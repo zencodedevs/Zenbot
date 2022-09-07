@@ -29,7 +29,7 @@ namespace Zenbot
                         .AddSingleton(_commands)
                         .BuildServiceProvider();
 
-            var token = "";
+            var token = "MTAxNTk2NzY0Mjc0MzQ4MDQzMw.GjjLsy.csYNkhHAn0v6arJh6g1mNV9U_l7oD716u55gVc";
 
             _client.Log += Log;
 
