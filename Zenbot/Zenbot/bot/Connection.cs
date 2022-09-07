@@ -21,7 +21,7 @@ namespace Zenbot.bot
             _client.Log += Log;
             _client.MessageReceived += ClientOnMessageReceived;
 
-            var token = "Token";
+            var token = "Token Key";
 
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
