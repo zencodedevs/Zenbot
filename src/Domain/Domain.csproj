@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>ZenAchitecture.Domain</RootNamespace>
+    <AssemblyName>ZenAchitecture.Domain</AssemblyName>
+    <CodeAnalysisRuleSet>..\..\.sonarlint\candidate-management-admin-testcsharp.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Zen.Domain" Version="1.0.63" />
+    <PackageReference Include="Zen.MultiTenancy" Version="1.0.56" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain.Shared\Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

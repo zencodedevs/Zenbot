@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Askmethat.Aspnet.JsonLocalizer" Version="3.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="FluentValidation" Version="10.2.3" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.3.0" />
+    <PackageReference Include="Ical.Net" Version="4.2.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="5.0.7" />
+    <PackageReference Include="Microsoft.FeatureManagement" Version="2.3.0" />
+    <PackageReference Include="RestSharp" Version="106.13.0" />
+    <PackageReference Include="TimeZoneConverter" Version="3.5.0" />
+    <PackageReference Include="Twilio" Version="5.68.2" />
+    <PackageReference Include="Zen.Application" Version="1.0.56" />
+    <PackageReference Include="Zen.Common" Version="1.0.56" />
+    <PackageReference Include="Zen.SendGrid" Version="1.0.34" />
+    <PackageReference Include="Zen.SendGrid.Extensions.DependencyInjection" Version="1.0.34" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure.Shared\Infrastructure.Shared.csproj" />
+  </ItemGroup>
+</Project>

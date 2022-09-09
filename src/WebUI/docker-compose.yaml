@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  candidatemgmt:
+    image: candidate-management:develop
+    container_name: candidate-management
+    restart: always
+    ports:
+      - "8010:5000"

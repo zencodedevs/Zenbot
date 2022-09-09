@@ -1,0 +1,626 @@
+﻿[
+  {
+    "Key": "OperationInvalid",
+    "LocalizedValue": {
+      "ka-GE": "ოპერაცია არავალიდურია",
+      "en-US": "Operation is not valid"
+    }
+  },
+  {
+    "Key": "FormatInvalid",
+    "LocalizedValue": {
+      "ka-GE": "ფორმატი არავალიდურია",
+      "en-US": "Format is not valid"
+    }
+  },
+  {
+    "Key": "ResumeSizeInvalid",
+    "LocalizedValue": {
+      "ka-GE": "რეზიუმეს ზომა არავალიდურია, მაქსიმალური ზომა {0}",
+      "en-US": "The size of the resume is not valid, Max size {0}"
+    }
+  },
+  {
+    "Key": "AvatarSizeInvalid",
+    "LocalizedValue": {
+      "ka-GE": "ავატარის ზომა არავალიდურია, მაქსიმალური ზომა {0}",
+      "en-US": "The size of the resume is not valid, max size {0}"
+    }
+  },
+  {
+    "Key": "Add",
+    "LocalizedValue": {
+      "ka-GE": "დამატება",
+      "en-US": "Add"
+    }
+  },
+  {
+    "Key": "Edit",
+    "LocalizedValue": {
+      "ka-GE": "რედაქტირება",
+      "en-US": "Edit"
+    }
+  },
+  {
+    "Key": "FieldRequired",
+    "LocalizedValue": {
+      "ka-GE": "შევსება სავალდებულოა",
+      "en-US": "Required"
+    }
+  },
+  {
+    "Key": "MaximumSize",
+    "LocalizedValue": {
+      "ka-GE": "მაქსიმალური ზომა {0}",
+      "en-US": "Maximum size {0}"
+    }
+  },
+  {
+    "Key": "RecordNotFound",
+    "LocalizedValue": {
+      "ka-GE": "მონაცემები ვერ მოიძებნა",
+      "en-US": "Record not found"
+    }
+  },
+  {
+    "Key": "RecordIsReadOnly",
+    "LocalizedValue": {
+      "ka-GE": "ჩანაწერი კითხივს რეჟიმშია",
+      "en-US": "Record Is ReadOnly"
+    }
+  },
+  {
+    "Key": "LanguageIsIncorrectOrEmpty",
+    "LocalizedValue": {
+      "ka-GE": "ენა არასწორია ან ცარიელია",
+      "en-US": "Language is incorrect or empty"
+    }
+  },
+  {
+    "Key": "NotCorrectFormat",
+    "LocalizedValue": {
+      "ka-GE": "ფორმატი არასწორია",
+      "en-US": "Format is incorrect"
+    }
+  },
+  {
+    "Key": "EmailNotValid",
+    "LocalizedValue": {
+      "ka-GE": "ელ.ფოსტა არავალიდურია",
+      "en-US": "Email is not valid"
+    }
+  },
+  {
+    "Key": "WebSiteNotValid",
+    "LocalizedValue": {
+      "ka-GE": "არა ვალიდური საიტის მისამართი",
+      "en-US": "Website format is not valid"
+    }
+  },
+  {
+    "Key": "CannotLeaveCompany",
+    "LocalizedValue": {
+      "ka-GE": "თქვენ არ შეგიძლიათ დატოვოთ კომპანია",
+      "en-US": "You can't leave the company"
+    }
+  },
+  {
+    "Key": "DefaultError",
+    "LocalizedValue": {
+      "ka-GE": "გაურკვეველი შეცდომა",
+      "en-US": "Unknown Error"
+    }
+  },
+  {
+    "Key": "ConcurrencyFailure",
+    "LocalizedValue": {
+      "ka-GE": "კონკურენტული მუშაობის შეცდომა",
+      "en-US": "Concurrency Failure"
+    }
+  },
+  {
+    "Key": "PasswordMismatch",
+    "LocalizedValue": {
+      "ka-GE": "პაროლები ერთმანეთს არ ემთხვევა",
+      "en-US": "Passwords does not match"
+    }
+  },
+  {
+    "Key": "InvalidToken",
+    "LocalizedValue": {
+      "ka-GE": "არავალიდური გასაღები",
+      "en-US": "Invalid Token"
+    }
+  },
+  {
+    "Key": "LoginAlreadyAssociated",
+    "LocalizedValue": {
+      "ka-GE": "ანგარიში უკვე არსებობს",
+      "en-US": "Login Already Associated"
+    }
+  },
+  {
+    "Key": "InvalidUserName",
+    "LocalizedValue": {
+      "ka-GE": "არავალიდური მომხმარებლის სახელი",
+      "en-US": "Invalid UserName"
+    }
+  },
+  {
+    "Key": "InvalidEmail",
+    "LocalizedValue": {
+      "ka-GE": "არავალიდური ელ.ფოსტა",
+      "en-US": "Invalid Email"
+    }
+  },
+  {
+    "Key": "DuplicateUserName",
+    "LocalizedValue": {
+      "ka-GE": "მომხმარებლის სახელი უკვე არსებობს",
+      "en-US": "UserName is already used"
+    }
+  },
+  {
+    "Key": "DuplicateEmail",
+    "LocalizedValue": {
+      "ka-GE": "ელ.ფოსტა უკვე არსებობს",
+      "en-US": "Email is already used"
+    }
+  },
+  {
+    "Key": "InvalidRoleName",
+    "LocalizedValue": {
+      "ka-GE": "არავალიდური როლის დასახელება",
+      "en-US": "Invalid RoleName"
+    }
+  },
+  {
+    "Key": "DuplicateRoleName",
+    "LocalizedValue": {
+      "ka-GE": "როლის სახელი უკვე არსებოს",
+      "en-US": "RoleName is already used"
+    }
+  },
+  {
+    "Key": "UserAlreadyHasPassword",
+    "LocalizedValue": {
+      "ka-GE": "UserAlreadyHasPassword",
+      "en-US": "UserAlreadyHasPassword"
+    }
+  },
+  {
+    "Key": "UserLockoutNotEnabled",
+    "LocalizedValue": {
+      "ka-GE": "UserLockoutNotEnabled",
+      "en-US": "UserLockoutNotEnabled"
+    }
+  },
+  {
+    "Key": "UserAlreadyInRole",
+    "LocalizedValue": {
+      "ka-GE": "მომხმარებელი არსებობს მონიშნულ როლში",
+      "en-US": "User already has this role"
+    }
+  },
+  {
+    "Key": "UserNotInRole",
+    "LocalizedValue": {
+      "ka-GE": "მომხმარებელი არ არის მონიშნულ როლში",
+      "en-US": "User does not have this role"
+    }
+  },
+  {
+    "Key": "PasswordTooShort",
+    "LocalizedValue": {
+      "ka-GE": "პაროლის არასაკმარისი სიგრძე",
+      "en-US": "Password is Too Short"
+    }
+  },
+  {
+    "Key": "PasswordRequiresNonAlphanumeric",
+    "LocalizedValue": {
+      "ka-GE": "პაროლად მოითხოვება არა ანბანურ-ციფრული",
+      "en-US": "Password Requires NonAlphanumeric symbol"
+    }
+  },
+  {
+    "Key": "PasswordRequiresDigit",
+    "LocalizedValue": {
+      "ka-GE": "პაროლად მოითხოვება ციფრები",
+      "en-US": "Password Requires Digits"
+    }
+  },
+  {
+    "Key": "PasswordRequiresLower",
+    "LocalizedValue": {
+      "ka-GE": "პაროლად მოითხოვება ქვედა რეგისტრის სიმბოლოები",
+      "en-US": "Password Requires LowerCase symbols"
+    }
+  },
+  {
+    "Key": "PasswordRequiresUpper",
+    "LocalizedValue": {
+      "ka-GE": "პაროლად მოითხოვება ზედა რეგისტრის სიმბოლოები",
+      "en-US": "Password Requires Upper Case symbols"
+    }
+  },
+  {
+    "Key": "Organizer",
+    "LocalizedValue": {
+      "ka-GE": "ორგანიზატორი",
+      "en-US": "Organizer"
+    }
+  },
+  {
+    "Key": "EventUpdated",
+    "LocalizedValue": {
+      "ka-GE": "განახლებული მოწვევის დეტალები",
+      "en-US": "Updated invitation details"
+    }
+  },
+  {
+    "Key": "Invitation",
+    "LocalizedValue": {
+      "ka-GE": "მოწვევა",
+      "en-US": "Invitation"
+    }
+  },
+  {
+    "Key": "EventCancelled",
+    "LocalizedValue": {
+      "ka-GE": "ღონისძიების გაუქმება",
+      "en-US": "Event has been cancelled"
+    }
+  },
+  {
+    "Key": "Receipt",
+    "LocalizedValue": {
+      "ka-GE": "ქვითარი",
+      "en-US": "Receipt"
+    }
+  },
+  {
+    "Key": "PaymentMethod",
+    "LocalizedValue": {
+      "ka-GE": "გადახდის მეთოდი",
+      "en-US": "Payment method"
+    }
+  },
+  {
+    "Key": "AmountPaid",
+    "LocalizedValue": {
+      "ka-GE": "გადახდილი თანხა",
+      "en-US": "Amount paid"
+    }
+  },
+  {
+    "Key": "ReceiptDate",
+    "LocalizedValue": {
+      "ka-GE": "ქვითრის თარიღი",
+      "en-US": "Receipt date"
+    }
+  },
+  {
+    "Key": "PaymentMethod",
+    "LocalizedValue": {
+      "ka-GE": "გადახდის მეთოდი",
+      "en-US": "Payment method"
+    }
+  },
+  {
+    "Key": "Subscription",
+    "LocalizedValue": {
+      "ka-GE": "გამოწერა",
+      "en-US": "Subscription"
+    }
+  },
+  {
+    "Key": "Total",
+    "LocalizedValue": {
+      "ka-GE": "ჯამი",
+      "en-US": "Total"
+    }
+  },
+  {
+    "Key": "PaymentFailEmailButtonText",
+    "LocalizedValue": {
+      "ka-GE": "გადახდა",
+      "en-US": "Pay now"
+    }
+  },
+  {
+    "Key": "Amount",
+    "LocalizedValue": {
+      "ka-GE": "თანხა",
+      "en-US": "Amount"
+    }
+  },
+  {
+    "Key": "AccountInformation",
+    "LocalizedValue": {
+      "ka-GE": "ინფორმაცია ანგარიშზე",
+      "en-US": "Account information"
+    }
+  },
+  {
+    "Key": "ApplicationAppliedTitle",
+    "LocalizedValue": {
+      "ka-GE": "თქვენ მიიღეთ ახალი განაცხადი!",
+      "en-US": "You Have a New Application!"
+    }
+  },
+  {
+    "Key": "ApplicationAppliedButtonText",
+    "LocalizedValue": {
+      "ka-GE": "შეამოწმე პროფილი!",
+      "en-US": "Check the profile!"
+    }
+  },
+  {
+    "Key": "FullName",
+    "LocalizedValue": {
+      "ka-GE": "სრული სახელი",
+      "en-US": "Full name"
+    }
+  },
+  {
+    "Key": "CompanyName",
+    "LocalizedValue": {
+      "ka-GE": "კომპანიის სახელი",
+      "en-US": "Company name"
+    }
+  },
+  {
+    "Key": "Email",
+    "LocalizedValue": {
+      "ka-GE": "ელ-ფოსტა",
+      "en-US": "Email"
+    }
+  },
+  {
+    "Key": "Password",
+    "LocalizedValue": {
+      "ka-GE": "პაროლი",
+      "en-US": "Password"
+    }
+  },
+  {
+    "Key": "ConfirmPassword",
+    "LocalizedValue": {
+      "ka-GE": "გაიმეორეთ პაროლი",
+      "en-US": "Confirm password"
+    }
+  },
+  {
+    "Key": "Registration",
+    "LocalizedValue": {
+      "ka-GE": "რეგისტრაცია",
+      "en-US": "Registration"
+    }
+  },
+  {
+    "Key": "Authorization",
+    "LocalizedValue": {
+      "ka-GE": "ავტორიზაცია",
+      "en-US": "Authorization"
+    }
+  },
+  {
+    "Key": "ForgotPassword",
+    "LocalizedValue": {
+      "ka-GE": "დაგავიწყდათ პაროლი?",
+      "en-US": "Forgot password?"
+    }
+  },
+  {
+    "Key": "RememberMe",
+    "LocalizedValue": {
+      "ka-GE": "დამიმახსოვრე",
+      "en-US": "Remember me?"
+    }
+  },
+  {
+    "Key": "EmailFildRequired",
+    "LocalizedValue": {
+      "ka-GE": "ელ-ფოსტის შევსება აუცილებელია!",
+      "en-US": "Email is required!"
+    }
+  },
+  {
+    "Key": "PasswordFildRequired",
+    "LocalizedValue": {
+      "ka-GE": "პაროლის შევსება აუცილებელია!",
+      "en-US": "Password is required!"
+    }
+  },
+  {
+    "Key": "InvalidLoginAttemp",
+    "LocalizedValue": {
+      "ka-GE": "არასწორი ელ-ფოსტა ან პაროლი.",
+      "en-US": "Invalid login attempt."
+    }
+  },
+  {
+    "Key": "FullNameIsRequired",
+    "LocalizedValue": {
+      "ka-GE": "სახელი და გვარის შევსება აუცილებელია",
+      "en-US": "Full name is required"
+    }
+  },
+  {
+    "Key": "CompanyNameIsRequired",
+    "LocalizedValue": {
+      "ka-GE": "კომპანიის  შევსება აუცილებელია",
+      "en-US": "Company name is required"
+    }
+  },
+  {
+    "Key": "PasswordIsRequired",
+    "LocalizedValue": {
+      "ka-GE": "პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს",
+      "en-US": "The Password must be at least 6 characters long"
+    }
+  },
+  {
+    "Key": "ConfirmPasswordIsRequired",
+    "LocalizedValue": {
+      "ka-GE": "პაროლები არ ემთხვევა ერთმანეთს",
+      "en-US": "The password and confirmation password do not match"
+    }
+  },
+  {
+    "Key": "UnableToLoadUser",
+    "LocalizedValue": {
+      "ka-GE": "მითითებული ელ-ფოსტით მომხმარებელი ვერ მოიძებნა {0}",
+      "en-US": "Unable to load user with email {0}"
+    }
+  },
+  {
+    "Key": "AccountActivationText",
+    "LocalizedValue": {
+      "ka-GE": "ანგარიშის გასააქტიურებლად გთხოვთ შეამოწმოთ ელ-ფოსტა",
+      "en-US": "Please check your email to confirm your account."
+    }
+  },
+  {
+    "Key": "ReSend",
+    "LocalizedValue": {
+      "ka-GE": "ხელახლა გაგზავნა",
+      "en-US": "Re send"
+    }
+  },
+  {
+    "Key": "AccountActivationReSendText",
+    "LocalizedValue": {
+      "ka-GE": "არ მიღეთ აქტივაციის შეტყობინება {0}   ელ. ფოსტაზე? ",
+      "en-US": "Did you not receive the activation notification {0} via email? "
+    }
+  },
+  {
+    "Key": "Send",
+    "LocalizedValue": {
+      "ka-GE": "გაგზავნა",
+      "en-US": "send"
+    }
+  },
+  {
+    "Key": "OldPassword",
+    "LocalizedValue": {
+      "ka-GE": "ძველი პაროლი",
+      "en-US": "Old password"
+    }
+  },
+  {
+    "Key": "NewPassword",
+    "LocalizedValue": {
+      "ka-GE": "ახალი პაროლი",
+      "en-US": "New password"
+    }
+  },
+  {
+    "Key": "ConfirmPassword",
+    "LocalizedValue": {
+      "ka-GE": "გაიმეორეთ პაროლი",
+      "en-US": "Confirm password"
+    }
+  },
+  {
+    "Key": "UpdatePassword",
+    "LocalizedValue": {
+      "ka-GE": "განაახლეთ პაროლი",
+      "en-US": "Update password"
+    }
+  },
+  {
+    "Key": "UnableToLoadUserWithId",
+    "LocalizedValue": {
+      "ka-GE": "მომხმარებელი ვერ მოიძებნა {0}",
+      "en-US": "Unable to load user with ID {0}"
+    }
+  },
+  {
+    "Key": "AccountAlreadyActivated",
+    "LocalizedValue": {
+      "ka-GE": "ანგარიში უკვე გააქტიურებულია",
+      "en-US": "Account already activated"
+    }
+  },
+  {
+    "Key": "InvalidUserName",
+    "LocalizedValue": {
+      "ka-GE": "არასწორი მომხმარებლის სახელი",
+      "en-US": "Invalid user name"
+    }
+  },
+  {
+    "Key": "InvalidUserEmail",
+    "LocalizedValue": {
+      "ka-GE": "არასწორი მომხმარებლის მეილი",
+      "en-US": "Invalid user email"
+    }
+  },
+  {
+    "Key": "ReturnToMainPage",
+    "LocalizedValue": {
+      "ka-GE": "ავტორიზაციის გვერდზე დაბრუნება",
+      "en-US": "Return to main page"
+    }
+  },
+  {
+    "Key": "AccessDenied",
+    "LocalizedValue": {
+      "ka-GE": "თქვენ არ გაქვთ წვდომა ამ რესურსთან.",
+      "en-US": "You do not have access to this resource"
+    }
+  },
+  {
+    "Key": "AccessDeniedText",
+    "LocalizedValue": {
+      "ka-GE": "თქვენ არ გაქვთ წვდომა ამ რესურსთან.",
+      "en-US": "You do not have access to this resource."
+    }
+  },
+  {
+    "Key": "Save",
+    "LocalizedValue": {
+      "ka-GE": "შენახვა",
+      "en-US": "Save"
+    }
+  },
+  {
+    "Key": "PasswordUpdateSuccessfully",
+    "LocalizedValue": {
+      "ka-GE": "პაროლი წარმატებით განახლდა.",
+      "en-US": "Your password has been set successfully."
+    }
+  },
+  {
+    "Key": "And",
+    "LocalizedValue": {
+      "ka-GE": "და",
+      "en-US": "and"
+    }
+  },
+  {
+    "Key": "PrivacyPolicy",
+    "LocalizedValue": {
+      "ka-GE": "კონფიდენციალურობის პოლიტიკა",
+      "en-US": "PrivacyPolicy"
+    }
+  },
+  {
+    "Key": "Contact",
+    "LocalizedValue": {
+      "ka-GE": "კონტაქტი",
+      "en-US": "Contact"
+    }
+  },
+  {
+    "Key": "AllRightsReserved",
+    "LocalizedValue": {
+      "ka-GE": "ყველა უფლება დაცულია",
+      "en-US": "All rights reserved"
+    }
+  }
+   
+]

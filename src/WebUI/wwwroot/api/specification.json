@@ -1,0 +1,500 @@
+{
+  "x-generator": "NSwag v13.9.4.0 (NJsonSchema v10.3.1.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ZenAchitecture Open API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/City/ReadCity": {
+      "get": {
+        "tags": [
+          "City"
+        ],
+        "operationId": "City_ReadCity",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "x-sys-language",
+            "in": "header",
+            "style": "simple",
+            "description": "System language indicator",
+            "default": "en-US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CityDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/City/GetCities": {
+      "get": {
+        "tags": [
+          "City"
+        ],
+        "operationId": "City_GetCities",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "x-sys-language",
+            "in": "header",
+            "style": "simple",
+            "description": "System language indicator",
+            "default": "en-US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CityDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/City/CreateCity": {
+      "post": {
+        "tags": [
+          "City"
+        ],
+        "operationId": "City_CreateCity",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "x-sys-language",
+            "in": "header",
+            "style": "simple",
+            "description": "System language indicator",
+            "default": "en-US"
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCityCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/City/UpdateCity": {
+      "post": {
+        "tags": [
+          "City"
+        ],
+        "operationId": "City_UpdateCity",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "x-sys-language",
+            "in": "header",
+            "style": "simple",
+            "description": "System language indicator",
+            "default": "en-US"
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCityCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/City/DeleteCity": {
+      "delete": {
+        "tags": [
+          "City"
+        ],
+        "operationId": "City_DeleteCity",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "type": "string",
+            "name": "x-sys-language",
+            "in": "header",
+            "style": "simple",
+            "description": "System language indicator",
+            "default": "en-US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/Ipay/PaymentCallback": {
+      "post": {
+        "tags": [
+          "Ipay"
+        ],
+        "operationId": "Ipay_PaymentCallback",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "x-sys-language",
+            "in": "header",
+            "style": "simple",
+            "description": "System language indicator",
+            "default": "en-US"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "order_id": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "payment_hash": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "ipay_payment_id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "status": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "status_description": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "shop_order_id": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "payment_method": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "card_type": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "transaction_id": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "pan": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ipay/RefundCallBack": {
+      "post": {
+        "tags": [
+          "Ipay"
+        ],
+        "operationId": "Ipay_RefundCallBack",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "x-sys-language",
+            "in": "header",
+            "style": "simple",
+            "description": "System language indicator",
+            "default": "en-US"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "order_id": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "payment_hash": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "ipay_payment_id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "status": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "status_description": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "shop_order_id": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "payment_method": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "card_type": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "transaction_id": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "pan": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Payment/CheckPaymentData": {
+      "get": {
+        "tags": [
+          "Payment"
+        ],
+        "operationId": "Payment_CheckPaymentData",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "type": "string",
+            "name": "x-sys-language",
+            "in": "header",
+            "style": "simple",
+            "description": "System language indicator",
+            "default": "en-US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CityDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CreateCityCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateCityCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PaymentResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/PaymentStatus"
+          }
+        }
+      },
+      "PaymentStatus": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "InProgress",
+          "Succeed",
+          "Failed",
+          "Unknown"
+        ],
+        "enum": [
+          "InProgress",
+          "Succeed",
+          "Failed",
+          "Unknown"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "type": "apiKey",
+        "description": "Type into the textbox: Bearer {your JWT token}.",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "JWT": []
+    }
+  ]
+}

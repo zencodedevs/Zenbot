@@ -1,0 +1,7 @@
+﻿# ეს კომენტარი არ წაშალოთ
+BuildCMD=dotnet publish .\\src\\WebUIAdmin\\WebUIAdmin.csproj -f net5.0 /p:Platform="Any CPU" --configuration Release  /p:EnvironmentName="Qa" --output build
+BuildOutput=build
+WebSiteName=candidate.zencode.io
+DestinationRoot=C:\\inetpub
+Bindings=http://candidate.zencode.io:80,https://candidate.zencode.io:443
+NotifyMail= andro.lomtadze@altcom.io,mikheil.shalvashvili@altcom.io, david.machitidze@altcom.io, guliko.merebashvili@gmail.com
