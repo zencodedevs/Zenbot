@@ -3,21 +3,16 @@ using Discord.Addons.Hosting;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Zenbot.BotConnection;
+using Zenbot.Services;
 
 namespace Zenbot
 {
-    //public class Program
-    //{
-    //    public static void Main(string[] args) => new Program().connection.MainAsync().GetAwaiter().GetResult();
-
-    //    Connection connection = new Connection();
-    //}
 
     /// <summary>
     /// The entry point of the bot.
@@ -62,8 +57,8 @@ namespace Zenbot
                 })
                 .ConfigureServices((context, services) =>
                 {
-                    //services
-                    //    .AddHostedService<CommandHandler>();
+                    services
+                        .AddHostedService<CommandHandler>();
                 })
                 .UseConsoleLifetime();
 
