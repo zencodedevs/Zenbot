@@ -1,4 +1,6 @@
-﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
+﻿using Application.Shared.Services;
+using Askmethat.Aspnet.JsonLocalizer.Localizer;
+using Domain.Shared.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +43,7 @@ namespace Application.Shared
             //zen send grid
             services.AddSendGrid(options => { options.ApiKey = configuration["SendGrid:ApiKey"]; });
 
+            services.TryAddTransient<ITest, Test>();
             return services;
         }
     }

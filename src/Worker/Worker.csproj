@@ -36,13 +36,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
-    <PackageReference Include="Zen.Mvc" Version="1.0.61" />
+    <PackageReference Include="Zen.Mvc" Version="1.0.64" />
 
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\tests\Domain.UnitTests\Domain.UnitTests.csproj" />
     <ProjectReference Include="..\Application.Shared\Application.Shared.csproj" />
+    <ProjectReference Include="..\Domain.Shared\Domain.Shared.csproj" />
     <ProjectReference Include="..\Infrastructure.Shared\Infrastructure.Shared.csproj" />
   </ItemGroup>
 </Project>

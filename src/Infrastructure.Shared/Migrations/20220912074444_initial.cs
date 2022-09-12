@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ZenAchitecture.Infrastructure.Migrations
+namespace Infrastructure.Shared.Migrations
 {
     public partial class initial : Migration
     {
