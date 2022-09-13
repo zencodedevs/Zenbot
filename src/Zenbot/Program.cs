@@ -15,6 +15,7 @@ using Microsoft.FeatureManagement;
 using NLog;
 using NLog.Web;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -23,10 +24,9 @@ using Zen.Infrastructure.Repositories;
 using Zen.Uow;
 using ZenAchitecture.Domain.Shared.Common;
 using ZenAchitecture.Domain.Shared.Interfaces;
-using Zenbot.Modules;
+using Zenbot.Modules.Birthday;
 using Zenbot.Services;
-
-using LogLevel = Microsoft.Extensions.Logging.LogLevel;
+using System.Threading;
 
 namespace Zenbot
 {
@@ -36,17 +36,12 @@ namespace Zenbot
     /// </summary>
     /// 
 
-    public class Constant
-    {
-        public static readonly string _birthdayDateFormat = "dd MMM";
-    }
-
     public class Program
     {
         private DiscordSocketClient _client;
         private CommandService _commands;
         private IServiceProvider _services;
-        private System.Threading.Timer timer;
+        private Timer timer;
 
 
 
@@ -71,12 +66,12 @@ namespace Zenbot
                         .AddSingleton(_commands)
                         .AddSingleton<IUnitOfWork, UnitOfWork>()
                         .AddSingleton<ITest, Test>()
-                        
+
                         .BuildServiceProvider();
 
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
-            var token = "MTAxODc2OTI1OTI1MTM4ODQ1Nw.GaS2hm.isFfBKSEi_JtSUea9oAaoEYhB4tTqghAejZjRY";
+            var token = "MTAxODc2OTI1OTI1MTM4ODQ1Nw.GjoNTY.UwJJFGPP4sYzqjee-sS9De0Td0-EBilRbvPqXQ";
 
             _client.Log += Log;
 
@@ -89,7 +84,7 @@ namespace Zenbot
 
             await _client.StartAsync();
 
-            timer = new System.Threading.Timer(TimedAnnouncement, null, 0, 60000); // 24 hour interval
+            timer = new Timer(TimedAnnouncement, null, 0, 6000); // 24 hour interval
 
             await Task.Delay(-1);
 
@@ -107,8 +102,8 @@ namespace Zenbot
         // Triggers the daily check/announcement of any existing birthdays.
         public async void TimedAnnouncement(object state)
         {
-            //if (DateTime.Now.Hour == 11)
-                await Announce.AnnounceBirthdays(_client);
+            if (DateTime.Now.Minute >= 50)
+                await AnnounceBirthdays();
         }
 
         public async Task AnnounceJoinedUser(SocketGuildUser user) //Welcomes the new user
@@ -117,7 +112,34 @@ namespace Zenbot
             await channel.SendMessageAsync($"Welcome {user.Username} to {channel.Guild.Name}"); //Welcomes the new user
 
         }
+        public  Task AnnounceBirthdays()
+        {
+            //Database.Birthday[] birthdays = Data.Data.GetBirthdays();
+            var builder = new EmbedBuilder()
+                .WithTitle("Happy Birthday")
+                .WithColor(new Color(0x8CE3C5))
+                .WithImageUrl("https://media.giphy.com/media/xUOxf0vukEHTKkD4ic/giphy.gif");
+            var channel = _client.GetGuild(1018765173969932319).GetChannel(1018765311215947816) as SocketTextChannel;
+            int numOfBirthdays = 0;
+            DateTime today = DateTime.Now;
+            //var channel = _client.GetGuild(1018765173969932319).GetChannel(1018765311215947816) as IMessageChannel;
 
+            string bdayMessage = "Happy Birthday to You";
+
+            //foreach (Birthday bday in birthdays)
+            //{
+            //    if (bday.Month == today.Month && bday.Day == today.Day)
+            //    {
+            //numOfBirthdays++;
+            //bdayMessage += $" {Client.GetUser(bday.UserId).Mention}";
+            //    }
+            //}
+
+            // No announcement will be made if there are no birthdays.
+            channel.SendMessageAsync($"{bdayMessage}!", false, builder.Build());
+
+            return Task.CompletedTask;
+        }
 
         private async Task HandleCommandsAsync(SocketMessage arg)
         {
@@ -187,4 +209,7 @@ namespace Zenbot
                .UseNLog();
     }
 }
+
+
+
 
