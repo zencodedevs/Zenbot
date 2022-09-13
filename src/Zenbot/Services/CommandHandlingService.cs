@@ -19,6 +19,7 @@ namespace Zenbot.Services
         private readonly CommandService _commands;
         private readonly DiscordSocketClient _client;
         private readonly string _prefix;
+        private System.Threading.Timer timer;
 
         public CommandHandlingService(IServiceProvider services, IOptions<CommandsConfiguration> commandsConfig, CommandService commands, DiscordSocketClient client)
         {

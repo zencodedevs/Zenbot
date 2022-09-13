@@ -23,6 +23,7 @@ using Zen.Infrastructure.Repositories;
 using Zen.Uow;
 using ZenAchitecture.Domain.Shared.Common;
 using ZenAchitecture.Domain.Shared.Interfaces;
+using Zenbot.Modules;
 using Zenbot.Services;
 
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
@@ -45,7 +46,7 @@ namespace Zenbot
         private DiscordSocketClient _client;
         private CommandService _commands;
         private IServiceProvider _services;
-
+        private System.Threading.Timer timer;
 
 
 
@@ -75,7 +76,7 @@ namespace Zenbot
 
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
-            var token = "Token Key";
+            var token = "MTAxODc2OTI1OTI1MTM4ODQ1Nw.GaS2hm.isFfBKSEi_JtSUea9oAaoEYhB4tTqghAejZjRY";
 
             _client.Log += Log;
 
@@ -87,6 +88,8 @@ namespace Zenbot
             await _client.LoginAsync(TokenType.Bot, token);
 
             await _client.StartAsync();
+
+            timer = new System.Threading.Timer(TimedAnnouncement, null, 0, 60000); // 24 hour interval
 
             await Task.Delay(-1);
 
@@ -101,6 +104,12 @@ namespace Zenbot
             return Task.CompletedTask;
         }
 
+        // Triggers the daily check/announcement of any existing birthdays.
+        public async void TimedAnnouncement(object state)
+        {
+            //if (DateTime.Now.Hour == 11)
+                await Announce.AnnounceBirthdays(_client);
+        }
 
         public async Task AnnounceJoinedUser(SocketGuildUser user) //Welcomes the new user
         {
