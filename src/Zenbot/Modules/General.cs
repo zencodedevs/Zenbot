@@ -1,4 +1,5 @@
-﻿using Discord.Commands;
+﻿using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 using Domain.Shared.Interfaces;
 using System;
@@ -29,6 +30,5 @@ namespace Zenbot.Modules
                     $"Created at: {socketGuildUser.CreatedAt}");
             }
 
-        
     }
 }

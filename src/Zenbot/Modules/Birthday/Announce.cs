@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 using System;
 
-namespace Zenbot.Modules
+namespace Zenbot.Modules.Birthday
 {
     // This class is used for the timed (daily) birthday announcements.
     // It is also used for the forceAnnouncement command.
@@ -21,19 +21,19 @@ namespace Zenbot.Modules
             int numOfBirthdays = 0;
             DateTime today = DateTime.Now;
             var channel = Client.GetChannel(1018765311215947816) as IMessageChannel;
-            string bdayMessage = "Happy Birthday to you";
+            
+            string bdayMessage = "Happy Birthday to You";
 
             //foreach (Birthday bday in birthdays)
             //{
             //    if (bday.Month == today.Month && bday.Day == today.Day)
             //    {
-            //        numOfBirthdays++;
-            //        bdayMessage += $" {Client.GetUser(bday.UserId).Mention}";
+                    //numOfBirthdays++;
+                    //bdayMessage += $" {Client.GetUser(bday.UserId).Mention}";
             //    }
             //}
 
             // No announcement will be made if there are no birthdays.
-          
                 channel.SendMessageAsync($"{bdayMessage}!", false, builder.Build());
             
             return Task.CompletedTask;
