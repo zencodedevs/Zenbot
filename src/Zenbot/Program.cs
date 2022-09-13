@@ -75,7 +75,7 @@ namespace Zenbot
 
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
-            var token = "MTAxODc2OTI1OTI1MTM4ODQ1Nw.GYga16.sjvpBKcxUj1GL-er2FC1luG06yHAEpPKGi7wpQ";
+            var token = "Token Key";
 
             _client.Log += Log;
 
