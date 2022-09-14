@@ -50,8 +50,6 @@ namespace Zenbot
 
         static void Main(string[] args)
         {
-           
-
             new Program().RunBothAsync(args).GetAwaiter().GetResult();
         }
 
@@ -62,31 +60,30 @@ namespace Zenbot
                .SetBasePath(AppContext.BaseDirectory)
                .AddJsonFile(path: "appsettings.json");
 
+            var c = new ConfigurationBuilder()
+             .SetBasePath(AppContext.BaseDirectory)
+             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+             .AddEnvironmentVariables()
+             .Build();
 
-          //  var env = hostContext.HostingEnvironment;
 
-              var c = new ConfigurationBuilder()
-                .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables()
-                .Build();
+            // hostbuilder configured for Nlog service
+            CreateHostBuilder(args);
 
-         
-
-           // CreateHostBuilder(args).Build();
-
+            // configure discordSocketClient for GatewayIntents to send welcome message to channel
             _client = new DiscordSocketClient(new DiscordSocketConfig
             {
                 GatewayIntents = GatewayIntents.All | GatewayIntents.GuildMembers
             });
 
             _commands = new CommandService();
+
+            //Set up all services here
             _services = new ServiceCollection()
                         .AddSingleton(_client)
                         .AddSingleton(_commands)
                         .AddSingleton<ICurrentUserService, CurrentUserPuppeteerService>()
-                         .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+                        .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                         .AddTransient<IConfiguration>(sp =>
                         {
                             IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
@@ -98,14 +95,14 @@ namespace Zenbot
                         .AddInfrastructureShared(c)
                         .BuildServiceProvider();
 
+            // configure for commands we use in discord for our bot
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
-            var token = "MTAxODc2OTI1OTI1MTM4ODQ1Nw.GjdhCz.UwzzqacE59vaM4gbvpM3JY2EQ4SuIYbgqd7Fog";
+            var token = "MTAxODc2OTI1OTI1MTM4ODQ1Nw.GScNNx.ucPC4Gbo33IvZMcF9fEHGnM2r1dWcNmrygJkII";
 
             _client.Log += Log;
 
             _client.UserJoined += AnnounceJoinedUser;
-
 
             _client.MessageReceived += HandleCommandsAsync;
 
@@ -113,12 +110,9 @@ namespace Zenbot
 
             await _client.StartAsync();
 
-            timer = new Timer(TimedAnnouncement, null, 0, 6000); // 24 hour interval
+            timer = new Timer(TimedAnnouncement, null, 0, 30000); // 24 hour interval
 
             await Task.Delay(-1);
-
-
-
 
         }
 
@@ -131,8 +125,9 @@ namespace Zenbot
         // Triggers the daily check/announcement of any existing birthdays.
         public async void TimedAnnouncement(object state)
         {
-            if (DateTime.Now.Hour <= 8)
-                await AnnounceBirthdays();
+            var datae = DateTime.Now.Hour;
+            if (DateTime.Now.Hour <= 17)
+                await Announce.AnnounceBirthdays(_client);
         }
 
         public async Task AnnounceJoinedUser(SocketGuildUser user) //Welcomes the new user
@@ -165,47 +160,29 @@ namespace Zenbot
 
         }
 
-        //public static IHostBuilder CreateHostBuilder(string[] args) =>
-        //   Host.CreateDefaultBuilder(args)
-        //       .ConfigureAppConfiguration((hostContext, configBuilder) =>
-        //       {
-        //           var env = hostContext.HostingEnvironment;
 
-        //           configBuilder
-        //               .SetBasePath(env.ContentRootPath)
-        //               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-        //               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-        //               .AddEnvironmentVariables()
-        //               .Build();
-        //       })
-        //       .ConfigureServices((hostContext, services) =>
-        //       {
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+           Host.CreateDefaultBuilder(args)
+               .ConfigureServices((hostContext, services) =>
+               {
 
-        //           Configuration = hostContext.Configuration;
+                   Configuration = hostContext.Configuration;
 
-        //           // set nlog connection string
-        //           GlobalDiagnosticsContext.Set("connectionString", Configuration.GetConnectionString("DefaultConnection"));
+                   // set nlog connection string
+                   GlobalDiagnosticsContext.Set("connectionString", Configuration.GetConnectionString("DefaultConnection"));
 
-        //           //set nlog inster clause variable
-        //           LogManager.Configuration.Variables["registerClause"] = Constants.Nlog.ZenBotDbRegisterClause;
+                   //set nlog inster clause variable
+                   LogManager.Configuration.Variables["registerClause"] = Constants.Nlog.ZenBotDbRegisterClause;
 
-        //         //  services.AddSingleton<ICurrentUserService, CurrentUserPuppeteerService>();
-
-        //         //  services.AddApplicationShared(Configuration);
-
-        //          // services.AddDomainShared();
-
-        //          // services.AddInfrastructureShared(Configuration);
-
-        //       })
-        //       .ConfigureLogging(logging =>
-        //       {
-        //           /* Clean providers */
-        //           logging.ClearProviders();
-        //           /* Set minimum log level*/
-        //           logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
-        //       })
-        //       .UseNLog();
+               })
+               .ConfigureLogging(logging =>
+               {
+                   /* Clean providers */
+                   logging.ClearProviders();
+                   /* Set minimum log level*/
+                   logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
+               })
+               .UseNLog();
     }
 }
 
