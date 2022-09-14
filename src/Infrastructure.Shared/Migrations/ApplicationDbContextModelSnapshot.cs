@@ -3,18 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ZenAchitecture.Infrastructure.Persistence;
 using ZenAchitecture.Infrastructure.Shared.Persistence;
 
-namespace ZenAchitecture.Infrastructure.Migrations
+namespace Infrastructure.Shared.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220228064631_initial")]
-    partial class initial
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -453,7 +450,7 @@ namespace ZenAchitecture.Infrastructure.Migrations
                     b.ToTable("EventLogs");
                 });
 
-            modelBuilder.Entity("ZenAchitecture.Domain.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("ZenAchitecture.Domain.Shared.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -521,7 +518,7 @@ namespace ZenAchitecture.Infrastructure.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("ZenAchitecture.Domain.Entities.Geography.City", b =>
+            modelBuilder.Entity("ZenAchitecture.Domain.Shared.Entities.Geography.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -547,7 +544,7 @@ namespace ZenAchitecture.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ZenAchitecture.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("ZenAchitecture.Domain.Shared.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -556,7 +553,7 @@ namespace ZenAchitecture.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ZenAchitecture.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("ZenAchitecture.Domain.Shared.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -571,7 +568,7 @@ namespace ZenAchitecture.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ZenAchitecture.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("ZenAchitecture.Domain.Shared.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -580,7 +577,7 @@ namespace ZenAchitecture.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ZenAchitecture.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("ZenAchitecture.Domain.Shared.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
