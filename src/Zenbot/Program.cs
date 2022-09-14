@@ -42,19 +42,39 @@ namespace Zenbot
         private CommandService _commands;
         private IServiceProvider _services;
         private Timer timer;
-
+   
 
 
         public static IConfiguration Configuration { get; private set; }
 
         static void Main(string[] args)
         {
+           
+
             new Program().RunBothAsync(args).GetAwaiter().GetResult();
         }
 
 
         public async Task RunBothAsync(string[] args)
         {
+            var _builder = new ConfigurationBuilder()
+               .SetBasePath(AppContext.BaseDirectory)
+               .AddJsonFile(path: "appsettings.json");
+
+
+          //  var env = hostContext.HostingEnvironment;
+
+              var c = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+         
+
+           // CreateHostBuilder(args).Build();
+
             _client = new DiscordSocketClient(new DiscordSocketConfig
             {
                 GatewayIntents = GatewayIntents.All | GatewayIntents.GuildMembers
@@ -64,14 +84,15 @@ namespace Zenbot
             _services = new ServiceCollection()
                         .AddSingleton(_client)
                         .AddSingleton(_commands)
-                        .AddSingleton<IUnitOfWorkManager, UnitOfWorkManager>()
-                        .AddSingleton<ITest, Test>()
-
+                        .AddSingleton<ICurrentUserService, CurrentUserPuppeteerService>()
+                        .AddDomainShared()
+                        .AddApplicationShared(c)
+                        .AddInfrastructureShared(c)
                         .BuildServiceProvider();
 
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
-            var token = "Token Key";
+            var token = "MTAxODc2OTI1OTI1MTM4ODQ1Nw.GjdhCz.UwzzqacE59vaM4gbvpM3JY2EQ4SuIYbgqd7Fog";
 
             _client.Log += Log;
 
@@ -88,7 +109,7 @@ namespace Zenbot
 
             await Task.Delay(-1);
 
-            CreateHostBuilder(args).Build();
+
 
 
         }
@@ -163,50 +184,47 @@ namespace Zenbot
 
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-           Host.CreateDefaultBuilder(args)
-               .ConfigureAppConfiguration((hostContext, configBuilder) =>
-               {
-                   var env = hostContext.HostingEnvironment;
+        //public static IHostBuilder CreateHostBuilder(string[] args) =>
+        //   Host.CreateDefaultBuilder(args)
+        //       .ConfigureAppConfiguration((hostContext, configBuilder) =>
+        //       {
+        //           var env = hostContext.HostingEnvironment;
 
-                   configBuilder
-                       .SetBasePath(env.ContentRootPath)
-                       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                       .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                       .AddEnvironmentVariables()
-                       .Build();
-               })
-               .ConfigureServices((hostContext, services) =>
-               {
+        //           configBuilder
+        //               .SetBasePath(env.ContentRootPath)
+        //               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        //               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+        //               .AddEnvironmentVariables()
+        //               .Build();
+        //       })
+        //       .ConfigureServices((hostContext, services) =>
+        //       {
 
-                   Configuration = hostContext.Configuration;
+        //           Configuration = hostContext.Configuration;
 
-                   // set nlog connection string
-                   GlobalDiagnosticsContext.Set("connectionString", Configuration.GetConnectionString("DefaultConnection"));
+        //           // set nlog connection string
+        //           GlobalDiagnosticsContext.Set("connectionString", Configuration.GetConnectionString("DefaultConnection"));
 
-                   //set nlog inster clause variable
-                   LogManager.Configuration.Variables["registerClause"] = Constants.Nlog.ZenBotDbRegisterClause;
+        //           //set nlog inster clause variable
+        //           LogManager.Configuration.Variables["registerClause"] = Constants.Nlog.ZenBotDbRegisterClause;
 
-                   services.AddSingleton<ICurrentUserService, CurrentUserPuppeteerService>();
+        //         //  services.AddSingleton<ICurrentUserService, CurrentUserPuppeteerService>();
 
-                   // add microsoft feature managment
-                   services.AddFeatureManagement();
+        //         //  services.AddApplicationShared(Configuration);
 
-                   services.AddApplicationShared(Configuration);
+        //          // services.AddDomainShared();
 
-                   services.AddDomainShared();
+        //          // services.AddInfrastructureShared(Configuration);
 
-                   services.AddInfrastructureShared(Configuration);
-
-               })
-               .ConfigureLogging(logging =>
-               {
-                   /* Clean providers */
-                   logging.ClearProviders();
-                   /* Set minimum log level*/
-                   logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
-               })
-               .UseNLog();
+        //       })
+        //       .ConfigureLogging(logging =>
+        //       {
+        //           /* Clean providers */
+        //           logging.ClearProviders();
+        //           /* Set minimum log level*/
+        //           logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
+        //       })
+        //       .UseNLog();
     }
 }
 
