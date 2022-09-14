@@ -27,6 +27,7 @@ using ZenAchitecture.Domain.Shared.Interfaces;
 using Zenbot.Modules.Birthday;
 using Zenbot.Services;
 using System.Threading;
+using Microsoft.AspNetCore.Http;
 
 namespace Zenbot
 {
@@ -85,6 +86,13 @@ namespace Zenbot
                         .AddSingleton(_client)
                         .AddSingleton(_commands)
                         .AddSingleton<ICurrentUserService, CurrentUserPuppeteerService>()
+                         .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+                        .AddTransient<IConfiguration>(sp =>
+                        {
+                            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+                            configurationBuilder.AddJsonFile("appsettings.json");
+                            return configurationBuilder.Build();
+                        })
                         .AddDomainShared()
                         .AddApplicationShared(c)
                         .AddInfrastructureShared(c)
