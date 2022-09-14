@@ -64,7 +64,7 @@ namespace Zenbot
             _services = new ServiceCollection()
                         .AddSingleton(_client)
                         .AddSingleton(_commands)
-                        .AddSingleton<IUnitOfWork, UnitOfWork>()
+                        .AddSingleton<IUnitOfWorkManager, UnitOfWorkManager>()
                         .AddSingleton<ITest, Test>()
 
                         .BuildServiceProvider();
@@ -102,7 +102,7 @@ namespace Zenbot
         // Triggers the daily check/announcement of any existing birthdays.
         public async void TimedAnnouncement(object state)
         {
-            if (DateTime.Now.Minute >= 50)
+            if (DateTime.Now.Hour <= 8)
                 await AnnounceBirthdays();
         }
 
