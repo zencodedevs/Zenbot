@@ -141,34 +141,7 @@ namespace Zenbot
             await channel.SendMessageAsync($"Welcome {user.Username} to {channel.Guild.Name}"); //Welcomes the new user
 
         }
-        public  Task AnnounceBirthdays()
-        {
-            //Database.Birthday[] birthdays = Data.Data.GetBirthdays();
-            var builder = new EmbedBuilder()
-                .WithTitle("Happy Birthday")
-                .WithColor(new Color(0x8CE3C5))
-                .WithImageUrl("https://media.giphy.com/media/xUOxf0vukEHTKkD4ic/giphy.gif");
-            var channel = _client.GetGuild(1018765173969932319).GetChannel(1018765311215947816) as SocketTextChannel;
-            int numOfBirthdays = 0;
-            DateTime today = DateTime.Now;
-            //var channel = _client.GetGuild(1018765173969932319).GetChannel(1018765311215947816) as IMessageChannel;
-
-            string bdayMessage = "Happy Birthday to You";
-
-            //foreach (Birthday bday in birthdays)
-            //{
-            //    if (bday.Month == today.Month && bday.Day == today.Day)
-            //    {
-            //numOfBirthdays++;
-            //bdayMessage += $" {Client.GetUser(bday.UserId).Mention}";
-            //    }
-            //}
-
-            // No announcement will be made if there are no birthdays.
-            channel.SendMessageAsync($"{bdayMessage}!", false, builder.Build());
-
-            return Task.CompletedTask;
-        }
+       
 
         private async Task HandleCommandsAsync(SocketMessage arg)
         {
