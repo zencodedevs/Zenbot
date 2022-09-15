@@ -10,12 +10,20 @@ using System.Threading.Tasks;
 using Zen.Domain.Interfaces;
 using Zen.Uow;
 using ZenAchitecture.Domain.Shared.Entities.Geography;
+using Zenbot.Services;
 
 namespace Zenbot.Modules
 {
     public class General : ModuleBase<SocketCommandContext>
     {
+        
+        private CommandHandler _handler;
 
+        // constructor injection is also a valid way to access the dependecies
+        public General(CommandHandler handler)
+        {
+            _handler = handler;
+        }
         [Command("info")]
         public async Task info(SocketGuildUser socketGuildUser = null)
         {
