@@ -43,7 +43,7 @@ namespace Application.Shared
             //zen send grid
             services.AddSendGrid(options => { options.ApiKey = configuration["SendGrid:ApiKey"]; });
 
-            services.TryAddTransient<ITest, Test>();
+            services.TryAddTransient<IBotUser, BotUserService>();
             return services;
         }
     }

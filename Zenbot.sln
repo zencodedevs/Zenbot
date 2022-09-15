@@ -34,7 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Shared", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Worker", "src\Worker\Worker.csproj", "{6E961B2D-9F73-4657-9C64-1190D2398D49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenbot", "src\Zenbot\Zenbot.csproj", "{4771F67A-C5B4-48D3-A007-39E6A93704C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenbot", "src\Zenbot\Zenbot.csproj", "{4771F67A-C5B4-48D3-A007-39E6A93704C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

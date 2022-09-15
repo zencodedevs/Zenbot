@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Shared.Interfaces
 {
-    public interface ITest
+    public interface IBotUser
     {
 
-        Task CreateNewCity();
+        Task CreateNewBotUser(string username, string userMail, string userId, byte month, byte day);
     }
 }
