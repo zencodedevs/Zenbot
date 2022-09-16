@@ -27,7 +27,7 @@
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
     <PackageReference Include="Zen.Bog.Ecommerce" Version="1.0.12" />
     <PackageReference Include="Zen.EventProcessor" Version="1.0.71" />
-    <PackageReference Include="Zen.Infrastructure" Version="1.0.62" />
+    <PackageReference Include="Zen.Infrastructure" Version="1.0.64" />
   </ItemGroup>
 
   <ItemGroup>

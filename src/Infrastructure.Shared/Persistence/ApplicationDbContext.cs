@@ -18,6 +18,8 @@ using Zen.Domain.Events;
 using Zen.Domain.Interfaces;
 using Zen.EventProcessor;
 using Zen.Infrastructure.Interfaces;
+using Zen.Domain.Entities.AuditingLog;
+using Domain.Shared.Entities.Zenbot;
 
 namespace ZenAchitecture.Infrastructure.Shared.Persistence
 {
@@ -50,12 +52,14 @@ namespace ZenAchitecture.Infrastructure.Shared.Persistence
 
         public DbSet<Payment> Payments { get; set; }
 
+        public DbSet<AuditLog> AuditLogs { get; set; }
 
         #endregion Zen Framework Suggested
 
 
 
         public DbSet<City> Cities { get; set; }
+        public DbSet<BotUser> BotUsers { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
