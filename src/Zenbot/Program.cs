@@ -1,213 +1,88 @@
-﻿using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NLog;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Discord.Interactions;
-using Microsoft.VisualStudio.Web.CodeGeneration;
-using Microsoft.Extensions.Configuration.Yaml;
-using ZenAchitecture.Domain.Shared.Common;
-using NLog.Web;
-using Zenbot.Modules.Birthday;
+using Discord.WebSocket;
+using Microsoft.Extensions.DependencyInjection;
+using Discord;
 using System.Threading;
-using System.Reflection;
-using Domain.Shared;
-using ZenAchitecture.Domain.Shared.Interfaces;
-using Zenbot.Services;
-using Microsoft.AspNetCore.Http;
-using Application.Shared;
-using Infrastructure.Shared;
+using Discord.Interactions;
+using Discord.Commands;
 
 namespace Zenbot
 {
-
-    /// <summary>
-    /// The entry point of the bot.
-    /// </summary>
-    /// 
-
     public class Program
     {
-        private readonly IConfiguration _config;
-        private DiscordSocketClient _client;
-        private InteractionService _commands;
-        private ulong _testGuildId;
-
-        private Timer timer;
-
-
-
-        public static IConfiguration Configuration { get; private set; }
-
-       
-        public static Task Main(string[] args) => new Program().MainAsync();
-       
-
-        public Program()
-        {
-            // create the configuration
-            var _builder = new ConfigurationBuilder()
-                .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile(path: "config.json");
-
-            // build the configuration and assign to _config          
-            _config = _builder.Build();
-            _testGuildId = ulong.Parse(_config["GuildId"]);
-
-            var _builder2 = new ConfigurationBuilder()
-               .SetBasePath(AppContext.BaseDirectory)
-               .AddJsonFile(path: "appsettings.json");
-
-        }
-
+        public static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
         public async Task MainAsync()
         {
-            _client = new DiscordSocketClient(new DiscordSocketConfig
-            {
-                GatewayIntents = GatewayIntents.All | GatewayIntents.GuildMembers
-            });
+            await Log("Program", "Main Async");
 
-            using (var services = ConfigureServices())
-            {
-                var client = services.GetRequiredService<DiscordSocketClient>();
-                var commands = services.GetRequiredService<InteractionService>();
+            var configuration = BotConfiguration.GetConfiguration();
 
-               
+            var services = new ServiceCollection()
+                .AddSingleton(configuration)
+                .AddSingleton<DiscordSocketClient>(x => new DiscordSocketClient(DiscordSocketConfig))
 
+                .AddSingleton<InteractionService>(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()))
+                .AddSingleton<InteractionsHandler>()
 
-                // setup logging and the ready event
-                client.Log += LogAsync;
-                commands.Log += LogAsync;
-                client.Ready += ReadyAsync;
+                .AddSingleton<CommandService>()
+                .AddSingleton<CommandHandler>()
 
-                client = new DiscordSocketClient(new DiscordSocketConfig
-                {
-                    GatewayIntents = GatewayIntents.All | GatewayIntents.GuildMembers
-                });
+                .AddSingleton<UsersService>()
 
-                client.UserJoined += AnnounceJoinedUser;
+                .AddSingleton<EventService>()
+                .BuildServiceProvider();
 
-                _client = client;
-                _commands = commands;
-
-                await client.LoginAsync(TokenType.Bot, _config["Token"]);
-                await client.StartAsync();
-
-                timer = new Timer(TimedAnnouncement, null, 0, 3000000000); // 24 hour interval
-
-                // we get the CommandHandler class here and call the InitializeAsync method to start things up for the CommandHandler service
-                await services.GetRequiredService<CommandHandler>().InitializeAsync();
-
-                await Task.Delay(Timeout.Infinite);
-            }
+            await RunAsync(services);
         }
-
-       
-
-        private ServiceProvider ConfigureServices()
+        public async Task RunAsync(IServiceProvider services)
         {
-            var c = new ConfigurationBuilder()
-            .SetBasePath(AppContext.BaseDirectory)
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddEnvironmentVariables()
-            .Build();
+            var config = services.GetRequiredService<BotConfiguration>();
 
-            return new ServiceCollection()
-                        .AddSingleton(_config)
-                        .AddSingleton<DiscordSocketClient>()
-                        .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()))
-                        .AddSingleton<CommandHandler>()
-                        .AddSingleton<ICurrentUserService, CurrentUserPuppeteerService>()
-                        .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+            var client = services.GetRequiredService<DiscordSocketClient>();
+            client.Log += Client_Log;
 
-                        .AddTransient<IConfiguration>(sp =>
-                        {
-                            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-                            configurationBuilder.AddJsonFile("appsettings.json");
-                            return configurationBuilder.Build();
-                        })
-                        .AddDomainShared()
-                        .AddApplicationShared(c)
-                        .AddInfrastructureShared(c)
-                        .BuildServiceProvider();
+            await services.GetRequiredService<InteractionsHandler>().InitializeAsync();
+            await services.GetRequiredService<CommandHandler>().InitializeAsync();
 
+            var events = services.GetRequiredService<EventService>();
+
+
+            await client.LoginAsync(TokenType.Bot, config.BotToken, true);
+            await client.StartAsync();
+
+            await Task.Delay(Timeout.Infinite);
         }
 
-        private async Task ReadyAsync()
-        {
-            
-                // this method will add commands globally, but can take around an hour
-                await _commands.RegisterCommandsGloballyAsync(true);
-            
-            Console.WriteLine($"Connected as -> [{_client.CurrentUser}] :)");
-        }
-
-
-        private Task LogAsync(LogMessage log)
+        private Task Client_Log(LogMessage log)
         {
             Console.WriteLine(log.ToString());
             return Task.CompletedTask;
         }
 
-
-        public async void TimedAnnouncement(object state)
+        public DiscordSocketConfig DiscordSocketConfig => new DiscordSocketConfig()
         {
-            var datae = DateTime.Now.Hour;
-            if (DateTime.Now.Minute == 36)
-                await Announce.AnnounceBirthdays(_client);
+            AlwaysDownloadUsers = true,
+            GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.GuildMembers
+        };
+
+        public Task Log(string service, string content, ConsoleColor color = ConsoleColor.White)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(DateTime.UtcNow.ToString("T") + " " + service.PadRight(10) + content);
+            return Task.CompletedTask;
         }
 
-        public async Task AnnounceJoinedUser(SocketGuildUser user) 
-        {
-            var channel = _client.GetChannel(1018765311215947816) as SocketTextChannel; 
-            await channel.SendMessageAsync($"Welcome {user.Username} to {channel.Guild.Name}"); 
-
-        }
-
-
-
-
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-           Host.CreateDefaultBuilder(args)
-               .ConfigureServices((hostContext, services) =>
-               {
-
-                   Configuration = hostContext.Configuration;
-
-                   // set nlog connection string
-                   GlobalDiagnosticsContext.Set("connectionString", Configuration.GetConnectionString("DefaultConnection"));
-
-                   //set nlog inster clause variable
-                   LogManager.Configuration.Variables["registerClause"] = Constants.Nlog.ZenBotDbRegisterClause;
-
-               })
-               .ConfigureLogging(logging =>
-               {
-                   /* Clean providers */
-                   logging.ClearProviders();
-                   /* Set minimum log level*/
-                   logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
-               })
-               .UseNLog();
-
-
-        static bool IsDebug()
+        public static bool IsDebug()
         {
 #if DEBUG
             return true;
 #else
-                return false;
+return false;
 #endif
         }
     }
 }
-
-
-
-
