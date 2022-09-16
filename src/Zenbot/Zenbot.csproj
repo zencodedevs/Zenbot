@@ -74,4 +74,12 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Entities\" />
+    <Folder Include="Interactions\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
