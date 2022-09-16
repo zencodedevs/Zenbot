@@ -78,7 +78,6 @@
     <Folder Include="Commands\" />
     <Folder Include="Interactions\" />
     <Folder Include="Models\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
