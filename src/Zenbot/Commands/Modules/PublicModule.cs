@@ -5,11 +5,10 @@ namespace Zenbot.Commands.Modules
 {
     public class PublicModule : ModuleBase<SocketCommandContext>
     {
-        [Command("ping")]
+        [Command("Hello")]
         public async Task ping()
         {
-            int i = 0;
-            int error = (1 / i);
+            await ReplyAsync("Hello dear User!");
         }
     }
 }
