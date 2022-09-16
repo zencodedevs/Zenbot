@@ -9,6 +9,7 @@ using Discord;
 using System.Threading;
 using Discord.Interactions;
 using Discord.Commands;
+using Zenbot.Entities.Zenbot;
 
 namespace Zenbot
 {
