@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Discord.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Shared;
 using Discord;
-using System.Threading;
-using Discord.Interactions;
 using Discord.Commands;
+using Discord.Interactions;
+using Discord.WebSocket;
+using Domain.Shared;
+using Infrastructure.Shared;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Worker.Services;
+using ZenAchitecture.Domain.Shared.Interfaces;
 using Zenbot.Entities.Zenbot;
 
 namespace Zenbot
@@ -18,6 +22,12 @@ namespace Zenbot
         public static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
         public async Task MainAsync()
         {
+            var c = new ConfigurationBuilder()
+           .SetBasePath(AppContext.BaseDirectory)
+           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+           .AddEnvironmentVariables()
+           .Build();
+
             await Log("Program", "Main Async");
 
             var configuration = BotConfiguration.GetConfiguration();
@@ -34,7 +44,24 @@ namespace Zenbot
 
                 .AddSingleton<UsersService>()
 
+                .AddSingleton<BrithdayService>()
                 .AddSingleton<EventService>()
+
+                //For connecting to database
+                .AddSingleton<ICurrentUserService, CurrentUserPuppeteerService>()
+                        .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+
+                        .AddTransient<IConfiguration>(sp =>
+                        {
+                            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+                            configurationBuilder.AddJsonFile("appsettings.json");
+                            return configurationBuilder.Build();
+                        })
+                        .AddDomainShared()
+                        .AddApplicationShared(c)
+                        .AddInfrastructureShared(c)
+                        
+
                 .BuildServiceProvider();
 
             await RunAsync(services);
@@ -49,6 +76,7 @@ namespace Zenbot
             await services.GetRequiredService<InteractionsHandler>().InitializeAsync();
             await services.GetRequiredService<CommandHandler>().InitializeAsync();
 
+            var brithday = services.GetRequiredService<BrithdayService>();
             var events = services.GetRequiredService<EventService>();
 
 

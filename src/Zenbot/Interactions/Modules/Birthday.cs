@@ -20,22 +20,22 @@ namespace Zenbot.Interactions.Modules
     {
         public UsersService UsersService { get; set; }
 
-        [SlashCommand("list", "members brithday")]
+        [SlashCommand("upcoming", "upcoming members brithday")]
         [ComponentInteraction("brithday-list:*", true)]
         public async Task list(int page = 0)
         {
             await DeferAsync();
 
-            var users = UsersService.GetUsersBirthday().Skip(page * 30).Take(31).ToList();
+            var users = await UsersService.GetUpComingUsersBrithday();
 
-            if (users != null && users.Count != 0)
+            if (users != null && users.Count() != 0)
             {
                 string times = "";
                 string usersContent = "";
                 foreach (var user in users)
                 {
-                    times += $"<t:{((DateTimeOffset)user.Brithday).ToUnixTimeSeconds()}:R>\n";
-                    usersContent += $"{MentionUtils.MentionUser(user.Id)}\n";
+                    times += $"<t:{((DateTimeOffset)user.Birthday).ToUnixTimeSeconds()}:R>\n";
+                    usersContent += $"{MentionUtils.MentionUser(user.UserId)}\n";
                 }
 
                 var embed = new EmbedBuilder()
@@ -45,7 +45,7 @@ namespace Zenbot.Interactions.Modules
 
                 var components = new ComponentBuilder()
                     .WithButton("Previous", $"brithday-list:{page - 1}", ButtonStyle.Primary, disabled: page > 0)
-                    .WithButton("Next", $"brithday-list:{page + 1}", ButtonStyle.Primary, disabled: users.Count > 30)
+                    .WithButton("Next", $"brithday-list:{page + 1}", ButtonStyle.Primary, disabled: users.Count() > 30)
                     .Build();
 
                 await FollowupAsync(embed: embed, components: components);
@@ -54,13 +54,15 @@ namespace Zenbot.Interactions.Modules
             await FollowupAsync("No user found.");
         }
 
-        [SlashCommand("add", "add user brithday")]
-        public async Task add(IGuildUser user)
+
+
+        [SlashCommand("add", "add your brithday")]
+        public async Task add()
         {
-            await RespondWithModalAsync<BirthdayForm>($"set-brithday:{user.Id}");
+            await RespondWithModalAsync<BirthdayForm>($"set-brithday");
         }
-        [ModalInteraction("set-brithday:*", true)]
-        public async Task set_modal(ulong userId, BirthdayForm form)
+        [ModalInteraction("set-brithday", true)]
+        public async Task set_modal(BirthdayForm form)
         {
             await DeferAsync();
 
@@ -69,35 +71,23 @@ namespace Zenbot.Interactions.Modules
                 .AddMonths(form.Month - 1)
                 .AddDays(form.Day - 1);
 
-            var user = UsersService.GetUser(userId);
-            user.Brithday = dateTime;
+            var nexttime = DateTime.UtcNow;
+            var user = UsersService.addBotUser(Context.User.Username, Context.User.Username, Context.User.Id, dateTime, nexttime);
 
-            await FollowupAsync($"Done, user brithday added <t:{((DateTimeOffset)user.Brithday).ToUnixTimeSeconds()}:R>");
+            await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>");
         }
 
 
-        [SlashCommand("notice-brithday", "enable notification for user brithday.")]
-        public async Task notice_modal(IGuildUser user, BooleanType state = BooleanType.Enable)
-        {
-            await DeferAsync();
-            var target = UsersService.GetUser(user.Id);
-            target.NoticeBrithday = state == BooleanType.Enable;
 
-            await FollowupAsync($"Done, brithday notification has been enabled.");
-        }
-        public enum BooleanType
-        {
-            Disable,
-            Enable,
-        }
         [SlashCommand("time", "time of user brithday.")]
         public async Task time(IGuildUser user)
         {
             await DeferAsync();
-            var target = UsersService.GetUser(user.Id);
+            var target = await UsersService.GetUser(user.Id);
 
-            await FollowupAsync($"{MentionUtils.MentionUser(user.Id)}'s brithday is <t:{((DateTimeOffset)target.Brithday).ToUnixTimeSeconds()}:R>.");
+            await FollowupAsync($"{MentionUtils.MentionUser(user.Id)}'s brithday is <t:{((DateTimeOffset)target.Birthday).ToUnixTimeSeconds()}:R>.");
         }
+
 
 
     }

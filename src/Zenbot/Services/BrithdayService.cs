@@ -1,0 +1,66 @@
+﻿using Discord.WebSocket;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Zenbot.Entities.Zenbot;
+
+namespace Zenbot
+{
+    public class BrithdayService
+    {
+        private readonly IServiceProvider _services;
+        private readonly DiscordSocketClient _client;
+        //private readonly UsersService _usersService;
+        private readonly BotConfiguration _config;
+        public BrithdayService(IServiceProvider services)
+        {
+            _services = services;
+            _client = services.GetRequiredService<DiscordSocketClient>();
+            //_usersService = services.GetRequiredService<UsersService>();
+            _config = services.GetRequiredService<BotConfiguration>();
+
+            _client.Ready += _client_Ready;
+        }
+        public UsersService UsersService { get; set; }
+        private Task _client_Ready()
+        {
+            _ = Task.Run(async () =>
+            {
+                while (true)
+                {
+                    try
+                    {
+                        var users = await UsersService.GetUpComingUsersBrithday();
+                        foreach (var u in users)
+                        {
+                            try
+                            {
+                                await _client.GetGuild(_config.MainGuildId).GetTextChannel(_config.LoggerChannel).SendMessageAsync($"<@{u.Id}> Hey today is your brithday 🎉");
+                              
+                                u.NextNotifyTIme = DateTime.UtcNow
+                                .AddYears(1)
+                                .AddSeconds(-30);
+                            }
+                            catch
+                            {
+
+                            }
+                            finally
+                            {
+                                await Task.Delay(200);
+                            }
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    await Task.Delay(TimeSpan.FromSeconds(30));
+                }
+            });
+            return Task.CompletedTask;
+        }
+    }
+}

@@ -8,7 +8,8 @@ namespace Zenbot.Interactions.Modules
         [SlashCommand("ping", "Ping the bot")]
         public async Task ping()
         {
-            await RespondAsync("done");
+            
+            await DeferAsync();
         }
     }
 }

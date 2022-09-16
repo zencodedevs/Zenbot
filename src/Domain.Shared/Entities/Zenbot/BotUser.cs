@@ -11,41 +11,23 @@ namespace Domain.Shared.Entities.Zenbot
 {
     public class BotUser : Entity, IHasDomainEvent
     {
-        public int Id { get; set; }
-        public string UserId { get; set; }
+        public ulong UserId { get; set; }
         public string UserMail { get; set; }
         public string Username { get; set; }
-        public byte Month { get; set; }
-        public byte Day { get; set; }
+        public DateTime Birthday { get; set; } = DateTime.MinValue;
+        public DateTime NextNotifyTIme { get; set; } = DateTime.MinValue;
 
         [NotMapped]
         public List<DomainEvent> DomainEvents { get; set; }
 
-        public BotUser Create(string username, string userMail, string userId, byte month, byte day)
+        public BotUser Create(string username, string userMail, ulong userId, DateTime birthday, DateTime nextNotifyTime)
         {
-            Day = day;
-            Month = month;
+            Birthday = birthday;
+            NextNotifyTIme = nextNotifyTime;
             UserId = userId;
             UserMail = userMail;
             Username = username;
-            //DomainEvents ??= new List<DomainEvent>();
-            //DomainEvents.Add(new BotUserCreatedEvent(this, Guid.NewGuid()));
             return this;
         }
-
-
-
-        //public void UpdateInfo(string name) => Name = name;
-
-        //public City Copy()
-        //{
-        //    var entity = new City
-        //    {
-        //        Name = this.Name
-
-        //    };
-
-        //    return entity;
-        //}
     }
 }
