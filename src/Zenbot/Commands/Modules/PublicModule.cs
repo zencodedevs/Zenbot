@@ -8,7 +8,7 @@ namespace Zenbot.Commands.Modules
         [Command("Hello")]
         public async Task ping()
         {
-            await ReplyAsync("Hello dear User!");
+            await ReplyAsync($"Hello dear {Context.User.Username}");
         }
     }
 }
