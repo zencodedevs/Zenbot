@@ -1,17 +1,9 @@
-﻿using CsvHelper.TypeConversion;
-using Discord;
+﻿using Discord;
 using Discord.Interactions;
-using Ical.Net;
-using Microsoft.VisualBasic;
-using NLog.Targets;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Zen.Common.Extensions;
-using static AutoMapper.Internal.ExpressionFactory;
+
 
 namespace Zenbot.Interactions.Modules
 {
@@ -19,6 +11,8 @@ namespace Zenbot.Interactions.Modules
     public class BirthdayModule : InteractionModuleBase<SocketInteractionContext>
     {
         public UsersService UsersService { get; set; }
+
+
 
         [SlashCommand("upcoming", "upcoming members brithday")]
         [ComponentInteraction("brithday-list:*", true)]
@@ -56,6 +50,8 @@ namespace Zenbot.Interactions.Modules
 
 
 
+
+
         [SlashCommand("add", "add your brithday")]
         public async Task add()
         {
@@ -76,6 +72,8 @@ namespace Zenbot.Interactions.Modules
 
             await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>");
         }
+
+
 
 
 

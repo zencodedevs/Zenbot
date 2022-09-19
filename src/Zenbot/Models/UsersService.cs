@@ -1,4 +1,5 @@
 ﻿using Domain.Shared.Entities.Zenbot;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
@@ -21,27 +22,32 @@ namespace Zenbot
         }
 
 
-        public async Task<IQueryable<BotUser>> GetUpComingUsersBrithday()
+        public async Task<List<BotUser>> GetUpComingUsersBrithday()
         {
+            var users = new List<BotUser>();
+
+
             using (var scope = _scopeFactory.CreateScope())
             {
                 var unitOfWorkManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
                 var _repository = scope.ServiceProvider.GetRequiredService<IEntityFrameworkRepository<BotUser>>();
-
+               
+                var TodayMonth = DateTime.UtcNow.Month;
+                var TodayDay = DateTime.UtcNow.Day;
 
                 using (var uow = unitOfWorkManager.Begin())
                 {
-                    var users = await _repository.GetQueryableAsync(a =>
-                                a.Birthday != DateTime.MinValue &&
-                                a.Birthday.DayOfYear == DateTime.UtcNow.DayOfYear &&
-                                a.NextNotifyTIme <= DateTime.UtcNow
-                                );
+                    IQueryable<BotUser> query = await _repository.GetQueryableAsync();
 
-                    return users;
-                    
+                    IQueryable<BotUser> usersQuery = query.Where(x => x.Birthday.Month == TodayMonth && x.Birthday.Day == TodayDay);
+
+                     users = await usersQuery.ToListAsync();
+
+                                 
                 }
 
             }
+                    return users;
 
         }
         public async Task<IQueryable<BotUser>> GetUsersBrithday()
