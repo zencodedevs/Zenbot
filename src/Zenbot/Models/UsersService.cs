@@ -104,7 +104,7 @@ namespace Zenbot
 
                 using (var uow = unitOfWorkManager.Begin())
                 {
-                    var user = await _repository.FindAsync(Id);
+                    var user = await _repository.FindAsync(null, default, u => u.UserId == Id);
                     if (user == null)
                     {
                         return null;
