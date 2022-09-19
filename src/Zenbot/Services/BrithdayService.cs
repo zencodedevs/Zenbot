@@ -17,9 +17,8 @@ namespace Zenbot
         private readonly IServiceProvider _services;
         private readonly DiscordSocketClient _client;
         private readonly UsersService _usersService;
-        private readonly IServiceScopeFactory _scopeFactory;
         private readonly BotConfiguration _config;
-        public BrithdayService(IServiceProvider services, IServiceScopeFactory scopeFactory)
+        public BrithdayService(IServiceProvider services)
         {
             _services = services;
             _client = services.GetRequiredService<DiscordSocketClient>();
@@ -27,8 +26,6 @@ namespace Zenbot
             _config = services.GetRequiredService<BotConfiguration>();
 
             _client.Ready += _client_Ready;
-            _scopeFactory = scopeFactory;
-
         }
 
         private Task _client_Ready()
