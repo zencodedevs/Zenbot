@@ -67,6 +67,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="config.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ClientApp\%2a%2a" />
     <None Remove="ClientApp\src\app\authentication-ex\authentication-ex.component.ts" />
     <None Remove="ClientApp\src\app\authentication-ex\authentication-ex.module.ts" />
@@ -90,6 +94,12 @@
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Properties\ServiceDependencies\" />
     <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">

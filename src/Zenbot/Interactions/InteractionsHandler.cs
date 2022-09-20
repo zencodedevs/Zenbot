@@ -23,12 +23,12 @@ namespace Zenbot
         }
         public async Task InitializeAsync()
         {
-            await _interactions.AddModulesAsync(Assembly.GetEntryAssembly(), this.services);
+            await _interactions.AddModulesAsync(Assembly.GetExecutingAssembly(), this.services);
 
             _client.Ready += _client_Ready;
             async Task _client_Ready()
             {
-                if (Program.IsDebug())
+                if (DiscordBotService.IsDebug())
                     await _interactions.RegisterCommandsToGuildAsync(_config.MainGuildId, true);
                 else
                     await _interactions.RegisterCommandsGloballyAsync(true);

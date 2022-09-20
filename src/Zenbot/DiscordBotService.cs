@@ -28,7 +28,7 @@ namespace Zenbot
             OnRecevied(jiraId);
         }
 
-
+       
         public async Task MainAsync()
         {
             var c = new ConfigurationBuilder()
@@ -39,7 +39,7 @@ namespace Zenbot
 
             await Log("DiscordBotService", "Main Async");
 
-
+         
             var configuration = BotConfiguration.GetConfiguration();
 
             var services = new ServiceCollection()
@@ -92,7 +92,7 @@ namespace Zenbot
 
             var brithday = services.GetRequiredService<BrithdayService>();
             var events = services.GetRequiredService<EventService>();
-
+            
 
             await client.LoginAsync(TokenType.Bot, config.BotToken, true);
             await client.StartAsync();

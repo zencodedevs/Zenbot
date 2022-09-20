@@ -6,29 +6,6 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/v1/Zenbot/jira": {
-      "post": {
-        "tags": [
-          "Zenbot"
-        ],
-        "operationId": "Zenbot_jira",
-        "parameters": [
-          {
-            "type": "string",
-            "name": "x-sys-language",
-            "in": "header",
-            "style": "simple",
-            "description": "System language indicator",
-            "default": "en-US"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/api/v1/City/ReadCity": {
       "get": {
         "tags": [
@@ -56,7 +33,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/v1/City/GetCities": {
@@ -89,7 +71,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/v1/City/CreateCity": {
@@ -226,6 +213,38 @@
             "JWT": []
           }
         ]
+      }
+    },
+    "/api/v1/City/CreateJira": {
+      "post": {
+        "tags": [
+          "City"
+        ],
+        "operationId": "City_CreateJira",
+        "parameters": [
+          {
+            "name": "jiraId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "type": "string",
+            "name": "x-sys-language",
+            "in": "header",
+            "style": "simple",
+            "description": "System language indicator",
+            "default": "en-US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
       }
     }
   },

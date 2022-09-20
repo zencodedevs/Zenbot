@@ -11,16 +11,6 @@ namespace Zenbot
     {
         public string Title => "Brithday";
 
-        [InputLabel("Jira Account ID")]
-        [ModalTextInput("JiraAccountID", Discord.TextInputStyle.Short, "Enter your Jira Account ID",10,30, null)]
-        [RequiredInput]
-        public string JiraAccountID { get; set; }
-
-        [InputLabel("Email Address")]
-        [ModalTextInput("userMail", Discord.TextInputStyle.Short, "Enter your Email Adress", 10, 30, null)]
-        [RequiredInput]
-        public string userMail { get; set; }
-
         [InputLabel("Day")]
         [ModalTextInput("day", Discord.TextInputStyle.Short, "Enter the day of the month", 1, 2, null)]
         [RequiredInput]

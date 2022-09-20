@@ -25,7 +25,7 @@ namespace Zenbot
             _usersService = services.GetRequiredService<UsersService>();
             _config = services.GetRequiredService<BotConfiguration>();
 
-            _client.Ready += _client_Ready;
+          //  _client.Ready += _client_Ready;
         }
 
         private Task _client_Ready()
