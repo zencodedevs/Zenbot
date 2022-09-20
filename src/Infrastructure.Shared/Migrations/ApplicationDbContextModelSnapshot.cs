@@ -26,14 +26,17 @@ namespace Infrastructure.Shared.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<byte>("Day")
-                        .HasColumnType("tinyint");
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
 
-                    b.Property<byte>("Month")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("UserId")
+                    b.Property<string>("JiraAccountID")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("NextNotifyTIme")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("UserId")
+                        .HasColumnType("decimal(20,0)");
 
                     b.Property<string>("UserMail")
                         .HasColumnType("nvarchar(max)");

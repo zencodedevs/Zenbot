@@ -31,7 +31,7 @@ namespace Zenbot
             {
                 var unitOfWorkManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
                 var _repository = scope.ServiceProvider.GetRequiredService<IEntityFrameworkRepository<BotUser>>();
-               
+
                 var TodayMonth = DateTime.UtcNow.Month;
                 var TodayDay = DateTime.UtcNow.Day;
 
@@ -41,13 +41,13 @@ namespace Zenbot
 
                     IQueryable<BotUser> usersQuery = query.Where(x => x.Birthday.Month == TodayMonth && x.Birthday.Day == TodayDay);
 
-                     users = await usersQuery.ToListAsync();
+                    users = await usersQuery.ToListAsync();
 
-                                 
+
                 }
 
             }
-                    return users;
+            return users;
 
         }
         public async Task<IQueryable<BotUser>> GetUsersBrithday()
@@ -71,7 +71,7 @@ namespace Zenbot
 
         }
 
-        public async Task<BotUser> addBotUser(string username, string userMail, ulong userId, DateTime birthday, DateTime nextNotifyTime)
+        public async Task<BotUser> addBotUser(string username, string userMail, ulong userId, DateTime birthday, DateTime nextNotifyTime, string jiraAccountID)
         {
             using (var scope = _scopeFactory.CreateScope())
             {
@@ -83,7 +83,7 @@ namespace Zenbot
                 {
                     var user = await _repository.FindAsync(userId);
 
-                    var botUser = new BotUser().Create(username, userMail, userId, birthday, nextNotifyTime);
+                    var botUser = new BotUser().Create(username, userMail, userId, birthday, nextNotifyTime, jiraAccountID);
                     await _repository.InsertAsync(botUser);
                     await _repository.SaveChangesAsync(true);
 

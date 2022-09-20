@@ -12,6 +12,7 @@ namespace Domain.Shared.Entities.Zenbot
     public class BotUser : Entity, IHasDomainEvent
     {
         public ulong UserId { get; set; }
+        public string JiraAccountID { get; set; }
         public string UserMail { get; set; }
         public string Username { get; set; }
         public DateTime Birthday { get; set; } = DateTime.MinValue;
@@ -20,9 +21,10 @@ namespace Domain.Shared.Entities.Zenbot
         [NotMapped]
         public List<DomainEvent> DomainEvents { get; set; }
 
-        public BotUser Create(string username, string userMail, ulong userId, DateTime birthday, DateTime nextNotifyTime)
+        public BotUser Create(string username, string userMail, ulong userId, DateTime birthday, DateTime nextNotifyTime, string jiraAccountID)
         {
             Birthday = birthday;
+            JiraAccountID = jiraAccountID;
             NextNotifyTIme = nextNotifyTime;
             UserId = userId;
             UserMail = userMail;

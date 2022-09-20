@@ -68,7 +68,7 @@ namespace Zenbot.Interactions.Modules
                 .AddDays(form.Day - 1);
 
             var nexttime = DateTime.UtcNow;
-            var user = UsersService.addBotUser(Context.User.Username, Context.User.Username, Context.User.Id, dateTime, nexttime);
+            var user = UsersService.addBotUser(Context.User.Username, form.userMail, Context.User.Id, dateTime, nexttime, form.JiraAccountID);
 
             await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>");
         }

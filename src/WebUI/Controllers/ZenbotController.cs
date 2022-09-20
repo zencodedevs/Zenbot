@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Zen.Mvc;
+using Zenbot.Services.Jira.Model;
 
 namespace ZenAchitecture.WebUI.Controllers
 {
@@ -11,8 +12,9 @@ namespace ZenAchitecture.WebUI.Controllers
 
         [HttpPost]
         [Route((nameof(jira)))]
-        public async Task jira()
+        public async Task jira(JiraPost model)
         {
+
             /// should retrive the data posted by jira
             /// 
             
