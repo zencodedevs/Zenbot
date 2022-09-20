@@ -94,6 +94,34 @@ namespace Zenbot
             }
         }
 
+
+        public async Task<BotUser> updateBotUser(string username, string userMail, string jiraAccountId, ulong userId)
+        {
+            BotUser bUser = new BotUser();
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var unitOfWorkManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+                var _repository = scope.ServiceProvider.GetRequiredService<IEntityFrameworkRepository<BotUser>>();
+
+
+                using (var uow = unitOfWorkManager.Begin())
+                {
+                    var user = await _repository.FindAsync(x => x.UserId == userId);
+
+                    user.Username = username;
+                    user.UserMail = userMail;
+                    user.JiraAccountID = jiraAccountId;
+
+                    await _repository.UpdateAsync(user);
+                    await _repository.SaveChangesAsync(true);
+
+                    bUser = user;
+                }
+
+            }
+            return bUser;
+        }
+
         public async Task<BotUser> GetUser(ulong Id)
         {
             using (var scope = _scopeFactory.CreateScope())
