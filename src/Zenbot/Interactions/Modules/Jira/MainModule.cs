@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace Zenbot.Interactions.SlashCommands
 {
-    [Group("jira", "jira test")]
+    [Group("jira", "jira info for sending message whenever an event occurs!")]
     public class MainModule : InteractionModuleBase<SocketInteractionContext>
     {
         public UsersService UsersService { get; set; }
 
 
-        [SlashCommand("login", "test")]
+        [SlashCommand("info", "Getting the information from discord user")]
         public async Task login()
         {
-            await RespondWithModalAsync<JiraLoginForm>("jira-login-modal");
+            await RespondWithModalAsync<JiraLoginForm>("jira-info-modal");
         }
 
-        [ModalInteraction("jira-login-modal", true)]
+        [ModalInteraction("jira-info-modal", true)]
         public async Task login_modal(JiraLoginForm form)
         {
             await DeferAsync(true);
