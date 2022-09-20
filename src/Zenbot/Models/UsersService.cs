@@ -71,8 +71,9 @@ namespace Zenbot
 
         }
 
-        public async Task<BotUser> addBotUser(string username, string userMail, ulong userId, DateTime birthday, DateTime nextNotifyTime, string jiraAccountID)
+        public async Task<BotUser> addBotUser(string username, string userMail, ulong userId, DateTime birthday, DateTime nextNotifyTime)
         {
+            BotUser bUser = new BotUser();
             using (var scope = _scopeFactory.CreateScope())
             {
                 var unitOfWorkManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
@@ -81,19 +82,18 @@ namespace Zenbot
 
                 using (var uow = unitOfWorkManager.Begin())
                 {
-                    var user = await _repository.FindAsync(userId);
+                    // var user = await _repository.FindAsync(userId);
 
-                    var botUser = new BotUser().Create(username, userMail, userId, birthday, nextNotifyTime, jiraAccountID);
+                    var botUser = new BotUser().Create(username, userMail, userId, birthday, nextNotifyTime);
                     await _repository.InsertAsync(botUser);
                     await _repository.SaveChangesAsync(true);
 
-
-                    return botUser;
+                    bUser = botUser;
                 }
 
             }
+            return bUser; ;
         }
-
 
         public async Task<BotUser> updateBotUser(string username, string userMail, string jiraAccountId, ulong userId)
         {
@@ -124,6 +124,7 @@ namespace Zenbot
 
         public async Task<BotUser> GetUser(ulong Id)
         {
+            BotUser bUser = new BotUser();
             using (var scope = _scopeFactory.CreateScope())
             {
                 var unitOfWorkManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
@@ -132,15 +133,28 @@ namespace Zenbot
 
                 using (var uow = unitOfWorkManager.Begin())
                 {
-                    var user = await _repository.FindAsync(null, default, u => u.UserId == Id);
-                    if (user == null)
-                    {
-                        return null;
-                    }
-                    return user;
+                    bUser = await _repository.FindAsync(a => a.UserId == Id);
                 }
 
             }
+            return bUser;
+        }
+        public async Task<BotUser> GetUserByJiraId(string jiraId)
+        {
+            BotUser bUser = new BotUser();
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var unitOfWorkManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+                var _repository = scope.ServiceProvider.GetRequiredService<IEntityFrameworkRepository<BotUser>>();
+
+
+                using (var uow = unitOfWorkManager.Begin())
+                {
+                    bUser = await _repository.FindAsync(a => a.JiraAccountID == jiraId);
+                }
+
+            }
+            return bUser;
         }
     }
 }

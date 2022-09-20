@@ -21,10 +21,9 @@ namespace Domain.Shared.Entities.Zenbot
         [NotMapped]
         public List<DomainEvent> DomainEvents { get; set; }
 
-        public BotUser Create(string username, string userMail, ulong userId, DateTime birthday, DateTime nextNotifyTime, string jiraAccountID)
+        public BotUser Create(string username, string userMail, ulong userId, DateTime birthday, DateTime nextNotifyTime)
         {
             Birthday = birthday;
-            JiraAccountID = jiraAccountID;
             NextNotifyTIme = nextNotifyTime;
             UserId = userId;
             UserMail = userMail;
