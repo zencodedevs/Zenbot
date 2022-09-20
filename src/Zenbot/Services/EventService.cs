@@ -31,22 +31,22 @@ namespace Zenbot
         private async Task BotService_OnRecevied(string jiraId)
         {
             var userService = services.GetRequiredService<UsersService>();
-            var target = await userService.GetUserByJiraId(jiraId);
+            var targetUser = await userService.GetUserByJiraId(jiraId);
 
-            if (target is null)
+            if (targetUser is null)
                 return;
 
-            var targetId = target.UserId;
-            var user = await _client.GetUserAsync(targetId);
+            var targetUserId = targetUser.UserId;
+            var user = await _client.GetUserAsync(targetUserId);
 
             try
             {
-                await user.SendMessageAsync($"<@{targetId}> you have new message.");
+                await user.SendMessageAsync($"<@{targetUserId}> you have new message.");
             }
             catch
             {
 
-                await SendMessageToLoggerChannel($"Can not send message to <@{targetId}>:\n" +
+                await SendMessageToLoggerChannel($"Can not send message to <@{targetUserId}>:\n" +
                     $"1. make sure user direct is open.\n" +
                     $"2. make sure user have a joined this server.");
 
