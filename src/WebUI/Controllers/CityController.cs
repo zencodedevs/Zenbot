@@ -14,11 +14,8 @@ namespace ZenAchitecture.WebUI.Controllers.V1
     [Route("api/v{version:apiVersion}/[controller]")]
     public class CityController : ZenController
     {
-        private readonly DiscordBotService _botService;
-        public CityController(ILogger<CityController> logger, DiscordBotService botService)
+        public CityController(ILogger<CityController> logger)
         {
-            this._botService = botService;
-
             logger.LogInformation("Test LogInformation");
             logger.LogWarning("Test LogWarning");
             logger.LogError("Test LogError");
@@ -53,18 +50,6 @@ namespace ZenAchitecture.WebUI.Controllers.V1
         [Authorize]
         [Route((nameof(DeleteCity)))]
         public async Task<int> DeleteCity([FromQuery] DeleteCityCommand command) => await Mediator.Send(command);
-
-
-
-        [HttpPost]
-        //[Authorize]
-        [Route(nameof(CreateJira))]
-        public Task CreateJira(string jiraId)
-        {
-            _botService.Event(jiraId);
-
-            return Task.CompletedTask;
-        }
 
     }
 }
