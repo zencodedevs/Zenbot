@@ -1,7 +1,4 @@
-﻿using Zenbot.Domain.Shared.Common;
-using Zenbot.Domain.Shared.Entities;
-using Zenbot.Domain.Shared.Entities.Geography;
-using Zenbot.Domain.Shared.Interfaces;
+﻿using Domain.Shared.Entities.Zenbot;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
@@ -12,18 +9,20 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Zen.Domain.Entities.Attributes;
+using Zen.Domain.Entities.AuditingLog;
 using Zen.Domain.Entities.Log;
 using Zen.Domain.Entities.Payment;
 using Zen.Domain.Events;
 using Zen.Domain.Interfaces;
 using Zen.EventProcessor;
 using Zen.Infrastructure.Interfaces;
-using Zen.Domain.Entities.AuditingLog;
-using Domain.Shared.Entities.Zenbot;
+using Zenbot.Domain.Shared.Common;
+using Zenbot.Domain.Shared.Entities;
+using Zenbot.Domain.Shared.Entities.Geography;
+using Zenbot.Domain.Shared.Interfaces;
 
 namespace Zenbot.Infrastructure.Shared.Persistence
 {
-
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IAppDbContext
     {
         private readonly IDateTime _dateTime;
@@ -55,7 +54,6 @@ namespace Zenbot.Infrastructure.Shared.Persistence
         public DbSet<AuditLog> AuditLogs { get; set; }
 
         #endregion Zen Framework Suggested
-
 
 
         public DbSet<City> Cities { get; set; }

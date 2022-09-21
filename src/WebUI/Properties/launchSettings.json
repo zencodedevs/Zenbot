@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:6011",
-      "sslPort": 6010
+      "applicationUrl": "http://localhost:6021",
+      "sslPort": 6020
     }
   },
   "profiles": {
@@ -21,7 +21,7 @@
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:6000;http://localhost:6001"
+      "applicationUrl": "https://localhost:6010;http://localhost:6011"
     },
     "Docker": {
       "commandName": "Docker",
@@ -29,12 +29,12 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
         "UseInMemoryDatabase": "true",
-        "ASPNETCORE_HTTPS_PORT": "6001",
-        "ASPNETCORE_URLS": "https://+:6001;http://+:6000"
+        "ASPNETCORE_HTTPS_PORT": "6011",
+        "ASPNETCORE_URLS": "https://+:6011;http://+:6010"
       },
-      "httpPort": 6001,
+      "httpPort": 6011,
       "useSSL": true,
-      "sslPort": 6000
+      "sslPort": 6010
     }
   }
 }
