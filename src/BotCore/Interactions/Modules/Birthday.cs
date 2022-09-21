@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Zenbot.BotCore.Interactions.Modules
 {
     [Group("birthday", "birthday commands")]
-    public class BirthdayModule : InteractionModuleBase<SocketInteractionContext>
+    public class BirthdayModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
         public UsersService UsersService { get; set; }
 

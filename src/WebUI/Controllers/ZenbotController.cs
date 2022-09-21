@@ -14,15 +14,7 @@ namespace Zenbot.WebUI.Controllers.V1
             this._botService = botService;
         }
 
-        // testing if data comes to our bot we shoul check if we have this user in discord then send message to 
-        [HttpPost]
-        [Route(nameof(CreateJira))]
-        public Task CreateJira(string jiraId)
-        {
-            _botService.Event(jiraId);
-
-            return Task.CompletedTask;
-        }
+ 
 
     }
 }

@@ -19,6 +19,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Zenbot.Application;
+using Zenbot.BotCore;
 using Zenbot.Domain;
 using Zenbot.Domain.Shared.Common;
 using Zenbot.Infrastructure;
