@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ZenAchitecture.Domain.Shared.Common
+namespace Zenbot.Domain.Shared.Common
 {
     public abstract class AuditableEntity
     {

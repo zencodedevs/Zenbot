@@ -2,9 +2,9 @@
 using System.Threading;
 using Zen.Domain.Interfaces;
 using System.Threading.Tasks;
-using ZenAchitecture.Domain.Shared.Entities.Geography;
+using Zenbot.Domain.Shared.Entities.Geography;
 
-namespace ZenAchitecture.Application.Account.Cities.Commands
+namespace Zenbot.Application.Account.Cities.Commands
 {
     public class UpdateCityCommand : IRequest<int>
     {

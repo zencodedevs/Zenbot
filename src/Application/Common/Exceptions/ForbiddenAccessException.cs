@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ZenAchitecture.Application.Common.Exceptions
+namespace Zenbot.Application.Common.Exceptions
 {
     public class ForbiddenAccessException : Exception
     {

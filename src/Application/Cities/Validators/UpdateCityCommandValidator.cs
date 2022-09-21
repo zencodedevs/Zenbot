@@ -3,13 +3,13 @@ using FluentValidation;
 using System.Threading.Tasks;
 using Zen.Domain.Interfaces;
 using Microsoft.Extensions.Localization;
-using ZenAchitecture.Domain.Shared.Entities.Geography;
-using ZenAchitecture.Application.Account.Cities.Commands;
-using ZenAchitecture.Application.Common.Validator;
+using Zenbot.Domain.Shared.Entities.Geography;
+using Zenbot.Application.Account.Cities.Commands;
+using Zenbot.Application.Common.Validator;
 using Microsoft.Extensions.DependencyInjection;
 using Zen.Uow;
 
-namespace ZenAchitecture.Application.Account.Cities.Validators
+namespace Zenbot.Application.Account.Cities.Validators
 {
     public class UpdateCityCommandValidator : ZenAbstractValidator<UpdateCityCommand>
     {

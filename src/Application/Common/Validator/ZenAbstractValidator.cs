@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Zen.Uow;
 
-namespace ZenAchitecture.Application.Common.Validator
+namespace Zenbot.Application.Common.Validator
 {
     public class ZenAbstractValidator<T> : AbstractValidator<T>
     {

@@ -6,10 +6,10 @@ using Zen.Domain.Interfaces;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using ZenAchitecture.Application.Account.Cities.Dtos;
-using ZenAchitecture.Domain.Shared.Entities.Geography;
+using Zenbot.Application.Account.Cities.Dtos;
+using Zenbot.Domain.Shared.Entities.Geography;
 
-namespace ZenAchitecture.Application.Account.Cities.Queries
+namespace Zenbot.Application.Account.Cities.Queries
 {
     public class GetCitiesQuery : IRequest<List<CityDto>> { }
 

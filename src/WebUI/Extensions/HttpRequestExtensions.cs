@@ -1,4 +1,4 @@
-﻿namespace ZenAchitecture.WebUI.Extensions
+﻿namespace Zenbot.WebUI.Extensions
 {
     using Microsoft.AspNetCore.Http;
     using System;

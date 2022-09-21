@@ -1,4 +1,4 @@
-﻿namespace ZenAchitecture.Infrastructure.Identity
+﻿namespace Zenbot.Infrastructure.Identity
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Localization;

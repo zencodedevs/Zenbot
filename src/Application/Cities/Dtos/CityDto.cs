@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using ZenAchitecture.Domain.Shared.Entities.Geography;
+using Zenbot.Domain.Shared.Entities.Geography;
 using Zen.Application.Mappings;
 
-namespace ZenAchitecture.Application.Account.Cities.Dtos
+namespace Zenbot.Application.Account.Cities.Dtos
 {
     public class CityDto : IMapFrom<City>
     {

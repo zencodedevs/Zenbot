@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ZenAchitecture.Domain.Common.Models
+namespace Zenbot.Domain.Common.Models
 {
     public class Result
     {

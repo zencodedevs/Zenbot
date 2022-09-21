@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 
-namespace ZenAchitecture.WebUI.Middlewares
+namespace Zenbot.WebUI.Middlewares
 {
     public class ExtensionCurrentTenantMiddleware
     {

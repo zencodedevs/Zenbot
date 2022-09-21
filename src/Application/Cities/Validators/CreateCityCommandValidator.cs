@@ -1,8 +1,8 @@
-﻿using ZenAchitecture.Application.Account.Cities.Commands;
-using ZenAchitecture.Application.Common.Validator;
+﻿using Zenbot.Application.Account.Cities.Commands;
+using Zenbot.Application.Common.Validator;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ZenAchitecture.Application.Account.Cities.Validators
+namespace Zenbot.Application.Account.Cities.Validators
 {
     public class CreateCityCommandValidator : ZenAbstractValidator<CreateCityCommand>
     {

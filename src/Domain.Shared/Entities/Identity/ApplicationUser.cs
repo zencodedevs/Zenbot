@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Zen.Domain.Entities.Entity;
 using Zen.Domain.Events;
 
-namespace ZenAchitecture.Domain.Shared.Entities
+namespace Zenbot.Domain.Shared.Entities
 {
     public class ApplicationUser : EntityUser, IHasDomainEvent
     {

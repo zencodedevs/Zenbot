@@ -1,7 +1,7 @@
 ﻿namespace Worker.Services
 {
-    using ZenAchitecture.Domain.Shared.Common;
-    using ZenAchitecture.Domain.Shared.Interfaces;
+    using Zenbot.Domain.Shared.Common;
+    using Zenbot.Domain.Shared.Interfaces;
 
     public class CurrentUserPuppeteerService : ICurrentUserService
     {

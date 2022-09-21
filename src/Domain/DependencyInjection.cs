@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Zen.Domain;
 
-namespace ZenAchitecture.Domain
+namespace Zenbot.Domain
 {
     public static class DependencyInjection
     {

@@ -1,7 +1,7 @@
-﻿using ZenAchitecture.Domain.Shared.Common;
-using ZenAchitecture.Domain.Shared.Entities;
-using ZenAchitecture.Domain.Shared.Entities.Geography;
-using ZenAchitecture.Domain.Shared.Interfaces;
+﻿using Zenbot.Domain.Shared.Common;
+using Zenbot.Domain.Shared.Entities;
+using Zenbot.Domain.Shared.Entities.Geography;
+using Zenbot.Domain.Shared.Interfaces;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +21,7 @@ using Zen.Infrastructure.Interfaces;
 using Zen.Domain.Entities.AuditingLog;
 using Domain.Shared.Entities.Zenbot;
 
-namespace ZenAchitecture.Infrastructure.Shared.Persistence
+namespace Zenbot.Infrastructure.Shared.Persistence
 {
 
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IAppDbContext

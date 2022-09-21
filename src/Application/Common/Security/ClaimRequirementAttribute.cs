@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZenAchitecture.Application.Common.Security
+namespace Zenbot.Application.Common.Security
 {
     public class ClaimRequirementAttribute : TypeFilterAttribute
     {

@@ -1,9 +1,9 @@
-﻿namespace ZenAchitecture.WebUI
+﻿namespace Zenbot.WebUI
 {
-    using ZenAchitecture.WebUI.Services;
+    using Zenbot.WebUI.Services;
     using Microsoft.Extensions.DependencyInjection;
     using Zen.Mvc;
-    using ZenAchitecture.Domain.Shared.Interfaces;
+    using Zenbot.Domain.Shared.Interfaces;
 
     public static class DependencyInjection
     {

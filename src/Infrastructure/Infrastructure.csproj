@@ -1,43 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>ZenAchitecture.Infrastructure</RootNamespace>
-    <AssemblyName>ZenAchitecture.Infrastructure</AssemblyName>
-    <CodeAnalysisRuleSet>..\..\.sonarlint\candidate-management-admin-testcsharp.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<RootNamespace>Zenbot.Infrastructure</RootNamespace>
+		<AssemblyName>Zenbot.Infrastructure</AssemblyName>
+		<CodeAnalysisRuleSet>..\..\.sonarlint\candidate-management-admin-testcsharp.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Files\**" />
-    <Compile Remove="Interfaces\**" />
-    <EmbeddedResource Remove="Files\**" />
-    <EmbeddedResource Remove="Interfaces\**" />
-    <None Remove="Files\**" />
-    <None Remove="Interfaces\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CsvHelper" Version="15.0.10" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.6" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
+		<PackageReference Include="Zen.Bog.Ecommerce" Version="1.0.12" />
+		<PackageReference Include="Zen.EventProcessor" Version="1.0.71" />
+		<PackageReference Include="Zen.Infrastructure" Version="1.0.64" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="15.0.10" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.6" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
-    <PackageReference Include="Zen.Bog.Ecommerce" Version="1.0.12" />
-    <PackageReference Include="Zen.EventProcessor" Version="1.0.71" />
-    <PackageReference Include="Zen.Infrastructure" Version="1.0.64" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Infrastructure.Shared\Infrastructure.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Persistence\Configurations\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Domain\Domain.csproj" />
+		<ProjectReference Include="..\Infrastructure.Shared\Infrastructure.Shared.csproj" />
+	</ItemGroup>
 
 </Project>

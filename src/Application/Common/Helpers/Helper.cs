@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace ZenAchitecture.Application.Common.Helpers
+namespace Zenbot.Application.Common.Helpers
 {
     public class Helper
     {

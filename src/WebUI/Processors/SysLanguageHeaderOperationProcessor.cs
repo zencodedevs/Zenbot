@@ -1,9 +1,9 @@
 ﻿using NSwag;
 using NSwag.Generation.Processors;
 using NSwag.Generation.Processors.Contexts;
-using ZenAchitecture.Domain.Shared.Common;
+using Zenbot.Domain.Shared.Common;
 
-namespace ZenAchitecture.WebUI.Processors
+namespace Zenbot.WebUI.Processors
 {
     public class SysLanguageHeaderOperationProcessor : IOperationProcessor
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ZenAchitecture.WebUI.Areas.Identity.Pages.Account.Manage
+namespace Zenbot.WebUI.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
     {

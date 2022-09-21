@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using ZenAchitecture.Domain.Shared.Entities;
+using Zenbot.Domain.Shared.Entities;
 
-namespace ZenAchitecture.WebUI.Areas.Identity.Pages.Account.Manage
+namespace Zenbot.WebUI.Areas.Identity.Pages.Account.Manage
 {
     public class DownloadPersonalDataModel : PageModel
     {

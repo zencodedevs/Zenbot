@@ -1,4 +1,4 @@
-﻿using ZenAchitecture.Domain.Shared.Interfaces;
+﻿using Zenbot.Domain.Shared.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ZenAchitecture.Application.Shared.Behaviours
+namespace Zenbot.Application.Shared.Behaviours
 {
     public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {

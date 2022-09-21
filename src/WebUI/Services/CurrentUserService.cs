@@ -1,10 +1,10 @@
 ﻿
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
-using ZenAchitecture.Domain.Interfaces;
-using ZenAchitecture.Domain.Shared.Interfaces;
+using Zenbot.Domain.Interfaces;
+using Zenbot.Domain.Shared.Interfaces;
 
-namespace ZenAchitecture.WebUI.Services
+namespace Zenbot.WebUI.Services
 {
     public class CurrentUserService : ICurrentUserService
     {

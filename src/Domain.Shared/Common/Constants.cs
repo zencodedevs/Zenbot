@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace ZenAchitecture.Domain.Shared.Common
+namespace Zenbot.Domain.Shared.Common
 {
     public class Constants
     {

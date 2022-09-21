@@ -1,9 +1,9 @@
 ﻿using System;
 using Zen.Domain.Entities.Attributes;
 using Zen.Domain.Events;
-using ZenAchitecture.Domain.Shared.Entities.Geography;
+using Zenbot.Domain.Shared.Entities.Geography;
 
-namespace ZenAchitecture.Domain.Shared.Events
+namespace Zenbot.Domain.Shared.Events
 {
     [ProcessedByEventProcessor]
     public class CityCreatedEvent : DomainEvent

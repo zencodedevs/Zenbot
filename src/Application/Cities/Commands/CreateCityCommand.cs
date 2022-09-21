@@ -1,10 +1,10 @@
-﻿using ZenAchitecture.Domain.Shared.Entities.Geography;
+﻿using Zenbot.Domain.Shared.Entities.Geography;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Zen.Domain.Interfaces;
 
-namespace ZenAchitecture.Application.Account.Cities.Commands
+namespace Zenbot.Application.Account.Cities.Commands
 {
     public class CreateCityCommand : IRequest<int>
     {

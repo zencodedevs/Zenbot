@@ -1,5 +1,3 @@
-using ZenAchitecture.Domain.Shared.Entities;
-using ZenAchitecture.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +8,11 @@ using Microsoft.Extensions.Logging;
 using NLog.Web;
 using System;
 using System.Threading.Tasks;
-using ZenAchitecture.Infrastructure.Shared.Persistence;
+using Zenbot.Domain.Shared.Entities;
+using Zenbot.Infrastructure.Persistence;
+using Zenbot.Infrastructure.Shared.Persistence;
 
-namespace ZenAchitecture.WebUI
+namespace Zenbot.WebUI
 {
     public class Program
     {
@@ -71,7 +71,7 @@ namespace ZenAchitecture.WebUI
                     })
                 .ConfigureServices((hostContext, services) =>
                  {
-                      
+
 
                      // other config
                  })

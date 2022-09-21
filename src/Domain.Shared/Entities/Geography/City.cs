@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Zen.Domain.Entities.Entity;
 using Zen.Domain.Events;
-using ZenAchitecture.Domain.Shared.Events;
+using Zenbot.Domain.Shared.Events;
 
-namespace ZenAchitecture.Domain.Shared.Entities.Geography
+namespace Zenbot.Domain.Shared.Entities.Geography
 {
     public class City : Entity, IHasDomainEvent
     {

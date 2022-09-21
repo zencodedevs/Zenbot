@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using ZenAchitecture.Domain.Shared.Entities;
+using Zenbot.Domain.Shared.Entities;
 
-namespace ZenAchitecture.WebUI.Areas.Identity.Pages.Account.Manage
+namespace Zenbot.WebUI.Areas.Identity.Pages.Account.Manage
 {
     public class EnableAuthenticatorModel : PageModel
     {
@@ -149,7 +149,7 @@ namespace ZenAchitecture.WebUI.Areas.Identity.Pages.Account.Manage
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("ZenAchitecture.WebUI"),
+                _urlEncoder.Encode("Zenbot.WebUI"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

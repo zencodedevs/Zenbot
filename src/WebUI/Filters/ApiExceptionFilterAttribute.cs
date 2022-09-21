@@ -1,4 +1,4 @@
-﻿using ZenAchitecture.Application.Common.Exceptions;
+﻿using Zenbot.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using Zen.Common.Exception;
 
-namespace ZenAchitecture.WebUI.Filters
+namespace Zenbot.WebUI.Filters
 {
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {

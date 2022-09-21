@@ -1,6 +1,6 @@
-﻿using ZenAchitecture.Domain.Interfaces;
+﻿using Zenbot.Domain.Interfaces;
 
-namespace ZenAchitecture.Application.Common.Services
+namespace Zenbot.Application.Common.Services
 {
     public class ActivityService : IActivityService
     {

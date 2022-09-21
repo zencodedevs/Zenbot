@@ -1,14 +1,12 @@
-﻿using ZenAchitecture.Domain.Common.Models;
-using ZenAchitecture.Domain.Shared.Entities;
-using ZenAchitecture.Domain.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using ZenAchitecture.Domain.Shared.Entities;
+using Zenbot.Domain.Interfaces;
+using Zenbot.Domain.Shared.Entities;
 
-namespace ZenAchitecture.Infrastructure.Identity
+namespace Zenbot.Infrastructure.Identity
 {
     public class IdentityService : IIdentityService
     {

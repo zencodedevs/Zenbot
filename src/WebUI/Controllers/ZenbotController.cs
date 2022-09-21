@@ -1,15 +1,9 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using ZenAchitecture.Application.Account.Cities.Dtos;
-using ZenAchitecture.Application.Account.Cities.Queries;
-using ZenAchitecture.Application.Account.Cities.Commands;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using Zen.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Logging;
-using Zenbot;
+using Zenbot.BotCore;
 
-namespace ZenAchitecture.WebUI.Controllers.V1
+namespace Zenbot.WebUI.Controllers.V1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ZenbotController : ZenController

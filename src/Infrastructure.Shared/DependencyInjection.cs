@@ -7,9 +7,9 @@ using Zen.Infrastructure;
 using Zen.Infrastructure.Interfaces;
 using Zen.MultiTenancy;
 using Zen.Uow;
-using ZenAchitecture.Domain.Shared.Interfaces;
-using ZenAchitecture.Infrastructure.Shared.Persistence;
-using ZenAchitecture.Infrastructure.Shared.Services;
+using Zenbot.Domain.Shared.Interfaces;
+using Zenbot.Infrastructure.Shared.Persistence;
+using Zenbot.Infrastructure.Shared.Services;
 
 namespace Infrastructure.Shared
 {

@@ -1,16 +1,15 @@
-﻿using ZenAchitecture.Application.Common.Exceptions;
-
-using ZenAchitecture.Application.Common.Security;
-using ZenAchitecture.Domain.Interfaces;
-using MediatR;
+﻿using MediatR;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using ZenAchitecture.Domain.Shared.Interfaces;
+using Zenbot.Application.Common.Exceptions;
+using Zenbot.Application.Common.Security;
+using Zenbot.Domain.Interfaces;
+using Zenbot.Domain.Shared.Interfaces;
 
-namespace ZenAchitecture.Application.Common.Behaviours
+namespace Zenbot.Application.Common.Behaviours
 {
     public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
@@ -67,7 +66,7 @@ namespace ZenAchitecture.Application.Common.Behaviours
                 var authorizeAttributesWithPolicies = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Policy));
                 if (authorizeAttributesWithPolicies.Any())
                 {
-                    foreach(var policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
+                    foreach (var policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
                     {
                         var authorized = await _identityService.AuthorizeAsync(_currentUserService.UserId, policy);
 

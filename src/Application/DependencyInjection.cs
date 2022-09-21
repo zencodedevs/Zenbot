@@ -1,6 +1,6 @@
-﻿using ZenAchitecture.Application.Common.Behaviours;
-using ZenAchitecture.Application.Common.Services;
-using ZenAchitecture.Domain.Interfaces;
+﻿using Zenbot.Application.Common.Behaviours;
+using Zenbot.Application.Common.Services;
+using Zenbot.Domain.Interfaces;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ using Zen.Application;
 using Application.Shared;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace ZenAchitecture.Application
+namespace Zenbot.Application
 {
     public static class DependencyInjection
     {

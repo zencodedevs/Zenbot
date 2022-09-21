@@ -1,12 +1,12 @@
 ﻿
-using ZenAchitecture.Domain.Interfaces;
+using Zenbot.Domain.Interfaces;
 using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
-using ZenAchitecture.Domain.Shared.Interfaces;
+using Zenbot.Domain.Shared.Interfaces;
 
-namespace ZenAchitecture.Application.Common.Behaviours
+namespace Zenbot.Application.Common.Behaviours
 {
     public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest>
     {

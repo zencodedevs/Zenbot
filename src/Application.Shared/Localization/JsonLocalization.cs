@@ -5,7 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-namespace ZenAchitecture.Application.Shared.Localization
+namespace Zenbot.Application.Shared.Localization
 {
     class JsonLocalization
     {

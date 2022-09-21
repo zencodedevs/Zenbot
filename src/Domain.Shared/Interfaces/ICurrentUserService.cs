@@ -1,4 +1,4 @@
-﻿namespace ZenAchitecture.Domain.Shared.Interfaces
+﻿namespace Zenbot.Domain.Shared.Interfaces
 {
     public interface ICurrentUserService
     {

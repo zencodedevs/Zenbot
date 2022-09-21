@@ -8,9 +8,9 @@ using SendGrid.Extensions.DependencyInjection;
 using System.Globalization;
 using System.Reflection;
 using Zen.Application;
-using ZenAchitecture.Application.Shared.Behaviours;
-using ZenAchitecture.Application.Shared.Localization;
-using ZenAchitecture.Domain.Shared.Common;
+using Zenbot.Application.Shared.Behaviours;
+using Zenbot.Application.Shared.Localization;
+using Zenbot.Domain.Shared.Common;
 
 namespace Application.Shared
 {

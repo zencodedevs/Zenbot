@@ -1,10 +1,3 @@
-using ZenAchitecture.Application;
-using ZenAchitecture.Domain;
-using ZenAchitecture.Infrastructure;
-using ZenAchitecture.WebUI.CurrentTenantMiddlewares;
-using ZenAchitecture.WebUI.Filters;
-using ZenAchitecture.WebUI.Middlewares;
-using ZenAchitecture.WebUI.Processors;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,12 +17,18 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json.Serialization;
-using ZenAchitecture.Domain.Shared.Common;
-using ZenAchitecture.Infrastructure.Shared.Persistence;
-using Zenbot;
-using IdentityServer4.Validation;
+using Zenbot.Application;
+using Zenbot.BotCore;
+using Zenbot.Domain;
+using Zenbot.Domain.Shared.Common;
+using Zenbot.Infrastructure;
+using Zenbot.Infrastructure.Shared.Persistence;
+using Zenbot.WebUI.CurrentTenantMiddlewares;
+using Zenbot.WebUI.Filters;
+using Zenbot.WebUI.Middlewares;
+using Zenbot.WebUI.Processors;
 
-namespace ZenAchitecture.WebUI
+namespace Zenbot.WebUI
 {
     public class Startup
     {

@@ -1,4 +1,4 @@
-﻿namespace ZenAchitecture.Domain.Interfaces
+﻿namespace Zenbot.Domain.Interfaces
 {
     public interface IActivityService { }
 }

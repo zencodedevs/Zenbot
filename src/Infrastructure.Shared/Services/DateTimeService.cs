@@ -1,7 +1,7 @@
 ﻿using System;
-using ZenAchitecture.Domain.Shared.Interfaces;
+using Zenbot.Domain.Shared.Interfaces;
 
-namespace ZenAchitecture.Infrastructure.Shared.Services
+namespace Zenbot.Infrastructure.Shared.Services
 {
     public class DateTimeService : IDateTime
     {

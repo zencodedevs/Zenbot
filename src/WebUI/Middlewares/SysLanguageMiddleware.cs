@@ -1,11 +1,11 @@
-﻿using ZenAchitecture.WebUI.Extensions;
+﻿using Zenbot.WebUI.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System.Globalization;
 using System.Threading.Tasks;
-using ZenAchitecture.Domain.Shared.Common;
+using Zenbot.Domain.Shared.Common;
 
-namespace ZenAchitecture.WebUI.Middlewares
+namespace Zenbot.WebUI.Middlewares
 {
     // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class SysLanguageMiddleware

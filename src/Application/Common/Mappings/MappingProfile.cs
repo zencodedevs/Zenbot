@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Zen.Application.Mappings;
 
-namespace ZenAchitecture.Application.Common.Mappings
+namespace Zenbot.Application.Common.Mappings
 {
     public class MappingProfile : Profile
     {

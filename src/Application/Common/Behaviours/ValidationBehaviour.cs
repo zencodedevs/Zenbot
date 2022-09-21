@@ -6,7 +6,7 @@ using FluentValidation;
 using MediatR;
 using Zen.Common.Exception;
 
-namespace ZenAchitecture.Application.Common.Behaviours
+namespace Zenbot.Application.Common.Behaviours
 {
     public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>

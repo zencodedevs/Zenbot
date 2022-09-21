@@ -1,9 +1,9 @@
-﻿using ZenAchitecture.Domain.Common.Models;
+﻿using Zenbot.Domain.Common.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ZenAchitecture.Infrastructure.Identity
+namespace Zenbot.Infrastructure.Identity
 {
     public static class IdentityResultExtensions
     {

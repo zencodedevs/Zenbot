@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using ZenAchitecture.Domain.Shared.Entities;
-using ZenAchitecture.Domain.Shared.Entities.Geography;
-using ZenAchitecture.Infrastructure.Shared.Persistence;
+using Zenbot.Domain.Shared.Entities;
+using Zenbot.Domain.Shared.Entities.Geography;
+using Zenbot.Infrastructure.Shared.Persistence;
 
-namespace ZenAchitecture.Infrastructure.Persistence
+namespace Zenbot.Infrastructure.Persistence
 {
     public static class ApplicationDbContextSeed
     {

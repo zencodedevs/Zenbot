@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZenAchitecture.Application.Common.Validator
+namespace Zenbot.Application.Common.Validator
 {
     public class ValidationBehaviorConfiguration
     {

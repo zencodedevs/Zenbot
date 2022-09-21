@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace ZenAchitecture.Application.Common.Classes
+namespace Zenbot.Application.Common.Classes
 {
     public class FilterGroup
     {

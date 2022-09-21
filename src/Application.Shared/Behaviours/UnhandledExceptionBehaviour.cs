@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Zen.Common.Exception;
 
-namespace ZenAchitecture.Application.Shared.Behaviours
+namespace Zenbot.Application.Shared.Behaviours
 {
     public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {

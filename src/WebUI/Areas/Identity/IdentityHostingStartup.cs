@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 
-[assembly: HostingStartup(typeof(ZenAchitecture.WebUI.Areas.Identity.IdentityHostingStartup))]
-namespace ZenAchitecture.WebUI.Areas.Identity
+[assembly: HostingStartup(typeof(Zenbot.WebUI.Areas.Identity.IdentityHostingStartup))]
+namespace Zenbot.WebUI.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {

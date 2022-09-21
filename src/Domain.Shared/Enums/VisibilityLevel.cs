@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Converters;
 using System.Text.Json.Serialization;
 
-namespace ZenAchitecture.Domain.Shared.Enums
+namespace Zenbot.Domain.Shared.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum VisibilityLevel

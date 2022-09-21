@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Zen.MultiTenancy;
 
-namespace ZenAchitecture.WebUI.CurrentTenantMiddlewares
+namespace Zenbot.WebUI.CurrentTenantMiddlewares
 {
     // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class CurrentTenantMiddleware

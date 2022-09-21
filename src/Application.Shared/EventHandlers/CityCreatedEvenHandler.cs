@@ -3,9 +3,9 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 using Zen.Domain.Events;
-using ZenAchitecture.Domain.Shared.Events;
+using Zenbot.Domain.Shared.Events;
 
-namespace ZenAchitecture.Application.Shared.EventHandlers
+namespace Zenbot.Application.Shared.EventHandlers
 {
     public class CityCreatedEvenHandler : INotificationHandler<DomainEventNotification<CityCreatedEvent>>
     {
