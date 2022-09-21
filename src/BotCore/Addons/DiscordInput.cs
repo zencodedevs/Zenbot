@@ -7,7 +7,7 @@ using Discord.WebSocket;
 using Discord;
 using Discord.Commands;
 
-namespace BotCore
+namespace Zenbot
 {
     public static class DiscordInput
     {

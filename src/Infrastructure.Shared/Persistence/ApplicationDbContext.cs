@@ -1,4 +1,5 @@
-﻿using Domain.Shared.Entities.Zenbot;
+﻿
+using Domain.Shared.Entities.Bot;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;

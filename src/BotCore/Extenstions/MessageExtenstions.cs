@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BotCore.Interactions;
+using Zenbot.Interactions;
 
-namespace BotCore
+namespace Zenbot
 {
     public static class MessageExtenstions
     {

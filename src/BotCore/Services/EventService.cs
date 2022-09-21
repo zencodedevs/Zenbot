@@ -5,9 +5,8 @@ using System;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using System.Web;
-using BotCore.Entities.BotCore;
 
-namespace BotCore
+namespace Zenbot
 {
     public class EventService
     {
@@ -23,7 +22,6 @@ namespace BotCore
 
             this._client.UserJoined += _client_UserJoined;
             this._client.Ready += _client_Ready;
-
         }
 
         public async Task SendMessageToUserByJiraId(string jiraId)
@@ -52,11 +50,21 @@ namespace BotCore
         }
 
 
-        private async Task _client_Ready() => await SendMessageToLoggerChannel("I am online.");
-        private async Task _client_UserJoined(SocketGuildUser user) => await SendMessageToLoggerChannel($"Say Welcome To {MentionUtils.MentionUser(user.Id)}");
+        private async Task _client_Ready()
+        {
+            await SendMessageToLoggerChannel("I am online.");
+
+            var guild = _client.GetGuild(_config.MainGuildId);
+            await GuildRolesManagment.SyncMemberRoles(guild, _config.Roles.VarifiedId, _config.Roles.UnVarifiedId);
+        }
+
+        private async Task _client_UserJoined(SocketGuildUser user)
+        {
+            await user.AddRoleAsync(_config.Roles.UnVarifiedId);
+        }
 
         public async Task SendMessageToLoggerChannel(string text) =>
-            await _client.GetGuild(_config.MainGuildId).GetTextChannel(_config.LoggerChannel).SendMessageAsync(text);
+            await _client.GetGuild(_config.MainGuildId).GetTextChannel(_config.Channels.LoggerId).SendMessageAsync(text);
 
     }
 }

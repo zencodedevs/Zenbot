@@ -1,6 +1,15 @@
 ﻿{
-  "BotToken": "",
+  "BotToken": "MTAxODc2OTI1OTI1MTM4ODQ1Nw.G3mWAy.TBgTo8rYLb0Hh89_oEEO7Ibjscssi2VheYH4SE",
   "Prefix": ".",
   "MainGuildId": 1018765173969932319,
-  "LoggerChannel": 1019954349499232306
+
+  "Channels": {
+    "LoggerId": 1019954349499232306,
+    "AuthenticationId": 1022085102383144961
+  },
+  "Roles": {
+    "VarifiedId": 1022084331184861214,
+    "UnVarifiedId": 1022092023513227275
+  }
+
 }

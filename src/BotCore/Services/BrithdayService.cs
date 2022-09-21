@@ -1,5 +1,5 @@
 ﻿using Discord.WebSocket;
-using Domain.Shared.Entities.Bot;
+using Domain.Shared.Entities.Zenbot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -8,9 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Zen.Domain.Interfaces;
 using Zen.Uow;
-using BotCore.Entities.BotCore;
 
-namespace BotCore
+
+namespace Zenbot
 {
     public class BrithdayService
     {
@@ -25,7 +25,7 @@ namespace BotCore
             _usersService = services.GetRequiredService<UsersService>();
             _config = services.GetRequiredService<BotConfiguration>();
 
-          //  _client.Ready += _client_Ready;
+           _client.Ready += _client_Ready;
         }
 
         private Task _client_Ready()
@@ -46,7 +46,7 @@ namespace BotCore
                             {
                                 try
                                 {
-                                    await _client.GetGuild(_config.MainGuildId).GetTextChannel(_config.LoggerChannel)
+                                    await _client.GetGuild(_config.MainGuildId).GetTextChannel(_config.Channels.LoggerId)
                                           .SendMessageAsync($"<@{u.Username}> Hey today is your brithday 🎉");
 
                                     u.NextNotifyTIme = DateTime.UtcNow

@@ -4,10 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
-using BotCore.Entities.BotCore;
-using BotCore.Interactions;
+using Zenbot.Interactions;
 
-namespace BotCore
+namespace Zenbot
 {
     public class InteractionsHandler
     {
@@ -36,7 +35,7 @@ namespace BotCore
             }
 
             _client.InteractionCreated += _client_IntegrationCreated;
-            _interactions.InteractionExecuted += _interactions_InteractionExecuted;
+            _interactions.InteractionExecuted += _interactions_InteractionExecuted;            
         }
         private async Task _client_IntegrationCreated(SocketInteraction interaction)
         {
@@ -50,12 +49,12 @@ namespace BotCore
 
             if (!context.Interaction.HasResponded)
             {
-                await context.Interaction.RespondAsync(result.ErrorReason);
+                await context.Interaction.RespondAsync(result.ErrorReason,ephemeral:true);
                 return;
             }
             else
             {
-                await context.Interaction.FollowupAsync(result.ErrorReason);
+                await context.Interaction.FollowupAsync(result.ErrorReason, ephemeral: true);
                 return;
             }
         }

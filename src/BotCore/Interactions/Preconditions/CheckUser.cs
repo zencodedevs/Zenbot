@@ -5,10 +5,12 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BotCore.Interactions;
+using Zenbot.Interactions;
 
 namespace Discord.Interactions
 {
+
+
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class CheckUser : PreconditionAttribute
     {

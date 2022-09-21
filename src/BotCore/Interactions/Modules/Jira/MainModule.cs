@@ -8,14 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotCore.Interactions.SlashCommands
+namespace Zenbot.Interactions.SlashCommands
 {
     [Group("jira", "jira test")]
     public class MainModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
-
         public UsersService UsersService { get; set; }
-        public IServiceProvider MyProperty { get; set; }
 
         [SlashCommand("account", "account setting")]
         public async Task account()

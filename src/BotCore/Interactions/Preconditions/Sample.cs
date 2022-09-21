@@ -1,4 +1,4 @@
-﻿namespace BotCore.Interactions
+﻿namespace Zenbot.Interactions
 {
     using System;
     using System.Collections.Generic;
