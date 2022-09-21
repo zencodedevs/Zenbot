@@ -1,4 +1,4 @@
-﻿using Domain.Shared.Entities.Zenbot;
+﻿using Domain.Shared.Entities.Bot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Zen.Domain.Interfaces;
 using Zen.Uow;
 
-namespace Zenbot
+namespace Zenbot.BotCore
 {
     public class UsersService
     {

@@ -1,7 +1,7 @@
 ﻿using Discord.Commands;
 using System.Threading.Tasks;
 
-namespace Zenbot.Commands.Modules
+namespace Zenbot.BotCore.Commands.Modules
 {
     public class PublicModule : ModuleBase<SocketCommandContext>
     {

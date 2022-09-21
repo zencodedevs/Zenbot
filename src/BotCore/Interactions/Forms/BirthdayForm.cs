@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord.Interactions;
 
-namespace Zenbot
+namespace Zenbot.BotCore
 {
     public class BirthdayForm : IModal
     {

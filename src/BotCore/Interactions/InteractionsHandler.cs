@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
-using Zenbot.Interactions;
+using Zenbot.BotCore.Interactions;
 
-namespace Zenbot
+namespace Zenbot.BotCore
 {
     public class InteractionsHandler
     {

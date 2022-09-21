@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zenbot
+namespace Zenbot.BotCore
 {
     public class GuildRolesManagment
     {

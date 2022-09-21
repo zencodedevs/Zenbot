@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
 
-namespace Zenbot
+namespace Zenbot.BotCore
 {
     public class JiraLoginForm : IModal
     {

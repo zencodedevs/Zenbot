@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zenbot.Interactions
+namespace Zenbot.BotCore.Interactions
 {
 
     public interface ICustomInteractionContext : IInteractionContext

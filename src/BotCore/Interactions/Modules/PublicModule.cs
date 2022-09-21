@@ -1,6 +1,6 @@
 ﻿using Discord.Interactions;
 using System.Threading.Tasks;
-namespace Zenbot.Interactions.Modules
+namespace Zenbot.BotCore.Interactions.Modules
 {
     public class PublicModule : InteractionModuleBase<SocketInteractionContext>
     {

@@ -1,4 +1,4 @@
-﻿namespace Zenbot
+﻿namespace Zenbot.BotCore
 {
     using System;
     using System.Collections.Generic;

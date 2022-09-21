@@ -6,7 +6,7 @@ using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Zenbot
+namespace Zenbot.BotCore
 {
     public class EventService
     {

@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 
-namespace Zenbot
+namespace Zenbot.BotCore
 {
     public class CommandHandler
     {

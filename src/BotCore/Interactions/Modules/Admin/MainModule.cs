@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zenbot.Interactions.Modules.Admin
+namespace Zenbot.BotCore.Interactions.Modules.Admin
 {
     [Group("admin", "admin commands")]
     [RequireUserPermission(GuildPermission.Administrator)]

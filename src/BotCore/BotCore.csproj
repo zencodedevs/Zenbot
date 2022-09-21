@@ -6,39 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.Development.json" />
-    <None Remove="appsettings.json" />
-    <None Remove="appsettings.Production.json" />
-    <None Remove="appsettings.Qa.json" />
-    <None Remove="nlog.config" />
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.Development.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="appsettings.Production.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="appsettings.Qa.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="nlog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
+    <None Remove="nlog.config" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,10 +41,6 @@
     <ProjectReference Include="..\Domain.Shared\Domain.Shared.csproj" />
     <ProjectReference Include="..\Infrastructure.Shared\Infrastructure.Shared.csproj" />
     <ProjectReference Include="..\Worker\Worker.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

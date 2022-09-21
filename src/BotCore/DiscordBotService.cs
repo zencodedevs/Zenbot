@@ -1,21 +1,14 @@
-﻿using Application.Shared;
-using Discord;
+﻿using Discord;
 using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Domain.Shared;
-using Infrastructure.Shared;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
-using Worker.Services;
-using ZenAchitecture.Domain.Shared.Interfaces;
 
 
-namespace Zenbot
+
+namespace Zenbot.BotCore
 {
     public class DiscordBotService
     {

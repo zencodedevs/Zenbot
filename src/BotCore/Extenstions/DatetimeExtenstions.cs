@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Zenbot
+namespace Zenbot.BotCore
 {
     public static class DatetimeExtenstions
     {

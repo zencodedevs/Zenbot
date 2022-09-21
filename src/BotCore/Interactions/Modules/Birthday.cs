@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace Zenbot.Interactions.Modules
+namespace Zenbot.BotCore.Interactions.Modules
 {
     [Group("birthday", "birthday commands")]
     public class BirthdayModule : InteractionModuleBase<SocketInteractionContext>

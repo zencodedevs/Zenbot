@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zenbot.Interactions.SlashCommands
+namespace Zenbot.BotCore.Interactions.SlashCommands
 {
     [Group("jira", "jira test")]
     public class MainModule : InteractionModuleBase<CustomSocketInteractionContext>
