@@ -38,7 +38,7 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
             });
         }
 
-        [ComponentInteraction("button-jira-account-cancel", true)]
+        [ComponentInteraction("button-jira-account-cancel:*", true)]
         [CheckUser(CheckUser.CheckUserType.CustomId)]
         public async Task cancel(ulong id)
         {
@@ -50,9 +50,9 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
                 x.Components = new ComponentBuilder().Build();
             });
         }
-        [ComponentInteraction("button-jira-account-confirm", true)]
+        [ComponentInteraction("button-jira-account-confirm:*", true)]
         [CheckUser(CheckUser.CheckUserType.CustomId)]
-        public async Task confirm(ulong id)
+        public async Task confirm(ulong userId)
         {
             await DeferAsync();
 

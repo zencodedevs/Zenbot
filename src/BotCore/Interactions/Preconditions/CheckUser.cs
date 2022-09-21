@@ -34,10 +34,10 @@ namespace Discord.Interactions
                     return Task.FromResult(PreconditionResult.FromError("Access Denied."));
             }
 
-
-            var param = (context.Interaction as CustomSocketInteractionContext).SegmentMatches.First().Value;
-
-            if (ulong.TryParse(param, out ulong id))
+            var context_ = (context as CustomSocketInteractionContext);
+            var matchs = context_.SegmentMatches;
+            var param = matchs.FirstOrDefault();
+            if (ulong.TryParse(param.Value ?? "0", out ulong id))
             {
                 if (context.User.Id != id)
                 {
