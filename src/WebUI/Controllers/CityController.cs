@@ -7,6 +7,7 @@ using ZenAchitecture.Application.Account.Cities.Commands;
 using Zen.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using Zenbot;
 
 namespace ZenAchitecture.WebUI.Controllers.V1
 {
@@ -35,8 +36,11 @@ namespace ZenAchitecture.WebUI.Controllers.V1
         [HttpPost]
         //[Authorize]
         [Route(nameof(CreateCity))]
-        public async Task<int> CreateCity(CreateCityCommand command) => await Mediator.Send(command);
-
+        public async Task<int> CreateCity(CreateCityCommand command)
+        {
+            await Mediator.Send(command);
+            return 0;
+        }
         [HttpPost]
         [Authorize]
         [Route((nameof(UpdateCity)))]

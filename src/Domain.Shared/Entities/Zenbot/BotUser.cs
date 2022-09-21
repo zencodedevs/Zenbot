@@ -11,9 +11,11 @@ namespace Domain.Shared.Entities.Zenbot
 {
     public class BotUser : Entity, IHasDomainEvent
     {
+       
         public ulong UserId { get; set; }
         public string UserMail { get; set; }
         public string Username { get; set; }
+        public string JiraAccountID { get; set; }
         public DateTime Birthday { get; set; } = DateTime.MinValue;
         public DateTime NextNotifyTIme { get; set; } = DateTime.MinValue;
 
@@ -29,5 +31,9 @@ namespace Domain.Shared.Entities.Zenbot
             Username = username;
             return this;
         }
+
+
+
+       
     }
 }

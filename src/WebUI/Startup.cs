@@ -26,6 +26,8 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using ZenAchitecture.Domain.Shared.Common;
 using ZenAchitecture.Infrastructure.Shared.Persistence;
+using Zenbot;
+using IdentityServer4.Validation;
 
 namespace ZenAchitecture.WebUI
 {
@@ -41,9 +43,6 @@ namespace ZenAchitecture.WebUI
 
             Configuration = builder.Build();
 
-
-
-
         }
 
         public IConfiguration Configuration { get; }
@@ -57,7 +56,8 @@ namespace ZenAchitecture.WebUI
             //set nlog inster clause variable
             LogManager.Configuration.Variables["registerClause"] = Constants.Nlog.WebUiDbRegisterClause;
 
-          
+            services.AddSingleton<DiscordBotService>();
+
             services.AddDomain();
             services.AddApplication(Configuration);
             services.AddInfrastructure(Configuration);
@@ -143,7 +143,7 @@ namespace ZenAchitecture.WebUI
                 options.SubstituteApiVersionInUrl = true;
             });
 
- 
+
             services.AddMvc()
                 .AddRazorRuntimeCompilation()
                 .AddJsonOptions(options =>
@@ -153,13 +153,16 @@ namespace ZenAchitecture.WebUI
 
                     });
 
-            
+
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var bot = app.ApplicationServices.GetRequiredService<DiscordBotService>();
+            await bot.MainAsync();
+
             // app.UseExtensionCurrentTenantMiddleware();
             app.UseSysLanguageMiddleware();
             app.UseCurrentTenantMiddleware();
@@ -187,7 +190,7 @@ namespace ZenAchitecture.WebUI
             }
 
 
-            app.UseSwaggerUi3( settings =>
+            app.UseSwaggerUi3(settings =>
             {
                 settings.Path = "/api";
                 settings.DocumentPath = "/api/specification.json";

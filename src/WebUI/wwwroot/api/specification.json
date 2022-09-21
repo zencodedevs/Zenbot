@@ -214,6 +214,38 @@
           }
         ]
       }
+    },
+    "/api/v1/City/CreateJira": {
+      "post": {
+        "tags": [
+          "City"
+        ],
+        "operationId": "City_CreateJira",
+        "parameters": [
+          {
+            "name": "jiraId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "type": "string",
+            "name": "x-sys-language",
+            "in": "header",
+            "style": "simple",
+            "description": "System language indicator",
+            "default": "en-US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
     }
   },
   "components": {

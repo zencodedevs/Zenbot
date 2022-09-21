@@ -10,7 +10,6 @@
 *.userosscache
 *.sln.docstates
 *.yml
-src/Zenbot/config.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

@@ -17,9 +17,18 @@ using Zenbot.Entities.Zenbot;
 
 namespace Zenbot
 {
-    public class Program
+    public class DiscordBotService
     {
-        public static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
+        //public static void Main(string[] args) => new DiscordBotService().MainAsync().GetAwaiter().GetResult();
+
+        public event OnRecivedEvent OnRecevied;
+        public delegate Task OnRecivedEvent(string jiraId);
+        public void Event(string jiraId)
+        {
+            OnRecevied(jiraId);
+        }
+
+       
         public async Task MainAsync()
         {
             var c = new ConfigurationBuilder()
@@ -28,11 +37,13 @@ namespace Zenbot
            .AddEnvironmentVariables()
            .Build();
 
-            await Log("Program", "Main Async");
+            await Log("DiscordBotService", "Main Async");
 
+         
             var configuration = BotConfiguration.GetConfiguration();
 
             var services = new ServiceCollection()
+                .AddSingleton(this)
                 .AddSingleton(configuration)
                 .AddSingleton<DiscordSocketClient>(x => new DiscordSocketClient(DiscordSocketConfig))
 
@@ -60,12 +71,15 @@ namespace Zenbot
                         .AddDomainShared()
                         .AddApplicationShared(c)
                         .AddInfrastructureShared(c)
-                        
+
 
                 .BuildServiceProvider();
 
             await RunAsync(services);
         }
+
+
+
         public async Task RunAsync(IServiceProvider services)
         {
             var config = services.GetRequiredService<BotConfiguration>();
@@ -78,12 +92,12 @@ namespace Zenbot
 
             var brithday = services.GetRequiredService<BrithdayService>();
             var events = services.GetRequiredService<EventService>();
-
+            
 
             await client.LoginAsync(TokenType.Bot, config.BotToken, true);
             await client.StartAsync();
 
-            await Task.Delay(Timeout.Infinite);
+            //  await Task.Delay(Timeout.Infinite);
         }
 
         private Task Client_Log(LogMessage log)
@@ -98,7 +112,7 @@ namespace Zenbot
             GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.GuildMembers
         };
 
-        public Task Log(string service, string content, ConsoleColor color = ConsoleColor.White)
+        public static Task Log(string service, string content, ConsoleColor color = ConsoleColor.White)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(DateTime.UtcNow.ToString("T") + " " + service.PadRight(10) + content);
