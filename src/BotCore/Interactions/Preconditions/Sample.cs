@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Discord;
-using Discord.Interactions;
-
-namespace Zenbot.BotCore.Interactions.Preconditions
+﻿namespace BotCore.Interactions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Discord;
+    using Discord.Interactions;
     public class Sample : PreconditionAttribute
     {
         public new string ErrorMessage = $"Sample Precondition.";

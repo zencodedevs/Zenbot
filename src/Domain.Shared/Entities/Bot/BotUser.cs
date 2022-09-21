@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Zen.Domain.Entities.Entity;
 using Zen.Domain.Events;
 
-namespace Domain.Shared.Entities.Zenbot
+namespace Domain.Shared.Entities.Bot
 {
     public class BotUser : Entity, IHasDomainEvent
     {

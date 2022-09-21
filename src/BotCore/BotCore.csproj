@@ -3,8 +3,8 @@
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<TargetFramework>net5.0</TargetFramework>
-		<AssemblyName>Zenbot.BotCore</AssemblyName>
-		<RootNamespace>Zenbot.BotCore</RootNamespace>
+		<AssemblyName>BotCore.BotCore</AssemblyName>
+		<RootNamespace>BotCore.BotCore</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

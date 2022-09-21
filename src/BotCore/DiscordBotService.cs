@@ -1,52 +1,28 @@
-﻿using Application.Shared;
+﻿using BotCore.Entities.BotCore;
 using Discord;
 using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Domain.Shared;
-using Infrastructure.Shared;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
-using Worker.Services;
-using Zenbot.BotCore.Commands;
-using Zenbot.BotCore.Entities.Zenbot;
-using Zenbot.BotCore.Interactions;
-using Zenbot.BotCore.Models;
-using Zenbot.BotCore.Services;
-using Zenbot.Domain.Shared.Interfaces;
 
-namespace Zenbot.BotCore
+namespace BotCore
 {
     public class DiscordBotService
     {
-        //public static void Main(string[] args) => new DiscordBotService().MainAsync().GetAwaiter().GetResult();
+        //private readonly IServiceProvider _services;
+        //public DiscordBotService(IServiceProvider services)
+        //{
+        //    this._services = services;
+        //}
 
-        public event OnRecivedEvent OnRecevied;
-        public delegate Task OnRecivedEvent(string jiraId);
-        public void Event(string jiraId)
+
+        public DiscordBotService ConfigServices(IServiceCollection services)
         {
-            OnRecevied(jiraId);
-        }
-
-
-        public async Task MainAsync()
-        {
-            var c = new ConfigurationBuilder()
-           .SetBasePath(AppContext.BaseDirectory)
-           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-           .AddEnvironmentVariables()
-           .Build();
-
-            await Log("DiscordBotService", "Main Async");
-
-
             var configuration = BotConfiguration.GetConfiguration();
 
-            var services = new ServiceCollection()
-                .AddSingleton(this)
+            services
                 .AddSingleton(configuration)
                 .AddSingleton<DiscordSocketClient>(x => new DiscordSocketClient(DiscordSocketConfig))
 
@@ -59,48 +35,29 @@ namespace Zenbot.BotCore
                 .AddSingleton<UsersService>()
 
                 .AddSingleton<BrithdayService>()
-                .AddSingleton<EventService>()
+                .AddSingleton<EventService>();
 
-                //For connecting to database
-                .AddSingleton<ICurrentUserService, CurrentUserPuppeteerService>()
-                        .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
-
-                        .AddTransient<IConfiguration>(sp =>
-                        {
-                            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-                            configurationBuilder.AddJsonFile("appsettings.json");
-                            return configurationBuilder.Build();
-                        })
-                        .AddDomainShared()
-                        .AddApplicationShared(c)
-                        .AddInfrastructureShared(c)
-
-
-                .BuildServiceProvider();
-
-            await RunAsync(services);
+            return this;
         }
 
-
-
-        public async Task RunAsync(IServiceProvider services)
+        public async Task RunAsync(IServiceProvider _services)
         {
-            var config = services.GetRequiredService<BotConfiguration>();
+            await Log("DiscordBotService", "Run Async");
 
-            var client = services.GetRequiredService<DiscordSocketClient>();
+            var config = _services.GetRequiredService<BotConfiguration>();
+
+            var client = _services.GetRequiredService<DiscordSocketClient>();
             client.Log += Client_Log;
 
-            await services.GetRequiredService<InteractionsHandler>().InitializeAsync();
-            await services.GetRequiredService<CommandHandler>().InitializeAsync();
+            await _services.GetRequiredService<InteractionsHandler>().InitializeAsync();
+            await _services.GetRequiredService<CommandHandler>().InitializeAsync();
 
-            var brithday = services.GetRequiredService<BrithdayService>();
-            var events = services.GetRequiredService<EventService>();
+            var brithday = _services.GetRequiredService<BrithdayService>();
+            var events = _services.GetRequiredService<EventService>();
 
 
             await client.LoginAsync(TokenType.Bot, config.BotToken, true);
             await client.StartAsync();
-
-            //  await Task.Delay(Timeout.Infinite);
         }
 
         private Task Client_Log(LogMessage log)

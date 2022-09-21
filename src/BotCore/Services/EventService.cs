@@ -2,11 +2,12 @@
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
-using Zenbot.BotCore.Entities.Zenbot;
-using Zenbot.BotCore.Models;
+using System.Web;
+using BotCore.Entities.BotCore;
 
-namespace Zenbot.BotCore.Services
+namespace BotCore
 {
     public class EventService
     {
@@ -19,33 +20,31 @@ namespace Zenbot.BotCore.Services
             this._config = services.GetRequiredService<BotConfiguration>();
             this._client = services.GetRequiredService<DiscordSocketClient>();
 
-            var botService = services.GetRequiredService<DiscordBotService>();
-            botService.OnRecevied += BotService_OnRecevied;
 
             this._client.UserJoined += _client_UserJoined;
             this._client.Ready += _client_Ready;
 
         }
 
-        private async Task BotService_OnRecevied(string jiraId)
+        public async Task SendMessageToUserByJiraId(string jiraId)
         {
             var userService = services.GetRequiredService<UsersService>();
-            var targetUser = await userService.GetUserByJiraId(jiraId);
+            var target = await userService.GetUserByJiraId(jiraId);
 
-            if (targetUser is null)
+            if (target is null)
                 return;
 
-            var targetUserId = targetUser.UserId;
-            var user = await _client.GetUserAsync(targetUserId);
+            var targetId = target.UserId;
+            var user = await _client.GetUserAsync(targetId);
 
             try
             {
-                await user.SendMessageAsync($"<@{targetUserId}> you have new message.");
+                await user.SendMessageAsync($"<@{targetId}> you have new message.");
             }
             catch
             {
 
-                await SendMessageToLoggerChannel($"Can not send message to <@{targetUserId}>:\n" +
+                await SendMessageToLoggerChannel($"Can not send message to <@{targetId}>:\n" +
                     $"1. make sure user direct is open.\n" +
                     $"2. make sure user have a joined this server.");
 

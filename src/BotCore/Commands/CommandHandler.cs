@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
-using Zenbot.BotCore.Entities.Zenbot;
+using BotCore.Entities.BotCore;
 
-namespace Zenbot.BotCore.Commands
+namespace BotCore
 {
     public class CommandHandler
     {

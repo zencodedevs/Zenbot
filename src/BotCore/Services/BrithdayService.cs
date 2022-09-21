@@ -1,12 +1,16 @@
 ﻿using Discord.WebSocket;
+using Domain.Shared.Entities.Bot;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Zenbot.BotCore.Entities.Zenbot;
-using Zenbot.BotCore.Models;
+using Zen.Domain.Interfaces;
+using Zen.Uow;
+using BotCore.Entities.BotCore;
 
-namespace Zenbot.BotCore.Services
+namespace BotCore
 {
     public class BrithdayService
     {
@@ -21,7 +25,7 @@ namespace Zenbot.BotCore.Services
             _usersService = services.GetRequiredService<UsersService>();
             _config = services.GetRequiredService<BotConfiguration>();
 
-            //  _client.Ready += _client_Ready;
+          //  _client.Ready += _client_Ready;
         }
 
         private Task _client_Ready()

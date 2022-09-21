@@ -3,10 +3,9 @@ using Discord.Interactions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Zenbot.BotCore.Interactions.Forms;
-using Zenbot.BotCore.Models;
 
-namespace Zenbot.BotCore.Interactions.Modules
+
+namespace BotCore.Interactions.Modules
 {
     [Group("birthday", "birthday commands")]
     public class BirthdayModule : InteractionModuleBase<SocketInteractionContext>

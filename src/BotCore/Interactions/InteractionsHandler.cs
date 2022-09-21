@@ -4,9 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
-using Zenbot.BotCore.Entities.Zenbot;
+using BotCore.Entities.BotCore;
+using BotCore.Interactions;
 
-namespace Zenbot.BotCore.Interactions
+namespace BotCore
 {
     public class InteractionsHandler
     {
@@ -39,7 +40,7 @@ namespace Zenbot.BotCore.Interactions
         }
         private async Task _client_IntegrationCreated(SocketInteraction interaction)
         {
-            var ctx = new SocketInteractionContext(this._client, interaction);
+            var ctx = new CustomSocketInteractionContext(this._client, interaction, interaction.Channel);
             await _interactions.ExecuteCommandAsync(ctx, this.services);
         }
         private async Task _interactions_InteractionExecuted(ICommandInfo info, Discord.IInteractionContext context, IResult result)
@@ -49,12 +50,12 @@ namespace Zenbot.BotCore.Interactions
 
             if (!context.Interaction.HasResponded)
             {
-                await context.Interaction.RespondAsync("Error in the result.");
+                await context.Interaction.RespondAsync(result.ErrorReason);
                 return;
             }
             else
             {
-                await context.Interaction.FollowupAsync("Error in the result.");
+                await context.Interaction.FollowupAsync(result.ErrorReason);
                 return;
             }
         }

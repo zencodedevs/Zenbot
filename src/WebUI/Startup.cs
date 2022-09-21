@@ -1,3 +1,4 @@
+using BotCore;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +19,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Zenbot.Application;
-using Zenbot.BotCore;
 using Zenbot.Domain;
 using Zenbot.Domain.Shared.Common;
 using Zenbot.Infrastructure;
@@ -55,7 +55,13 @@ namespace Zenbot.WebUI
             //set nlog inster clause variable
             LogManager.Configuration.Variables["registerClause"] = Constants.Nlog.WebUiDbRegisterClause;
 
-            services.AddSingleton<DiscordBotService>();
+
+            // Adding services from Discord bot to start the bot from this Layer
+            var bot = new DiscordBotService()
+                .ConfigServices(services);
+
+            services.AddSingleton(bot);
+        
 
             services.AddDomain();
             services.AddApplication(Configuration);
@@ -159,8 +165,10 @@ namespace Zenbot.WebUI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var bot = app.ApplicationServices.GetRequiredService<DiscordBotService>();
-            await bot.MainAsync();
+
+            // Configuraiton with Discord bot
+            await app.ApplicationServices.GetRequiredService<DiscordBotService>()
+               .RunAsync(app.ApplicationServices);
 
             // app.UseExtensionCurrentTenantMiddleware();
             app.UseSysLanguageMiddleware();

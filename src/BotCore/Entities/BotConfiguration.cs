@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zenbot.BotCore.Entities
+namespace BotCore.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace Zenbot.BotCore.Entities
     using System.IO;
     using Newtonsoft.Json;
 
-    namespace Zenbot
+    namespace BotCore
     {
         public class BotConfiguration
         {

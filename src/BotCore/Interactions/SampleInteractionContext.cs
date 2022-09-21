@@ -7,19 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zenbot.BotCore.Interactions
+namespace BotCore.Interactions
 {
+
     public interface ICustomInteractionContext : IInteractionContext
     {
         //public SocketInteraction InteractionOverrided { get; }
         //public SocketInteraction SetOverridedInteraction(SocketInteraction interaction);
     }
 
-    public class SampleInteractionContext : InteractionContext, ICustomInteractionContext
+    public class CustomSocketInteractionContext : InteractionContext, ICustomInteractionContext
     {
         //private SocketInteraction _overridedInteraction;
 
-        public SampleInteractionContext(IDiscordClient client, IDiscordInteraction interaction, IMessageChannel channel = null) : base(client, interaction, channel)
+        public CustomSocketInteractionContext(IDiscordClient client, IDiscordInteraction interaction, IMessageChannel channel = null) : base(client, interaction, channel)
         {
 
         }
