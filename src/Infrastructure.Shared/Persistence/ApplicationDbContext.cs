@@ -19,6 +19,7 @@ using Zen.EventProcessor;
 using Zen.Infrastructure.Interfaces;
 using Zenbot.Domain.Shared.Common;
 using Zenbot.Domain.Shared.Entities;
+using Zenbot.Domain.Shared.Entities.Bot;
 using Zenbot.Domain.Shared.Interfaces;
 
 namespace Zenbot.Infrastructure.Shared.Persistence
@@ -57,6 +58,7 @@ namespace Zenbot.Infrastructure.Shared.Persistence
 
 
         public DbSet<BotUser> BotUsers { get; set; }
+        public DbSet<ZenbotServer> ZenbotServers { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
