@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Zenbot.Domain.Shared.Entities;
-using Zenbot.Domain.Shared.Entities.Geography;
 using Zenbot.Infrastructure.Shared.Persistence;
 
 namespace Zenbot.Infrastructure.Persistence
@@ -27,23 +26,13 @@ namespace Zenbot.Infrastructure.Persistence
             }
         }
 
-
         public static async Task SeedDefaultDataAsync(ApplicationDbContext dbContext)
         {
-            if (!dbContext.Cities.Any())
-            {
-                await dbContext.Cities.AddAsync(new City().Create("თბილისი"));
-                await dbContext.Cities.AddAsync(new City().Create("რუსთავი"));
-                await dbContext.Cities.AddAsync(new City().Create("თელავი"));
-                await dbContext.Cities.AddAsync(new City().Create("ყვარელი"));
-                await dbContext.Cities.AddAsync(new City().Create("ზესტაფონი"));
-                await dbContext.Cities.AddAsync(new City().Create("ქუთაისი"));
-                await dbContext.Cities.AddAsync(new City().Create("ცხინვალი"));
-                await dbContext.Cities.AddAsync(new City().Create("სოხუმი"));
-                await dbContext.Cities.AddAsync(new City().Create("ბათუმი"));
-                await dbContext.SaveChangesAsync();
-            }
+            //if (!dbContext.Cities.Any())
+            //{
+            //    await dbContext.Cities.AddAsync(new City().Create("თბილისი"));
+            //    await dbContext.SaveChangesAsync();
+            //}
         }
-
     }
 }

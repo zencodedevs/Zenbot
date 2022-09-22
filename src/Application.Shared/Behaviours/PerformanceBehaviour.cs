@@ -1,10 +1,10 @@
-﻿using Zenbot.Domain.Shared.Interfaces;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Zenbot.Domain.Shared.Interfaces;
 
 namespace Zenbot.Application.Shared.Behaviours
 {
@@ -14,9 +14,6 @@ namespace Zenbot.Application.Shared.Behaviours
         private readonly ILogger<TRequest> _logger;
         private readonly ICurrentUserService _currentUserService;
         private readonly IConfiguration _configuration;
-     
-
-         
 
         public PerformanceBehaviour(ILogger<TRequest> logger, ICurrentUserService currentUserService,
               IConfiguration configuration)
@@ -25,7 +22,7 @@ namespace Zenbot.Application.Shared.Behaviours
             _logger = logger;
             _configuration = configuration;
             _currentUserService = currentUserService;
-            
+
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -46,7 +43,7 @@ namespace Zenbot.Application.Shared.Behaviours
                 var userId = _currentUserService.UserId ?? string.Empty;
                 var userName = "APP USER";
 
-                _logger.LogWarning("ZenAchitecture Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
+                _logger.LogWarning("Zenbot Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
                     requestName, elapsedMilliseconds, userId, userName, request);
             }
 

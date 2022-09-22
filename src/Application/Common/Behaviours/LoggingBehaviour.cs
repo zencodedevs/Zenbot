@@ -32,7 +32,7 @@ namespace Zenbot.Application.Common.Behaviours
                 userName = await _identityService.GetUserNameAsync(userId);
             }
 
-            _logger.LogInformation("ZenAchitecture Request: {Name} {@UserId} {@UserName} {@Request}",
+            _logger.LogInformation("Zenbot Request: {Name} {@UserId} {@UserName} {@Request}",
                 requestName, userId, userName, request);
         }
     }

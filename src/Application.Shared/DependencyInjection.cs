@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Localization;
-using SendGrid.Extensions.DependencyInjection;
 using System.Globalization;
 using System.Reflection;
 using Zen.Application;
@@ -34,12 +33,9 @@ namespace Application.Shared
             CultureInfo.CurrentCulture = new CultureInfo(Constants.SystemCultureNames.Georgian);
 
 
-
             services.TryAddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
             services.TryAddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
 
-            //zen send grid
-            services.AddSendGrid(options => { options.ApiKey = configuration["SendGrid:ApiKey"]; });
 
             return services;
         }

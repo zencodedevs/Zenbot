@@ -20,7 +20,7 @@ namespace Infrastructure.Shared
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseInMemoryDatabase("ZenAchitecture"));
+                    options.UseInMemoryDatabase("Zenbot_Db"));
             }
             else
             {
