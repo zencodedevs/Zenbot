@@ -36,10 +36,10 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .btn.btn-hover.btn-primary {
-  box-shadow: 0 20px 20px -15px rgba(33, 89, 211, 0.8);
+  box-shadow: 0 20px 20px -15px rgba(88, 101, 242, 0.8);
 }
 .btn.btn-hover.btn-primary:hover {
-  box-shadow: 0 20px 25px -10px rgba(33, 89, 211, 0.8);
+  box-shadow: 0 20px 25px -10px rgba(88, 101, 242, 0.8);
 }
 
 .btn.btn-hover.btn-secondary {

@@ -1,1 +1,19 @@
-﻿<h2 class="text-infoo">Index</h2>
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section>
+    <div class="text-center">
+        <img src="~/img/logo.svg" class="w-25" alt="Logo" />
+    </div>
+
+    <div class="mt-2 text-center">
+        <h2 class="text-primary fs-1 fw-bolder">Zenbot</h2>
+    </div>
+
+    <div class="mt-3 text-center">
+        <a asp-area="Identity" asp-page="/Account/Login" class="text-dark hover-fade fs-4 fw-bold">Login</a>
+    </div>
+</section>
