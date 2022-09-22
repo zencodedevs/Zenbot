@@ -1,0 +1,19 @@
+﻿[
+  // compile scss
+  {
+    "outputFile": "wwwroot/css/bootstrap-customized.css",
+    "inputFile": "wwwroot/scss/bootstrap-customized.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/base.css",
+    "inputFile": "wwwroot/scss/base.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/base-auth.css",
+    "inputFile": "wwwroot/scss/base-auth.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/forms.css",
+    "inputFile": "wwwroot/scss/forms.scss"
+  }
+]

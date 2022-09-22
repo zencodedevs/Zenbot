@@ -1,0 +1,124 @@
+﻿@import '_mixins-global.scss';
+@import '../lib/bootstrap/scss/_functions.scss';
+@import '_variables-global.scss';
+@import '../lib/bootstrap/scss/_variables.scss';
+
+html {
+    direction: $direction;
+}
+
+body,
+input,
+textarea,
+button {
+    font-family: 'Inter', 'Arial' !important;
+}
+
+a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.hover-fade {
+    transition: opacity .3s;
+}
+
+.hover-fade:hover {
+    opacity: .7;
+}
+
+@mixin btn-hover($color) {
+    box-shadow: 0 20px 20px -15px rgba($color, .8);
+
+    &:hover {
+        box-shadow: 0 20px 25px -10px rgba($color, .8);
+    }
+}
+
+.btn.btn-hover {
+    transition: box-shadow 150ms;
+}
+
+.btn.btn-lg.btn-hover {
+    padding: .5rem 1.8rem;
+}
+
+.btn.btn-hover.btn-primary {
+    @include btn-hover($primary);
+}
+
+.btn.btn-hover.btn-secondary {
+    @include btn-hover($secondary);
+}
+
+.btn.btn-hover.btn-success {
+    @include btn-hover($success);
+}
+
+.btn.btn-hover.btn-info {
+    @include btn-hover($info);
+}
+
+.btn.btn-hover.btn-warning {
+    @include btn-hover($warning);
+}
+
+.btn.btn-hover.btn-danger {
+    @include btn-hover($danger);
+}
+
+.btn.btn-hover.btn-light {
+    @include btn-hover($light);
+}
+
+.btn.btn-hover.btn-dark {
+    @include btn-hover($dark);
+}
+
+.icon-circle-button,
+.icon-circle-button-sm {
+    border-radius: 50%;
+}
+
+.icon-circle-button {
+    padding: .4rem;
+}
+
+.icon-circle-button-sm {
+    padding: .3rem;
+}
+
+.icon-circle-button > i,
+.icon-circle-button-sm > i {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.icon-circle-button > i {
+    min-width: 25px;
+    min-height: 25px;
+    line-height: 25px;
+    font-size: 1.3rem;
+}
+
+.icon-circle-button-sm > i {
+    min-width: 20px;
+    min-height: 20px;
+    line-height: 20px;
+}
+
+i.toggle-password-button-icon {
+    min-width: 20px;
+}
+
+.scrollable-dropdown-menu {
+    min-width: 200px;
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

@@ -1,0 +1,73 @@
+@import '_variables-global.scss';
+
+@mixin margin-start($value) {
+    @if $direction == "ltr" {
+        margin-left: $value;
+    }
+    @else if $direction == "rtl" {
+        margin-right: $value;
+    }
+}
+
+@mixin margin-end($value) {
+    @if $direction == "ltr" {
+        margin-right: $value;
+    }
+    @else if $direction == "rtl" {
+        margin-left: $value;
+    }
+}
+
+@mixin margin-all-sides($value-top, $value-end, $value-start, $value-bottom) {
+    @if $direction == "ltr" {
+        margin: $value-top $value-end $value-start $value-bottom;
+    }
+    @else if $direction == "rtl" {
+        margin: $value-top $value-start $value-end $value-bottom;
+    }
+}
+
+@mixin padding-start($value) {
+    @if $direction == "ltr" {
+        padding-left: $value;
+    }
+    @else if $direction == "rtl" {
+        padding-right: $value;
+    }
+}
+
+@mixin padding-end($value) {
+    @if $direction == "ltr" {
+        padding-right: $value;
+    }
+    @else if $direction == "rtl" {
+        padding-left: $value;
+    }
+}
+
+@mixin padding-all-sides($value-top, $value-end, $value-start, $value-bottom) {
+    @if $direction == "ltr" {
+        padding: $value-top $value-end $value-start $value-bottom;
+    }
+    @else if $direction == "rtl" {
+        padding: $value-top $value-start $value-end $value-bottom;
+    }
+}
+
+@mixin edge-space-start($value) {
+    @if $direction == "ltr" {
+        left: $value;
+    }
+    @else if $direction == "rtl" {
+        right: $value;
+    }
+}
+
+@mixin edge-space-end($value) {
+    @if $direction == "ltr" {
+        right: $value;
+    }
+    @else if $direction == "rtl" {
+        left: $value;
+    }
+}

@@ -1,4 +1,3 @@
-
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -60,7 +59,7 @@ namespace Zenbot.WebUI
                 .ConfigServices(services);
 
             services.AddSingleton(bot);
-        
+
 
             services.AddDomain();
             services.AddApplication(Configuration);

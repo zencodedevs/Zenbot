@@ -1,0 +1,75 @@
+﻿@import '_mixins-global.scss';
+@import "../lib/bootstrap/scss/_functions.scss";
+@import '_variables-global.scss';
+@import "../lib/bootstrap/scss/_variables.scss";
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.validation-summary-errors,
+.form-group span.field-validation-error {
+    padding: .2rem .6rem;
+    border-radius: $border-radius;
+    background-color: rgba($danger, .1);
+    color: $danger;
+}
+
+.validation-summary-errors {
+    margin: 1rem 0;
+}
+
+.validation-summary-errors ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.validation-summary-errors ul li:not(:first-child),
+.form-group span.field-validation-error {
+    margin-top: .5rem;
+}
+
+.form-group span.field-validation-error {
+    display: inline-block;
+}
+
+.validation-summary-errors ul li:before,
+.form-group span.field-validation-error:before {
+    content: '* ';
+}
+
+.form-group .form-label-required:after {
+    content: ' *';
+}
+
+.form-group .input-group {
+    position: relative;
+}
+
+.form-group .input-group .form-control {
+    @include padding-end(40px);
+}
+
+.form-group .input-group button[type=button] {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    right: 5px;
+    z-index: 5;
+    outline: none;
+    border: none;
+    background-color: $white;
+    border-radius: 50% !important;
+    transition: .3s;
+}
+
+.form-group .input-group button[type=button]:hover {
+    background-color: $gray-300;
+    opacity: .7;
+}
+
+.form-group .input-group button[type=button] span,
+.form-group .input-group button[type=button] i {
+    vertical-align: middle;
+}

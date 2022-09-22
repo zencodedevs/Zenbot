@@ -1,0 +1,3 @@
+﻿$(document).ready(function () {
+    // place auth base scripts here...
+});

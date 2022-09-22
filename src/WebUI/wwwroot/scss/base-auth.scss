@@ -1,0 +1,132 @@
+﻿@import '_mixins-global.scss';
+@import "../lib/bootstrap/scss/_functions.scss";
+@import '_variables-global.scss';
+@import "../lib/bootstrap/scss/_variables.scss";
+@import "../lib/bootstrap/scss/mixins/_breakpoints.scss";
+
+.form-group input.form-control {
+    box-shadow: $box-shadow-sm;
+}
+
+.form-group button[type=submit] {
+    width: 100%;
+    padding: .7rem .2rem;
+    margin-top: .7rem;
+    border-radius: 2rem;
+}
+
+form .form-header {
+    margin-bottom: 2.2rem;
+}
+
+form .form-header .title {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+form .form-header .link {
+    margin-top: .5rem;
+}
+
+form .form-header .paragraph {
+    font-size: .9rem;
+    color: $gray-600;
+}
+
+.form-group .form-label,
+.form-group button[type=submit] {
+    font-weight: 600;
+}
+
+.auth-wrapper {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.auth-items {
+    display: flex;
+    width: 1150px;
+    border-radius: 1rem;
+    box-shadow: $box-shadow-sm;
+}
+
+.auth-items .auth-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+    background-color: $dark;
+    border-radius: 1rem 0 0 1rem;
+}
+
+.auth-items .auth-banner .title {
+    z-index: 5;
+}
+
+.auth-items .auth-banner .title span {
+    display: block;
+    color: $white;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.auth-items .auth-form {
+    width: 600px;
+    padding: 4rem;
+    background-color: $white;
+    border-radius: 0 1rem 1rem 0;
+}
+
+@include media-breakpoint-down(xl) {
+    .auth-wrapper {
+        padding: .75rem;
+    }
+
+    .auth-items {
+        width: 970px;
+    }
+
+    .auth-items .auth-form {
+        width: 450px;
+        padding: 3rem;
+    }
+}
+
+@include media-breakpoint-down(lg) {
+    .auth-wrapper {
+        padding: .75rem;
+    }
+
+    .auth-items {
+        width: 450px;
+    }
+
+    .auth-items .auth-banner {
+        display: none;
+    }
+
+    .auth-items .auth-form {
+        width: 100%;
+        border-radius: 1rem;
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .auth-wrapper {
+        padding: .5rem;
+    }
+
+    .auth-items {
+        width: 100%;
+    }
+
+    .auth-items .auth-form {
+        width: 100%;
+        padding: 2rem;
+    }
+}
