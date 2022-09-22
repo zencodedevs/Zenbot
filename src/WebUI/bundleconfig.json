@@ -1,0 +1,61 @@
+[
+  // bundle and minify js
+  {
+    "outputFileName": "wwwroot/bundle/js/base.min.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery/js/jquery.min.js",
+      "wwwroot/lib/jquery-validation/js/jquery.validate.min.js",
+      "wwwroot/lib/jquery-unobtrusive-validation/js/jquery.validate.unobtrusive.min.js",
+      "wwwroot/lib/bootstrap/js/bootstrap.bundle.min.js",
+      "wwwroot/js/base.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundle/js/base-auth.min.js",
+    "inputFiles": [
+      "wwwroot/js/base-auth.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  // bundle and minify css
+  {
+    "outputFileName": "wwwroot/bundle/css/font.min.css",
+    "inputFiles": [
+      "wwwroot/font/inter/inter.css",
+      "wwwroot/font/material-icons/material-icons.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundle/css/base.min.css",
+    "inputFiles": [
+      "wwwroot/css/bootstrap-customized.css",
+      "wwwroot/css/base.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundle/css/base-auth.min.css",
+    "inputFiles": [
+      "wwwroot/css/base-auth.css",
+      "wwwroot/css/forms.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  }
+]

@@ -1,0 +1,70 @@
+﻿.form-group {
+  margin-bottom: 1rem;
+}
+
+.validation-summary-errors,
+.form-group span.field-validation-error {
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.25rem;
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.validation-summary-errors {
+  margin: 1rem 0;
+}
+
+.validation-summary-errors ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.validation-summary-errors ul li:not(:first-child),
+.form-group span.field-validation-error {
+  margin-top: 0.5rem;
+}
+
+.form-group span.field-validation-error {
+  display: inline-block;
+}
+
+.validation-summary-errors ul li:before,
+.form-group span.field-validation-error:before {
+  content: "* ";
+}
+
+.form-group .form-label-required:after {
+  content: " *";
+}
+
+.form-group .input-group {
+  position: relative;
+}
+
+.form-group .input-group .form-control {
+  padding-right: 40px;
+}
+
+.form-group .input-group button[type=button] {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  right: 5px;
+  z-index: 5;
+  outline: none;
+  border: none;
+  background-color: #fff;
+  border-radius: 50% !important;
+  transition: 0.3s;
+}
+
+.form-group .input-group button[type=button]:hover {
+  background-color: #dee2e6;
+  opacity: 0.7;
+}
+
+.form-group .input-group button[type=button] span,
+.form-group .input-group button[type=button] i {
+  vertical-align: middle;
+}
