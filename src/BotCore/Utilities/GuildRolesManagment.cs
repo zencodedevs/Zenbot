@@ -21,9 +21,9 @@ namespace Zenbot.BotCore
                 {
                     await u.AddRoleAsync(unVerifiedRoleId);
                 }
-                catch
+                catch(Exception ex)
                 {
-
+                    Console.WriteLine(ex.Message);
                 }
                 finally
                 {

@@ -21,6 +21,9 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
         {
             public BotConfiguration botConfiguration { get; set; }
 
+            // check if we have any user without Roles(Varified, UnVarified) if found we will give them UnVerified role
+            // so they should enter the Discord server password to have access to the channels
+
             [SlashCommand("sync-roles", "sync roles")]
             public async Task syncRoles()
             {
@@ -34,6 +37,10 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
                     x.Content = "Done, users roles are synced.";
                 });
             }
+
+
+            // This command is gonna be used just once in Authentication channel by Admin 
+            // and by this component new users can enter the server password to have access to other channels 
             [SlashCommand("authentication", "setup authentication channel")]
             public async Task authentication(ITextChannel channel)
             {
@@ -54,6 +61,8 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
         }
     }
 
+
+    // here is the place where new users can enter the server password to join the main server
     [RequireBotPermission(GuildPermission.ManageRoles)]
     public class SharedModules : InteractionModuleBase<CustomSocketInteractionContext>
     {
