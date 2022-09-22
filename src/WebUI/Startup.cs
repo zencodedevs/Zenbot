@@ -41,7 +41,6 @@ namespace Zenbot.WebUI
                   .AddEnvironmentVariables();
 
             Configuration = builder.Build();
-
         }
 
         public IConfiguration Configuration { get; }
@@ -49,7 +48,6 @@ namespace Zenbot.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             //set nlog connection string
             GlobalDiagnosticsContext.Set("connectionString", Configuration.GetConnectionString("DefaultConnection"));
             //set nlog inster clause variable
@@ -84,24 +82,17 @@ namespace Zenbot.WebUI
                 options.SuppressModelStateInvalidFilter = true;
             });
 
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
-
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(Constants.SettingsSecurityPolicy,
                     policy => policy.RequireClaim(Permissions.PermissionType.SettingPerm));
             });
 
-
             #region Open api  
 
             services.AddOpenApiDocument(configure =>
             {
-                configure.Title = "ZenAchitecture Open API";
+                configure.Title = "Zenbot Open API";
                 configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
                 {
                     Type = OpenApiSecuritySchemeType.ApiKey,
@@ -114,16 +105,15 @@ namespace Zenbot.WebUI
                 configure.OperationProcessors.Add(new SysLanguageHeaderOperationProcessor());
             });
 
-
             #endregion Open api  
 
-            // TO DO
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader());
+                    builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
             });
 
             ////
@@ -142,18 +132,13 @@ namespace Zenbot.WebUI
                 options.SubstituteApiVersionInUrl = true;
             });
 
-
             services.AddMvc()
                 .AddRazorRuntimeCompilation()
                 .AddJsonOptions(options =>
                     {
                         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                         options.JsonSerializerOptions.IgnoreNullValues = false;
-
                     });
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -183,18 +168,12 @@ namespace Zenbot.WebUI
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-
 
             app.UseSwaggerUi3(settings =>
             {
                 settings.Path = "/api";
                 settings.DocumentPath = "/api/specification.json";
                 settings.DocExpansion = "list";
-
             });
 
             app.UseOpenApi(options =>
@@ -212,10 +191,9 @@ namespace Zenbot.WebUI
             app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseIdentityServer();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -224,22 +202,6 @@ namespace Zenbot.WebUI
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
-
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
-                {
-                    //spa.UseAngularCliServer(npmScript: "start");
-                    var config = Configuration["SpaBaseUrl"] ?? "http://localhost:4200";
-                    spa.UseProxyToSpaDevelopmentServer(config);
-                }
-            });
-
 
             #region Localization
 

@@ -1,14 +1,13 @@
-﻿using Zenbot.Application.Common.Behaviours;
-using Zenbot.Application.Common.Services;
-using Zenbot.Domain.Interfaces;
+﻿using Application.Shared;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using Zen.Application;
-using Application.Shared;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Reflection;
+using Zenbot.Application.Common.Behaviours;
+using Zenbot.Application.Common.Services;
+using Zenbot.Domain.Interfaces;
 
 namespace Zenbot.Application
 {
@@ -24,7 +23,6 @@ namespace Zenbot.Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
 
 
             services.TryAddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));

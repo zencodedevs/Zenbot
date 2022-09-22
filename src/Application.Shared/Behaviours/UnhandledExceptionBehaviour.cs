@@ -30,7 +30,7 @@ namespace Zenbot.Application.Shared.Behaviours
             {
                 var requestName = typeof(TRequest).Name;
 
-                _logger.LogError(ex, "ZenAchitecture Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
+                _logger.LogError(ex, "Zenbot Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
 
                 throw;
             }

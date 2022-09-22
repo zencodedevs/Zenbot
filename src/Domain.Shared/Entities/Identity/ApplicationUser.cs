@@ -10,10 +10,8 @@ namespace Zenbot.Domain.Shared.Entities
         public ApplicationUser() { }
 
         public string Avatar { get; private set; }
-    
+
         [NotMapped]
         public List<DomainEvent> DomainEvents { get; set; }
-
-   
     }
 }

@@ -18,7 +18,6 @@ using Zen.EventProcessor;
 using Zen.Infrastructure.Interfaces;
 using Zenbot.Domain.Shared.Common;
 using Zenbot.Domain.Shared.Entities;
-using Zenbot.Domain.Shared.Entities.Geography;
 using Zenbot.Domain.Shared.Interfaces;
 
 namespace Zenbot.Infrastructure.Shared.Persistence
@@ -56,7 +55,6 @@ namespace Zenbot.Infrastructure.Shared.Persistence
         #endregion Zen Framework Suggested
 
 
-        public DbSet<City> Cities { get; set; }
         public DbSet<BotUser> BotUsers { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -96,9 +94,7 @@ namespace Zenbot.Infrastructure.Shared.Persistence
 
             modelBuilder.Entity<ApplicationUser>(b => { });
 
-
             /// Entity type configurations  
-
         }
 
         private async Task DispatchEvents()
