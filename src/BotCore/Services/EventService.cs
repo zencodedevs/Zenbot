@@ -1,7 +1,9 @@
-﻿using Discord;
+﻿using BotCore;
+using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using System.Web;
@@ -42,7 +44,7 @@ namespace Zenbot.BotCore
             catch
             {
 
-                await SendMessageToLoggerChannel($"Can not send message to <@{targetId}>:\n" +
+                await SendMessageToLoggerChannelAsync($"Can not send message to <@{targetId}>:\n" +
                     $"1. make sure user direct is open.\n" +
                     $"2. make sure user have a joined this server.");
 
@@ -52,10 +54,29 @@ namespace Zenbot.BotCore
 
         private async Task _client_Ready()
         {
-            await SendMessageToLoggerChannel("I am online.");
+            var serversCount = _client.Guilds.Count;
+            var memebrsCount = _client.Guilds.Sum(a => a.MemberCount);
+            var mainServer = _client.GetGuild(_config.MainGuildId);
+            var embed = new EmbedBuilder()
+            {
+                Title = "I am ready",
+                Description =
+                $"Hi, i am online, my current latency to discord is **{_client.Latency}ms**!\n" +
+                $"Total servers: `{serversCount}`\n" +
+                $"Total members: `{memebrsCount}`\n" +
+                $"{mainServer.Name}'s members: `{memebrsCount}`\n" +
+                $"{mainServer.Name}'s roles: `{mainServer.Roles.Count}`\n" +
+                $"{mainServer.Name}'s channels: `{mainServer.Channels.Count}`",
+                ThumbnailUrl = "https://img.icons8.com/fluency/344/chatbot.png",
+                Color = 7976191
+            }.Build();
+
+            await SendMessageToLoggerChannelAsync(embed: embed);
+
 
             var guild = _client.GetGuild(_config.MainGuildId);
-            await GuildRolesManagment.SyncMemberRoles(guild, _config.Roles.VarifiedId, _config.Roles.UnVarifiedId);
+            var users = await GuildRolesManagment.GetUsersWithoutAnyRoleAsync(guild, _config.Roles.VarifiedId, _config.Roles.UnVarifiedId);
+            await GuildRolesManagment.SyncMemberRolesAsync(users, _config.Roles.UnVarifiedId);
         }
 
         private async Task _client_UserJoined(SocketGuildUser user)
@@ -63,8 +84,8 @@ namespace Zenbot.BotCore
             await user.AddRoleAsync(_config.Roles.UnVarifiedId);
         }
 
-        public async Task SendMessageToLoggerChannel(string text) =>
-            await _client.GetGuild(_config.MainGuildId).GetTextChannel(_config.Channels.LoggerId).SendMessageAsync(text);
+        public async Task SendMessageToLoggerChannelAsync(string text = null, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageReference messageReference = null, MessageComponent components = null, ISticker[] stickers = null, Embed[] embeds = null, MessageFlags flags = MessageFlags.None) =>
+            await _client.GetGuild(_config.MainGuildId).GetTextChannel(_config.Channels.LoggerId).SendMessageAsync(text, isTTS, embed, options, allowedMentions, messageReference, components, stickers, embeds, flags);
 
     }
 }
