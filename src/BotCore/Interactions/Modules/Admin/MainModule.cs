@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using BotCore;
+using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using System;
@@ -21,30 +22,43 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
         {
             public BotConfiguration botConfiguration { get; set; }
 
-            // check if we have any user without Roles(Varified, UnVarified) if found we will give them UnVerified role
-            // so they should enter the Discord server password to have access to the channels
-
             [SlashCommand("sync-roles", "sync roles")]
             public async Task syncRoles()
             {
                 await DeferAsync();
-                var msg = await FollowupAsync("Syncing the roles.");
 
-                await GuildRolesManagment.SyncMemberRoles(Context.Guild, botConfiguration.Roles.VarifiedId, botConfiguration.Roles.UnVarifiedId);
+                var users = await GuildRolesManagment.GetUsersWithoutAnyRoleAsync(Context.Guild, botConfiguration.Roles.VarifiedId, botConfiguration.Roles.UnVarifiedId);
+                var usersCount = users.Count();
+
+                var embed = new EmbedBuilder()
+                {
+                    Title = "Please Wait",
+                    Description = $"Syncing the roles for **{usersCount}** users, it may takes time about **{(usersCount * 105) / 1000} seconds**.",
+                    Color = 16761607,
+                    ThumbnailUrl = "https://cdn.discordapp.com/attachments/1022106350219698186/1022529862960947200/4.gif",
+                }.Build();
+
+                var msg = await FollowupAsync(embed: embed);
+
+                await GuildRolesManagment.SyncMemberRolesAsync(users, botConfiguration.Roles.UnVarifiedId);
 
                 await msg.ModifyAsync(x =>
                 {
-                    x.Content = "Done, users roles are synced.";
+                    var embed1 = new EmbedBuilder()
+                    {
+                        Title = "The operation was completed successfully.",
+                        Description = $"The operation was completed successfully, roles synced for **{usersCount}** users.",
+                        ThumbnailUrl = "https://img.icons8.com/fluency/200/good-quality.png",
+                        Color = Color.Green
+                    }.Build();
+                    x.Embed = embed1;
+                    x.Content = Context.User.Id.ToUserMention();
                 });
             }
-
-
-            // This command is gonna be used just once in Authentication channel by Admin 
-            // and by this component new users can enter the server password to have access to other channels 
             [SlashCommand("authentication", "setup authentication channel")]
             public async Task authentication(ITextChannel channel)
             {
-                await DeferAsync();
+                await DeferAsync(true);
 
                 var embed = new EmbedBuilder()
                 {
@@ -56,13 +70,13 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
                     .WithButton("Authentication", "button-admin-setup-authentication-password", ButtonStyle.Success, new Emoji("🔒"), null, false, 0);
 
                 await channel.SendMessageAsync(embed: embed.Build(), components: component.Build());
+
+                await FollowupAsync("The channel updated, make sure the channel is private and unwriteable.", ephemeral: true);
             }
 
         }
     }
 
-
-    // here is the place where new users can enter the server password to join the main server
     [RequireBotPermission(GuildPermission.ManageRoles)]
     public class SharedModules : InteractionModuleBase<CustomSocketInteractionContext>
     {
@@ -71,6 +85,7 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
 
         [ComponentInteraction("button-admin-setup-authentication-password", true)]
         [RequireGuildRole(RequireGuildRole.RoleType.UnVerified)]
+        [RateLimit(10, 1, RateLimit.RateLimitType.User, RateLimit.RateLimitBaseType.BaseOnMessageComponentCustomId)]
         public async Task btnAuthentication()
         {
             await RespondWithModalAsync<AuthenticationForm>("modal-admin-setup-authentication-password");
@@ -81,29 +96,77 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
         {
             await DeferAsync(true);
 
-            if (modal.Password.Equals("1"))
+            if (!modal.Password.Equals("1"))
             {
-                try
+                var emebd = new EmbedBuilder()
                 {
-                    await EventService.SendMessageToLoggerChannel($"@everyone Say Welcome To {MentionUtils.MentionUser(Context.User.Id)}");
+                    Title = "Wrong Password !",
+                    Description = "Your entered password is wrong.",
+                    ThumbnailUrl = "https://img.icons8.com/fluency/200/restriction-shield.png",
+                    Color = Color.Red
+                }.Build();
 
-                    await Context.User.SendFileAsync(@"wwwroot/documents/sample.pdf", "Download the file");
-                    
-                    await (Context.User as IGuildUser).AddRoleAsync(botConfiguration.Roles.VarifiedId);
-                    await (Context.User as IGuildUser).RemoveRoleAsync(botConfiguration.Roles.UnVarifiedId);
-
-                    await FollowupAsync("You are verified now.", ephemeral: true);
-
-                    return;
-                }
-                catch
-                {
-                    await FollowupAsync("The bot can't send message in your direct, make sure yoru direct is open.", ephemeral: true);
-                    return;
-                }
+                await FollowupAsync(embed: emebd, ephemeral: true);
+                return;
             }
 
-            await FollowupAsync("Your entered password is wrong.", ephemeral: true);
+            var embed = new EmbedBuilder()
+            {
+                Title = "Be Carefull !",
+                Description = "Make sure your direct (DM) is open to send a message then click on the **confirm** button.",
+                ThumbnailUrl = "https://img.icons8.com/fluency/344/important-mail.png",
+                Color = 506623
+            }.Build();
+
+            var component = new ComponentBuilder()
+                .WithButton("Confirm", "button-admin-setup-authentication-password-confirm", ButtonStyle.Success, new Emoji("⚒"), null, false, 0);
+
+            await FollowupAsync(embed: embed, components: component.Build(), ephemeral: true);
+        }
+
+
+        [ComponentInteraction("button-admin-setup-authentication-password-confirm")]
+        [RequireGuildRole(RequireGuildRole.RoleType.UnVerified)]
+        [RateLimit(10, 1, RateLimit.RateLimitType.User, RateLimit.RateLimitBaseType.BaseOnMessageComponentCustomId)]
+        public async Task confirm()
+        {
+            await DeferAsync();
+
+            if (!System.IO.File.Exists(botConfiguration.StaticFiles.GreetingFile))
+            {
+                await FollowupAsync("File not found.", ephemeral: true);
+                return;
+            }
+
+            try
+            {
+                await Context.User.SendFileAsync(
+                    filePath: botConfiguration.StaticFiles.GreetingFile,
+                    text: string.Format(botConfiguration.Text.GreetingMessage, Context.User.Username));
+            }
+            catch
+            {
+                await FollowupAsync("The bot can't send message in your direct, make sure yoru direct is open.", ephemeral: true);
+                return;
+            }
+
+            await (Context.User as IGuildUser).AddRoleAsync(botConfiguration.Roles.VarifiedId);
+
+            var embed = new EmbedBuilder()
+            {
+                Title = $"{Context.User.Username} Joined",
+                Description = $"@everyone Say Welcome To <@{Context.User.Id}>.",
+                ThumbnailUrl = "https://img.icons8.com/fluency/200/confetti.png",
+                Author = new EmbedAuthorBuilder()
+                {
+                    Name = Context.User.Username,
+                    IconUrl = Context.User.GetAvatarUrl() ?? Context.User.GetDefaultAvatarUrl()
+                }
+            }.Build();
+
+            await EventService.SendMessageToLoggerChannelAsync(Context.User.Id.ToUserMention(), embed: embed);
+
+            await (Context.User as IGuildUser).RemoveRoleAsync(botConfiguration.Roles.UnVarifiedId);
         }
     }
 }
