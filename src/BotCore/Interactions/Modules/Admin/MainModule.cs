@@ -17,6 +17,8 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
     public class MainModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
 
+        // It is all about how the Admin can manage Roles in discord
+
         [Group("roles", "roles commands")]
         public class RolesModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
@@ -88,7 +90,7 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
         }
 
 
-
+        // the command that admin can run to check if there are some people without desired (Verified ) Role
         [Group("setup", "setup guild settings")]
         public class SetupModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
@@ -149,6 +151,9 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
         }
     }
 
+
+
+    // Here is the part that New users should enter the server password so the can be part of this server
     [RequireBotPermission(GuildPermission.ManageRoles)]
     public class SharedModules : InteractionModuleBase<CustomSocketInteractionContext>
     {
@@ -163,6 +168,8 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
             await RespondWithModalAsync<AuthenticationForm>("modal-admin-setup-authentication-password");
         }
 
+
+        // The Modal which unverified user should enter their password
         [ModalInteraction("modal-admin-setup-authentication-password", true)]
         public async Task modalAuthentication(AuthenticationForm modal)
         {
@@ -197,6 +204,11 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
         }
 
 
+        /// <summary>
+        /// Errro handling if the user's direct is not open, first they should open thier direct so the bot can send them message and 
+        /// on boarding file
+        /// </summary>
+        /// <returns></returns>
         [ComponentInteraction("button-admin-setup-authentication-password-confirm")]
         [RequireGuildRole(RequireGuildRole.RoleType.UnVerified)]
         [RateLimit(10, 1, RateLimit.RateLimitType.User, RateLimit.RateLimitBaseType.BaseOnMessageComponentCustomId)]
