@@ -52,25 +52,6 @@ namespace BotCore.Interactions.Modules.Moderators
         [Group("roles", "roles commands")]
         public class RolesModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
-            //public enum SetType
-            //{
-            //    [ChoiceDisplay("Add Role")]
-            //    Add,
-            //    [ChoiceDisplay("Remove Role")]
-            //    Remove
-            //}
-            //[SlashCommand("set", "add or remove role from user.")]
-            //public async Task add(SetType type, IRole role, IGuildUser user)
-            //{
-            //    if (type == SetType.Add)
-            //    {
-            //        await add(role, user);
-            //    }
-            //    else
-            //    {
-            //        await remove(role, user);
-            //    }
-            //}
 
             [SlashCommand("add", "add role to user")]
             public async Task add(IGuildUser user, IRole role)

@@ -48,7 +48,7 @@ namespace Zenbot.BotCore
                                 try
                                 {
                                     await _client.GetGuild(_config.MainGuildId).GetTextChannel(_config.Channels.LoggerId)
-                                          .SendMessageAsync($"<@{u.Username}> Hey today is your brithday 🎉");
+                                          .SendMessageAsync($"@everyone Congrates <@{u.UserId}>'s birthday, Happy Birtday 🎉");
 
                                     u.NextNotifyTIme = DateTime.UtcNow
                                     .AddYears(1)
@@ -60,7 +60,7 @@ namespace Zenbot.BotCore
                                 }
                                 finally
                                 {
-                                    await Task.Delay(300);
+                                    await Task.Delay(200);
                                 }
                             }
                         }

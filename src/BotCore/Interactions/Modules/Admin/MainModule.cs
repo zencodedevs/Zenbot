@@ -17,6 +17,78 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
     public class MainModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
 
+        [Group("roles", "roles commands")]
+        public class RolesModule : InteractionModuleBase<CustomSocketInteractionContext>
+        {
+
+            [SlashCommand("add", "add role to user")]
+            public async Task add(IGuildUser user, IRole role)
+            {
+                await DeferAsync();
+                if (user.RoleIds.Contains(role.Id))
+                {
+                    await FollowupAsync("the user have this role already.");
+                    return;
+                }
+                await user.AddRoleAsync(role);
+                await FollowupAsync("the role added to the user succesfuly.");
+            }
+
+            [SlashCommand("remove", "remove role to user")]
+            public async Task remove(IGuildUser user, [Autocomplete()] string role)
+            {
+                await DeferAsync();
+
+                var roleId = ulong.Parse(role);
+
+                if (!user.RoleIds.Contains(roleId))
+                {
+                    await FollowupAsync("the user haven't this role.");
+                    return;
+                }
+
+                await user.RemoveRoleAsync(roleId);
+                await FollowupAsync("the role removed from the user succesfuly.");
+            }
+
+            [AutocompleteCommand("role", "remove")]
+            public async Task user_roles()
+            {
+                var socket = (Context.Interaction as SocketAutocompleteInteraction);
+
+                var results = new List<AutocompleteResult>();
+
+                var targetUser = socket.Data.Options.FirstOrDefault(a => a.Name == "user");
+                if (targetUser != null && targetUser.Value != null)
+                {
+                    bool parseResult = ulong.TryParse(targetUser.Value.ToString(), out ulong userId);
+                    if (parseResult is true)
+                    {
+                        var user = await Context.Guild.GetUserAsync(userId);
+                        foreach (var roleId in user.RoleIds)
+                        {
+                            var role = Context.Guild.GetRole(roleId);
+                            if (role.IsManaged || role.Name == "@everyone") continue;
+
+                            var match = socket.Data.Current.Value.ToString();
+                            if (!role.Name.ToLower().Contains(match.ToLower()))
+                                continue;
+
+                            var result = new AutocompleteResult()
+                            {
+                                Name = role.Name,
+                                Value = role.Id.ToString()
+                            };
+                            results.Add(result);
+                        }
+                    }
+                }
+                await socket.RespondAsync(results);
+            }
+        }
+
+
+
         [Group("setup", "setup guild settings")]
         public class SetupModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
