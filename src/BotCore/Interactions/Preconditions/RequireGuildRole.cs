@@ -1,4 +1,4 @@
-﻿namespace Zenbot.BotCore.Interactions
+﻿namespace Discord.Interactions
 {
     using System;
     using System.Collections.Generic;
@@ -8,6 +8,7 @@
     using Discord;
     using Discord.Interactions;
     using Microsoft.Extensions.DependencyInjection;
+    using Zenbot.BotCore;
 
     public class RequireGuildRole : PreconditionAttribute
     {
@@ -19,7 +20,8 @@
         public enum RoleType
         {
             Verified,
-            UnVerified
+            UnVerified,
+            HR
         }
         public override Task<PreconditionResult> CheckRequirementsAsync(IInteractionContext context, ICommandInfo commandInfo, IServiceProvider services)
         {
@@ -35,6 +37,7 @@
             {
                 RoleType.Verified => config.Roles.VarifiedId,
                 RoleType.UnVerified => config.Roles.UnVarifiedId,
+                RoleType.HR => config.Roles.HR,
                 _ => 0
             };
 
@@ -43,7 +46,7 @@
                 return Task.FromResult(PreconditionResult.FromSuccess());
             }
 
-            return Task.FromResult(PreconditionResult.FromError(ErrorMessage ?? ("You need guild role " + context.Guild.GetRole(_roleId).Name + ".")));
+            return Task.FromResult(PreconditionResult.FromError(ErrorMessage ?? ("You need guild role **" + context.Guild.GetRole(_roleId).Name + "**.")));
 
         }
     }

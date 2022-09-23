@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Zen.Domain.Interfaces;
 using Zen.Uow;
 
-namespace Zenbot.BotCore
+namespace BotCore
 {
     public class UsersService
     {

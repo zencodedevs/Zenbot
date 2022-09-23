@@ -1,4 +1,5 @@
-﻿using Discord.WebSocket;
+﻿using BotCore;
+using Discord.WebSocket;
 using Domain.Shared.Entities.Bot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

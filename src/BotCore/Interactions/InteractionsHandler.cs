@@ -35,7 +35,7 @@ namespace Zenbot.BotCore
             }
 
             _client.InteractionCreated += _client_IntegrationCreated;
-            _interactions.InteractionExecuted += _interactions_InteractionExecuted;            
+            _interactions.InteractionExecuted += _interactions_InteractionExecuted;
         }
         private async Task _client_IntegrationCreated(SocketInteraction interaction)
         {
@@ -47,9 +47,12 @@ namespace Zenbot.BotCore
             if (result.IsSuccess)
                 return;
 
+            if (context.Interaction.Type == Discord.InteractionType.ApplicationCommandAutocomplete)
+                return;
+
             if (!context.Interaction.HasResponded)
             {
-                await context.Interaction.RespondAsync(result.ErrorReason,ephemeral:true);
+                await context.Interaction.RespondAsync(result.ErrorReason, ephemeral: true);
                 return;
             }
             else

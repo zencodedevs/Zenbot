@@ -8,8 +8,8 @@ namespace Zenbot.BotCore.Interactions.Modules
         [SlashCommand("ping", "Ping the bot")]
         public async Task ping()
         {
-            
             await DeferAsync();
+            await FollowupAsync($"Pong ! ` Current Latency {Context.Client.Latency}`");
         }
     }
 }

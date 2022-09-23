@@ -25,7 +25,7 @@ namespace Zenbot.BotCore
         }
         public async Task InitializeAsync()
         {
-            await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), this.services);
+            await _commands.AddModulesAsync(Assembly.GetExecutingAssembly(), this.services);
             _client.MessageReceived += _client_MessageReceived;
             _commands.CommandExecuted += _commands_CommandExecuted;
         }

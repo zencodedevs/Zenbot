@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using BotCore;
+using Discord;
 using Discord.Interactions;
 using System;
 using System.Linq;
@@ -11,7 +12,6 @@ namespace Zenbot.BotCore.Interactions.Modules
     public class BirthdayModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
         public UsersService UsersService { get; set; }
-
 
 
         [SlashCommand("upcoming", "upcoming members brithday")]

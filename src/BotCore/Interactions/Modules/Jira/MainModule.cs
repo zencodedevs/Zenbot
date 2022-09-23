@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using BotCore;
+using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using EllipticCurve;
@@ -20,17 +21,23 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
         {
             await DeferAsync();
 
+            var timeout = TimeSpan.FromSeconds(50);
+            var embed = new EmbedBuilder()
+            {
+                Title = "Are you ready ?",
+                Description =
+                $"**Are you ready to complete your information ?**\n" +
+                $"Timeout: {timeout.ToUtcDiscordUnixTime()}",
+                ThumbnailUrl = "https://img.icons8.com/fluency/480/check-all.png",
+                Color = 6542957,
+            }.Build();
+
             var component = new ComponentBuilder()
-                  .WithButton("Yes", $"button-jira-account-{nameof(confirm)}:{Context.User.Id}", ButtonStyle.Success, null, null, false, 0)
-                  .WithButton("No", $"button-jira-account-{nameof(cancel)}:{Context.User.Id}", ButtonStyle.Danger, null, null, false, 0)
+                  .WithButton("Yes, i am ready", $"button-jira-account-confirm:{Context.User.Id}", ButtonStyle.Success, new Emoji("✔"), null, false, 0)
+                  .WithButton("No, later", $"button-jira-account-cancel:{Context.User.Id}", ButtonStyle.Danger, new Emoji("❌"), null, false, 0)
                   .Build();
 
-            var timeout = TimeSpan.FromSeconds(50);
-
-            var msg = await FollowupAsync(
-                "Are you sure to fill your information ?" +
-                $"\n**This closes in {timeout.ToUtcDiscordUnixTime()}**",
-                components: component);
+            var msg = await FollowupAsync(Context.User.Id.ToUserMention(), embed: embed, components: component);
 
             await msg.WhenNoResponse(this.Context, timeout, x =>
             {
@@ -43,36 +50,56 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
         public async Task cancel(ulong id)
         {
             await DeferAsync();
-
             await (Context.Interaction as SocketMessageComponent).Message.ModifyAsync(x =>
             {
-                x.Content = $"You canceled the task.";
+                var embed = new EmbedBuilder()
+                {
+                    Title = "Task Canceled",
+                    Description = "You canceled the task, but you can run new one with `/jira account`.",
+                    ThumbnailUrl = "https://img.icons8.com/fluency/480/delete-sign.png",
+                    Color = 14946816,
+                }.Build();
+
+                x.Content = $"<@{id}>";
+                x.Embed = embed;
                 x.Components = new ComponentBuilder().Build();
             });
         }
         [ComponentInteraction("button-jira-account-confirm:*", true)]
         [CheckUser(CheckUser.CheckUserType.CustomId)]
-        public async Task confirm(ulong userId)
+        public async Task confirm(ulong id)
         {
             await DeferAsync();
+
+            var timeout = TimeSpan.FromSeconds(60);
+            var embed = new EmbedBuilder()
+            {
+                Title = "Hold On !",
+                Description =
+                "**Are you sure to fill your information ?**\n" +
+                "🤖 ` 1.` **The bot**, click on the  **Fill out here.**\n" +
+                "🌐 ` 2.` **The web,** fill on the site, click on the  **Fill out on the web**.\n\n" +
+               $"⌛ Timeout: {timeout.ToUtcDiscordUnixTime()}",
+                ThumbnailUrl = "https://img.icons8.com/fluency/200/verified-account.png",
+                Color = 1364764
+            }.Build();
 
             var component = new ComponentBuilder()
                   .WithButton("Fill Info Here", $"button-jira-account-{nameof(enterInfo)}:{Context.User.Id}", ButtonStyle.Primary, null, null, false, 0)
                   .WithButton("Fill Info ont the Web", null, ButtonStyle.Link, null, "https://localhost:5001/api", false, 0);
 
             var msg = (Context.Interaction as SocketMessageComponent).Message;
-
-            var timeout = TimeSpan.FromSeconds(10);
+            
+            await msg.ModifyAsync(a =>
+            {
+                a.Embed = embed;
+                a.Content = Context.User.Id.ToUserMention();
+                a.Components = component.Build();
+            });
 
             await msg.WhenNoResponse(this.Context, timeout, async (x) =>
             {
-                await x.ModifyAsync(a =>
-                {
-                    a.Content = $"Welcome, you have two ways to enter your account info." +
-                     $"\n**This closes in {timeout.ToUtcDiscordUnixTime()}**";
-
-                    a.Components = component.Build();
-                });
+                await x.DeleteAsync();
             });
         }
 
@@ -95,11 +122,11 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
             Embed embed = new EmbedBuilder()
             {
                 Title = "Your Information Updated",
-                Description = String.Format(
-                "Your Discord Id: {0}\n" +
-                "Your Id: {1}\n" +
-                "Your Email: {2}\n" +
-                "Your Username: {3}\n", Context.User.Id, form.Id, form.Email, form.Username),
+                Description =
+                $"Your Id: `{form.Id}`\n" +
+                $"Your Email: `{form.Email}`\n" +
+                $"Your Username: `{form.Username}`\n" +
+                $"Your Discord Id: `{Context.User.Id}`\n",
                 ThumbnailUrl = Context.User.GetAvatarUrl() ?? Context.User.GetDefaultAvatarUrl(),
                 Color = Color.Green
             }.Build();
