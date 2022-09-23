@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using BotCore;
+using Discord;
 using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
