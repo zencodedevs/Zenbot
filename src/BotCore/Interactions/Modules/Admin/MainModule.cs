@@ -36,6 +36,8 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
                 await FollowupAsync("the role added to the user succesfuly.");
             }
 
+
+            // Remove roles from users
             [SlashCommand("remove", "remove role to user")]
             public async Task remove(IGuildUser user, [Autocomplete()] string role)
             {
@@ -53,6 +55,8 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
                 await FollowupAsync("the role removed from the user succesfuly.");
             }
 
+
+            // AutoComplate the Roles which user already has
             [AutocompleteCommand("role", "remove")]
             public async Task user_roles()
             {
