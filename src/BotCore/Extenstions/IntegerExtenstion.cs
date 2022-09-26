@@ -8,6 +8,11 @@ namespace BotCore
 {
     public static class IntegerExtenstions
     {
+        /// <summary>
+        /// Managing the file size and calculate accurately 
+        /// </summary>
+
+
         private static readonly string[] SizeSuffixes =
                   { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 

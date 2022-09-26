@@ -10,6 +10,13 @@ namespace Zenbot.BotCore
 {
     public static class DatetimeExtenstions
     {
+        /// <summary>
+        ///  For time out the messages, whenever we want user to response within specific time
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+
+
         public static string ToUtcDiscordUnixTime(this TimeSpan time)
         {
             return (DateTime.UtcNow + time).ToUnixTimeSeconds().ToDiscordUnixTime();
