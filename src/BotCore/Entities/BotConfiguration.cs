@@ -15,11 +15,16 @@
     /// </summary>
     public class BotConfiguration
     {
+        //Bot Server common config
         public string BotToken { get; set; }
         public string Prefix { get; set; }
         public ulong MainGuildId { get; set; }
 
+        // bot Scrin.io Config
+        public ScrinIO ScrinIO { get; set; }
 
+
+        // Bot New user config
         public Channels Channels { get; set; }
         public Roles Roles { get; set; }
         public Text Text { get; set; }
@@ -32,6 +37,12 @@
             var json = JsonConvert.DeserializeObject<BotConfiguration>(data);
             return json;
         }
+    }
+
+    public class ScrinIO
+    {
+        public string Token { get; set; }
+        public string HeaderName { get; set; }
     }
     public class Files
     {
