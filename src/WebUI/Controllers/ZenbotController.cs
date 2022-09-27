@@ -15,6 +15,11 @@ namespace Zenbot.WebUI.Controllers.V1
         }
 
  
+        [HttpGet]
+        public async Task GetJiraWebhook(string id)
+        {
+            _botService.
+        }
 
     }
 }

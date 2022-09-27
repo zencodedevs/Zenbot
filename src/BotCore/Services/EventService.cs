@@ -29,6 +29,8 @@ namespace Zenbot.BotCore
             this._client.Ready += _client_Ready;
         }
 
+
+        // Jira integration 
         public async Task SendMessageToUserByJiraId(string jiraId)
         {
             var userService = services.GetRequiredService<UsersService>();
