@@ -10,6 +10,9 @@ using System.Web;
 
 namespace Zenbot.BotCore
 {
+   /// <summary>
+   /// All the event which is for Discord Server whenver some event happans
+   /// </summary>
     public class EventService
     {
         private readonly BotConfiguration _config;

@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Zenbot.BotCore
 {
+    /// <summary>
+    ///        The main Class for Zenbot
+    /// </summary>
     public class DiscordBotService
     {
         //private readonly IServiceProvider _services;

@@ -10,6 +10,14 @@ namespace Zenbot.BotCore
 {
     public class GuildRolesManagment
     {
+
+        /// <summary>
+        /// Server Role for Users and check for authetiaction the new users
+        /// </summary>
+        /// <param name="guild"></param>
+        /// <param name="verifiedRoleId"></param>
+        /// <param name="unVerifiedRoleId"></param>
+        /// <returns></returns>
         public static async Task<IEnumerable<IGuildUser>> GetUsersWithoutAnyRoleAsync(IGuild guild, ulong verifiedRoleId, ulong unVerifiedRoleId)
         {
             var users = await (guild as SocketGuild).GetUsersAsync().FlattenAsync();

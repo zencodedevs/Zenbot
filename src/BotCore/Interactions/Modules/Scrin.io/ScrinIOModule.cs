@@ -7,6 +7,8 @@ using Zenbot.BotCore.Interactions;
 namespace BotCore.Interactions.Modules.Scrin.io
 {
 
+    // Scrin Io Commands and Sending invitation to desired user
+
     [Group("scrin", "admin commands")]
     [RequireUserPermission(GuildPermission.Administrator)]
     [RequireBotPermission(GuildPermission.ManageRoles)]

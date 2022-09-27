@@ -15,7 +15,7 @@ namespace Zenbot.BotCore.Interactions
     {
 
     }
-
+    // Bot's custome SocketInteractionContext for more costomization
     public class CustomSocketInteractionContext : InteractionContext, ICustomInteractionContext
     {
 

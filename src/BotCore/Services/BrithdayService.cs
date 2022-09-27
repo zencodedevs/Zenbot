@@ -13,6 +13,9 @@ using Zen.Uow;
 
 namespace Zenbot.BotCore
 {
+    /// <summary>
+    /// The service which is sending birthday message for Users in exact day in specified channal
+    /// </summary>
     public class BrithdayService
     {
         private readonly IServiceProvider _services;
