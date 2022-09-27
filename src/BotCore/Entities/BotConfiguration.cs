@@ -9,6 +9,10 @@
     using System.IO;
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Here we have all configuration about zenbot
+    /// We're retriving all these data from config.json which all environment variables
+    /// </summary>
     public class BotConfiguration
     {
         public string BotToken { get; set; }

@@ -12,6 +12,10 @@ using Zen.Uow;
 
 namespace BotCore
 {
+
+    /// <summary>
+    /// User data Interaction with database 
+    /// </summary>
     public class UsersService
     {
         private readonly IServiceScopeFactory _scopeFactory;

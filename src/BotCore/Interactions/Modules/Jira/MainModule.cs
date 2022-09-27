@@ -16,6 +16,8 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
     {
         public UsersService UsersService { get; set; }
 
+
+        // Command for getting the Jira info from user
         [SlashCommand("account", "account setting")]
         public async Task account()
         {
@@ -45,6 +47,7 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
             });
         }
 
+        // Cancel the operation
         [ComponentInteraction("button-jira-account-cancel:*", true)]
         [CheckUser(CheckUser.CheckUserType.CustomId)]
         public async Task cancel(ulong id)
@@ -65,6 +68,8 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
                 x.Components = new ComponentBuilder().Build();
             });
         }
+
+// Confirm the operation
         [ComponentInteraction("button-jira-account-confirm:*", true)]
         [CheckUser(CheckUser.CheckUserType.CustomId)]
         public async Task confirm(ulong id)
@@ -103,6 +108,8 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
             });
         }
 
+
+
         [ComponentInteraction("button-jira-account-enterInfo:*", true)]
         [CheckUser(CheckUser.CheckUserType.CustomId)]
 
@@ -112,6 +119,8 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
             await (Context.Interaction as SocketMessageComponent).Message.DeleteAsync();
         }
 
+
+        // Modal Interaction which is geeting Modal data
         [ModalInteraction("jira-login-modal", true)]
         public async Task login_modal(JiraLoginForm form)
         {

@@ -17,6 +17,8 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
     public class MainModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
 
+        // It is all about how the Admin can manage Roles in discord
+
         [Group("roles", "roles commands")]
         public class RolesModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
@@ -34,6 +36,8 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
                 await FollowupAsync("the role added to the user succesfuly.");
             }
 
+
+            // Remove roles from users
             [SlashCommand("remove", "remove role to user")]
             public async Task remove(IGuildUser user, [Autocomplete()] string role)
             {
@@ -51,6 +55,8 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
                 await FollowupAsync("the role removed from the user succesfuly.");
             }
 
+
+            // AutoComplate the Roles which user already has
             [AutocompleteCommand("role", "remove")]
             public async Task user_roles()
             {
@@ -88,12 +94,12 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
         }
 
 
-
+        // the command that admin can run to check if there are some people without desired (Verified ) Role
         [Group("setup", "setup guild settings")]
         public class SetupModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
             public BotConfiguration botConfiguration { get; set; }
-
+        
             [SlashCommand("sync-roles", "sync roles")]
             public async Task syncRoles()
             {
@@ -116,17 +122,22 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
 
                 await msg.ModifyAsync(x =>
                 {
-                    var embed1 = new EmbedBuilder()
+                    var result = new EmbedBuilder()
                     {
                         Title = "The operation was completed successfully.",
                         Description = $"The operation was completed successfully, roles synced for **{usersCount}** users.",
                         ThumbnailUrl = "https://img.icons8.com/fluency/200/good-quality.png",
                         Color = Color.Green
                     }.Build();
-                    x.Embed = embed1;
+                    x.Embed = result;
                     x.Content = Context.User.Id.ToUserMention();
                 });
             }
+
+
+            // The command that Admin make it once and then all new user will use it to enter thier password
+            // for authentication
+
             [SlashCommand("authentication", "setup authentication channel")]
             public async Task authentication(ITextChannel channel)
             {
@@ -149,6 +160,9 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
         }
     }
 
+
+
+    // Here is the part that New users should enter the server password so the can be part of this server
     [RequireBotPermission(GuildPermission.ManageRoles)]
     public class SharedModules : InteractionModuleBase<CustomSocketInteractionContext>
     {
@@ -163,6 +177,8 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
             await RespondWithModalAsync<AuthenticationForm>("modal-admin-setup-authentication-password");
         }
 
+
+        // The Modal which unverified user should enter their password
         [ModalInteraction("modal-admin-setup-authentication-password", true)]
         public async Task modalAuthentication(AuthenticationForm modal)
         {
@@ -173,7 +189,7 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
                 var emebd = new EmbedBuilder()
                 {
                     Title = "Wrong Password !",
-                    Description = "Your entered password is wrong.",
+                    Description = "Your password is not correct! Please contact admin for providing the righ password.",
                     ThumbnailUrl = "https://img.icons8.com/fluency/200/restriction-shield.png",
                     Color = Color.Red
                 }.Build();
@@ -197,6 +213,11 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
         }
 
 
+        /// <summary>
+        /// Errro handling if the user's direct is not open, first they should open thier direct so the bot can send them message and 
+        /// on boarding file
+        /// </summary>
+        /// <returns></returns>
         [ComponentInteraction("button-admin-setup-authentication-password-confirm")]
         [RequireGuildRole(RequireGuildRole.RoleType.UnVerified)]
         [RateLimit(10, 1, RateLimit.RateLimitType.User, RateLimit.RateLimitBaseType.BaseOnMessageComponentCustomId)]
@@ -206,7 +227,7 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
 
             if (!System.IO.File.Exists(botConfiguration.StaticFiles.GreetingFile))
             {
-                await FollowupAsync("File not found.", ephemeral: true);
+                await FollowupAsync("File not found. Please contact HR for providing the file", ephemeral: true);
                 return;
             }
 

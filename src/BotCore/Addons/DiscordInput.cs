@@ -11,7 +11,7 @@ namespace Zenbot.BotCore
 {
     public static class DiscordInput
     {
-
+        // some required code for time managemnet for messages
 
         public static async Task<SocketMessage> ReadContextMessageAsync(this ICommandContext Context, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
         => await ReadMessageAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), (OnlyCurrentUser ? Context.User.Id : 0), Timeout);

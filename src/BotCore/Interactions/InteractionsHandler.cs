@@ -8,6 +8,9 @@ using Zenbot.BotCore.Interactions;
 
 namespace Zenbot.BotCore
 {
+    /// <summary>
+    /// The main class which is taking care of each interaction commands
+    /// </summary>
     public class InteractionsHandler
     {
         private readonly IServiceProvider services;

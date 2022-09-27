@@ -13,11 +13,17 @@ using Zenbot.BotCore.Interactions;
 
 namespace BotCore.Interactions.Modules.Moderators
 {
+    /// <summary>
+    /// Here is all HR commands for Managing the Roles of server
+    /// </summary>
+
     [RequireBotPermission(GuildPermission.ManageRoles)]
     [RequireGuildRole(RequireGuildRole.RoleType.HR)]
     [Group("hr", "hr commands")]
     public class HRModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
+
+        // Users Group which HR sends onboarding file or ther required file to users
         [Group("users", "users commands")]
         public class UsersModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
@@ -49,6 +55,9 @@ namespace BotCore.Interactions.Modules.Moderators
             }
         }
 
+
+
+        // Managing Role by Commands
         [Group("roles", "roles commands")]
         public class RolesModule : InteractionModuleBase<CustomSocketInteractionContext>
         {

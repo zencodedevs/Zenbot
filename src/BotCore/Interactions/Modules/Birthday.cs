@@ -8,12 +8,21 @@ using System.Threading.Tasks;
 
 namespace Zenbot.BotCore.Interactions.Modules
 {
+    /// <summary>
+    /// All about Birthday Command and register 
+    /// </summary>
     [Group("birthday", "birthday commands")]
     public class BirthdayModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
         public UsersService UsersService { get; set; }
 
 
+
+        /// <summary>
+        /// Check if there is some upcomming birthday by Admin
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
         [SlashCommand("upcoming", "upcoming members brithday")]
         [ComponentInteraction("brithday-list:*", true)]
         public async Task list(int page = 0)
@@ -51,7 +60,10 @@ namespace Zenbot.BotCore.Interactions.Modules
 
 
 
-
+        /// <summary>
+        /// Add birthday data by user
+        /// </summary>
+        /// <returns></returns>
         [SlashCommand("add", "add your brithday")]
         public async Task add()
         {
@@ -75,7 +87,7 @@ namespace Zenbot.BotCore.Interactions.Modules
 
 
 
-
+        // check by each user the exact time of birthday date
 
         [SlashCommand("time", "time of user brithday.")]
         public async Task time(IGuildUser user)

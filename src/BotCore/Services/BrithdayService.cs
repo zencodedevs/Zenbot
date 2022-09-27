@@ -13,6 +13,9 @@ using Zen.Uow;
 
 namespace Zenbot.BotCore
 {
+    /// <summary>
+    /// The service which is sending birthday message for Users in exact day in specified channal
+    /// </summary>
     public class BrithdayService
     {
         private readonly IServiceProvider _services;
@@ -26,7 +29,7 @@ namespace Zenbot.BotCore
             _usersService = services.GetRequiredService<UsersService>();
             _config = services.GetRequiredService<BotConfiguration>();
 
-           _client.Ready += _client_Ready;
+            _client.Ready += _client_Ready;
         }
 
         private Task _client_Ready()
@@ -34,12 +37,12 @@ namespace Zenbot.BotCore
             _ = Task.Run(async () =>
             {
 
-                var users = await _usersService.GetUpComingUsersBrithday();
 
-                if (!users.IsNullOrEmpty())
+                // while loop for calling the function everyday
+                while (true)
                 {
-                    // while loop for calling the function everyday
-                    while (true)
+                    var users = await _usersService.GetUpComingUsersBrithday();
+                    if (!users.IsNullOrEmpty())
                     {
                         try
                         {

@@ -7,6 +7,7 @@ using Discord.Interactions;
 
 namespace Zenbot.BotCore
 {
+    // Modal form for adding Birthday date
     public class BirthdayForm : IModal
     {
         public string Title => "Brithday";

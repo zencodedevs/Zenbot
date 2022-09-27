@@ -8,6 +8,7 @@ using Discord.Interactions;
 
 namespace Zenbot.BotCore
 {
+    // Modal form for Athentication the users
     public class AuthenticationForm : IModal
     {
         public string Title => "Authentication";

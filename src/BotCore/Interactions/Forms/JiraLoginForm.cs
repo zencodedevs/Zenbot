@@ -8,6 +8,7 @@ using Discord.Interactions;
 
 namespace Zenbot.BotCore
 {
+    // Modal form for adding jira info
     public class JiraLoginForm : IModal
     {
         public string Title => "Login";
