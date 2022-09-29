@@ -13,6 +13,18 @@
     "inputFile": "wwwroot/scss/base-auth.scss"
   },
   {
+    "outputFile": "wwwroot/css/base-error.css",
+    "inputFile": "wwwroot/scss/base-error.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/base-home.css",
+    "inputFile": "wwwroot/scss/base-home.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/base-panel.css",
+    "inputFile": "wwwroot/scss/base-panel.scss"
+  },
+  {
     "outputFile": "wwwroot/css/forms.css",
     "inputFile": "wwwroot/scss/forms.scss"
   }

@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "_BaseLayout";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/bundle/css/base-home.min.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
+}
+
+    @section Scripts{
+    <script src="~/bundle/js/base-home.min.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+}
+
+    @RenderBody()

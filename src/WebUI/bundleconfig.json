@@ -24,6 +24,36 @@
       "renameLocals": false
     }
   },
+  {
+    "outputFileName": "wwwroot/bundle/js/base-error.min.js",
+    "inputFiles": [
+      "wwwroot/js/base-error.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundle/js/base-home.min.js",
+    "inputFiles": [
+      "wwwroot/js/base-home.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundle/js/base-panel.min.js",
+    "inputFiles": [
+      "wwwroot/js/base-panel.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
   // bundle and minify css
   {
     "outputFileName": "wwwroot/bundle/css/font.min.css",
@@ -40,7 +70,8 @@
     "outputFileName": "wwwroot/bundle/css/base.min.css",
     "inputFiles": [
       "wwwroot/css/bootstrap-customized.css",
-      "wwwroot/css/base.css"
+      "wwwroot/css/base.css",
+      "wwwroot/css/forms.css"
     ],
     "minify": {
       "enabled": true,
@@ -50,8 +81,37 @@
   {
     "outputFileName": "wwwroot/bundle/css/base-auth.min.css",
     "inputFiles": [
-      "wwwroot/css/base-auth.css",
-      "wwwroot/css/forms.css"
+      "wwwroot/css/base-auth.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundle/css/base-error.min.css",
+    "inputFiles": [
+      "wwwroot/css/base-error.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundle/css/base-home.min.css",
+    "inputFiles": [
+      "wwwroot/css/base-home.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "wwwroot/bundle/css/base-panel.min.css",
+    "inputFiles": [
+      "wwwroot/css/base-panel.css"
     ],
     "minify": {
       "enabled": true,
