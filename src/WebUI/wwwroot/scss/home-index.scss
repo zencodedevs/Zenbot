@@ -2,7 +2,53 @@
 @import "../lib/bootstrap/scss/_functions.scss";
 @import '_variables-global.scss';
 @import "../lib/bootstrap/scss/_variables.scss";
+@import "../lib/bootstrap/scss/mixins/_breakpoints.scss";
 
-.css-keep {
-    display: initial;
+.about .image {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.about .image img {
+    width: 100%;
+    height: auto;
+    padding: .5rem;
+    background-color: $white;
+    border: 6px solid $gray-200;
+    border-radius: $border-radius;
+}
+
+.about .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.about .info .title {
+    margin-bottom: 0;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.about .info .description {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    font-size: 1.3rem;
+    text-align: justify;
+}
+
+.about .info .links {
+    margin-top: 1.5rem;
+}
+
+.about .info .links .btn:not(:first-child) {
+    @include margin-start(.8rem);
+}
+
+@include media-breakpoint-down(lg) {
+    .about .info {
+        margin-top: 1.5rem;
+    }
 }

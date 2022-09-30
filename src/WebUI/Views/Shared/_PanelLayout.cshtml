@@ -7,15 +7,15 @@
     @RenderSection("Styles", required: false)
 }
 
-    @section Scripts{
+@section Scripts{
     <script src="~/bundle/js/base-panel.min.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 }
 
-    <section>
-        <h2>Panel Layout</h2>
+<section>
+    <h2>Panel Layout</h2>
 
-        <div>
-            @RenderBody()
-        </div>
-    </section>
+    <div>
+        @RenderBody()
+    </div>
+</section>

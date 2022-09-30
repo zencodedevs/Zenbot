@@ -7,22 +7,22 @@
     @RenderSection("Styles", required: false)
 }
 
-    @section Scripts{
+@section Scripts{
     <script src="~/bundle/js/base-auth.min.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 }
 
-    <section class="auth-wrapper">
-        <div class="auth-items">
-            <div class="auth-banner">
-                <div class="title">
-                    <span>Welcome to</span>
-                    <span>Zenbot</span>
-                </div>
+<section class="auth-wrapper">
+    <div class="auth-items">
+        <div class="auth-banner">
+            <div class="title">
+                <span>Welcome to</span>
+                <span>Zenbot</span>
             </div>
-
-            <sections class="auth-form">
-                @RenderBody()
-            </sections>
         </div>
-    </section>
+
+        <sections class="auth-form">
+            @RenderBody()
+        </sections>
+    </div>
+</section>
