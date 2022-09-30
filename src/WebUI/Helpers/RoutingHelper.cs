@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 namespace Zenbot.WebUI.Helpers
 {
@@ -12,6 +13,13 @@ namespace Zenbot.WebUI.Helpers
         public static string GetActionRoute(this string actionName, string controllerName)
         {
             return $"/{controllerName.GetControllerRoute()}/{actionName}";
+        }
+
+        public static string GetUrl(string host, string actionUrl)
+        {
+            var decodedActionUrl = HttpUtility.UrlDecode(actionUrl);
+
+            return $"https://{host}{decodedActionUrl}";
         }
     }
 }
