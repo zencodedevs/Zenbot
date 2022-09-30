@@ -12,10 +12,64 @@
     @RenderSection("Scripts", required: false)
 }
 
-    <section>
-        <h2>Home Layout</h2>
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">
+                    <img src="~/img/logo.svg" alt="Logo" />
+                    <span>Zenbot</span>
+                </a>
 
-        <div>
-            @RenderBody()
-        </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-end" id="homeNavbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Tutorials</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Support</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Login</a>
+                        </li>
+
+                        @*@{
+                    if (!User.Identity.IsAuthenticated)
+                    {
+                    <li class="nav-item">
+                    <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Login</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Register</a>
+                    </li>
+                    }
+                    else
+                    {
+                    <li class="nav-item">
+                    <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Panel</a>
+                    </li>
+                    <li class="nav-item">
+                    <form asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)" asp-antiforgery="true" method="post">
+                    <button type="submit" class="nav-link btn btn-outline-dark">Logout</button>
+                    </form>
+                    </li>
+                    }
+                    }*@
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="container flex-grow-1 py-5">
+        @RenderBody()
     </section>

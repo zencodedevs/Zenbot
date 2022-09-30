@@ -27,5 +27,9 @@
   {
     "outputFile": "wwwroot/css/forms.css",
     "inputFile": "wwwroot/scss/forms.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/home-index.css",
+    "inputFile": "wwwroot/scss/home-index.scss"
   }
 ]

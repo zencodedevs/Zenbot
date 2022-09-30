@@ -3,6 +3,12 @@
 @import '_variables-global.scss';
 @import "../lib/bootstrap/scss/_variables.scss";
 
-.css-keep {
-    display: inherit;
+.header .navbar .navbar-brand > img {
+    width: 35px;
+    @include margin-end(.3rem);
+}
+
+.header .navbar .navbar-brand > img,
+.header .navbar .navbar-brand > span {
+    vertical-align: middle;
 }
