@@ -76,20 +76,30 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    padding: .5rem;
-    border-radius: $border-radius;
-    border: 1px solid $dark;
+    padding: 1.5rem .3rem;
+    border-radius: $border-radius-lg;
+    border: 2px solid $gray-400;
+    overflow: hidden;
+    transition: 200ms;
+}
+
+.integration .items .item:hover {
+    border-color: $gray-500;
 }
 
 .integration .items .item .integration-logo {
     width: 100%;
-    height: 200px;
+    height: 150px;
     object-fit: contain;
+    transition: 200ms;
+}
+
+.integration .items .item:hover .integration-logo {
+    transform: scale(.9);
 }
 
 .integration .items .item .integration-name {
-    margin-top: .5rem;
+    margin-top: 1.5rem;
     font-weight: bold;
     font-size: 1.1rem;
 }
@@ -97,5 +107,11 @@
 @include media-breakpoint-down(lg) {
     .about .info {
         margin-top: 1.5rem;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .integration .items .item .integration-logo {
+        height: 100px;
     }
 }
