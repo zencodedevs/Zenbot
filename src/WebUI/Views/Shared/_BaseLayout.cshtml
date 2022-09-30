@@ -26,9 +26,9 @@
 <body>
     <h1 class="d-none">@pageTitle</h1>
 
-    <div class="main-wrapper">
+    <main class="main-wrapper">
         @RenderBody()
-    </div>
+    </main>
 
     <script src="~/bundle/js/base.min.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
