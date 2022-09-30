@@ -21,7 +21,7 @@
 
         <div class="row mt-4">
             <div class="col-12 text-center">
-                <a class="text-light hover-fade" asp-controller="@nameof(HomeController).Replace("Controller", string.Empty)" asp-action="@nameof(HomeController.Index)">
+                <a class="text-light hover-fade" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">
                     <i class="fa fa-chevron-circle-left me-1"></i>
                     <span>Go Back To Home</span>
                 </a>

@@ -23,8 +23,10 @@ using Zenbot.Domain;
 using Zenbot.Domain.Shared.Common;
 using Zenbot.Infrastructure;
 using Zenbot.Infrastructure.Shared.Persistence;
+using Zenbot.WebUI.Controllers;
 using Zenbot.WebUI.CurrentTenantMiddlewares;
 using Zenbot.WebUI.Filters;
+using Zenbot.WebUI.Helpers;
 using Zenbot.WebUI.Middlewares;
 using Zenbot.WebUI.Processors;
 
@@ -53,13 +55,11 @@ namespace Zenbot.WebUI
             //set nlog inster clause variable
             LogManager.Configuration.Variables["registerClause"] = Constants.Nlog.WebUiDbRegisterClause;
 
-
             // Adding services from Discord bot to start the bot from this Layer
             var bot = new DiscordBotService()
                 .ConfigServices(services);
 
             services.AddSingleton(bot);
-
 
             services.AddDomain();
             services.AddApplication(Configuration);
@@ -150,6 +150,17 @@ namespace Zenbot.WebUI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseStatusCodePages();
+
+            app.Use(async (context, next) =>
+            {
+                await next();
+                if (context.Response.StatusCode == 404)
+                {
+                    context.Request.Path = nameof(ErrorController.Code404).GetActionRoute(nameof(ErrorController));
+                    await next();
+                }
+            });
 
             // Configuraiton with Discord bot
             await app.ApplicationServices.GetRequiredService<DiscordBotService>()
@@ -166,7 +177,7 @@ namespace Zenbot.WebUI
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler(nameof(ErrorController.Code500).GetActionRoute(nameof(ErrorController)));
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
