@@ -58,7 +58,8 @@
   {
     "outputFileName": "wwwroot/bundle/css/font.min.css",
     "inputFiles": [
-      "wwwroot/font/inter/inter.css",
+      "wwwroot/font/roboto/roboto.css",
+      "wwwroot/font/orbitron/orbitron.css",
       "wwwroot/font/material-icons/material-icons.css"
     ],
     "minify": {
