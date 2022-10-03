@@ -201,7 +201,7 @@ namespace Zenbot.WebUI
                 options.PostProcess = (document, request) =>
                 {
                     // Patch server URL for Swagger UI
-                    var prefix = "/api/v" + document.Info.Version.Split('.')[0];
+                    var prefix = string.Empty;
                     document.Servers.First().Url += prefix;
                 };
             });
