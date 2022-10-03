@@ -1,0 +1,72 @@
+@font-face {
+    font-family: 'Orbitron';
+    src: url('Orbitron-Bold.eot');
+    src: url('Orbitron-Bold.eot?#iefix') format('embedded-opentype'),
+        url('Orbitron-Bold.woff2') format('woff2'),
+        url('Orbitron-Bold.woff') format('woff'),
+        url('Orbitron-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: url('Orbitron-Black.eot');
+    src: url('Orbitron-Black.eot?#iefix') format('embedded-opentype'),
+        url('Orbitron-Black.woff2') format('woff2'),
+        url('Orbitron-Black.woff') format('woff'),
+        url('Orbitron-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: url('Orbitron-Regular.eot');
+    src: url('Orbitron-Regular.eot?#iefix') format('embedded-opentype'),
+        url('Orbitron-Regular.woff2') format('woff2'),
+        url('Orbitron-Regular.woff') format('woff'),
+        url('Orbitron-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: url('Orbitron-Medium.eot');
+    src: url('Orbitron-Medium.eot?#iefix') format('embedded-opentype'),
+        url('Orbitron-Medium.woff2') format('woff2'),
+        url('Orbitron-Medium.woff') format('woff'),
+        url('Orbitron-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: url('Orbitron-ExtraBold.eot');
+    src: url('Orbitron-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('Orbitron-ExtraBold.woff2') format('woff2'),
+        url('Orbitron-ExtraBold.woff') format('woff'),
+        url('Orbitron-ExtraBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: url('Orbitron-SemiBold.eot');
+    src: url('Orbitron-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('Orbitron-SemiBold.woff2') format('woff2'),
+        url('Orbitron-SemiBold.woff') format('woff'),
+        url('Orbitron-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+

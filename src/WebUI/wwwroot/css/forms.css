@@ -6,8 +6,8 @@
 .form-group span.field-validation-error {
   padding: 0.2rem 0.6rem;
   border-radius: 0.25rem;
-  background-color: rgba(220, 53, 69, 0.1);
-  color: #dc3545;
+  background-color: rgba(207, 74, 74, 0.1);
+  color: #cf4a4a;
 }
 
 .validation-summary-errors {

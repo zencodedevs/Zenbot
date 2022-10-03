@@ -1,0 +1,3 @@
+﻿$(document).ready(function () {
+    // place error base scripts here...
+});

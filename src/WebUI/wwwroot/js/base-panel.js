@@ -1,0 +1,3 @@
+﻿$(document).ready(function () {
+    // place panel base scripts here...
+});

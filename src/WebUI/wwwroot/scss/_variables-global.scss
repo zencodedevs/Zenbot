@@ -12,26 +12,27 @@ $gray-800: #343a40;
 $gray-900: #212529;
 $black: #000;
 
-$light-blue: #81a5f3;
-$blue: #5865f2;
-$indigo: #6610f2;
+$blue: #5e60ce;
+$dark-blue: #3c3e84;
+$darker-blue: #262860;
+$indigo: #8f9cff;
 $purple: #6f42c1;
 $pink: #d63384;
-$red: #dc3545;
+$red: #cf4a4a;
 $orange: #fd7e14;
-$yellow: #ffc107;
-$green: #198754;
+$yellow: #cfcb4a;
+$green: #7ecf4a;
 $teal: #20c997;
-$cyan: #0dcaf0;
+$cyan: #0f99b5;
 
 $primary: $blue;
-$secondary: $gray-600;
+$secondary: $indigo;
 $success: $green;
 $info: $cyan;
 $warning: $yellow;
 $danger: $red;
-$light: #f1f5f9;
-$dark: #1e293b;
+$light: $gray-100;
+$dark: $darker-blue;
 
 $body-bg: $light;
 $body-color: $dark;

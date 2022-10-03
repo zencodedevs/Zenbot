@@ -6,7 +6,7 @@ body,
 input,
 textarea,
 button {
-  font-family: "Inter", "Arial" !important;
+  font-family: "Roboto", "Arial" !important;
 }
 
 a:link, a:visited, a:hover, a:active {
@@ -36,59 +36,59 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .btn.btn-hover.btn-primary {
-  box-shadow: 0 20px 20px -15px rgba(88, 101, 242, 0.8);
+  box-shadow: 0 20px 20px -15px rgba(94, 96, 206, 0.8);
 }
 .btn.btn-hover.btn-primary:hover {
-  box-shadow: 0 20px 25px -10px rgba(88, 101, 242, 0.8);
+  box-shadow: 0 20px 25px -10px rgba(94, 96, 206, 0.8);
 }
 
 .btn.btn-hover.btn-secondary {
-  box-shadow: 0 20px 20px -15px rgba(108, 117, 125, 0.8);
+  box-shadow: 0 20px 20px -15px rgba(143, 156, 255, 0.8);
 }
 .btn.btn-hover.btn-secondary:hover {
-  box-shadow: 0 20px 25px -10px rgba(108, 117, 125, 0.8);
+  box-shadow: 0 20px 25px -10px rgba(143, 156, 255, 0.8);
 }
 
 .btn.btn-hover.btn-success {
-  box-shadow: 0 20px 20px -15px rgba(25, 135, 84, 0.8);
+  box-shadow: 0 20px 20px -15px rgba(126, 207, 74, 0.8);
 }
 .btn.btn-hover.btn-success:hover {
-  box-shadow: 0 20px 25px -10px rgba(25, 135, 84, 0.8);
+  box-shadow: 0 20px 25px -10px rgba(126, 207, 74, 0.8);
 }
 
 .btn.btn-hover.btn-info {
-  box-shadow: 0 20px 20px -15px rgba(13, 202, 240, 0.8);
+  box-shadow: 0 20px 20px -15px rgba(15, 153, 181, 0.8);
 }
 .btn.btn-hover.btn-info:hover {
-  box-shadow: 0 20px 25px -10px rgba(13, 202, 240, 0.8);
+  box-shadow: 0 20px 25px -10px rgba(15, 153, 181, 0.8);
 }
 
 .btn.btn-hover.btn-warning {
-  box-shadow: 0 20px 20px -15px rgba(255, 193, 7, 0.8);
+  box-shadow: 0 20px 20px -15px rgba(207, 203, 74, 0.8);
 }
 .btn.btn-hover.btn-warning:hover {
-  box-shadow: 0 20px 25px -10px rgba(255, 193, 7, 0.8);
+  box-shadow: 0 20px 25px -10px rgba(207, 203, 74, 0.8);
 }
 
 .btn.btn-hover.btn-danger {
-  box-shadow: 0 20px 20px -15px rgba(220, 53, 69, 0.8);
+  box-shadow: 0 20px 20px -15px rgba(207, 74, 74, 0.8);
 }
 .btn.btn-hover.btn-danger:hover {
-  box-shadow: 0 20px 25px -10px rgba(220, 53, 69, 0.8);
+  box-shadow: 0 20px 25px -10px rgba(207, 74, 74, 0.8);
 }
 
 .btn.btn-hover.btn-light {
-  box-shadow: 0 20px 20px -15px rgba(241, 245, 249, 0.8);
+  box-shadow: 0 20px 20px -15px rgba(248, 249, 250, 0.8);
 }
 .btn.btn-hover.btn-light:hover {
-  box-shadow: 0 20px 25px -10px rgba(241, 245, 249, 0.8);
+  box-shadow: 0 20px 25px -10px rgba(248, 249, 250, 0.8);
 }
 
 .btn.btn-hover.btn-dark {
-  box-shadow: 0 20px 20px -15px rgba(30, 41, 59, 0.8);
+  box-shadow: 0 20px 20px -15px rgba(38, 40, 96, 0.8);
 }
 .btn.btn-hover.btn-dark:hover {
-  box-shadow: 0 20px 25px -10px rgba(30, 41, 59, 0.8);
+  box-shadow: 0 20px 25px -10px rgba(38, 40, 96, 0.8);
 }
 
 .icon-circle-button,

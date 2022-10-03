@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "_BaseLayout";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/bundle/css/base-auth.min.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
+}
+
+@section Scripts{
+    <script src="~/bundle/js/base-auth.min.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+}
+
+<section class="auth-wrapper">
+    <div class="auth-items">
+        <div class="auth-banner">
+            <div class="title">
+                <span>Welcome to</span>
+                <span>Zenbot</span>
+            </div>
+        </div>
+
+        <section class="auth-form">
+            @RenderBody()
+        </section>
+    </div>
+</section>

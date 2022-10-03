@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "_BaseLayout";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/bundle/css/base-panel.min.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
+}
+
+@section Scripts{
+    <script src="~/bundle/js/base-panel.min.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+}
+
+<div>
+    <h2 class="text-center text-primary">Panel Layout</h2>
+
+    <section>
+        @RenderBody()
+    </section>
+</div>
