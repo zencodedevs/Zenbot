@@ -52,6 +52,7 @@ namespace Zenbot.WebUI
         {
             //set nlog connection string
             GlobalDiagnosticsContext.Set("connectionString", Configuration.GetConnectionString("DefaultConnection"));
+
             //set nlog inster clause variable
             LogManager.Configuration.Variables["registerClause"] = Constants.Nlog.WebUiDbRegisterClause;
 
@@ -191,7 +192,7 @@ namespace Zenbot.WebUI
             app.UseSwaggerUi3(settings =>
             {
                 settings.Path = "/api";
-                settings.DocumentPath = "/api/specification.json";
+                settings.DocumentPath = "/swagger/v1/swagger.json";
                 settings.DocExpansion = "list";
             });
 
