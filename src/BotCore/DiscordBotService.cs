@@ -1,5 +1,4 @@
 ﻿using BotCore;
-using BotCore.Services.Jira;
 using Discord;
 using Discord.Commands;
 using Discord.Interactions;
@@ -13,7 +12,8 @@ using System.Threading.Tasks;
 namespace Zenbot.BotCore
 {
     /// <summary>
-    ///        The main Class for Zenbot
+    ///        The main Class for Zenbot where all bot services are registerd and 
+    ///        make ready the bot configuration
     /// </summary>
     public class DiscordBotService
     {
