@@ -11,7 +11,7 @@ using Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook;
 
 namespace Zenbot.WebUI.Controllers.Api
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]/[action]")]
     public class ZenbotController : ZenController
     {
         private readonly EventService _eventservice;
