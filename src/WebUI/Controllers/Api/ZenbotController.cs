@@ -11,7 +11,7 @@ using Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook;
 
 namespace Zenbot.WebUI.Controllers.Api
 {
-    [Route("api/v{version:apiVersion}/[controller]/[action]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ZenbotController : ZenController
     {
         private readonly EventService _eventservice;
@@ -30,7 +30,21 @@ namespace Zenbot.WebUI.Controllers.Api
         [HttpPost]
         public async Task GetJiraWebHook([FromBody] JiraWebhookObject value)
         {
-            
+            var user = await _jiraData.GetBotUserWithJiraAccount(value.issue.fields.assignee.accountId);
+            if (user is not null)
+            {
+                var jiraWH = new JiraWebHook
+                {
+                    AssigneeId = value.issue.fields.assignee.accountId,
+                    AssigneeName = value.issue.fields.assignee.displayName,
+                    IssueSelf = value.issue.self,
+                    PriorityIconUrl = value.issue.fields.priority.iconUrl,
+                    PriorityName = value.issue.fields.priority.name,
+                    ProjectName = value.issue.fields.project.name,
+                    ProjectUrl = value.issue.fields.project.self,
+                    ReporterName = value.issue.fields.reporter.displayName
+                };
+            }
         }
 
     }
