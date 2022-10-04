@@ -39,7 +39,7 @@ namespace Zenbot.BotCore
                 .AddSingleton<CommandHandler>()
 
                 .AddSingleton<UsersService>()
-                .AddSingleton<Data>()
+                .AddSingleton<JiraService>()
 
                 .AddSingleton<ScrinIOService>()
 
@@ -64,7 +64,6 @@ namespace Zenbot.BotCore
             var brithday = _services.GetRequiredService<BrithdayService>();
             var events = _services.GetRequiredService<EventService>();
             var scrinio = _services.GetRequiredService<ScrinIOService>();
-            var jira = _services.GetRequiredService<Data>();
 
             await client.LoginAsync(TokenType.Bot, config.BotToken, true);
             await client.StartAsync();
