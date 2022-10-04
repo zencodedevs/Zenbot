@@ -39,7 +39,7 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
                   .WithButton("No, later", $"button-jira-account-cancel:{Context.User.Id}", ButtonStyle.Danger, new Emoji("❌"), null, false, 0)
                   .Build();
 
-            var msg = await FollowupAsync(Context.User.Id.ToUserMention(), embed: embed, components: component);
+            var msg = await FollowupAsync(Context.User.ToUserMention(), embed: embed, components: component);
 
             await msg.WhenNoResponse(this.Context, timeout, x =>
             {
@@ -98,7 +98,7 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
             await msg.ModifyAsync(a =>
             {
                 a.Embed = embed;
-                a.Content = Context.User.Id.ToUserMention();
+                a.Content = Context.User.ToUserMention();
                 a.Components = component.Build();
             });
 

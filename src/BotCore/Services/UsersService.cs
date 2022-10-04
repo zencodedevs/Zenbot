@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Zen.Domain.Interfaces;
 using Zen.Uow;
+using Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook;
 
 namespace BotCore
 {
@@ -23,13 +24,12 @@ namespace BotCore
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IServiceProvider _services;
         private readonly DiscordSocketClient _discord;
-        public UsersService(IServiceProvider services,IServiceScopeFactory scopeFactory)
+        public UsersService(IServiceProvider services, IServiceScopeFactory scopeFactory)
         {
             _services = services;
             _scopeFactory = scopeFactory;
             _discord = _services.GetRequiredService<DiscordSocketClient>();
         }
-
 
         public async Task<IMessage> TrySendMessageToUserAsync(ulong userId, string text = null, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageComponent components = null, Embed[] embeds = null)
         {
@@ -44,9 +44,6 @@ namespace BotCore
                 return null;
             }
         }
-
-
-
         public async Task<List<BotUser>> GetUpComingUsersBrithday()
         {
             var users = new List<BotUser>();

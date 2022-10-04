@@ -44,14 +44,14 @@ namespace Zenbot.WebUI.Controllers.Api
             }.Build();
 
             var component = new ComponentBuilder()
-                .WithButton("Reportter ->", "1", ButtonStyle.Secondary, new Emoji("👤"), "", true, row: 0)
-                .WithButton(jiraWH.ReporterName, null, ButtonStyle.Link, new Emoji(""), jiraWH.IssueSelf, row: 0)
+                .WithButton("Reporter ------>", "1", ButtonStyle.Secondary, new Emoji("👤"), "",true, row: 0)
+                .WithButton(jiraWH.ReporterName, null, ButtonStyle.Link, null, jiraWH.IssueSelf, row: 0)
 
                 .WithButton("Project Name ->", "2", ButtonStyle.Secondary, new Emoji("🛠"), "", true, row: 1)
-                .WithButton(jiraWH.ProjectName, null, ButtonStyle.Link, new Emoji(""), jiraWH.ProjectUrl, row: 1)
+                .WithButton(jiraWH.ProjectName, null, ButtonStyle.Link, null, jiraWH.ProjectUrl, row: 1)
 
-                .WithButton("Priority ->", "3", ButtonStyle.Secondary, new Emoji("♦"), "", true, row: 2)
-                .WithButton(jiraWH.PriorityName, null, ButtonStyle.Link, new Emoji(""), jiraWH.IssueSelf, row: 2)
+                .WithButton("Priority -------->", "3", ButtonStyle.Secondary, new Emoji("♦"), "", true, row: 2)
+                .WithButton(jiraWH.PriorityName, null, ButtonStyle.Link, null, jiraWH.IssueSelf, row: 2)
 
                 .Build();
 

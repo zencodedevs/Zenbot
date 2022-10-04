@@ -7,13 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-
-
 namespace Zenbot.BotCore
 {
     /// <summary>
-    ///        The main Class for Zenbot where all bot services are registerd and 
-    ///        make ready the bot configuration
+    ///        The main Class for Zenbot
     /// </summary>
     public class DiscordBotService
     {
@@ -22,8 +19,6 @@ namespace Zenbot.BotCore
         //{
         //    this._services = services;
         //}
-
-
         public DiscordBotService ConfigServices(IServiceCollection services)
         {
             var configuration = BotConfiguration.GetConfiguration();
