@@ -33,7 +33,6 @@
         "entityId": "3f127bfb-bec7-4243-9acf-8c89c9945410",
         "hierarchyLevel": 0
       },
-      "timespent": null,
       "project": {
         "self": "https://zenbot.atlassian.net/rest/api/2/project/10000",
         "id": "10000",
@@ -49,16 +48,12 @@
         }
       },
       "fixVersions": [],
-      "aggregatetimespent": null,
       "resolution": {
         "self": "https://zenbot.atlassian.net/rest/api/2/resolution/10000",
         "id": "10000",
         "description": "Work has been completed on this issue.",
         "name": "Done"
       },
-      "customfield_10027": null,
-      "customfield_10028": null,
-      "customfield_10029": null,
       "resolutiondate": "2022-09-19T13:10:54.475+0430",
       "workratio": -1,
       "watches": {
@@ -72,22 +67,14 @@
         "shouldDisplay": true
       },
       "created": "2022-09-19T12:13:39.508+0430",
-      "customfield_10020": null,
-      "customfield_10021": null,
-      "customfield_10022": null,
-      "customfield_10023": null,
       "priority": {
         "self": "https://zenbot.atlassian.net/rest/api/2/priority/3",
         "iconUrl": "https://zenbot.atlassian.net/images/icons/priorities/medium.svg",
         "name": "Medium",
         "id": "3"
       },
-      "customfield_10024": null,
       "customfield_10025": "10000_*:*_2_*:*_2860549_*|*_10002_*:*_2_*:*_26985_*|*_10001_*:*_3_*:*_547455",
-      "customfield_10026": null,
       "labels": [],
-      "customfield_10016": null,
-      "customfield_10017": null,
       "customfield_10018": {
         "hasEpicLinkFieldDependency": false,
         "showField": false,
@@ -97,8 +84,6 @@
         }
       },
       "customfield_10019": "0|hzzzzz:",
-      "timeestimate": null,
-      "aggregatetimeoriginalestimate": null,
       "versions": [],
       "issuelinks": [],
       "assignee": {
@@ -131,19 +116,8 @@
         }
       },
       "components": [],
-      "timeoriginalestimate": null,
       "description": "oka",
-      "customfield_10010": null,
-      "customfield_10014": null,
-      "customfield_10015": null,
       "timetracking": {},
-      "customfield_10005": null,
-      "customfield_10006": null,
-      "security": null,
-      "customfield_10007": null,
-      "customfield_10008": null,
-      "customfield_10009": null,
-      "aggregatetimeestimate": null,
       "attachment": [],
       "summary": "filter",
       "creator": {
@@ -179,12 +153,6 @@
         "progress": 0,
         "total": 0
       },
-      "customfield_10001": null,
-      "customfield_10002": null,
-      "customfield_10003": null,
-      "customfield_10004": null,
-      "environment": null,
-      "duedate": null,
       "progress": {
         "progress": 0,
         "total": 0
@@ -203,8 +171,6 @@
         "field": "resolution",
         "fieldtype": "jira",
         "fieldId": "resolution",
-        "from": null,
-        "fromString": null,
         "to": "10000",
         "toString": "Done"
       },
@@ -220,3 +186,180 @@
     ]
   }
 }
+
+//{
+//  "timestamp": 1663576854497,
+//  "webhookEvent": "jira:issue_updated",
+//  "issue_event_type_name": "issue_generic",
+//  "user": {
+//    "self": "https://zenbot.atlassian.net/rest/api/2/user?accountId=6321714c051efc6985670d5f",
+//    "accountId": "6321714c051efc6985670d5f",
+//    "avatarUrls": {
+//      "_48x48": "string",
+//      "_24x24": "string",
+//      "_16x16": "string",
+//      "_32x32": "string"
+//    },
+//    "displayName": "Nematullah Hussaini",
+//    "active": true,
+//    "timeZone": "Asia/Kabul",
+//    "accountType": "atlassian"
+//  },
+//  "issue": {
+//    "id": "10000",
+//    "self": "https://zenbot.atlassian.net/rest/api/2/10000",
+//    "key": "DEL-1",
+//    "fields": {
+//      "statuscategorychangedate": "2022-10-03T13:09:20.936Z",
+//      "issuetype": {
+//        "self": "https://zenbot.atlassian.net/rest/api/2/issuetype/10001",
+//        "id": "10001",
+//        "description": "Tasks track small, distinct pieces of work.",
+//        "iconUrl": "https://zenbot.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+//        "name": "Task",
+//        "subtask": false,
+//        "avatarId": 10318,
+//        "entityId": "3f127bfb-bec7-4243-9acf-8c89c9945410",
+//        "hierarchyLevel": 0
+//      },
+//      "project": {
+//        "self": "https://zenbot.atlassian.net/rest/api/2/project/10000",
+//        "id": "10000",
+//        "key": "DEL",
+//        "name": "Delgaarm",
+//        "projectTypeKey": "software",
+//        "simplified": true,
+
+
+//        "avatarUrls": {
+//          "48x48": "https://zenbot.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10409",
+//          "24x24": "https://zenbot.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10409?size=small",
+//          "16x16": "https://zenbot.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10409?size=xsmall",
+//          "32x32": "https://zenbot.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10409?size=medium"
+//        }
+//      },
+//      "resolution": {
+//        "self": "string",
+//        "id": "string",
+//        "description": "string",
+//        "name": "string"
+//      },
+//      "resolutiondate": "2022-10-03T13:09:20.936Z",
+//      "workratio": 0,
+//      "watches": {
+//        "self": "string",
+//        "watchCount": 0,
+//        "isWatching": true
+//      },
+//      "lastViewed": "2022-10-03T13:09:20.936Z",
+//      "issuerestriction": {
+//        "issuerestrictions": {},
+//        "shouldDisplay": true
+//      },
+//      "created": "2022-10-03T13:09:20.936Z",
+//      "priority": {
+//        "self": "https://zenbot.atlassian.net/rest/api/2/priority/3",
+//        "iconUrl": "https://zenbot.atlassian.net/images/icons/priorities/medium.svg",
+//        "name": "Medium",
+//        "id": "3"
+//      },
+//      "customfield_10025": "string",
+//      "customfield_10018": {
+//        "hasEpicLinkFieldDependency": true,
+//        "showField": true,
+//        "nonEditableReason": {
+//          "reason": "string",
+//          "message": "string"
+//        }
+//      },
+//      "customfield_10019": "string",
+//      "assignee": {
+//        "self": "https://zenbot.atlassian.net/rest/api/2/user?accountId=6321714c051efc6985670d5f",
+//        "accountId": "6321714c051efc6985670d5f",
+//        "avatarUrls": {
+//          "_48x48": "string",
+//          "_24x24": "string",
+//          "_16x16": "string",
+//          "_32x32": "string"
+//        },
+//        "displayName": "string",
+//        "active": true,
+//        "timeZone": "string",
+//        "accountType": "string"
+//      },
+//      "updated": "2022-10-03T13:09:20.936Z",
+//      "status": {
+//        "self": "string",
+//        "description": "string",
+//        "iconUrl": "string",
+//        "name": "string",
+//        "id": "string",
+//        "statusCategory": {
+//          "self": "string",
+//          "id": 0,
+//          "key": "string",
+//          "colorName": "string",
+//          "name": "string"
+//        }
+//      },
+//      "description": "string",
+//      "timetracking": {},
+//      "summary": "string",
+//      "creator": {
+//        "self": "string",
+//        "accountId": "string",
+//        "avatarUrls": {
+//          "_48x48": "string",
+//          "_24x24": "string",
+//          "_16x16": "string",
+//          "_32x32": "string"
+//        },
+//        "displayName": "string",
+//        "active": true,
+//        "timeZone": "string",
+//        "accountType": "string"
+//      },
+//      "reporter": {
+//        "self": "https://zenbot.atlassian.net/rest/api/2/user?accountId=6321714c051efc6985670d5f",
+//        "accountId": "6321714c051efc6985670d5f",
+//        "avatarUrls": {
+//          "_48x48": "string",
+//          "_24x24": "string",
+//          "_16x16": "string",
+//          "_32x32": "string"
+//        },
+//        "displayName": "string",
+//        "active": true,
+//        "timeZone": "string",
+//        "accountType": "string"
+//      },
+//      "aggregateprogress": {
+//        "progress": 0,
+//        "total": 0
+//      },
+//      "progress": {
+//        "progress": 0,
+//        "total": 0
+//      },
+//      "votes": {
+//        "self": "string",
+//        "votes": 0,
+//        "hasVoted": true
+//      }
+//    }
+//  },
+//  "changelog": {
+//    "id": "string",
+//    "items": [
+//      {
+//        "field": "string",
+//        "fieldtype": "string",
+//        "fieldId": "string",
+//        "from": "string",
+//        "fromString": "string",
+//        "to": "string",
+//        "toString": "string"
+//      }
+//    ]
+//  }
+//}
