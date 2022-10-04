@@ -1,5 +1,5 @@
 ﻿{
-  "BotToken": "MTAxODc2OTI1OTI1MTM4ODQ1Nw.GDxdYT.wScBAtJir-Yu_iIcL9wINXAymOjb-g1lG_95vE",
+  "BotToken": "",
   "Prefix": ".",
   "MainGuildId": 1018765173969932319,
 
@@ -18,6 +18,10 @@
   },
   "StaticFiles": {
     "GreetingFile": "wwwroot/documents/sample.pdf"
+  },
+  "ScrinIO": {
+    "Token": "170159l6cc5c7dd910dc025f52ef0fb6bfb642c",
+    "HeaderName": "X-SSM-Token"
   }
 
 }
