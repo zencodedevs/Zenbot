@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BotCore.Services.Jira;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,11 @@ namespace Zenbot.WebUI.Controllers.Api
     public class ZenbotController : ZenController
     {
         private readonly EventService _eventservice;
-       
-        public ZenbotController(EventService eventService)
+        private readonly Data _jiraData;
+        public ZenbotController(EventService eventService, Data jiraData)
         {
             _eventservice = eventService;
+            _jiraData = jiraData;
         }
 
         [HttpGet]
