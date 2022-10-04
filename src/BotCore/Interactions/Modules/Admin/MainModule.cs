@@ -130,7 +130,7 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
                         Color = Color.Green
                     }.Build();
                     x.Embed = result;
-                    x.Content = Context.User.Id.ToUserMention();
+                    x.Content = Context.User.ToUserMention();
                 });
             }
 
@@ -257,7 +257,7 @@ namespace Zenbot.BotCore.Interactions.Modules.Admin
                 }
             }.Build();
 
-            await EventService.SendMessageToLoggerChannelAsync(Context.User.Id.ToUserMention(), embed: embed);
+            await EventService.SendMessageToLoggerChannelAsync(Context.User.ToUserMention(), embed: embed);
 
             await (Context.User as IGuildUser).RemoveRoleAsync(botConfiguration.Roles.UnVarifiedId);
         }

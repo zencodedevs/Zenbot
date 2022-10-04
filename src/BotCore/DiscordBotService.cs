@@ -7,8 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-
-
 namespace Zenbot.BotCore
 {
     /// <summary>
@@ -21,8 +19,6 @@ namespace Zenbot.BotCore
         //{
         //    this._services = services;
         //}
-
-
         public DiscordBotService ConfigServices(IServiceCollection services)
         {
             var configuration = BotConfiguration.GetConfiguration();
@@ -38,6 +34,7 @@ namespace Zenbot.BotCore
                 .AddSingleton<CommandHandler>()
 
                 .AddSingleton<UsersService>()
+                .AddSingleton<JiraService>()
 
                 .AddSingleton<ScrinIOService>()
 
