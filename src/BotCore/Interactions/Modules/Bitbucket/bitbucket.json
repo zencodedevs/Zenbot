@@ -1,0 +1,202 @@
+﻿{
+  "repository": {
+    "type": "repository",
+    "full_name": "hamnava/zenbot",
+    "links": {
+      "self": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot" },
+      "html": { "href": "https://bitbucket.org/hamnava/zenbot" },
+      "avatar": { "href": "https://bytebucket.org/ravatar/%7B1db404b3-a0a8-4f54-93be-e40767c92ec8%7D?ts=default" }
+    },
+    "name": "zenbot",
+    "scm": "git",
+    "website": null,
+    "owner": {
+      "display_name": "Nematullah Hussaini",
+      "links": {
+        "self": { "href": "https://api.bitbucket.org/2.0/users/%7B9704c70c-fd1f-4a0f-88d9-3904e3d57a6d%7D" },
+        "avatar": { "href": "https://secure.gravatar.com/avatar/659767915d8da6cafaccdfc72b2fcae2?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNH-3.png" },
+        "html": { "href": "https://bitbucket.org/%7B9704c70c-fd1f-4a0f-88d9-3904e3d57a6d%7D/" }
+      },
+      "type": "user",
+      "uuid": "{9704c70c-fd1f-4a0f-88d9-3904e3d57a6d}",
+      "account_id": "6321714c051efc6985670d5f",
+      "nickname": "Nematullah Hussaini"
+    },
+    "workspace": {
+      "type": "workspace",
+      "uuid": "{9704c70c-fd1f-4a0f-88d9-3904e3d57a6d}",
+      "name": "Nematullah Hussaini",
+      "slug": "hamnava",
+      "links": {
+        "avatar": { "href": "https://bitbucket.org/workspaces/hamnava/avatar/?ts=1663582419" },
+        "html": { "href": "https://bitbucket.org/hamnava/" },
+        "self": { "href": "https://api.bitbucket.org/2.0/workspaces/hamnava" }
+      }
+    },
+    "is_private": true,
+    "project": {
+      "type": "project",
+      "key": "ZEN",
+      "uuid": "{37014db4-ce35-4a86-9d09-7214d9c2bb11}",
+      "name": "zenbot",
+      "links": {
+        "self": { "href": "https://api.bitbucket.org/2.0/workspaces/hamnava/projects/ZEN" },
+        "html": { "href": "https://bitbucket.org/hamnava/workspace/projects/ZEN" },
+        "avatar": { "href": "https://bitbucket.org/account/user/hamnava/projects/ZEN/avatar/32?ts=1663582486" }
+      }
+    },
+    "uuid": "{1db404b3-a0a8-4f54-93be-e40767c92ec8}"
+  },
+  "actor": {
+    "display_name": "Nematullah Hussaini",
+    "links": {
+      "self": { "href": "https://api.bitbucket.org/2.0/users/%7B9704c70c-fd1f-4a0f-88d9-3904e3d57a6d%7D" },
+      "avatar": { "href": "https://secure.gravatar.com/avatar/659767915d8da6cafaccdfc72b2fcae2?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNH-3.png" },
+      "html": { "href": "https://bitbucket.org/%7B9704c70c-fd1f-4a0f-88d9-3904e3d57a6d%7D/" }
+    },
+    "type": "user",
+    "uuid": "{9704c70c-fd1f-4a0f-88d9-3904e3d57a6d}",
+    "account_id": "6321714c051efc6985670d5f",
+    "nickname": "Nematullah Hussaini"
+  },
+  "pullrequest": {
+    "comment_count": 0,
+    "task_count": 0,
+    "type": "pullrequest",
+    "id": 1,
+    "title": "file added",
+    "description": "",
+    "rendered": {
+      "title": {
+        "type": "rendered",
+        "raw": "file added",
+        "markup": "markdown",
+        "html": "<p>file added</p>"
+      },
+      "description": {
+        "type": "rendered",
+        "raw": "",
+        "markup": "markdown",
+        "html": ""
+      }
+    },
+    "state": "OPEN",
+    "merge_commit": null,
+    "close_source_branch": false,
+    "closed_by": null,
+    "author": {
+      "display_name": "Nematullah Hussaini",
+      "links": {
+        "self": { "href": "https://api.bitbucket.org/2.0/users/%7B9704c70c-fd1f-4a0f-88d9-3904e3d57a6d%7D" },
+        "avatar": { "href": "https://secure.gravatar.com/avatar/659767915d8da6cafaccdfc72b2fcae2?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNH-3.png" },
+        "html": { "href": "https://bitbucket.org/%7B9704c70c-fd1f-4a0f-88d9-3904e3d57a6d%7D/" }
+      },
+      "type": "user",
+      "uuid": "{9704c70c-fd1f-4a0f-88d9-3904e3d57a6d}",
+      "account_id": "6321714c051efc6985670d5f",
+      "nickname": "Nematullah Hussaini"
+    },
+    "reason": "",
+    "created_on": "2022-10-05T05:13:31.245773+00:00",
+    "updated_on": "2022-10-05T05:14:03.620392+00:00",
+    "destination": {
+      "branch": { "name": "master" },
+      "commit": {
+        "type": "commit",
+        "hash": "04c30f09ecb3",
+        "links": {
+          "self": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/commit/04c30f09ecb3" },
+          "html": { "href": "https://bitbucket.org/hamnava/zenbot/commits/04c30f09ecb3" }
+        }
+      },
+      "repository": {
+        "type": "repository",
+        "full_name": "hamnava/zenbot",
+        "links": {
+          "self": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot" },
+          "html": { "href": "https://bitbucket.org/hamnava/zenbot" },
+          "avatar": { "href": "https://bytebucket.org/ravatar/%7B1db404b3-a0a8-4f54-93be-e40767c92ec8%7D?ts=default" }
+        },
+        "name": "zenbot",
+        "uuid": "{1db404b3-a0a8-4f54-93be-e40767c92ec8}"
+      }
+    },
+    "source": {
+      "branch": { "name": "main" },
+      "commit": {
+        "type": "commit",
+        "hash": "54fccdbf11b2",
+        "links": {
+          "self": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/commit/54fccdbf11b2" },
+          "html": { "href": "https://bitbucket.org/hamnava/zenbot/commits/54fccdbf11b2" }
+        }
+      },
+      "repository": {
+        "type": "repository",
+        "full_name": "hamnava/zenbot",
+        "links": {
+          "self": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot" },
+          "html": { "href": "https://bitbucket.org/hamnava/zenbot" },
+          "avatar": { "href": "https://bytebucket.org/ravatar/%7B1db404b3-a0a8-4f54-93be-e40767c92ec8%7D?ts=default" }
+        },
+        "name": "zenbot",
+        "uuid": "{1db404b3-a0a8-4f54-93be-e40767c92ec8}"
+      }
+    },
+    "reviewers": [
+      {
+        "display_name": "Nematullah Hussaini",
+        "links": {
+          "self": { "href": "https://api.bitbucket.org/2.0/users/%7B83089065-e3fd-40d4-89f7-b8c54c0555eb%7D" },
+          "avatar": { "href": "https://secure.gravatar.com/avatar/42ebd8287ffea31535c47ff535cf69eb?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNH-3.png" },
+          "html": { "href": "https://bitbucket.org/%7B83089065-e3fd-40d4-89f7-b8c54c0555eb%7D/" }
+        },
+        "type": "user",
+        "uuid": "{83089065-e3fd-40d4-89f7-b8c54c0555eb}",
+        "account_id": "623d84517910a200718c57d5",
+        "nickname": "Nematullah Hussaini"
+      }
+    ],
+    "participants": [
+      {
+        "type": "participant",
+        "user": {
+          "display_name": "Nematullah Hussaini",
+          "links": {
+            "self": { "href": "https://api.bitbucket.org/2.0/users/%7B83089065-e3fd-40d4-89f7-b8c54c0555eb%7D" },
+            "avatar": { "href": "https://secure.gravatar.com/avatar/42ebd8287ffea31535c47ff535cf69eb?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FNH-3.png" },
+            "html": { "href": "https://bitbucket.org/%7B83089065-e3fd-40d4-89f7-b8c54c0555eb%7D/" }
+          },
+          "type": "user",
+          "uuid": "{83089065-e3fd-40d4-89f7-b8c54c0555eb}",
+          "account_id": "623d84517910a200718c57d5",
+          "nickname": "Nematullah Hussaini"
+        },
+        "role": "REVIEWER",
+        "approved": false,
+        "state": null,
+        "participated_on": null
+      }
+    ],
+    "links": {
+      "self": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/pullrequests/1" },
+      "html": { "href": "https://bitbucket.org/hamnava/zenbot/pull-requests/1" },
+      "commits": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/pullrequests/1/commits" },
+      "approve": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/pullrequests/1/approve" },
+      "request-changes": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/pullrequests/1/request-changes" },
+      "diff": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/diff/hamnava/zenbot:54fccdbf11b2%0D04c30f09ecb3?from_pullrequest_id=1&topic=true" },
+      "diffstat": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/diffstat/hamnava/zenbot:54fccdbf11b2%0D04c30f09ecb3?from_pullrequest_id=1&topic=true" },
+      "comments": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/pullrequests/1/comments" },
+      "activity": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/pullrequests/1/activity" },
+      "merge": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/pullrequests/1/merge" },
+      "decline": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/pullrequests/1/decline" },
+      "statuses": { "href": "https://api.bitbucket.org/2.0/repositories/hamnava/zenbot/pullrequests/1/statuses" }
+    },
+    "summary": {
+      "type": "rendered",
+      "raw": "",
+      "markup": "markdown",
+      "html": ""
+    }
+  }
+}
