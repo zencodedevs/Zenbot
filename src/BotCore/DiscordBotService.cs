@@ -35,6 +35,7 @@ namespace Zenbot.BotCore
 
                 .AddSingleton<UsersService>()
                 .AddSingleton<JiraService>()
+                .AddSingleton<BitbucketService>()
 
                 .AddSingleton<ScrinIOService>()
 

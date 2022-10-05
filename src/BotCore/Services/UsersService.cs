@@ -189,5 +189,23 @@ namespace BotCore
             }
             return bUser;
         }
+
+        public async Task<BotUser> GetUserByBitbucketId(string bitbucketId)
+        {
+            BotUser bUser = new BotUser();
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var unitOfWorkManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+                var _repository = scope.ServiceProvider.GetRequiredService<IEntityFrameworkRepository<BotUser>>();
+
+
+                using (var uow = unitOfWorkManager.Begin())
+                {
+                    bUser = await _repository.FindAsync(a => a.BitBucketAccountId == bitbucketId);
+                }
+
+            }
+            return bUser;
+        }
     }
 }
