@@ -1,6 +1,8 @@
 ﻿using BotCore;
+using BotCore.Shared;
 using Discord;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 using Zen.Mvc;
@@ -14,10 +16,12 @@ namespace Zenbot.WebUI.Controllers.Api
     {
         private readonly IServiceProvider _services;
         private readonly JiraService _jiraService;
+        private readonly BitbucketService _bitbucketService;
         public ZenbotController(IServiceProvider services, JiraService jiraService)
         {
             _services = services;
             _jiraService = jiraService;
+            _bitbucketService = services.GetRequiredService<BitbucketService>();
         }
         [HttpPost]
         public async Task GetJiraWebHook([FromBody] JiraWebhookObject value)
@@ -51,7 +55,7 @@ namespace Zenbot.WebUI.Controllers.Api
 
                 .Build();
 
-            var message = await this._jiraService.TrySendMessageToUserAsync(jiraWH.AssigneeId, "", false, embed: embed, components: component);
+            var message = await this._jiraService.SendMessageToUserAsync(jiraWH.AssigneeId, "", false, embed: embed, components: component);
         }
 
 
@@ -66,10 +70,10 @@ namespace Zenbot.WebUI.Controllers.Api
             {
                 AuthorName = value.pullrequest.author.display_name,
                 PullRequestDate = value.pullrequest.created_on,
-                PullRequestLink = value.pullrequest.links.html,
+                PullRequestLink = value.pullrequest.links.html.href,
                 PullRequestTitle = value.pullrequest.title,
                 RepositoryName = value.repository.name,
-                RepositoryLink = value.repository.links.html,
+                RepositoryLink = value.repository.links.html.href,
                 PullRequestId = value.pullrequest.id,
             };
             var embed = new EmbedBuilder()
@@ -79,23 +83,24 @@ namespace Zenbot.WebUI.Controllers.Api
             }.Build();
 
             var component = new ComponentBuilder()
-                .WithButton("Author ------>", "1", ButtonStyle.Secondary, null, "", true, row: 0)
-                .WithButton(bitbucketWH.AuthorName, null, ButtonStyle.Secondary, null, null, row: 0)
+                .WithButton("Author ------>", "1", ButtonStyle.Success, null, null, true, row: 0)
+                .WithButton(bitbucketWH.AuthorName, Buttons.BtnTextCustomId, ButtonStyle.Secondary, row: 0)
 
-                .WithButton("Repository ->", "2", ButtonStyle.Secondary, null, "", true, row: 1)
-                .WithButton(bitbucketWH.RepositoryName, null, ButtonStyle.Link, null, $"{bitbucketWH.RepositoryLink}", row: 1)
+                .WithButton("Repository ->", "3", ButtonStyle.Success, null, "", true, row: 1)
+                .WithButton(bitbucketWH.RepositoryName, null, ButtonStyle.Link, null, bitbucketWH.RepositoryLink, row: 1)
 
-                .WithButton("Message -------->", "3", ButtonStyle.Secondary, null, "", true, row: 2)
-                .WithButton(bitbucketWH.PullRequestTitle, null, ButtonStyle.Link, null, null, row: 2)
+                .WithButton("Pull Request Message ->", "4", ButtonStyle.Success, null, "", true, row: 2)
+                .WithButton(bitbucketWH.PullRequestTitle, Buttons.BtnTextCustomId, ButtonStyle.Link, null,bitbucketWH.PullRequestLink, row: 2)
 
-                 .WithButton("Date -------->", "3", ButtonStyle.Secondary, null, "", true, row: 3)
-                .WithButton(bitbucketWH.PullRequestDate.ToString("dddd, dd MMMM yyyy"), null, ButtonStyle.Link, null, null, row: 3)
+                 .WithButton("Date -------->", "6", ButtonStyle.Success, null, null, true, row: 3)
+                .WithButton(bitbucketWH.PullRequestDate.ToString("dddd, dd MMMM yyyy"), Buttons.BtnTextCustomId, ButtonStyle.Secondary, row: 3)
 
                 .Build();
 
             foreach (var item in reviewers)
             {
-                var message = await this._jiraService.TrySendMessageToUserAsync(item.account_id, "", false, embed: embed, components: component);
+                var message = await this._bitbucketService.SendMessageToUserAsync(item.account_id, "", false, embed: embed, components: component);
+                await Task.Delay(100);
             }
 
         }

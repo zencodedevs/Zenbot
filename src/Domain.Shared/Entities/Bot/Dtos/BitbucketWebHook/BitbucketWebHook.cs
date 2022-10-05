@@ -10,11 +10,11 @@ namespace Zenbot.Domain.Shared.Entities.Bot.Dtos.BitbucketWebHook
     public class BitbucketWebHook
     {
         public string AuthorName { get; set; }
-        public Html PullRequestLink { get; set; }
+        public string PullRequestLink { get; set; }
         public string PullRequestTitle { get; set; }
         public DateTime PullRequestDate { get; set; }
         public string RepositoryName { get; set; }
-        public Html RepositoryLink { get; set; }
+        public string RepositoryLink { get; set; }
         public int PullRequestId { get; set; }
 
     }
