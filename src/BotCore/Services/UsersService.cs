@@ -104,7 +104,18 @@ namespace BotCore
 
                 using (var uow = unitOfWorkManager.Begin())
                 {
-                    // var user = await _repository.FindAsync(userId);
+                     var user = await _repository.FindAsync(x=> x.DiscordUserId == userId);
+                    if (user is not null)
+                    {
+                        user.DiscordUserId = userId;
+                        user.Birthday = birthday;
+                        user.NextNotifyTIme = nextNotifyTime;
+                        await _repository.UpdateAsync(user);
+                        await _repository.SaveChangesAsync(true);
+
+                        bUser = user;
+                        return bUser;
+                    }
 
                     var botUser = new BotUser().Create(username, userMail, userId, birthday, nextNotifyTime);
                     await _repository.InsertAsync(botUser);
@@ -117,7 +128,7 @@ namespace BotCore
             return bUser; ;
         }
 
-        public async Task<BotUser> updateBotUser(string username, string userMail, string jiraAccountId, ulong userId)
+        public async Task<BotUser> updateBotUser(string username, string userMail, string jiraAccountId, string bitbucketAccountId, ulong userId)
         {
             BotUser bUser = new BotUser();
             using (var scope = _scopeFactory.CreateScope())
