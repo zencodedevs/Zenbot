@@ -31,18 +31,12 @@ namespace BotCore
             _discord = _services.GetRequiredService<DiscordSocketClient>();
         }
 
-        public async Task<IMessage> TrySendMessageToUserAsync(ulong userId, string text = null, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageComponent components = null, Embed[] embeds = null)
+        public async Task<IMessage> SendMessageToUserAsync(ulong userId, string text = null, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageComponent components = null, Embed[] embeds = null)
         {
             IUser discordUser = await _discord.Rest.GetUserAsync(userId);
             if (discordUser == null) return null;
-            try
-            {
-                return await discordUser.SendMessageAsync(text, isTTS, embed, options, allowedMentions, components, embeds); ;
-            }
-            catch
-            {
-                return null;
-            }
+
+            return await discordUser.SendMessageAsync(text, isTTS, embed, options, allowedMentions, components, embeds);
         }
         public async Task<List<BotUser>> GetUpComingUsersBrithday()
         {
@@ -104,7 +98,7 @@ namespace BotCore
 
                 using (var uow = unitOfWorkManager.Begin())
                 {
-                     var user = await _repository.FindAsync(x=> x.DiscordUserId == userId);
+                    var user = await _repository.FindAsync(x => x.DiscordUserId == userId);
                     if (user is not null)
                     {
                         user.DiscordUserId = userId;
@@ -144,6 +138,7 @@ namespace BotCore
                     user.Username = username;
                     user.UserMail = userMail;
                     user.JiraAccountID = jiraAccountId;
+                    user.BitBucketAccountId = bitbucketAccountId;
 
                     await _repository.UpdateAsync(user);
                     await _repository.SaveChangesAsync(true);
