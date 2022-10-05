@@ -10,12 +10,12 @@ namespace BotCore
 {
     public static class DiscordUserExtenstions
     {
-        private static string ToUserId(ulong id) 
+        private static string ToDiscordUserId(ulong id) 
             => MentionUtils.MentionUser(id);
 
-        public static string ToUserMention(this BotUser user) => ToUserId(user.UserId);
+        public static string ToUserMention(this BotUser user) => ToDiscordUserId(user.DiscordUserId);
 
-        public static string ToUserMention(this IUser user) => ToUserId(user.Id);
+        public static string ToUserMention(this IUser user) => ToDiscordUserId(user.Id);
 
     }
 }

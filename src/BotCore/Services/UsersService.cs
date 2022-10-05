@@ -128,7 +128,7 @@ namespace BotCore
 
                 using (var uow = unitOfWorkManager.Begin())
                 {
-                    var user = await _repository.FindAsync(x => x.UserId == userId);
+                    var user = await _repository.FindAsync(x => x.DiscordUserId == userId);
 
                     user.Username = username;
                     user.UserMail = userMail;
@@ -155,7 +155,7 @@ namespace BotCore
 
                 using (var uow = unitOfWorkManager.Begin())
                 {
-                    bUser = await _repository.FindAsync(a => a.UserId == Id);
+                    bUser = await _repository.FindAsync(a => a.DiscordUserId == Id);
                 }
 
             }

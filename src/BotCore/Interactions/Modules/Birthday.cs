@@ -38,7 +38,7 @@ namespace Zenbot.BotCore.Interactions.Modules
                 foreach (var user in users)
                 {
                     times += $"<t:{((DateTimeOffset)user.Birthday).ToUnixTimeSeconds()}:R>\n";
-                    usersContent += $"{MentionUtils.MentionUser(user.UserId)}\n";
+                    usersContent += $"{MentionUtils.MentionUser(user.DiscordUserId)}\n";
                 }
 
                 var embed = new EmbedBuilder()

@@ -15,8 +15,8 @@ namespace Zenbot.BotCore
 
         public static async Task<SocketMessage> ReadContextMessageAsync(this ICommandContext Context, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
         => await ReadMessageAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), (OnlyCurrentUser ? Context.User.Id : 0), Timeout);
-        public static async Task<SocketMessage> ReadUserMessageAsync(this ICommandContext Context, TimeSpan Timeout, ulong UserId, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-        => await ReadMessageAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, Timeout);
+        public static async Task<SocketMessage> ReadUserMessageAsync(this ICommandContext Context, TimeSpan Timeout, ulong DiscordUserId, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+        => await ReadMessageAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, Timeout);
         public static async Task<SocketMessage> ReadChannelMessageAsync(this ICommandContext Context, TimeSpan Timeout, ulong ChannelId, bool OnlyCurrentGuild = true)
         => await ReadMessageAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), Context.Channel.Id, 0, Timeout);
         public static async Task<SocketMessage> ReadGuildMessageAsync(this ICommandContext Context, TimeSpan Timeout, ulong GuildId)
@@ -26,8 +26,8 @@ namespace Zenbot.BotCore
 
         public static async Task<SocketMessage> ReadContextMessageAsync(this IInteractionContext Context, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
        => await ReadMessageAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), (OnlyCurrentUser ? Context.User.Id : 0), Timeout);
-        public static async Task<SocketMessage> ReadUserMessageAsync(this IInteractionContext Context, TimeSpan Timeout, ulong UserId, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-        => await ReadMessageAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, Timeout);
+        public static async Task<SocketMessage> ReadUserMessageAsync(this IInteractionContext Context, TimeSpan Timeout, ulong DiscordUserId, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+        => await ReadMessageAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, Timeout);
         public static async Task<SocketMessage> ReadChannelMessageAsync(this IInteractionContext Context, TimeSpan Timeout, ulong ChannelId, bool OnlyCurrentGuild = true)
         => await ReadMessageAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), Context.Channel.Id, 0, Timeout);
         public static async Task<SocketMessage> ReadGuildMessageAsync(this IInteractionContext Context, TimeSpan Timeout, ulong GuildId)
@@ -76,12 +76,12 @@ namespace Zenbot.BotCore
       => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), (OnlyCurrentUser ? Context.User.Id : 0), MessageId, Timeout, Optional<ComponentType>.Unspecified);
         public static async Task<SocketMessageComponent> ReadMessageComponentFromMessageAsync(this ICommandContext Context, IMessage Message, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
        => await ReadMessageComponentFromMessageIdAsync(Context, Message.Id, Timeout, OnlyCurrentUser, OnlyCurrentChannel, OnlyCurrentGuild);
-        public static async Task<SocketMessageComponent> ReadUserMessageComponentAsync(this ICommandContext Context, ulong UserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, 0, Timeout, Optional<ComponentType>.Unspecified);
-        public static async Task<SocketMessageComponent> ReadUserMessageComponentFromMessageIdAsync(this ICommandContext Context, ulong UserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, MessageId, Timeout, Optional<ComponentType>.Unspecified);
-        public static async Task<SocketMessageComponent> ReadUserMessageComponentFromMessageAsync(this ICommandContext Context, ulong UserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadUserMessageComponentFromMessageIdAsync(Context, UserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
+        public static async Task<SocketMessageComponent> ReadUserMessageComponentAsync(this ICommandContext Context, ulong DiscordUserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, 0, Timeout, Optional<ComponentType>.Unspecified);
+        public static async Task<SocketMessageComponent> ReadUserMessageComponentFromMessageIdAsync(this ICommandContext Context, ulong DiscordUserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, MessageId, Timeout, Optional<ComponentType>.Unspecified);
+        public static async Task<SocketMessageComponent> ReadUserMessageComponentFromMessageAsync(this ICommandContext Context, ulong DiscordUserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadUserMessageComponentFromMessageIdAsync(Context, DiscordUserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
 
         public static async Task<SocketMessageComponent> ReadContextMessageComponentAsync(this IInteractionContext Context, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
       => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), (OnlyCurrentUser ? Context.User.Id : 0), 0, Timeout, Optional<ComponentType>.Unspecified);
@@ -89,12 +89,12 @@ namespace Zenbot.BotCore
       => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), (OnlyCurrentUser ? Context.User.Id : 0), MessageId, Timeout, Optional<ComponentType>.Unspecified);
         public static async Task<SocketMessageComponent> ReadMessageComponentFromMessageAsync(this IInteractionContext Context, IMessage Message, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
        => await ReadMessageComponentFromMessageIdAsync(Context, Message.Id, Timeout, OnlyCurrentUser, OnlyCurrentChannel, OnlyCurrentGuild);
-        public static async Task<SocketMessageComponent> ReadUserMessageComponentAsync(this IInteractionContext Context, ulong UserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, 0, Timeout, Optional<ComponentType>.Unspecified);
-        public static async Task<SocketMessageComponent> ReadUserMessageComponentFromMessageIdAsync(this IInteractionContext Context, ulong UserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, MessageId, Timeout, Optional<ComponentType>.Unspecified);
-        public static async Task<SocketMessageComponent> ReadUserMessageComponentFromMessageAsync(this IInteractionContext Context, ulong UserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadUserMessageComponentFromMessageIdAsync(Context, UserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
+        public static async Task<SocketMessageComponent> ReadUserMessageComponentAsync(this IInteractionContext Context, ulong DiscordUserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, 0, Timeout, Optional<ComponentType>.Unspecified);
+        public static async Task<SocketMessageComponent> ReadUserMessageComponentFromMessageIdAsync(this IInteractionContext Context, ulong DiscordUserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, MessageId, Timeout, Optional<ComponentType>.Unspecified);
+        public static async Task<SocketMessageComponent> ReadUserMessageComponentFromMessageAsync(this IInteractionContext Context, ulong DiscordUserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadUserMessageComponentFromMessageIdAsync(Context, DiscordUserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
 
 
         public static async Task<SocketMessageComponent> ReadContextButtonAsync(this ICommandContext Context, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
@@ -103,12 +103,12 @@ namespace Zenbot.BotCore
       => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), (OnlyCurrentUser ? Context.User.Id : 0), MessageId, Timeout, ComponentType.Button);
         public static async Task<SocketMessageComponent> ReadButtonFromMessageAsync(this ICommandContext Context, IMessage Message, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
        => await ReadButtonFromMessageIdAsync(Context, Message.Id, Timeout, OnlyCurrentUser, OnlyCurrentChannel, OnlyCurrentGuild);
-        public static async Task<SocketMessageComponent> ReadUserButtonAsync(this ICommandContext Context, ulong UserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, 0, Timeout, ComponentType.Button);
-        public static async Task<SocketMessageComponent> ReadUserButtonFromMessageIdAsync(this ICommandContext Context, ulong UserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, MessageId, Timeout, ComponentType.Button);
-        public static async Task<SocketMessageComponent> ReadUserButtonFromMessageAsync(this ICommandContext Context, ulong UserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadUserButtonFromMessageIdAsync(Context, UserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
+        public static async Task<SocketMessageComponent> ReadUserButtonAsync(this ICommandContext Context, ulong DiscordUserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, 0, Timeout, ComponentType.Button);
+        public static async Task<SocketMessageComponent> ReadUserButtonFromMessageIdAsync(this ICommandContext Context, ulong DiscordUserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, MessageId, Timeout, ComponentType.Button);
+        public static async Task<SocketMessageComponent> ReadUserButtonFromMessageAsync(this ICommandContext Context, ulong DiscordUserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadUserButtonFromMessageIdAsync(Context, DiscordUserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
 
 
         public static async Task<SocketMessageComponent> ReadContextButtonAsync(this IInteractionContext Context, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
@@ -117,12 +117,12 @@ namespace Zenbot.BotCore
       => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), (OnlyCurrentUser ? Context.User.Id : 0), MessageId, Timeout, ComponentType.Button);
         public static async Task<SocketMessageComponent> ReadButtonFromMessageAsync(this IInteractionContext Context, IMessage Message, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
        => await ReadButtonFromMessageIdAsync(Context, Message.Id, Timeout, OnlyCurrentUser, OnlyCurrentChannel, OnlyCurrentGuild);
-        public static async Task<SocketMessageComponent> ReadUserButtonAsync(this IInteractionContext Context, ulong UserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, 0, Timeout, ComponentType.Button);
-        public static async Task<SocketMessageComponent> ReadUserButtonFromMessageIdAsync(this IInteractionContext Context, ulong UserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, MessageId, Timeout, ComponentType.Button);
-        public static async Task<SocketMessageComponent> ReadUserButtonFromMessageAsync(this IInteractionContext Context, ulong UserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadUserButtonFromMessageIdAsync(Context, UserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
+        public static async Task<SocketMessageComponent> ReadUserButtonAsync(this IInteractionContext Context, ulong DiscordUserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, 0, Timeout, ComponentType.Button);
+        public static async Task<SocketMessageComponent> ReadUserButtonFromMessageIdAsync(this IInteractionContext Context, ulong DiscordUserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, MessageId, Timeout, ComponentType.Button);
+        public static async Task<SocketMessageComponent> ReadUserButtonFromMessageAsync(this IInteractionContext Context, ulong DiscordUserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadUserButtonFromMessageIdAsync(Context, DiscordUserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
 
 
         public static async Task<SocketMessageComponent> ReadContextSelectMenuAsync(this IInteractionContext Context, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
@@ -131,12 +131,12 @@ namespace Zenbot.BotCore
       => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), (OnlyCurrentUser ? Context.User.Id : 0), MessageId, Timeout, ComponentType.SelectMenu);
         public static async Task<SocketMessageComponent> ReadSelectMenuFromMessageAsync(this IInteractionContext Context, IMessage Message, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
        => await ReadSelectMenuFromMessageIdAsync(Context, Message.Id, Timeout, OnlyCurrentUser, OnlyCurrentChannel, OnlyCurrentGuild);
-        public static async Task<SocketMessageComponent> ReadUserSelectMenuAsync(this IInteractionContext Context, ulong UserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, 0, Timeout, ComponentType.SelectMenu);
-        public static async Task<SocketMessageComponent> ReadUserSelectMenuFromMessageIdAsync(this IInteractionContext Context, ulong UserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, MessageId, Timeout, ComponentType.SelectMenu);
-        public static async Task<SocketMessageComponent> ReadUserSelectMenuFromMessageAsync(this IInteractionContext Context, ulong UserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadUserSelectMenuFromMessageIdAsync(Context, UserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
+        public static async Task<SocketMessageComponent> ReadUserSelectMenuAsync(this IInteractionContext Context, ulong DiscordUserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, 0, Timeout, ComponentType.SelectMenu);
+        public static async Task<SocketMessageComponent> ReadUserSelectMenuFromMessageIdAsync(this IInteractionContext Context, ulong DiscordUserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, MessageId, Timeout, ComponentType.SelectMenu);
+        public static async Task<SocketMessageComponent> ReadUserSelectMenuFromMessageAsync(this IInteractionContext Context, ulong DiscordUserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadUserSelectMenuFromMessageIdAsync(Context, DiscordUserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
 
         public static async Task<SocketMessageComponent> ReadContextSelectMenuAsync(this ICommandContext Context, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
          => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), (OnlyCurrentUser ? Context.User.Id : 0), 0, Timeout, ComponentType.SelectMenu);
@@ -144,14 +144,14 @@ namespace Zenbot.BotCore
       => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), (OnlyCurrentUser ? Context.User.Id : 0), MessageId, Timeout, ComponentType.SelectMenu);
         public static async Task<SocketMessageComponent> ReadSelectMenuFromMessageAsync(this ICommandContext Context, IMessage Message, TimeSpan Timeout, bool OnlyCurrentUser = true, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
        => await ReadSelectMenuFromMessageIdAsync(Context, Message.Id, Timeout, OnlyCurrentUser, OnlyCurrentChannel, OnlyCurrentGuild);
-        public static async Task<SocketMessageComponent> ReadUserSelectMenuAsync(this ICommandContext Context, ulong UserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, 0, Timeout, ComponentType.SelectMenu);
-        public static async Task<SocketMessageComponent> ReadUserSelectMenuFromMessageIdAsync(this ICommandContext Context, ulong UserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), UserId, MessageId, Timeout, ComponentType.SelectMenu);
-        public static async Task<SocketMessageComponent> ReadUserSelectMenuFromMessageAsync(this ICommandContext Context, ulong UserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
-     => await ReadUserSelectMenuFromMessageIdAsync(Context, UserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
+        public static async Task<SocketMessageComponent> ReadUserSelectMenuAsync(this ICommandContext Context, ulong DiscordUserId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+      => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, 0, Timeout, ComponentType.SelectMenu);
+        public static async Task<SocketMessageComponent> ReadUserSelectMenuFromMessageIdAsync(this ICommandContext Context, ulong DiscordUserId, ulong MessageId, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadMessageComponentAsync(Context.Client as DiscordSocketClient, (OnlyCurrentGuild ? Context.Guild.Id : 0), (OnlyCurrentChannel ? Context.Channel.Id : 0), DiscordUserId, MessageId, Timeout, ComponentType.SelectMenu);
+        public static async Task<SocketMessageComponent> ReadUserSelectMenuFromMessageAsync(this ICommandContext Context, ulong DiscordUserId, IMessage Message, TimeSpan Timeout, bool OnlyCurrentChannel = true, bool OnlyCurrentGuild = true)
+     => await ReadUserSelectMenuFromMessageIdAsync(Context, DiscordUserId, Message.Id, Timeout, OnlyCurrentChannel, OnlyCurrentGuild);
 
-        public static async Task<SocketMessageComponent> ReadMessageComponentAsync(DiscordSocketClient client, ulong GuildId, ulong ChannelId, ulong UserId, ulong MessageId, TimeSpan Timeout, Optional<ComponentType> ComponentType)
+        public static async Task<SocketMessageComponent> ReadMessageComponentAsync(DiscordSocketClient client, ulong GuildId, ulong ChannelId, ulong DiscordUserId, ulong MessageId, TimeSpan Timeout, Optional<ComponentType> ComponentType)
         {
             var inputTask = new TaskCompletionSource<SocketMessageComponent>();
             try
@@ -174,7 +174,7 @@ namespace Zenbot.BotCore
                     //if (InteractionUtilities.IsStaticInteractionCommand(arg)) return Task.CompletedTask; ;
                     if (arg is SocketMessageComponent Smc)
                     {
-                        if (GuildId != 0 && Smc.GuildId != GuildId || ChannelId != 0 && Smc.ChannelId != ChannelId || UserId != 0 && Smc.User.Id != UserId || MessageId != 0 && Smc.Message.Id != MessageId || ComponentType.IsSpecified && Smc.Data.Type != ComponentType.Value)
+                        if (GuildId != 0 && Smc.GuildId != GuildId || ChannelId != 0 && Smc.ChannelId != ChannelId || DiscordUserId != 0 && Smc.User.Id != DiscordUserId || MessageId != 0 && Smc.Message.Id != MessageId || ComponentType.IsSpecified && Smc.Data.Type != ComponentType.Value)
                             return Task.CompletedTask;
 
                         inputTask.TrySetResult(arg as SocketMessageComponent);
@@ -191,7 +191,7 @@ namespace Zenbot.BotCore
         public static async Task<SocketModal> ReadContextModalAsync(this IInteractionContext Context, TimeSpan Timeout)
         => await ReadModalAsync(Context.Client as DiscordSocketClient, Context.User.Id, Timeout);
 
-        public static async Task<SocketModal> ReadModalAsync(DiscordSocketClient client, ulong UserId, TimeSpan Timeout)
+        public static async Task<SocketModal> ReadModalAsync(DiscordSocketClient client, ulong DiscordUserId, TimeSpan Timeout)
         {
             var inputTask = new TaskCompletionSource<SocketModal>();
             try
@@ -211,7 +211,7 @@ namespace Zenbot.BotCore
             {
                 _ = Task.Run(() =>
                 {
-                    if ((arg.Type != InteractionType.ModalSubmit) || (arg.User.Id != UserId)) return Task.CompletedTask;
+                    if ((arg.Type != InteractionType.ModalSubmit) || (arg.User.Id != DiscordUserId)) return Task.CompletedTask;
 
                     inputTask.TrySetResult(arg as SocketModal);
                     return Task.CompletedTask;

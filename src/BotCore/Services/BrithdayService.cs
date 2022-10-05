@@ -51,7 +51,7 @@ namespace Zenbot.BotCore
                                 try
                                 {
                                     await _client.GetGuild(_config.MainGuildId).GetTextChannel(_config.Channels.LoggerId)
-                                          .SendMessageAsync($"@everyone Congrates <@{u.UserId}>'s birthday, Happy Birtday 🎉");
+                                          .SendMessageAsync($"@everyone Congrates <@{u.DiscordUserId}>'s birthday, Happy Birtday 🎉");
 
                                     u.NextNotifyTIme = DateTime.UtcNow
                                     .AddYears(1)
