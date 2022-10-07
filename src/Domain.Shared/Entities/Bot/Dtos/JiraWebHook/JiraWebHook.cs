@@ -11,7 +11,7 @@ namespace Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook
         public string AssigneeId { get; set; }
         public string AssigneeName { get; set; }
         public string ReporterName { get; set; }
-        public string MyProperty { get; set; }
+        public string IssueName { get; set; }
         public string IssueSelf { get; set; }
         public string PriorityName { get; set; }
         public string PriorityIconUrl { get; set; }

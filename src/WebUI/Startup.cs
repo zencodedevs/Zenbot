@@ -1,3 +1,4 @@
+using BotCore;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +19,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Zenbot.Application;
-using Zenbot.BotCore;
+
 using Zenbot.Domain;
 using Zenbot.Domain.Shared.Common;
 using Zenbot.Infrastructure;
@@ -57,7 +58,7 @@ namespace Zenbot.WebUI
             LogManager.Configuration.Variables["registerClause"] = Constants.Nlog.WebUiDbRegisterClause;
 
             // Adding services from Discord bot to start the bot from this Layer
-            var bot = new DiscordBotService()
+            var bot = new BotService()
                 .ConfigServices(services);
 
             services.AddSingleton(bot);
@@ -164,7 +165,7 @@ namespace Zenbot.WebUI
             });
 
             // Configuraiton with Discord bot
-            await app.ApplicationServices.GetRequiredService<DiscordBotService>()
+            await app.ApplicationServices.GetRequiredService<BotService>()
                .RunAsync(app.ApplicationServices);
 
             // app.UseExtensionCurrentTenantMiddleware();

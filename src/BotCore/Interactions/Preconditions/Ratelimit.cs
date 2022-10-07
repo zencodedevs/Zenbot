@@ -1,8 +1,9 @@
-﻿// Originally made by jalaljaleh for Dynastio.Discord
-//Read the original file at https://github.com/jalaljaleh/Dynastio.Discord/blob/master/Dynastio.Bot/Interactions/Preconditions/RateLimit.cs
-//Originally licensed under Apache 2.0 https://github.com/jalaljaleh/Dynastio.Discord/blob/master/LICENSE.txt
-//Modifications:
-// 
+﻿/*!
+ * Discord Rate limit v1.4 (https://jalaljaleh.github.io/)
+ * Copyright 2021-2022 Jalal Jaleh
+ * Licensed under Apache (https://github.com/jalaljaleh/Dynastio.Discord/blob/master/LICENSE.txt)
+ * Original (https://github.com/jalaljaleh/Dynastio.Discord/blob/master/Dynastio.Bot/Interactions/Preconditions/RateLimit.cs)
+ */
 namespace Discord.Interactions
 {
     using System;

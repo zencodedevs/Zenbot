@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotCore
+namespace BotCore.Extenstions
 {
     public static class IntegerExtenstions
     {
@@ -21,10 +21,10 @@ namespace BotCore
 
         public static string ToSizeSuffix(this long value, int decimalPlaces = 1)
         {
-            if (value < 0) { return "-" + ToSizeSuffix(-value, decimalPlaces); }
+            if (value < 0) { return "-" + (-value).ToSizeSuffix(decimalPlaces); }
 
             int i = 0;
-            decimal dValue = (decimal)value;
+            decimal dValue = value;
             while (Math.Round(dValue, decimalPlaces) >= 1000)
             {
                 dValue /= 1024;

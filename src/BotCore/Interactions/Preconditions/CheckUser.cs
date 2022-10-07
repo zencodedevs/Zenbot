@@ -1,16 +1,16 @@
-﻿using Discord.WebSocket;
+﻿using BotCore.Entities;
+using Discord;
+using Discord.Interactions;
+using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Zenbot.BotCore.Interactions;
 
-namespace Discord.Interactions
+namespace BotCore.Interactions.Preconditions
 {
-
-
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class CheckUser : PreconditionAttribute
     {
@@ -34,7 +34,7 @@ namespace Discord.Interactions
                     return Task.FromResult(PreconditionResult.FromError("Access Denied."));
             }
 
-            var context_ = (context as CustomSocketInteractionContext);
+            var context_ = context as CustomSocketInteractionContext;
             var matchs = context_.SegmentMatches;
             var param = matchs.FirstOrDefault();
 

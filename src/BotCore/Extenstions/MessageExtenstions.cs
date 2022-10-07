@@ -1,12 +1,13 @@
-﻿using Discord;
+﻿using BotCore.Addons;
+using BotCore.Entities;
+using Discord;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Zenbot.BotCore.Interactions;
 
-namespace Zenbot.BotCore
+namespace BotCore.Extenstions
 {
     public static class MessageExtenstions
     {

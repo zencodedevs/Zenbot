@@ -1,0 +1,187 @@
+﻿using BotCore.Entities;
+using BotCore.Extenstions;
+using BotCore.Services;
+using Discord;
+using Discord.Interactions;
+using Microsoft.CodeAnalysis.Operations;
+using NJsonSchema.Validation;
+using Quartz.Impl.Triggers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Channels;
+using System.Threading.Tasks;
+using Twilio.Rest.Api.V2010.Account;
+using Zenbot.Domain.Shared.Entities.Bot;
+
+namespace BotCore.Interactions.Modules.Admin
+{
+    [Group("setup", "setup guild settings")]
+    [RequireUserPermission(GuildPermission.Administrator)]
+    [DefaultMemberPermissions(GuildPermission.Administrator)]
+
+    [RequireBotPermission(GuildPermission.ManageRoles)]
+    [RequireContext(ContextType.Guild)]
+    [EnabledInDm(false)]
+    public class SetupModule : InteractionModuleBase<CustomSocketInteractionContext>
+    {
+        public ChannelService _channelService { get; set; }
+
+        [SlashCommand("prefix", "setup server prefix")]
+        public async Task prefix([MaxLength(20)] string prefix)
+        {
+            await DeferAsync();
+            await Context._guildService.UpdateAsync(Context.BotGuild.Id, x =>
+            {
+                x.BotPrefix = prefix;
+            });
+            await FollowupAsync($"Channel prefix updated to **{prefix}**");
+        }
+
+        [SlashCommand("password", "setup server password")]
+        public async Task password(string password)
+        {
+            await DeferAsync();
+            await Context._guildService.UpdateAsync(Context.BotGuild.Id, x =>
+            {
+                x.AuthenticationPassword = password;
+            });
+            await FollowupAsync($"The password changed to {password} succesfuly.");
+        }
+
+        [SlashCommand("logger-channel", "setup logger channel")]
+        public async Task logger_channel(ITextChannel channel)
+        {
+            await DeferAsync();
+
+            var loggerChannel = await _channelService.GetAsync(a => a.Type == GuildChannelType.Logger && a.GuildId == Context.BotGuild.Id);
+            if (loggerChannel is not null)
+            {
+                await _channelService.UpdateAsync(loggerChannel, x => x.Type = GuildChannelType.None);
+            }
+
+            var targetChannel = await _channelService.GetOrAddAsync(channel.Id, Context.BotGuild.Id);
+            await _channelService.UpdateAsync(targetChannel, x => x.Type = GuildChannelType.Logger);
+
+            await FollowupAsync($"The logger channel changed to **<#{channel.Mention()}>**");
+        }
+        [SlashCommand("roles", "setup server roles")]
+        public async Task roles(IRole verified, IRole unVerified, IRole hr)
+        {
+            await DeferAsync();
+            if (new ulong[] { verified.Id, unVerified.Id, hr.Id }.Distinct().Count() != 3)
+            {
+                await FollowupAsync("duplicated roles are not allowed");
+                return;
+            }
+            await Context._guildService.UpdateAsync(Context.BotGuild, x =>
+            {
+                x.VerifiedRoleId = verified.Id;
+                x.UnVerifiedRoleId = unVerified.Id;
+                x.HrRoleId = hr.Id;
+            });
+            await FollowupAsync($"The server roles updated.");
+        }
+        [SlashCommand("greeting-message", "setup server's greeting message.")]
+        public async Task greeting_message(string message, IAttachment grettingFile = null)
+        {
+            await DeferAsync();
+
+            if (File.Exists(Context.BotGuild.GreetingFilePath))
+                File.Delete(Context.BotGuild.GreetingFilePath);
+
+            if (grettingFile is null)
+            {
+                await Context._guildService.UpdateAsync(Context.BotGuild, x =>
+                {
+                    x.GreetingMessage = message;
+                    x.GreetingFilePath = "";
+                });
+                return;
+            }
+
+            using (WebClient client = new WebClient())
+            {
+                var directoryPath = $@"guilds/{Context.Guild.Id}/";
+                if (!Directory.Exists(directoryPath))
+                    Directory.CreateDirectory(directoryPath);
+
+                var filePath = directoryPath + grettingFile.Filename;
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
+
+                client.DownloadFileCompleted += Client_DownloadFileCompleted;
+                async void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+                {
+                    if (e.Error is not null)
+                    {
+                        await FollowupAsync("can not download the file, try again.");
+                        return;
+                    }
+                    await Context._guildService.UpdateAsync(Context.BotGuild, x =>
+                    {
+                        x.GreetingMessage = message;
+                        x.GreetingFilePath = filePath;
+                    });
+                    await FollowupAsync("file downloaded, gretting-message updated.");
+                }
+
+                client.DownloadFileAsync(new Uri(grettingFile.Url), filePath);
+                await FollowupAsync("please wait, we are downloading the file.");
+            }
+
+        }
+
+
+        [SlashCommand("help", "help")]
+        public async Task help()
+        {
+            var embed = new EmbedBuilder()
+            .WithTitle("Setup Help")
+            .WithDescription(
+                $"`Note:` in order to enable user authentication first you should make three Roles in your " +
+                $"server `Verified, Unverified, HR` Roles. Then make a channel which only `unverfied` role can see " +
+                $"and the whole other channel should be visible only for `Verified` role. \n\n" +
+                $"If done, great let's follow these folowing steps: \n\n" +
+                $"1. `/setup roles`  Setup your roles for this server so bot can perform it's tasks.\n" +
+                $"2. `/setup password` The password which server user will be authenticated.\n" +
+                $"3. `/setup logger-channel`  Every common message from bot will be sent here.\n"+
+                $"4. `/setup greeting-message`  Whenever a user joins your server this message will be sent to him/her and in logger-channel.\n"+
+                $"5. `/setup prefix` You will change the default prefix for your server.\n" +
+                $"6. `/setup admin role add/remove` Admin can Assign or remove roles to/from users.\n"+
+                $"7. `/setup hr role add/remove` HR can assign or remove roles to/from users.\n"+
+                $"8. `/setup hr user-send file` HR can send onboarding file to specific user\n"+
+                $"9. `/setup birthday add` Users can add their birthday date, the bot will then announce in logger channel.\n" +
+                $"10. `/setup external account` Users can add their external account Id (jira, bitbucket).\n" +
+                $"11. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
+                ).Build();
+            await RespondAsync(embed: embed);
+        }
+
+        // The command that Admin make it once and then all new user will use it to enter thier password
+        // for authentication
+        [SlashCommand("authentication", "setup authentication channel")]
+        [RequireGuildSetup(RequireGuildSetup.GuildSetupType.RoleId)]
+        public async Task authentication(ITextChannel channel)
+        {
+            await DeferAsync(true);
+
+            var embed = new EmbedBuilder()
+            {
+                Title = "Authentication",
+                Description = "Specify your identity, so that the necessary accesses are issued.",
+                ThumbnailUrl = "https://img.icons8.com/fluency/344/identification-documents.png",
+            };
+            var component = new ComponentBuilder()
+                .WithButton("Authentication", "button-admin-setup-authentication-password", ButtonStyle.Success, new Emoji("🔒"), null, false, 0);
+
+            await channel.SendMessageAsync(embed: embed.Build(), components: component.Build());
+
+            await FollowupAsync("The channel updated, make sure the channel is private and unwriteable.", ephemeral: true);
+        }
+
+    }
+}
