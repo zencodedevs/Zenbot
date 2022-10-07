@@ -11,8 +11,7 @@ namespace Domain.Shared.Entities.Bot
 {
     public class BotUser : Entity, IHasDomainEvent
     {
-       
-        public ulong DiscordUserId { get; set; }
+        public ulong DiscordId { get; set; }
         public string UserMail { get; set; }
         public string Username { get; set; }
         public string JiraAccountID { get; set; }
@@ -27,7 +26,7 @@ namespace Domain.Shared.Entities.Bot
         {
             Birthday = birthday;
             NextNotifyTIme = nextNotifyTime;
-            DiscordUserId = userId;
+            DiscordId = userId;
             UserMail = userMail;
             Username = username;
             return this;
@@ -35,6 +34,6 @@ namespace Domain.Shared.Entities.Bot
 
 
 
-       
+
     }
 }

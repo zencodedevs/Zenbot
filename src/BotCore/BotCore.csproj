@@ -43,4 +43,20 @@
     <ProjectReference Include="..\Worker\Worker.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Bitbucket\Forms\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Services\Locale\Locales\en-US.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\Locale\Locales\ru.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\Locale\Locales\tr.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Zenbot.BotCore
+namespace BotCore.Extenstions
 {
     public static class DatetimeExtenstions
     {
@@ -25,7 +25,7 @@ namespace Zenbot.BotCore
         {
             return time.ToUnixTimeSeconds().ToDiscordUnixTime();
         }
-        
+
         public static long ToUnixTimeSeconds(this DateTime time)
         {
             return ((DateTimeOffset)time).ToUnixTimeSeconds();

@@ -58,7 +58,8 @@ namespace Zenbot.Infrastructure.Shared.Persistence
 
 
         public DbSet<BotUser> BotUsers { get; set; }
-        public DbSet<ZenbotServer> ZenbotServers { get; set; }
+        public DbSet<Guild> Guilds { get; set; }
+        public DbSet<GuildChannel> GuildChannels { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

@@ -1,0 +1,5 @@
+{
+  "hello": "Privet",
+  "x:welcome_to_server": "{0} Добро пожаловать на наш сервер.",
+  "precondination.error.require_locale": "Эта команда недоступна из этой локали."
+}

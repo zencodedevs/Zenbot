@@ -1,27 +1,14 @@
 ﻿{
-  "BotToken": "",
+  "BotToken": "MTAxODc2OTI1OTI1MTM4ODQ1Nw.GJZdtF.ah1y_rfUudjmans-QDZecHfmlmXHXeboEpGQ0o",
   "Prefix": ".",
-  "MainGuildId": 1018765173969932319,
-
-  "Channels": {
-    "LoggerId": 1019954349499232306,
-    "AuthenticationId": 1022085102383144961
-  },
-  "Roles": {
-    "VarifiedId": 1022084331184861214,
-    "UnVarifiedId": 1022092023513227275,
-    "HR": 1022460186117537802
-  },
-
-  "Text": {
-    "GreetingMessage": "Dear {0},\nAttached guidebook can be a valuable communication resource for you.  It provides information related to the organization’s policies and procedures in a written format.\nSincerely"
-  },
-  "StaticFiles": {
-    "GreetingFile": "wwwroot/documents/sample.pdf"
-  },
+  //"Text": {
+  //  "GreetingMessage": "Dear {0},\nAttached guidebook can be a valuable communication resource for you.  It provides information related to the organization’s policies and procedures in a written format.\nSincerely"
+  //},
+  //"StaticFiles": {
+  //  "GreetingFile": "wwwroot/documents/sample.pdf"
+  //},
   "ScrinIO": {
     "Token": "170159l6cc5c7dd910dc025f52ef0fb6bfb642c",
     "HeaderName": "X-SSM-Token"
   }
-
 }

@@ -32,7 +32,7 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.Property<string>("BitBucketAccountId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("DiscordUserId")
+                    b.Property<decimal>("DiscordId")
                         .HasColumnType("decimal(20,0)");
 
                     b.Property<string>("JiraAccountID")
@@ -590,28 +590,66 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.ZenbotServer", b =>
+            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.Guild", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("GeneralChannelId")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.Property<decimal>("ServerID")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.Property<string>("ServerJoinedMessage")
+                    b.Property<string>("AuthenticationPassword")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ServerPassword")
+                    b.Property<string>("BotPrefix")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GreetingFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GreetingMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("GuildId")
+                        .HasColumnType("decimal(20,0)");
+
+                    b.Property<decimal>("HrRoleId")
+                        .HasColumnType("decimal(20,0)");
+
+                    b.Property<bool>("IsMainServer")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("UnVerifiedRoleId")
+                        .HasColumnType("decimal(20,0)");
+
+                    b.Property<decimal>("VerifiedRoleId")
+                        .HasColumnType("decimal(20,0)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ZenbotServers");
+                    b.ToTable("Guilds");
+                });
+
+            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.GuildChannel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("ChannelId")
+                        .HasColumnType("decimal(20,0)");
+
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GuildId");
+
+                    b.ToTable("GuildChannels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -674,6 +712,22 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                         .IsRequired();
 
                     b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.GuildChannel", b =>
+                {
+                    b.HasOne("Zenbot.Domain.Shared.Entities.Bot.Guild", "Guild")
+                        .WithMany("Channels")
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Guild");
+                });
+
+            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.Guild", b =>
+                {
+                    b.Navigation("Channels");
                 });
 #pragma warning restore 612, 618
         }

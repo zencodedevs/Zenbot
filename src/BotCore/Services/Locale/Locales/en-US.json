@@ -1,0 +1,5 @@
+{
+  "hello": "Hello",
+  "x:welcome_to_server": "Welcome to our server.",
+  "precondination.error.require_locale": "This command is not accessible from this locale."
+}

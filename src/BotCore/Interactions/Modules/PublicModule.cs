@@ -1,15 +1,18 @@
-﻿using Discord.Interactions;
+﻿using BotCore.Entities;
+using Discord.Interactions;
+using Discord.WebSocket;
 using System.Threading.Tasks;
-namespace Zenbot.BotCore.Interactions.Modules
+
+namespace BotCore.Interactions.Modules
 {
-    public class PublicModule : InteractionModuleBase<SocketInteractionContext>
+    public class PublicModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
 
         [SlashCommand("ping", "Ping the bot")]
         public async Task ping()
         {
             await DeferAsync();
-            await FollowupAsync($"Pong ! ` Current Latency {Context.Client.Latency}`");
+            await FollowupAsync($"Pong ! ` Current Latency {(Context.Client as DiscordSocketClient).Latency}`");
         }
     }
 }

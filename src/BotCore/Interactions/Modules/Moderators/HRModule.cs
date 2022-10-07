@@ -1,4 +1,7 @@
-﻿using Discord;
+﻿using BotCore.Entities;
+using BotCore.Extenstions;
+using BotCore.Interactions.Preconditions;
+using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using System;
@@ -8,8 +11,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using Zenbot.BotCore;
-using Zenbot.BotCore.Interactions;
 
 namespace BotCore.Interactions.Modules.Moderators
 {
@@ -28,6 +29,7 @@ namespace BotCore.Interactions.Modules.Moderators
         public class UsersModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
             public BotConfiguration BotConfiguration { get; set; }
+          
             [SlashCommand("send-file", "send file to a user")]
             public async Task sendFile(IGuildUser user, bool @private, IAttachment file)
             {
@@ -38,7 +40,7 @@ namespace BotCore.Interactions.Modules.Moderators
                     Title = "New File Received",
                     Description =
                     $"**You have new {(file.Ephemeral ? "private " : "")} file from <@{Context.User.Id}>\n**" +
-                    $"Description: {string.Format(BotConfiguration.Text.GreetingMessage, Context.User.Username)}\n" +
+                    $"Description: {Context.BotGuild.GreetingMessage}\n" +
                     $"Size: ` {file.Size.ToSizeSuffix()} `\n" +
                     $"File Name: ` {file.Filename} `\n" +
                     $"**[Download The File]({file.Url})**",

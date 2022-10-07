@@ -1,0 +1,5 @@
+{
+  "hello": "Selam",
+  "x:welcome_to_server": "{0} xoshgeldim.",
+  "precondination.error.require_locale": "Bu komuta bu yerel ayardan erişilemiyor."
+}
