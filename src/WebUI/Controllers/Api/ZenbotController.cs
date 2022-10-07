@@ -12,7 +12,7 @@ using Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook;
 
 namespace Zenbot.WebUI.Controllers.Api
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]/[action]")]
     public class ZenbotController : ZenController
     {
         private readonly IServiceProvider _services;
@@ -64,7 +64,7 @@ namespace Zenbot.WebUI.Controllers.Api
 
         // For Bitbucket Webhook
 
-        [HttpPost("bitbucket")]
+        [HttpPost]
         public async Task BitbucketWebHook([FromBody] BitbucketWebHookRequest value)
         {
             var reviewers = value.pullrequest.reviewers.ToArray();

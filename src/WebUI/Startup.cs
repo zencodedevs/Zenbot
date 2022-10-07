@@ -19,7 +19,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Zenbot.Application;
-
 using Zenbot.Domain;
 using Zenbot.Domain.Shared.Common;
 using Zenbot.Infrastructure;
@@ -58,8 +57,7 @@ namespace Zenbot.WebUI
             LogManager.Configuration.Variables["registerClause"] = Constants.Nlog.WebUiDbRegisterClause;
 
             // Adding services from Discord bot to start the bot from this Layer
-            var bot = new BotService()
-                .ConfigServices(services);
+            var bot = new BotService().ConfigServices(services);
 
             services.AddSingleton(bot);
 
