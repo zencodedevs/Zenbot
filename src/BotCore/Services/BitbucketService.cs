@@ -10,25 +10,25 @@ using Zenbot.BotCore;
 
 namespace BotCore
 {
-    public class JiraService
+    public class BitbucketService
     {
         private readonly UsersService usersService;
         private readonly DiscordSocketClient _client;
         private readonly IServiceProvider _services;
-        public JiraService(IServiceProvider services)
+        public BitbucketService(IServiceProvider services)
         {
             _services = services;
             this._client = services.GetRequiredService<DiscordSocketClient>();
             this.usersService = services.GetRequiredService<UsersService>();
         }
-        public async Task<IMessage> SendMessageToUserAsync(string jiraId, string text = null, bool mentionUser = false, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageComponent components = null, Embed[] embeds = null)
+        public async Task<IMessage> SendMessageToUserAsync(string bitbucketId, string text = null, bool mentionUser = false, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageComponent components = null, Embed[] embeds = null)
         {
-            var user = await usersService.GetUserByJiraId(jiraId);
+            var user = await usersService.GetUserByBitbucketId(bitbucketId);
             return await usersService.SendMessageToUserAsync(user.DiscordUserId, mentionUser ? user.ToUserMention().PadRight(1) : "" + text, isTTS, embed, options, allowedMentions, components);
         }
-        public async Task<IUser> GetDisocrdUserByJiraIdAsync(string jiraId)
+        public async Task<IUser> GetDisocrdUserByBitBucketIdAsync(string bitbucketId)
         {
-            var target = await usersService.GetUserByJiraId(jiraId);
+            var target = await usersService.GetUserByBitbucketId(bitbucketId);
             if (target is null)
                 return null;
 

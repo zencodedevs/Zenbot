@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Zenbot.BotCore.Interactions.SlashCommands
 {
-    [Group("jira", "jira test")]
+    [Group("external", "We can add other external account like Jira and bitbucket account Id here")]
     public class MainModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
         public UsersService UsersService { get; set; }
@@ -58,7 +58,7 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
                 var embed = new EmbedBuilder()
                 {
                     Title = "Task Canceled",
-                    Description = "You canceled the task, but you can run new one with `/jira account`.",
+                    Description = "You canceled the task, but you can run new one with `/external account`.",
                     ThumbnailUrl = "https://img.icons8.com/fluency/480/delete-sign.png",
                     Color = 14946816,
                 }.Build();
@@ -132,7 +132,8 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
             {
                 Title = "Your Information Updated",
                 Description =
-                $"Your Id: `{form.Id}`\n" +
+                $"Your Jira Account ID: `{form.Id}`\n" +
+                $"Your Bitbuckt Account ID: `{form.bitbucketId}`\n" +
                 $"Your Email: `{form.Email}`\n" +
                 $"Your Username: `{form.Username}`\n" +
                 $"Your Discord Id: `{Context.User.Id}`\n",
@@ -140,7 +141,7 @@ namespace Zenbot.BotCore.Interactions.SlashCommands
                 Color = Color.Green
             }.Build();
 
-            await UsersService.updateBotUser(form.Username, form.Email, form.Id, id);
+            await UsersService.updateBotUser(form.Username, form.Email, form.Id, form.bitbucketId, id);
 
             await FollowupAsync(embed: embed, ephemeral: true);
         }

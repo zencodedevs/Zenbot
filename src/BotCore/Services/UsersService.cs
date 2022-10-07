@@ -31,18 +31,12 @@ namespace BotCore
             _discord = _services.GetRequiredService<DiscordSocketClient>();
         }
 
-        public async Task<IMessage> TrySendMessageToUserAsync(ulong userId, string text = null, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageComponent components = null, Embed[] embeds = null)
+        public async Task<IMessage> SendMessageToUserAsync(ulong userId, string text = null, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageComponent components = null, Embed[] embeds = null)
         {
             IUser discordUser = await _discord.Rest.GetUserAsync(userId);
             if (discordUser == null) return null;
-            try
-            {
-                return await discordUser.SendMessageAsync(text, isTTS, embed, options, allowedMentions, components, embeds); ;
-            }
-            catch
-            {
-                return null;
-            }
+
+            return await discordUser.SendMessageAsync(text, isTTS, embed, options, allowedMentions, components, embeds);
         }
         public async Task<List<BotUser>> GetUpComingUsersBrithday()
         {
@@ -104,7 +98,18 @@ namespace BotCore
 
                 using (var uow = unitOfWorkManager.Begin())
                 {
-                    // var user = await _repository.FindAsync(userId);
+                    var user = await _repository.FindAsync(x => x.DiscordUserId == userId);
+                    if (user is not null)
+                    {
+                        user.DiscordUserId = userId;
+                        user.Birthday = birthday;
+                        user.NextNotifyTIme = nextNotifyTime;
+                        await _repository.UpdateAsync(user);
+                        await _repository.SaveChangesAsync(true);
+
+                        bUser = user;
+                        return bUser;
+                    }
 
                     var botUser = new BotUser().Create(username, userMail, userId, birthday, nextNotifyTime);
                     await _repository.InsertAsync(botUser);
@@ -117,7 +122,7 @@ namespace BotCore
             return bUser; ;
         }
 
-        public async Task<BotUser> updateBotUser(string username, string userMail, string jiraAccountId, ulong userId)
+        public async Task<BotUser> updateBotUser(string username, string userMail, string jiraAccountId, string bitbucketAccountId, ulong userId)
         {
             BotUser bUser = new BotUser();
             using (var scope = _scopeFactory.CreateScope())
@@ -128,11 +133,12 @@ namespace BotCore
 
                 using (var uow = unitOfWorkManager.Begin())
                 {
-                    var user = await _repository.FindAsync(x => x.UserId == userId);
+                    var user = await _repository.FindAsync(x => x.DiscordUserId == userId);
 
                     user.Username = username;
                     user.UserMail = userMail;
                     user.JiraAccountID = jiraAccountId;
+                    user.BitBucketAccountId = bitbucketAccountId;
 
                     await _repository.UpdateAsync(user);
                     await _repository.SaveChangesAsync(true);
@@ -155,7 +161,7 @@ namespace BotCore
 
                 using (var uow = unitOfWorkManager.Begin())
                 {
-                    bUser = await _repository.FindAsync(a => a.UserId == Id);
+                    bUser = await _repository.FindAsync(a => a.DiscordUserId == Id);
                 }
 
             }
@@ -173,6 +179,24 @@ namespace BotCore
                 using (var uow = unitOfWorkManager.Begin())
                 {
                     bUser = await _repository.FindAsync(a => a.JiraAccountID == jiraId);
+                }
+
+            }
+            return bUser;
+        }
+
+        public async Task<BotUser> GetUserByBitbucketId(string bitbucketId)
+        {
+            BotUser bUser = new BotUser();
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var unitOfWorkManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+                var _repository = scope.ServiceProvider.GetRequiredService<IEntityFrameworkRepository<BotUser>>();
+
+
+                using (var uow = unitOfWorkManager.Begin())
+                {
+                    bUser = await _repository.FindAsync(a => a.BitBucketAccountId == bitbucketId);
                 }
 
             }

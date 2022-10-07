@@ -39,7 +39,7 @@ namespace Zenbot.BotCore
             if (target is null)
                 return;
 
-            var targetId = target.UserId;
+            var targetId = target.DiscordUserId;
             var user = await _client.GetUserAsync(targetId);
 
             try
