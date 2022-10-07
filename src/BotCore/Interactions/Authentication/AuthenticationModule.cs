@@ -114,10 +114,10 @@ namespace BotCore.Interactions.Authentication
                 }
             }.Build();
 
+            await (Context.User as IGuildUser).RemoveRoleAsync(Context.BotGuild.UnVerifiedRoleId);
             var loggerChannel = (GuildChannel)Context.Data;
             await Context._channelService.SendMessageAsync(loggerChannel.ChannelId, Context.User.ToUserMention(), embed: embed);
 
-            await (Context.User as IGuildUser).RemoveRoleAsync(Context.BotGuild.UnVerifiedRoleId);
         }
     }
 }

@@ -55,20 +55,24 @@ namespace BotCore.Services.Birthday
 
             return Task.CompletedTask;
         }
-        private async Task NotficationUsersBirthdayAsync(ICollection<BotUser> users)
+        public async Task NotficationUsersBirthdayAsync(ICollection<BotUser> users)
         {
-            if (users is null)
+            if (users is null || users.Count < 1)
                 return;
 
             List<Guild> botGuilds = new();
             List<GuildChannel> botChannels = new();
 
+            var listUsers = _discord.Guilds.SelectMany(a => a.Users);
+
             foreach (var u in users)
             {
-                var user = await _discord.GetUserAsync(u.DiscordId);
-                var guilds = (user as SocketUser).MutualGuilds.ToList();
+                SocketUser user = listUsers.FirstOrDefault(a => a.Id == u.DiscordId);
 
-                foreach (var guild in guilds)
+                if (user is null || user.MutualGuilds is null || user.MutualGuilds.Count < 1)
+                    continue;
+
+                foreach (var guild in user.MutualGuilds)
                 {
                     var botGuild = botGuilds.FirstOrDefault(a => a.GuildId == guild.Id);
                     if (botGuild is null)
@@ -102,6 +106,9 @@ namespace BotCore.Services.Birthday
                     .AddSeconds(-30);
                 });
             }
+
+
         }
+
     }
 }

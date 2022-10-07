@@ -178,7 +178,7 @@ namespace BotCore.Interactions.Modules.Admin
                 ThumbnailUrl = "https://img.icons8.com/fluency/344/identification-documents.png",
             };
             var component = new ComponentBuilder()
-                .WithButton("Authentication", "button-admin-setup-authentication-password", ButtonStyle.Success, new Emoji("🔒"), null, false, 0);
+                .WithButton("Sign In", "button-admin-setup-authentication-password", ButtonStyle.Success, new Emoji("🔒"), null, false, 0);
 
             await channel.SendMessageAsync(embed: embed.Build(), components: component.Build());
 
