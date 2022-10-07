@@ -17,6 +17,7 @@ namespace Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook
         public string PriorityIconUrl { get; set; }
         public string ProjectName { get; set; }
         public string ProjectUrl { get; set; }
+        public DateTime IssueUpdateDate { get; set; }
     }
 
     public class Aggregateprogress

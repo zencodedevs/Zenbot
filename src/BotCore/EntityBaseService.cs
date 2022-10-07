@@ -1,4 +1,5 @@
 ﻿using Discord.WebSocket;
+using Domain.Shared.Entities.Bot;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,8 @@ namespace BotCore
                 }
             }
         }
+
+       
         public async Task<T> GetAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] propertySelectors)
         {
             using (var scope = _scopeFactory.CreateScope())

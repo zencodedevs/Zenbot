@@ -25,7 +25,11 @@ namespace BotCore.Services.Bitbucket
         public async Task<IMessage> SendMessageToUserAsync(string bitbucketId, string text = null, bool mentionUser = false, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageComponent components = null, Embed[] embeds = null)
         {
             var user = await usersService.GetUserByBitbucketId(bitbucketId);
-            return await usersService.SendMessageToUserAsync(user.DiscordId, mentionUser ? user.ToUserMention().PadRight(1) : "" + text, isTTS, embed, options, allowedMentions, components);
+            if(user is not null)
+            {
+                return await usersService.SendMessageToUserAsync(user.DiscordId, mentionUser ? user.ToUserMention().PadRight(1) : "" + text, isTTS, embed, options, allowedMentions, components);
+            }
+            return null;
         }
         public async Task<IUser> GetDisocrdUserByBitBucketIdAsync(string bitbucketId)
         {

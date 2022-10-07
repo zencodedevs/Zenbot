@@ -3,6 +3,7 @@ using BotCore.Services;
 using BotCore.Services.Birthday.Forms;
 using Discord;
 using Discord.Interactions;
+using Domain.Shared.Entities.Bot;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace BotCore.Services.Birthday.Modules
     public class BirthdayModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
         public UserService _usersService { get; set; }
-
+        public BrithdayService brithdayService { get; set; }
         /// <summary>
         /// Check if there is some upcomming birthday by Admin
         /// </summary>
@@ -52,6 +53,7 @@ namespace BotCore.Services.Birthday.Modules
                     .Build();
 
                 await FollowupAsync(embed: embed, components: components);
+               
                 return;
             }
             await FollowupAsync("No user found.");
@@ -83,8 +85,8 @@ namespace BotCore.Services.Birthday.Modules
             {
                 x.Birthday = dateTime;
             });
-
-            await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>");
+            await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>", ephemeral:true);
+            await brithdayService.NotficationUsersBirthdayAsync(new BotUser[] { Context.BotUser });
         }
 
 

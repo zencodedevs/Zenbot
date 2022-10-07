@@ -45,7 +45,8 @@
                 return Task.FromResult(PreconditionResult.FromSuccess());
             }
 
-            return Task.FromResult(PreconditionResult.FromError(ErrorMessage ?? "You need guild role **" + context.Guild.GetRole(roleId).Name + "**."));
+            return Task.FromResult(PreconditionResult.FromError(ErrorMessage ?? "You don't have permission to run this command!"));
+            //return Task.FromResult(PreconditionResult.FromError(ErrorMessage ?? "You need guild role **" + context.Guild.GetRole(roleId).Name + "**."));
 
         }
     }
