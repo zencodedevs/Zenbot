@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Zenbot.WebUI.Helpers;
+using System.Threading.Tasks;
+using Zenbot.Application.Account.Queries;
 
 namespace Zenbot.WebUI.Controllers
 {
@@ -9,38 +11,39 @@ namespace Zenbot.WebUI.Controllers
     public class AccountController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly IMediator _mediator;
 
-        public AccountController(IConfiguration configuration)
+        public AccountController(IConfiguration configuration, IMediator mediator)
         {
             _configuration = configuration;
+            _mediator = mediator;
         }
 
         // GET: /Account/DiscordLogin
         [HttpGet]
-        public IActionResult DiscordLogin()
+        public async Task<IActionResult> DiscordLogin()
         {
-            var clientId = _configuration.GetSection("DiscordOAuth")["ClientId"];
-            var loginUrlFormat = _configuration.GetSection("DiscordOAuth")["LoginUrlFormat"];
-            var requestHostUrl = Request.Host.Value;
-            var redirectActionRoute = nameof(AccountController.DiscordLoginRedirect).GetActionRoute(nameof(AccountController));
-            var redirectUrl = RoutingHelper.GetUrl(requestHostUrl, redirectActionRoute);
-            var loginUrl = DiscordOAuthHelper.GetLoginUrl(loginUrlFormat, clientId, redirectUrl);
-
-            return Redirect(loginUrl);
+            var formattedDiscordBaseAuthorizationUrl = await _mediator.Send(new GetFormattedDiscordBaseAuthorizationUrlQuery());
+            return Redirect(formattedDiscordBaseAuthorizationUrl);
         }
 
         // GET: /Account/DiscordLoginRedirect
         [HttpGet]
-        public IActionResult DiscordLoginRedirect(string code)
+        public async Task<IActionResult> DiscordLoginRedirect(string code)
         {
+            var discordToken = await _mediator.Send(new GetDiscordTokenQuery
+            {
+                Code = code
+            });
+
             return Content(code);
         }
 
-        // GET: /Account/Logout
+        // GET: /Account/DiscordLogout
         [HttpGet]
-        public IActionResult Logout()
+        public IActionResult DiscordLogout()
         {
-            return View();
+            return null;
         }
     }
 }
