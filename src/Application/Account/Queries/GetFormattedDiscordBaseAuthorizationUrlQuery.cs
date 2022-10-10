@@ -36,12 +36,12 @@ namespace Zenbot.Application.Account.Queries
                 var redirectActionUrl = _configuration.GetSection("DiscordAuth")["RedirectActionUrl"];
                 var redirectUrl = "https://" + requestHostUrl + redirectActionUrl;
 
-                var formattedDiscordBaseAuthorizationUrl =
-                    discordBaseUrl +
-                    baseAuthorizationUrl +
-                    baseAuthorizationParamsFormat
-                    .Replace("{clientId}", clientId)
-                    .Replace("{redirectUrl}", redirectUrl);
+                formattedDiscordBaseAuthorizationUrl =
+                discordBaseUrl +
+                baseAuthorizationUrl +
+                baseAuthorizationParamsFormat
+                .Replace("{clientId}", clientId)
+                .Replace("{redirectUrl}", redirectUrl);
             });
 
             return formattedDiscordBaseAuthorizationUrl;

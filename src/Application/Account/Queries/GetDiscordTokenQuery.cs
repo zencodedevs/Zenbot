@@ -50,7 +50,7 @@ namespace Zenbot.Application.Account.Queries
                 code = request.Code,
                 redirect_uri = redirectUrl
             };
-            var discordToken = _discordAuthService.GetDiscordToken(GetDiscordTokenRequest);
+            var discordToken = await _discordAuthService.GetDiscordTokenAsync(GetDiscordTokenRequest);
 
             var mapped = _mapper.Map<GetDiscordTokenDto>(discordToken);
             return mapped;

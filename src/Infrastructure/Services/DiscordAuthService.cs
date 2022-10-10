@@ -14,7 +14,7 @@ namespace Zenbot.Infrastructure.Services
             _configuration = configuration;
         }
 
-        public async Task<GetDiscordTokenResponse> GetDiscordToken(GetDiscordTokenRequest getDiscordTokenRequest)
+        public async Task<GetDiscordTokenResponse> GetDiscordTokenAsync(GetDiscordTokenRequest getDiscordTokenRequest)
         {
             return default;
         }
