@@ -36,7 +36,7 @@ namespace Zenbot.WebUI.Controllers
                 Code = code
             });
 
-            return Content(code);
+            return Content(discordToken.ToString());
         }
 
         // GET: /Account/DiscordLogout

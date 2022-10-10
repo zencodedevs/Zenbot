@@ -5,6 +5,6 @@ namespace Zenbot.Domain.Interfaces
 {
     public interface IDiscordAuthService
     {
-        public Task<GetDiscordTokenResponse> GetDiscordTokenAsync(GetDiscordTokenRequest getDiscordTokenRequest);
+        public Task<GetDiscordTokenResponse> GetDiscordTokenAsync(GetDiscordTokenRequest request);
     }
 }

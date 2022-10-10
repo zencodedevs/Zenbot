@@ -40,8 +40,7 @@ namespace Zenbot.Application.Account.Queries
             var clientSecret = _configuration.GetSection("DiscordAuth")["ClientSecret"];
 
             var requestHostUrl = _httpContextAccessor.HttpContext.Request.Host.Value;
-            var redirectActionUrl = _configuration.GetSection("DiscordAuth")["RedirectActionUrl"];
-            var redirectUrl = "https://" + requestHostUrl + redirectActionUrl;
+            var redirectUrl = "https://" + requestHostUrl;
 
             var GetDiscordTokenRequest = new GetDiscordTokenRequest
             {
