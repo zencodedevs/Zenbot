@@ -1,0 +1,7 @@
+# ეს კომენტარი არ წაშალოთ.
+BuildCMD=npm run build-prod-no-cache-with-version-qa
+BuildOutput=dist\\zenbot
+WebSiteName=bot.zencode.io
+DestinationRoot=C:\\inetpub
+Bindings=https://bot.zencode.io:443/
+NotifyMail = hussaini@zencode.io
