@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Zenbot.Infrastructure.Shared.Migrations
 {
-    public partial class migupdate : Migration
+    public partial class miginitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

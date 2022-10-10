@@ -10,8 +10,8 @@ using Zenbot.Infrastructure.Shared.Persistence;
 namespace Zenbot.Infrastructure.Shared.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221007063358_mig-update")]
-    partial class migupdate
+    [Migration("20221010083105_mig-initial")]
+    partial class miginitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
