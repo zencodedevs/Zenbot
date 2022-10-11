@@ -43,8 +43,12 @@
   margin-top: 1.5rem;
 }
 
-.about .info .links .btn:not(:first-child) {
-  margin-left: 0.8rem;
+.about .info .links .btn {
+  margin-bottom: 1rem;
+}
+
+.about .info .links .btn:first-child {
+  margin-right: 0.8rem;
 }
 
 .information .title,
