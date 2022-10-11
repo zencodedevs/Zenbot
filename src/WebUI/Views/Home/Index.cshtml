@@ -27,34 +27,31 @@
             </p>
 
             <div class="links">
-                <a class="btn btn-lg btn-primary btn-hover" asp-controller="@nameof(AccountController).GetControllerRoute()" asp-action="@nameof(AccountController.DiscordLogin)">
-                    <span class="material-icons me-1 align-middle">add</span>
-                    <span class="align-middle">Add to server</span>
-                </a>
+                @{
+                    var addToServerController = string.Empty;
+                    var addToServerAction = string.Empty;
 
-                <a class="btn btn-lg btn-dark btn-hover" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        addToServerController = nameof(PanelController).GetControllerRoute();
+                        addToServerAction = nameof(PanelController.Index);
+                    }
+                    else
+                    {
+                        addToServerController = nameof(AccountController).GetControllerRoute();
+                        addToServerAction = nameof(AccountController.DiscordLogin);
+                    }
+
+                    <a class="btn btn-lg btn-primary btn-hover" asp-controller="@addToServerController" asp-action="@addToServerAction">
+                        <span class="material-icons me-1 align-middle">add</span>
+                        <span class="align-middle">Add to server</span>
+                    </a>
+                }
+
+                <a class="btn btn-lg btn-dark btn-hover" asp-controller="@nameof(ErrorController).GetControllerRoute()" asp-action="@nameof(ErrorController.Code403)">
                     <span class="material-icons me-1 align-middle">list</span>
                     <span class="align-middle">See features</span>
                 </a>
-
-                @*@if (!User.Identity.IsAuthenticated)
-            {
-            <a class="btn btn-lg btn-success btn-hover" asp-controller="@nameof(AccountController).GetControllerRoute()" asp-action="@nameof(AccountController.Login)">
-            <i class="fa fa-sign-in me-1"></i>
-            <span>Login</span>
-            </a>
-            <a class="btn btn-lg btn-secondary btn-hover" asp-controller="@nameof(AccountController).GetControllerRoute()" asp-action="@nameof(AccountController.Register)">
-            <i class="fa fa-user-plus me-1"></i>
-            <span>Register</span>
-            </a>
-            }
-            else
-            {
-            <a class="btn btn-lg btn-primary btn-hover" asp-controller="@nameof(PanelController).GetControllerRoute()" asp-action="@nameof(PanelController.Index)">
-            <i class="fa fa-tachometer-alt-fast me-1"></i>
-            <span>Panel</span>
-            </a>
-            }*@
             </div>
         </div>
     </div>

@@ -13,6 +13,9 @@ namespace Zenbot.WebUI.Controllers
         [HttpGet]
         public IActionResult DiscordLogin()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction(nameof(PanelController.Index), nameof(PanelController).GetControllerRoute());
+
             var challengeAuthenticationProperties = new AuthenticationProperties()
             {
                 RedirectUri = nameof(PanelController.Index).GetActionRoute(nameof(PanelController))
