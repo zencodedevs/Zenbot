@@ -18,10 +18,20 @@ namespace Zenbot.WebUI.Controllers
 
             var challengeAuthenticationProperties = new AuthenticationProperties()
             {
-                RedirectUri = nameof(PanelController.Index).GetActionRoute(nameof(PanelController))
+                RedirectUri = nameof(AccountController.DiscordLoginCallback).GetActionRoute(nameof(AccountController))
             };
 
             return Challenge(challengeAuthenticationProperties);
+        }
+
+        // GET: /Account/DiscordLoginCallback
+        [HttpGet]
+        public IActionResult DiscordLoginCallback()
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).GetControllerRoute());
+
+            return RedirectToAction(nameof(PanelController.Index), nameof(PanelController).GetControllerRoute());
         }
 
         // GET: /Account/DiscordLogout
