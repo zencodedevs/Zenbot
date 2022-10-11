@@ -89,12 +89,6 @@ namespace Zenbot.WebUI
                 options.SuppressModelStateInvalidFilter = true;
             });
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy(Constants.SettingsSecurityPolicy,
-            //        policy => policy.RequireClaim(Permissions.PermissionType.SettingPerm));
-            //});
-
             services.AddAuthentication(DiscordDefaults.AuthenticationScheme)
                 .AddDiscord(options =>
                 {
@@ -102,6 +96,12 @@ namespace Zenbot.WebUI
                     options.AppSecret = Configuration["Discord:AppSecret"];
                     options.Scope.Add("guilds");
                 });
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy(Constants.SettingsSecurityPolicy,
+            //        policy => policy.RequireClaim(Permissions.PermissionType.SettingPerm));
+            //});
 
             #region Open api  
 

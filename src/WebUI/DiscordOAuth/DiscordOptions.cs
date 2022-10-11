@@ -11,8 +11,8 @@ namespace Zenbot.WebUI.DiscordOAuth
     {
         public DiscordOptions()
         {
-            CallbackPath = new PathString(nameof(AccountController.DiscordLoginCallback).GetActionRoute(nameof(AccountController)));
-            AccessDeniedPath = new PathString(nameof(ErrorController.Code403).GetActionRoute(nameof(ErrorController)));
+            CallbackPath = new PathString("/signin-discord");
+            AccessDeniedPath = nameof(ErrorController.Code403).GetActionRoute(nameof(ErrorController));
             AuthorizationEndpoint = DiscordDefaults.AuthorizationEndpoint;
             TokenEndpoint = DiscordDefaults.TokenEndpoint;
             UserInformationEndpoint = DiscordDefaults.UserInformationEndpoint;
