@@ -30,6 +30,7 @@ namespace BotCore.Interactions.Modules.Admin
     {
         public ChannelService _channelService { get; set; }
 
+        // Replace the default bot prefix with your own profex
         [SlashCommand("prefix", "setup server prefix")]
         public async Task prefix([MaxLength(20)] string prefix)
         {
@@ -41,6 +42,8 @@ namespace BotCore.Interactions.Modules.Admin
             await FollowupAsync($"Channel prefix updated to **{prefix}**");
         }
 
+
+        // Create Or update the Server Guild password for Authentication users
         [SlashCommand("password", "setup server password")]
         public async Task password(string password)
         {
@@ -52,6 +55,8 @@ namespace BotCore.Interactions.Modules.Admin
             await FollowupAsync($"The password changed to {password} succesfuly.");
         }
 
+
+        // Select or change the Guild logger channel
         [SlashCommand("logger-channel", "setup logger channel")]
         public async Task logger_channel(ITextChannel channel)
         {
@@ -68,6 +73,9 @@ namespace BotCore.Interactions.Modules.Admin
 
             await FollowupAsync($"The logger channel changed to **<#{channel.Mention()}>**");
         }
+
+
+        // Insert or change the Roles Id for this Guild
         [SlashCommand("roles", "setup server roles")]
         public async Task roles(IRole verified, IRole unVerified, IRole hr)
         {
@@ -85,6 +93,8 @@ namespace BotCore.Interactions.Modules.Admin
             });
             await FollowupAsync($"The server roles updated.");
         }
+
+        // Set the greeting message for this Guild
         [SlashCommand("greeting-message", "setup server's greeting message.")]
         public async Task greeting_message(string message, IAttachment grettingFile = null)
         {
@@ -136,6 +146,7 @@ namespace BotCore.Interactions.Modules.Admin
         }
 
 
+        //Help Command for the whole bot setup
         [SlashCommand("help", "help")]
         public async Task help()
         {

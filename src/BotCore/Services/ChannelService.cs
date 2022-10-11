@@ -23,7 +23,7 @@ namespace BotCore.Services
         private readonly DiscordSocketClient _discord;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IServiceProvider _services;
-        private readonly BotConfiguration _config;
+        //private readonly BotConfiguration _config;
 
         public ChannelService(IServiceProvider services, IServiceScopeFactory scopeFactory) : base(services, scopeFactory)
         {
