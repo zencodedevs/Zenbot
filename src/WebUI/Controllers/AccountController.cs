@@ -1,49 +1,33 @@
-﻿using MediatR;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using Zenbot.Application.Account.Queries;
+using Zenbot.WebUI.Helpers;
 
 namespace Zenbot.WebUI.Controllers
 {
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private readonly IConfiguration _configuration;
-        private readonly IMediator _mediator;
-
-        public AccountController(IConfiguration configuration, IMediator mediator)
-        {
-            _configuration = configuration;
-            _mediator = mediator;
-        }
-
         // GET: /Account/DiscordLogin
         [HttpGet]
-        public async Task<IActionResult> DiscordLogin()
+        public IActionResult DiscordLogin()
         {
-            var formattedDiscordBaseAuthorizationUrl = await _mediator.Send(new GetFormattedDiscordBaseAuthorizationUrlQuery());
-            return Redirect(formattedDiscordBaseAuthorizationUrl);
-        }
-
-        // GET: /Account/DiscordLoginRedirect
-        [HttpGet]
-        public async Task<IActionResult> DiscordLoginRedirect(string code)
-        {
-            var discordToken = await _mediator.Send(new GetDiscordTokenQuery
+            var challengeAuthenticationProperties = new AuthenticationProperties()
             {
-                Code = code
-            });
+                RedirectUri = nameof(PanelController.Index).GetActionRoute(nameof(PanelController))
+            };
 
-            return Content(discordToken.ToString());
+            return Challenge(challengeAuthenticationProperties);
         }
 
         // GET: /Account/DiscordLogout
         [HttpGet]
-        public IActionResult DiscordLogout()
+        public async Task<IActionResult> DiscordLogout()
         {
-            return null;
+            await HttpContext.SignOutAsync();
+
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).GetControllerRoute());
         }
     }
 }

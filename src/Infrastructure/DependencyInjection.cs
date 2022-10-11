@@ -11,7 +11,6 @@ using Zenbot.Domain.Interfaces;
 using Zenbot.Domain.Shared.Entities;
 using Zenbot.Domain.Shared.Interfaces;
 using Zenbot.Infrastructure.Identity;
-using Zenbot.Infrastructure.Services;
 using Zenbot.Infrastructure.Shared.Persistence;
 using Zenbot.Infrastructure.Shared.Services;
 
@@ -83,13 +82,6 @@ namespace Zenbot.Infrastructure
             {
                 options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator"));
             });
-
-            #region DiscrodServices
-
-            services.AddSingleton<IDiscordAuthService, DiscordAuthService>();
-            services.AddSingleton<IDiscordApiService, DiscordApiService>();
-
-            #endregion
 
             return services;
         }
