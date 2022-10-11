@@ -9,7 +9,7 @@ using Zenbot.Domain.Shared.Entities.Bot;
 
 namespace BotCore.Services
 {
-    internal class BirthdayMessageService : EntityBaseService<BirthdayMessage>
+    public class BirthdayMessageService : EntityBaseService<BirthdayMessage>
     {
         private readonly DiscordSocketClient _discord;
         private readonly IServiceScopeFactory _scopeFactory;

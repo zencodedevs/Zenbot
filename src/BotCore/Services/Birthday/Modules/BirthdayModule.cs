@@ -17,6 +17,8 @@ namespace BotCore.Services.Birthday.Modules
     [Group("birthday", "birthday commands")]
     public class BirthdayModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
+        public BirthdayMessageService _birthdayMessageService { get; set; }
+
         public UserService _usersService { get; set; }
         public BirthdayService brithdayService { get; set; }
         /// <summary>
@@ -90,6 +92,12 @@ namespace BotCore.Services.Birthday.Modules
         }
 
 
+        [SlashCommand("message-if", "some desc")]
+        public async Task messages(bool status, string message)
+        {
+            await DeferAsync();
+            await FollowupAsync(message);
+        }
 
         // check by each user the exact time of birthday date
 

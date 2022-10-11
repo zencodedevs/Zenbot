@@ -1,6 +1,7 @@
 ﻿using BotCore.Entities;
 using BotCore.Extenstions;
 using BotCore.Services;
+using BotCore.Services.Birthday.Forms;
 using Discord;
 using Discord.Interactions;
 using Microsoft.CodeAnalysis.Operations;
@@ -29,6 +30,7 @@ namespace BotCore.Interactions.Modules.Admin
     public class SetupModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
         public ChannelService _channelService { get; set; }
+        public BirthdayMessageService _birthdayMessageService { get; set; }
 
         // Replace the default bot prefix with your own profex
         [SlashCommand("prefix", "setup server prefix")]
@@ -76,22 +78,22 @@ namespace BotCore.Interactions.Modules.Admin
 
 
         // Select or change the Guild Birthday Message
-        [SlashCommand("birthday-message", "setup birthday message for this guild")]
-        public async Task birthday_message(string)
+        [SlashCommand("message", "setup birthday message for this guild")]
+        public async Task birthday_message(bool status, string message)
         {
-            await DeferAsync();
-
-            var loggerChannel = await _channelService.GetAsync(a => a.Type == GuildChannelType.Logger && a.GuildId == Context.BotGuild.Id);
-            if (loggerChannel is not null)
-            {
-                await _channelService.UpdateAsync(loggerChannel, x => x.Type = GuildChannelType.None);
-            }
-
-            var targetChannel = await _channelService.GetOrAddAsync(channel.Id, Context.BotGuild.Id);
-            await _channelService.UpdateAsync(targetChannel, x => x.Type = GuildChannelType.Logger);
-
-            await FollowupAsync($"The logger channel changed to **<#{channel.Mention()}>**");
+             await DeferAsync();
+            //await _birthdayMessageService.GetOrAddAsync(status, message, Context.BotGuild.Id);
+             await FollowupAsync($"You've adde new message for birthday \n **<#{message}>**");
         }
+
+        //[ModalInteraction("set-brithday-message", true)]
+        //public async Task set_modal(BirthdayMessageForm form)
+        //{
+        //    await DeferAsync();
+
+        //    await _birthdayMessageService.GetOrAddAsync(true, form.Message, Context.BotGuild.Id);
+        //    await FollowupAsync($"You've adde new message for birthday \n **<#{form.Message}>**");
+        //}
 
 
 
