@@ -18,7 +18,7 @@ namespace BotCore.Services.Birthday.Modules
     public class BirthdayModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
         public UserService _usersService { get; set; }
-        public BrithdayService brithdayService { get; set; }
+        public BirthdayService brithdayService { get; set; }
         /// <summary>
         /// Check if there is some upcomming birthday by Admin
         /// </summary>

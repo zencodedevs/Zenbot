@@ -31,8 +31,12 @@ namespace BotCore.Entities
 
         }
 
-        public object Data { get; set; }
 
+        // Here are some methods which will be called when bot is ready and during bot lifetime
+        // We use from this methods which avoid too much request to our database
+
+
+        public object Data { get; set; }
 
         private GuildChannel _botChannel;
         public GuildChannel GuildChannel
@@ -42,6 +46,8 @@ namespace BotCore.Entities
                 return GetBotChannelAsync(false).Result;
             }
         }
+
+        // Getting logger channel for this Guild
         public async Task<GuildChannel> GetBotChannelAsync(bool refresh)
         {
             if (!Interaction.ChannelId.HasValue)
@@ -56,6 +62,7 @@ namespace BotCore.Entities
         }
 
 
+        // Current User using bot
         private BotUser _user;
         public BotUser BotUser
         {
@@ -64,6 +71,8 @@ namespace BotCore.Entities
                 return GetBotUserAsync(false).Result;
             }
         }
+
+
         public async Task<BotUser> GetBotUserAsync(bool refresh)
         {
             if (_user is null || refresh)
@@ -73,6 +82,9 @@ namespace BotCore.Entities
             return _user;
         }
 
+
+
+        // Current Guild bot is running in
         private Guild _botGuild;
         public Guild BotGuild
         {

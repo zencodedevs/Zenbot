@@ -20,7 +20,7 @@ namespace BotCore.Services.Birthday
     /// <summary>
     /// The service which is sending birthday message for Users in exact day in specified channal
     /// </summary>
-    public class BrithdayService
+    public class BirthdayService
     {
         private readonly IServiceProvider _services;
         private readonly DiscordSocketClient _discord;
@@ -28,7 +28,7 @@ namespace BotCore.Services.Birthday
         private readonly BotConfiguration _config;
         private readonly GuildService _guildService;
         private readonly ChannelService _channelService;
-        public BrithdayService(IServiceProvider services)
+        public BirthdayService(IServiceProvider services)
         {
             _services = services;
             _discord = services.GetRequiredService<DiscordSocketClient>();

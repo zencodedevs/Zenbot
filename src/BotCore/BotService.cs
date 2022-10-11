@@ -44,6 +44,7 @@ namespace BotCore
                 .AddSingleton<UserService>()
                 .AddSingleton<GuildService>()
                 .AddSingleton<ChannelService>()
+                .AddSingleton<BirthdayMessageService>()
 
                 .AddSingleton<JiraService>()
                 .AddSingleton<BitbucketService>()
@@ -51,7 +52,7 @@ namespace BotCore
 
                 .AddSingleton<ScrinIOService>()
 
-                .AddSingleton<BrithdayService>()
+                .AddSingleton<BirthdayService>()
                 .AddSingleton<EventService>();
 
             return this;
@@ -71,7 +72,7 @@ namespace BotCore
             await _services.GetRequiredService<InteractionsHandler>().InitializeAsync();
             await _services.GetRequiredService<CommandHandler>().InitializeAsync();
 
-            var brithday = _services.GetRequiredService<BrithdayService>();
+            var brithday = _services.GetRequiredService<BirthdayService>();
             var events = _services.GetRequiredService<EventService>();
             var scrinio = _services.GetRequiredService<ScrinIOService>();
 

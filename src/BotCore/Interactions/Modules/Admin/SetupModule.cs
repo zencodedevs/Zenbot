@@ -75,6 +75,26 @@ namespace BotCore.Interactions.Modules.Admin
         }
 
 
+        // Select or change the Guild Birthday Message
+        [SlashCommand("birthday-message", "setup birthday message for this guild")]
+        public async Task birthday_message(string)
+        {
+            await DeferAsync();
+
+            var loggerChannel = await _channelService.GetAsync(a => a.Type == GuildChannelType.Logger && a.GuildId == Context.BotGuild.Id);
+            if (loggerChannel is not null)
+            {
+                await _channelService.UpdateAsync(loggerChannel, x => x.Type = GuildChannelType.None);
+            }
+
+            var targetChannel = await _channelService.GetOrAddAsync(channel.Id, Context.BotGuild.Id);
+            await _channelService.UpdateAsync(targetChannel, x => x.Type = GuildChannelType.Logger);
+
+            await FollowupAsync($"The logger channel changed to **<#{channel.Mention()}>**");
+        }
+
+
+
         // Insert or change the Roles Id for this Guild
         [SlashCommand("roles", "setup server roles")]
         public async Task roles(IRole verified, IRole unVerified, IRole hr)
