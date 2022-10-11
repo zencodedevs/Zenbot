@@ -7,7 +7,7 @@
     @RenderSection("Styles", required: false)
 }
 
-@section Scripts{
+    @section Scripts{
     <script src="~/bundle/js/base-home.min.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 }
@@ -31,39 +31,29 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Tutorials</a>
+                        <a class="nav-link" asp-controller="@nameof(ErrorController).GetControllerRoute()" asp-action="@nameof(ErrorController.Code403)">Tutorials</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Support</a>
+                        <a class="nav-link" asp-controller="@nameof(ErrorController).GetControllerRoute()" asp-action="@nameof(ErrorController.Code403)">Support</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="@nameof(AccountController).GetControllerRoute()" asp-action="@nameof(AccountController.DiscordLogin)">Login</a>
-                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="@nameof(PanelController).GetControllerRoute()" asp-action="@nameof(PanelController.Index)">Panel</a>
+                        </li>
 
-                    @*@{
-                if (!User.Identity.IsAuthenticated)
-                {
-                <li class="nav-item">
-                <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Login</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Register</a>
-                </li>
-                }
-                else
-                {
-                <li class="nav-item">
-                <a class="nav-link" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">Panel</a>
-                </li>
-                <li class="nav-item">
-                <form asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)" asp-antiforgery="true" method="post">
-                <button type="submit" class="nav-link btn btn-outline-dark">Logout</button>
-                </form>
-                </li>
-                }
-                }*@
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="@nameof(AccountController).GetControllerRoute()" asp-action="@nameof(AccountController.DiscordLogout)">Logout</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="@nameof(AccountController).GetControllerRoute()" asp-action="@nameof(AccountController.DiscordLogin)">Login</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

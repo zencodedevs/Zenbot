@@ -25,6 +25,7 @@ using Zenbot.Infrastructure;
 using Zenbot.Infrastructure.Shared.Persistence;
 using Zenbot.WebUI.Controllers;
 using Zenbot.WebUI.CurrentTenantMiddlewares;
+using Zenbot.WebUI.DiscordOAuth;
 using Zenbot.WebUI.Filters;
 using Zenbot.WebUI.Helpers;
 using Zenbot.WebUI.Middlewares;
@@ -88,11 +89,19 @@ namespace Zenbot.WebUI
                 options.SuppressModelStateInvalidFilter = true;
             });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(Constants.SettingsSecurityPolicy,
-                    policy => policy.RequireClaim(Permissions.PermissionType.SettingPerm));
-            });
+            services.AddAuthentication(DiscordDefaults.AuthenticationScheme)
+                .AddDiscord(options =>
+                {
+                    options.AppId = Configuration["Discord:AppId"];
+                    options.AppSecret = Configuration["Discord:AppSecret"];
+                    options.Scope.Add("guilds");
+                });
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy(Constants.SettingsSecurityPolicy,
+            //        policy => policy.RequireClaim(Permissions.PermissionType.SettingPerm));
+            //});
 
             #region Open api  
 
@@ -141,10 +150,10 @@ namespace Zenbot.WebUI
             services.AddMvc()
                 .AddRazorRuntimeCompilation()
                 .AddJsonOptions(options =>
-                    {
-                        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                        options.JsonSerializerOptions.IgnoreNullValues = false;
-                    });
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    options.JsonSerializerOptions.IgnoreNullValues = false;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

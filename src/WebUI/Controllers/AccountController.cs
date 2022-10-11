@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 using Zenbot.WebUI.Helpers;
 
 namespace Zenbot.WebUI.Controllers
@@ -8,39 +9,38 @@ namespace Zenbot.WebUI.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private readonly IConfiguration _configuration;
-
-        public AccountController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
         // GET: /Account/DiscordLogin
         [HttpGet]
         public IActionResult DiscordLogin()
         {
-            var clientId = _configuration.GetSection("DiscordOAuth")["ClientId"];
-            var loginUrlFormat = _configuration.GetSection("DiscordOAuth")["LoginUrlFormat"];
-            var requestHostUrl = Request.Host.Value;
-            var redirectActionRoute = nameof(AccountController.DiscordLoginRedirect).GetActionRoute(nameof(AccountController));
-            var redirectUrl = RoutingHelper.GetUrl(requestHostUrl, redirectActionRoute);
-            var loginUrl = DiscordOAuthHelper.GetLoginUrl(loginUrlFormat, clientId, redirectUrl);
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction(nameof(PanelController.Index), nameof(PanelController).GetControllerRoute());
 
-            return Redirect(loginUrl);
+            var challengeAuthenticationProperties = new AuthenticationProperties()
+            {
+                RedirectUri = nameof(AccountController.DiscordLoginCallback).GetActionRoute(nameof(AccountController))
+            };
+
+            return Challenge(challengeAuthenticationProperties);
         }
 
-        // GET: /Account/DiscordLoginRedirect
+        // GET: /Account/DiscordLoginCallback
         [HttpGet]
-        public IActionResult DiscordLoginRedirect(string code)
+        public IActionResult DiscordLoginCallback()
         {
-            return Content(code);
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).GetControllerRoute());
+
+            return RedirectToAction(nameof(PanelController.Index), nameof(PanelController).GetControllerRoute());
         }
 
-        // GET: /Account/Logout
+        // GET: /Account/DiscordLogout
         [HttpGet]
-        public IActionResult Logout()
+        public async Task<IActionResult> DiscordLogout()
         {
-            return View();
+            await HttpContext.SignOutAsync();
+
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).GetControllerRoute());
         }
     }
 }
