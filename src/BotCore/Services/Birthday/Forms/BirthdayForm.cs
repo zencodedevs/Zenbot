@@ -35,7 +35,7 @@ namespace BotCore.Services.Birthday.Forms
         public string Title => "Brithday Message";
 
         [InputLabel("Message")]
-        [ModalTextInput("message", Discord.TextInputStyle.Paragraph, "Enter the Birthday Message here, use {username} where ever you want to put the Discord's username", 1, 500, null)]
+        [ModalTextInput("message", Discord.TextInputStyle.Paragraph, "Birthday Message, use {username} where ever you want to put the Discord's username", 1, 500, null)]
         [RequiredInput]
         public string Message { get; set; }
 

@@ -21,6 +21,7 @@ namespace BotCore.Interactions.Authentication
     {
         public BotConfiguration botConfiguration { get; set; }
         public EventService EventService { get; set; }
+        public GuildService guildService { get; set; }
 
 
         [ComponentInteraction("button-admin-setup-authentication-password", true)]
@@ -101,11 +102,16 @@ namespace BotCore.Interactions.Authentication
             }
 
             await (Context.User as IGuildUser).AddRoleAsync(Context.BotGuild.VerifiedRoleId);
+            var welcomeMessage = await guildService.GetWelcomeMessageAsync(Context.BotGuild.Id);
+
+            // Message text and replace the {username} with Discord username
+            var wMessage = welcomeMessage.Message.Replace("{username}", $"<@{Context.User.Id}>");
 
             var embed = new EmbedBuilder()
             {
-                Title = $"{Context.User.Username} Joined",
-                Description = $"@everyone Say Welcome To <@{Context.User.Id}>.",
+                Title = "Happy Birthday",
+                Description = $"{wMessage} \n\n  @everyone  ",
+                Color = Color.Purple,
                 ThumbnailUrl = "https://img.icons8.com/fluency/200/confetti.png",
                 Author = new EmbedAuthorBuilder()
                 {

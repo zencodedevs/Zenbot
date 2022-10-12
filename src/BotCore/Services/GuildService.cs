@@ -27,6 +27,7 @@ namespace BotCore.Services
         private readonly BotConfiguration _config;
         private readonly ChannelService _channelService;
         private readonly BirthdayMessageService _birthdayMessageService;
+        private readonly WelcomeMessageService _welcomeMessageService;
         public GuildService(IServiceProvider services, IServiceScopeFactory scopeFactory) : base(services, scopeFactory)
         {
             _services = services;
@@ -34,6 +35,7 @@ namespace BotCore.Services
             _discord = _services.GetRequiredService<DiscordSocketClient>();
             _channelService = _services.GetRequiredService<ChannelService>();
             _birthdayMessageService = _services.GetRequiredService<BirthdayMessageService>();
+            _welcomeMessageService = _services.GetRequiredService<WelcomeMessageService>();
             _config = _services.GetRequiredService<BotConfiguration>();
         }
         public async Task<Guild> UpdateGuildAsync(int id, Action<Guild> value)
@@ -51,6 +53,13 @@ namespace BotCore.Services
         public async Task<BirthdayMessage> GetBirthdayMessageAsync(int guildId)
         {
             return await _birthdayMessageService.GetAsync(a => a.GuildId == guildId && a.IsActive);
+        }
+
+
+        // Getting Active Welcome message from this Guild
+        public async Task<WelcomeMessage> GetWelcomeMessageAsync(int guildId)
+        {
+            return await _welcomeMessageService.GetAsync(a => a.GuildId == guildId && a.IsActive);
         }
 
 

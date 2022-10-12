@@ -2,6 +2,7 @@
 using BotCore.Extenstions;
 using BotCore.Services;
 using BotCore.Services.Birthday.Forms;
+using BotCore.WelcomeMessageFormModal;
 using Discord;
 using Discord.Interactions;
 using Microsoft.CodeAnalysis.Operations;
@@ -31,6 +32,7 @@ namespace BotCore.Interactions.Modules.Admin
     {
         public ChannelService _channelService { get; set; }
         public BirthdayMessageService _birthdayMessageService { get; set; }
+        public WelcomeMessageService _welcomeMessageService { get; set; }
 
         // Replace the default bot prefix with your own profex
         [SlashCommand("prefix", "setup server prefix")]
@@ -95,6 +97,24 @@ namespace BotCore.Interactions.Modules.Admin
 
 
 
+        // Select or change the Guild Welcome Message
+        [SlashCommand("welcome-message", "setup welcome message for this guild")]
+        public async Task welcome_message()
+        {
+            await RespondWithModalAsync<WelcomeMessageForm>($"set-welcome-message");
+        }
+
+        [ModalInteraction("set-welcome-message", true)]
+        public async Task welcome_modal(WelcomeMessageForm form)
+        {
+            await DeferAsync();
+
+            await _welcomeMessageService.GetOrAddAsync(true, form.Message, Context.BotGuild.Id);
+            await FollowupAsync($"You've adde new welcome Message \n **<#{form.Message}>**");
+        }
+
+
+
         // Insert or change the Roles Id for this Guild
         [SlashCommand("roles", "setup server roles")]
         public async Task roles(IRole verified, IRole unVerified, IRole hr)
@@ -132,6 +152,9 @@ namespace BotCore.Interactions.Modules.Admin
                 });
                 return;
             }
+
+            // Download the file from Discord and put in a file in discord
+            // then we can just sent this file from discord
 
             using (WebClient client = new WebClient())
             {
@@ -183,14 +206,15 @@ namespace BotCore.Interactions.Modules.Admin
                 $"4. `/setup greeting-message`  Whenever a user joins your server this message will be sent to him/her and in logger-channel.\n" +
                 $"5. `/setup prefix` You will change the default prefix for your server.\n" +
                 $"6. `/setup authentication` Please choose the channel which only `Unverified` users can see.\n" +
-                $"7. `/setup birthday-message` Made a new Birthday message which will be the default message for birthday message.\n" +
-                $"8. `/admin roles sync` All the server users will need to authenticat with server password. Bot will assign `Unverified` Role to all of users which don't have `Verified` Role\n" +
-                $"9. `/admin role add/remove` Admin can Assign or remove roles to/from users.\n" +
-                $"10. `/hr role add/remove` HR can assign or remove roles to/from users.\n" +
-                $"11. `/hr user-send file` HR can send onboarding file to specific user\n" +
-                $"12. `/birthday add` Users can add their birthday date, the bot will then announce in logger channel.\n" +
-                $"13. `/external account` Users can add their external account Id (jira, bitbucket).\n" +
-                $"14. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
+                $"7. `/setup birthday-message` Make a new Birthday message which will be the default message for birthday message.\n" +
+                $"8. `/setup welcome-message` Make a new Welcome message which will be the default message for Welcome new user message.\n" +
+                $"9. `/admin roles sync` All the server users will need to authenticat with server password. Bot will assign `Unverified` Role to all of users which don't have `Verified` Role\n" +
+                $"10. `/admin role add/remove` Admin can Assign or remove roles to/from users.\n" +
+                $"11. `/hr role add/remove` HR can assign or remove roles to/from users.\n" +
+                $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
+                $"13. `/birthday add` Users can add their birthday date, the bot will then announce in logger channel.\n" +
+                $"14. `/external account` Users can add their external account Id (jira, bitbucket).\n" +
+                $"15. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
                 ).Build();
             await RespondAsync(embed: embed);
         }

@@ -22,11 +22,7 @@ namespace BotCore
     /// </summary>
     public class BotService
     {
-        //private readonly IServiceProvider _services;
-        //public BotService(IServiceProvider services)
-        //{
-        //    this._services = services;
-        //}
+        
         public BotService ConfigServices(IServiceCollection services)
         {
             var configuration = BotConfiguration.GetConfiguration();
@@ -45,6 +41,7 @@ namespace BotCore
                 .AddSingleton<GuildService>()
                 .AddSingleton<ChannelService>()
                 .AddSingleton<BirthdayMessageService>()
+                .AddSingleton<WelcomeMessageService>()
 
                 .AddSingleton<JiraService>()
                 .AddSingleton<BitbucketService>()

@@ -1,6 +1,7 @@
 ﻿using BotCore.Entities;
 using BotCore.Extenstions;
 using BotCore.Interactions.Preconditions;
+using BotCore.Services;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
@@ -29,18 +30,24 @@ namespace BotCore.Interactions.Modules.Moderators
         public class UsersModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
             public BotConfiguration BotConfiguration { get; set; }
-          
+            public GuildService guildService { get; set; }
+
             [SlashCommand("send-file", "send file to a user")]
             public async Task sendFile(IGuildUser user, bool @private, IAttachment file)
             {
                 await DeferAsync(@private);
+                
+                var welcomeMessage = await guildService.GetWelcomeMessageAsync(Context.BotGuild.Id);// getting data from database
+
+                // Message text and replace the {username} with Discord username
+                var wMessage = welcomeMessage.Message.Replace("{username}", $"<@{user.Id}>");
 
                 var embed = new EmbedBuilder()
                 {
                     Title = "New File Received",
                     Description =
-                    $"**You have new {(file.Ephemeral ? "private " : "")} file from <@{Context.User.Id}>\n**" +
-                    $"Description: {Context.BotGuild.GreetingMessage}\n" +
+                    $"**You have new {(file.Ephemeral ? "private " : "")} file from <@{Context.User.Id}>\n\n**" +
+                    $"Description: {wMessage}\n\n" +
                     $"Size: ` {file.Size.ToSizeSuffix()} `\n" +
                     $"File Name: ` {file.Filename} `\n" +
                     $"**[Download The File]({file.Url})**",
