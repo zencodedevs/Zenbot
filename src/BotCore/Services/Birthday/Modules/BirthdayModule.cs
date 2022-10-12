@@ -86,11 +86,16 @@ namespace BotCore.Services.Birthday.Modules
                 x.Birthday = dateTime;
             });
             await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>", ephemeral:true);
-            await brithdayService.NotficationUsersBirthdayAsync(new BotUser[] { Context.BotUser });
+            //await brithdayService.NotficationUsersBirthdayAsync(new BotUser[] { Context.BotUser });
         }
 
 
-
+        [SlashCommand("hello", "ljsdjf ljsdkfj ")]
+        public async Task Hello()
+        {
+            await DeferAsync();
+            await FollowupAsync("Hello");
+        }
         // check by each user the exact time of birthday date
 
         [SlashCommand("time", "time of user brithday.")]
