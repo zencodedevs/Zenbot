@@ -1,13 +1,12 @@
-﻿namespace Zenbot.WebUI.Extensions
-{
-    using Microsoft.AspNetCore.Http;
-    using System;
-    using System.Globalization;
-    using System.Linq;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Globalization;
+using System.Linq;
 
+namespace Zenbot.WebUI.Extensions
+{
     public static class HttpRequestExtensions
     {
-  
         public static string GetSysLanguage(this HttpRequest request)
         {
             request.Headers.TryGetValue("x-sys-language", out var _params);
@@ -28,7 +27,6 @@
             return null;
         }
 
- 
         public static Guid? GetSysTenant(this HttpRequest request)
         {
             request.Headers.TryGetValue("x-tenant-id", out var _params);
@@ -41,8 +39,5 @@
 
             return null;
         }
-
-
-
     }
 }

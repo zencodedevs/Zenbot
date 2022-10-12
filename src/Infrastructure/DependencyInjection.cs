@@ -1,8 +1,4 @@
-﻿
-using Zenbot.Domain.Shared.Entities;
-using Zenbot.Domain.Interfaces;
-using Zenbot.Infrastructure.Identity;
-using Zenbot.Infrastructure.Shared.Services;
+﻿using Infrastructure.Shared;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,9 +7,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Zen.Bog.Ecommerce;
 using Zen.Infrastructure.Interfaces;
-using Infrastructure.Shared;
-using Zenbot.Infrastructure.Shared.Persistence;
+using Zenbot.Domain.Interfaces;
+using Zenbot.Domain.Shared.Entities;
 using Zenbot.Domain.Shared.Interfaces;
+using Zenbot.Infrastructure.Identity;
+using Zenbot.Infrastructure.Shared.Persistence;
+using Zenbot.Infrastructure.Shared.Services;
 
 namespace Zenbot.Infrastructure
 {
@@ -21,7 +20,6 @@ namespace Zenbot.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-
             services.AddInfrastructureShared(configuration);
 
             services.AddZenBogEcommerce(configuration);
@@ -87,8 +85,5 @@ namespace Zenbot.Infrastructure
 
             return services;
         }
-
-
-
     }
 }
