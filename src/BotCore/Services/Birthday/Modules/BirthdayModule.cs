@@ -89,7 +89,12 @@ namespace BotCore.Services.Birthday.Modules
                 x.Username = Context.User.Username;
             });
             await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>", ephemeral:true);
-            
+            var todayDay = DateTime.UtcNow.Day;
+            var todayMonth = DateTime.UtcNow.Month;
+            if (dateTime.Day == todayDay && dateTime.Month == todayMonth)
+            {
+                await brithdayService.NotficationUsersBirthdayAsync(new BotUser[] { Context.BotUser });
+            }
         }
 
 

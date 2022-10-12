@@ -39,6 +39,7 @@ namespace BotCore.Services.Birthday
             _discord.Ready += _client_Ready;
         }
 
+        // Method which will be called every 24 hours to check if there are in bot servers who has birthday
         private Task _client_Ready()
         {
             _ = Task.Run(async () =>
@@ -49,12 +50,15 @@ namespace BotCore.Services.Birthday
                     var users = await _usersService.GetUpComingUsersBrithday();
                     await NotficationUsersBirthdayAsync(users);
 
-                    await Task.Delay(TimeSpan.FromSeconds(30));
+                    await Task.Delay(TimeSpan.FromHours(24));
                 }
             });
 
             return Task.CompletedTask;
         }
+
+
+
         public async Task NotficationUsersBirthdayAsync(ICollection<BotUser> users)
         {
             if (users is null || users.Count < 1)
@@ -104,7 +108,7 @@ namespace BotCore.Services.Birthday
                         Title = "Happy Birthday",
                         Description = $"{bMessage} \n\n  @everyone  ",
                         Color = Color.Purple,
-                        ThumbnailUrl = "https://cdn.discordapp.com/attachments/1022106350219698186/1022529862960947200/4.gif",
+                        ThumbnailUrl = "https://img.icons8.com/external-flat-icons-pause-08/64/000000/external-birthday-christmas-collection-flat-icons-pause-08.png",
                     }.Build();
                     await _channelService.SendMessageAsync(loggerChannel.ChannelId, null,false,embed: brithday_embed);
 
