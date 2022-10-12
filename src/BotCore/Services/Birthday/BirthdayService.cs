@@ -49,7 +49,7 @@ namespace BotCore.Services.Birthday
                     var users = await _usersService.GetUpComingUsersBrithday();
                     await NotficationUsersBirthdayAsync(users);
 
-                    await Task.Delay(TimeSpan.FromSeconds(30));
+                    await Task.Delay(TimeSpan.FromHours(24));
                 }
             });
 

@@ -78,22 +78,20 @@ namespace BotCore.Interactions.Modules.Admin
 
 
         // Select or change the Guild Birthday Message
-        [SlashCommand("message", "setup birthday message for this guild")]
-        public async Task birthday_message(bool status, string message)
+        [SlashCommand("birthday-message", "setup birthday message for this guild")]
+        public async Task birthday_message()
         {
-             await DeferAsync();
-            //await _birthdayMessageService.GetOrAddAsync(status, message, Context.BotGuild.Id);
-             await FollowupAsync($"You've adde new message for birthday \n **<#{message}>**");
+            await RespondWithModalAsync<BirthdayMessageForm>($"set-brithday-message");
         }
 
-        //[ModalInteraction("set-brithday-message", true)]
-        //public async Task set_modal(BirthdayMessageForm form)
-        //{
-        //    await DeferAsync();
+        [ModalInteraction("set-brithday-message", true)]
+        public async Task set_modal(BirthdayMessageForm form)
+        {
+            await DeferAsync();
 
-        //    await _birthdayMessageService.GetOrAddAsync(true, form.Message, Context.BotGuild.Id);
-        //    await FollowupAsync($"You've adde new message for birthday \n **<#{form.Message}>**");
-        //}
+            await _birthdayMessageService.GetOrAddAsync(true, form.Message, Context.BotGuild.Id);
+            await FollowupAsync($"You've adde new message for birthday \n **<#{form.Message}>**");
+        }
 
 
 
