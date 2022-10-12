@@ -1,7 +1,7 @@
 ﻿# ეს კომენტარი არ წაშალოთ
-BuildCMD=dotnet publish .\\src\\WebUIAdmin\\WebUIAdmin.csproj -f net5.0 /p:Platform="Any CPU" --configuration Release  /p:EnvironmentName="Qa" --output build
+BuildCMD=dotnet publish .\\src\\WebUI\\WebUI.csproj -f net5.0 /p:Platform="Any CPU" --configuration Release  /p:EnvironmentName="Qa" --output build
 BuildOutput=build
-WebSiteName=zenbot.zencode.io
+WebSiteName=bot.zencode.io
 DestinationRoot=C:\\inetpub
-Bindings=http://zenbot.zencode.io:80,https://zenbot.zencode.io:443
+Bindings=http://bot.zencode.io:80,https://bot.zencode.io:443
 NotifyMail= andro.lomtadze@altcom.io
