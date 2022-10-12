@@ -60,6 +60,8 @@ namespace Zenbot.Infrastructure.Shared.Persistence
         public DbSet<BotUser> BotUsers { get; set; }
         public DbSet<Guild> Guilds { get; set; }
         public DbSet<GuildChannel> GuildChannels { get; set; }
+        public DbSet<BirthdayMessage> BirthdayMessages { get; set; }
+        public DbSet<WelcomeMessage> WelcomeMessages { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

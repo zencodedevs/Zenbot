@@ -23,7 +23,7 @@ namespace BotCore.Services
         private readonly DiscordSocketClient _discord;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IServiceProvider _services;
-        private readonly BotConfiguration _config;
+        //private readonly BotConfiguration _config;
 
         public ChannelService(IServiceProvider services, IServiceScopeFactory scopeFactory) : base(services, scopeFactory)
         {
@@ -32,11 +32,15 @@ namespace BotCore.Services
             _discord = _services.GetRequiredService<DiscordSocketClient>();
         }
 
+        // Common method for sending message to logger channel
         public async Task SendMessageAsync(ulong channelId, string text = null, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageReference messageReference = null, MessageComponent components = null, ISticker[] stickers = null, Embed[] embeds = null, MessageFlags flags = MessageFlags.None)
         {
             var channel = (ITextChannel)(_discord.GetChannel(channelId) ?? await _discord.GetChannelAsync(channelId));
             await channel.SendMessageAsync(text, isTTS, embed, options, allowedMentions, messageReference, components, stickers, embeds, flags);
         }
+
+
+        // methodf to Get Or Add a logger channel for/from this Guild
         public async Task<GuildChannel> GetOrAddAsync(ulong id, int guildId)
         {
             var channel = await base.GetAsync(a => a.ChannelId == id);

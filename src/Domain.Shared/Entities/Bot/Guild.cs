@@ -18,7 +18,7 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public string BotPrefix { get; set; }
 
         public bool IsMainServer { get; set; }
-
+        public string ScrinIOToken { get; set; }
         public string AuthenticationPassword { get; set; }
         public string GreetingFilePath { get; set; }
         public ulong VerifiedRoleId { get; set; }
@@ -27,19 +27,9 @@ namespace Zenbot.Domain.Shared.Entities.Bot
 
         public string GreetingMessage { get; set; }
         public virtual ICollection<GuildChannel> Channels { get; set; }
+        public virtual ICollection<BirthdayMessage> BirthdayMessages { get; set; }
+        public virtual ICollection<WelcomeMessage> WelcomeMessages { get; set; }
     }
-    public class GuildChannel : Entity
-    {
-        public ulong ChannelId { get; set; }
-        public GuildChannelType Type { get; set; }
-
-        public int GuildId { get; set; }
-        public Guild Guild { get; set; }
-    }
-    public enum GuildChannelType
-    {
-        None,
-        Authentication,
-        Logger
-    }
+ 
+  
 }

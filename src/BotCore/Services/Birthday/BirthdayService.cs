@@ -20,7 +20,7 @@ namespace BotCore.Services.Birthday
     /// <summary>
     /// The service which is sending birthday message for Users in exact day in specified channal
     /// </summary>
-    public class BrithdayService
+    public class BirthdayService
     {
         private readonly IServiceProvider _services;
         private readonly DiscordSocketClient _discord;
@@ -28,7 +28,7 @@ namespace BotCore.Services.Birthday
         private readonly BotConfiguration _config;
         private readonly GuildService _guildService;
         private readonly ChannelService _channelService;
-        public BrithdayService(IServiceProvider services)
+        public BirthdayService(IServiceProvider services)
         {
             _services = services;
             _discord = services.GetRequiredService<DiscordSocketClient>();
@@ -39,6 +39,7 @@ namespace BotCore.Services.Birthday
             _discord.Ready += _client_Ready;
         }
 
+        // Method which will be called every 24 hours to check if there are in bot servers who has birthday
         private Task _client_Ready()
         {
             _ = Task.Run(async () =>
@@ -49,12 +50,15 @@ namespace BotCore.Services.Birthday
                     var users = await _usersService.GetUpComingUsersBrithday();
                     await NotficationUsersBirthdayAsync(users);
 
-                    await Task.Delay(TimeSpan.FromSeconds(30));
+                    await Task.Delay(TimeSpan.FromHours(24));
                 }
             });
 
             return Task.CompletedTask;
         }
+
+
+
         public async Task NotficationUsersBirthdayAsync(ICollection<BotUser> users)
         {
             if (users is null || users.Count < 1)
@@ -94,7 +98,19 @@ namespace BotCore.Services.Birthday
                         botChannels.Add(loggerChannel);
                     }
 
-                    await _channelService.SendMessageAsync(loggerChannel.ChannelId, $"@everyone Congrates <@{u.DiscordId}>'s birthday, Happy Birtday 🎉");
+                    // Getting message from database the one which is active
+                    var birthday_message = await _guildService.GetBirthdayMessageAsync(botGuild.Id);
+                    // Message text and replace the {username} with Discord username
+                    var bMessage = birthday_message.Message.Replace("{username}", $"<@{u.DiscordId}>");
+
+                    var brithday_embed = new EmbedBuilder()
+                    {
+                        Title = "Happy Birthday",
+                        Description = $"{bMessage} \n\n  @everyone  ",
+                        Color = Color.Purple,
+                        ThumbnailUrl = "https://img.icons8.com/external-flat-icons-pause-08/64/000000/external-birthday-christmas-collection-flat-icons-pause-08.png",
+                    }.Build();
+                    await _channelService.SendMessageAsync(loggerChannel.ChannelId, null,false,embed: brithday_embed);
 
                     await Task.Delay(150);
                 }

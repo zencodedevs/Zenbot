@@ -17,8 +17,10 @@ namespace BotCore.Services.Birthday.Modules
     [Group("birthday", "birthday commands")]
     public class BirthdayModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
+        public BirthdayMessageService _birthdayMessageService { get; set; }
+
         public UserService _usersService { get; set; }
-        public BrithdayService brithdayService { get; set; }
+        public BirthdayService brithdayService { get; set; }
         /// <summary>
         /// Check if there is some upcomming birthday by Admin
         /// </summary>
@@ -84,18 +86,20 @@ namespace BotCore.Services.Birthday.Modules
             var user = _usersService.UpdateAsync(Context.BotUser, x =>
             {
                 x.Birthday = dateTime;
+                x.Username = Context.User.Username;
             });
             await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>", ephemeral:true);
-            //await brithdayService.NotficationUsersBirthdayAsync(new BotUser[] { Context.BotUser });
+            var todayDay = DateTime.UtcNow.Day;
+            var todayMonth = DateTime.UtcNow.Month;
+            if (dateTime.Day == todayDay && dateTime.Month == todayMonth)
+            {
+                await brithdayService.NotficationUsersBirthdayAsync(new BotUser[] { Context.BotUser });
+            }
         }
 
 
-        [SlashCommand("hello", "ljsdjf ljsdkfj ")]
-        public async Task Hello()
-        {
-            await DeferAsync();
-            await FollowupAsync("Hello");
-        }
+     
+
         // check by each user the exact time of birthday date
 
         [SlashCommand("time", "time of user brithday.")]

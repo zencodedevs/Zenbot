@@ -26,12 +26,16 @@ namespace BotCore.Services
         private readonly IServiceProvider _services;
         private readonly BotConfiguration _config;
         private readonly ChannelService _channelService;
+        private readonly BirthdayMessageService _birthdayMessageService;
+        private readonly WelcomeMessageService _welcomeMessageService;
         public GuildService(IServiceProvider services, IServiceScopeFactory scopeFactory) : base(services, scopeFactory)
         {
             _services = services;
             _scopeFactory = scopeFactory;
             _discord = _services.GetRequiredService<DiscordSocketClient>();
             _channelService = _services.GetRequiredService<ChannelService>();
+            _birthdayMessageService = _services.GetRequiredService<BirthdayMessageService>();
+            _welcomeMessageService = _services.GetRequiredService<WelcomeMessageService>();
             _config = _services.GetRequiredService<BotConfiguration>();
         }
         public async Task<Guild> UpdateGuildAsync(int id, Action<Guild> value)
@@ -39,10 +43,27 @@ namespace BotCore.Services
             return await base.UpdateAsync(id, value);
         }
 
+        // Getting Logger channel from this Guild
         public async Task<GuildChannel> GetChannelAsync(int guildId, GuildChannelType channelType)
         {
             return await _channelService.GetAsync(a => a.GuildId == guildId && a.Type == channelType);
         }
+
+        // Getting Active Birthday message from this Guild
+        public async Task<BirthdayMessage> GetBirthdayMessageAsync(int guildId)
+        {
+            return await _birthdayMessageService.GetAsync(a => a.GuildId == guildId && a.IsActive);
+        }
+
+
+        // Getting Active Welcome message from this Guild
+        public async Task<WelcomeMessage> GetWelcomeMessageAsync(int guildId)
+        {
+            return await _welcomeMessageService.GetAsync(a => a.GuildId == guildId && a.IsActive);
+        }
+
+
+        // Get Or insert the current Guild from/to bot database
         public async Task<Guild> GetOrAddAsync(ulong id)
         {
             var guild = await base.GetAsync(x => x.GuildId == id);
@@ -58,6 +79,9 @@ namespace BotCore.Services
             }
             return guild;
         }
+
+
+        // Sync all guild users with roles => any user without Verified or Unverified role will get Unverified role.
         public async Task SyncAllGuildsUsersRolesAsync()
         {
             var guilds = await GetManyAsync(x => x.VerifiedRoleId != 0 && x.UnVerifiedRoleId != 0);
@@ -67,6 +91,8 @@ namespace BotCore.Services
                 await Task.Delay(TimeSpan.FromSeconds(2));
             }
         }
+
+
         public async Task SyncGuildUsersRolesAsync(Guild guild)
         {
             var discordGuild = _discord.GetGuild(guild.GuildId);
