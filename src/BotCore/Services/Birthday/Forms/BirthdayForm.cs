@@ -29,13 +29,13 @@ namespace BotCore.Services.Birthday.Forms
         public int Year { get; set; }
     }
 
-    // Modal form for adding Birthday date
+    // Modal form for adding Birthday new Birthday Message
     public class BirthdayMessageForm : IModal
     {
         public string Title => "Brithday Message";
 
         [InputLabel("Message")]
-        [ModalTextInput("message", Discord.TextInputStyle.Paragraph, "Enter the Birthday Message here", 1, 500, null)]
+        [ModalTextInput("message", Discord.TextInputStyle.Paragraph, "Enter the Birthday Message here, use {username} where ever you want to put the Discord's username", 1, 500, null)]
         [RequiredInput]
         public string Message { get; set; }
 

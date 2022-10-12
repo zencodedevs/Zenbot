@@ -183,13 +183,14 @@ namespace BotCore.Interactions.Modules.Admin
                 $"4. `/setup greeting-message`  Whenever a user joins your server this message will be sent to him/her and in logger-channel.\n" +
                 $"5. `/setup prefix` You will change the default prefix for your server.\n" +
                 $"6. `/setup authentication` Please choose the channel which only `Unverified` users can see.\n" +
-                $"7. `/admin roles sync` All the server users will need to authenticat with server password. Bot will assign `Unverified` Role to all of users which don't have `Verified` Role\n" +
-                $"8. `/admin role add/remove` Admin can Assign or remove roles to/from users.\n" +
-                $"9. `/hr role add/remove` HR can assign or remove roles to/from users.\n" +
-                $"10. `/hr user-send file` HR can send onboarding file to specific user\n" +
-                $"11. `/birthday add` Users can add their birthday date, the bot will then announce in logger channel.\n" +
-                $"12. `/external account` Users can add their external account Id (jira, bitbucket).\n" +
-                $"13. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
+                $"7. `/setup birthday-message` Made a new Birthday message which will be the default message for birthday message.\n" +
+                $"8. `/admin roles sync` All the server users will need to authenticat with server password. Bot will assign `Unverified` Role to all of users which don't have `Verified` Role\n" +
+                $"9. `/admin role add/remove` Admin can Assign or remove roles to/from users.\n" +
+                $"10. `/hr role add/remove` HR can assign or remove roles to/from users.\n" +
+                $"11. `/hr user-send file` HR can send onboarding file to specific user\n" +
+                $"12. `/birthday add` Users can add their birthday date, the bot will then announce in logger channel.\n" +
+                $"13. `/external account` Users can add their external account Id (jira, bitbucket).\n" +
+                $"14. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
                 ).Build();
             await RespondAsync(embed: embed);
         }
