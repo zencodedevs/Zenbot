@@ -49,7 +49,7 @@ namespace BotCore.Services.Birthday
                     var users = await _usersService.GetUpComingUsersBrithday();
                     await NotficationUsersBirthdayAsync(users);
 
-                    await Task.Delay(TimeSpan.FromHours(24));
+                    await Task.Delay(TimeSpan.FromSeconds(30));
                 }
             });
 
@@ -94,7 +94,19 @@ namespace BotCore.Services.Birthday
                         botChannels.Add(loggerChannel);
                     }
 
-                    await _channelService.SendMessageAsync(loggerChannel.ChannelId, $"@everyone Congrates <@{u.DiscordId}>'s birthday, Happy Birtday 🎉");
+                    // Getting message from database the one which is active
+                    var birthday_message = await _guildService.GetBirthdayMessageAsync(botGuild.Id);
+                    // Message text and replace the {username} with Discord username
+                    var bMessage = birthday_message.Message.Replace("{username}", $"<@{u.DiscordId}>");
+
+                    var brithday_embed = new EmbedBuilder()
+                    {
+                        Title = "Happy Birthday",
+                        Description = $"{bMessage} \n\n  @everyone  ",
+                        Color = Color.Purple,
+                        ThumbnailUrl = "https://cdn.discordapp.com/attachments/1022106350219698186/1022529862960947200/4.gif",
+                    }.Build();
+                    await _channelService.SendMessageAsync(loggerChannel.ChannelId, null,false,embed: brithday_embed);
 
                     await Task.Delay(150);
                 }

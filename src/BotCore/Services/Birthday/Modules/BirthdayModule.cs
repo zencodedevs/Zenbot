@@ -86,9 +86,10 @@ namespace BotCore.Services.Birthday.Modules
             var user = _usersService.UpdateAsync(Context.BotUser, x =>
             {
                 x.Birthday = dateTime;
+                x.Username = Context.User.Username;
             });
             await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>", ephemeral:true);
-            await brithdayService.NotficationUsersBirthdayAsync(new BotUser[] { Context.BotUser });
+            
         }
 
 

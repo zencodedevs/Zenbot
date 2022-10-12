@@ -39,6 +39,7 @@ namespace BotCore
         }
 
        
+        // Common method for getting the data from database
         public async Task<T> GetAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] propertySelectors)
         {
             using (var scope = _scopeFactory.CreateScope())
@@ -52,6 +53,9 @@ namespace BotCore
                 }
             }
         }
+
+
+        // Common method for inserting data into database
         public async Task<T> InsertAsync(T value)
         {
             using (var scope = _scopeFactory.CreateScope())
@@ -70,6 +74,8 @@ namespace BotCore
             }
         }
 
+
+        // Common method for updating the data into database
         public async Task<T> UpdateAsync(T obj, Action<T> value) => await UpdateAsync(obj.Id, value);
         public async Task<T> UpdateAsync(int id, Action<T> value)
         {
