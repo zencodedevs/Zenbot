@@ -135,8 +135,8 @@ namespace BotCore.Interactions.Modules.Admin
         }
 
         // Set the greeting message for this Guild
-        [SlashCommand("greeting-message", "setup server's greeting message.")]
-        public async Task greeting_message(string message, IAttachment grettingFile = null)
+        [SlashCommand("on-boarding-file", "setup server's greeting message.")]
+        public async Task greeting_message(IAttachment grettingFile = null)
         {
             await DeferAsync();
 
@@ -147,7 +147,6 @@ namespace BotCore.Interactions.Modules.Admin
             {
                 await Context._guildService.UpdateAsync(Context.BotGuild, x =>
                 {
-                    x.GreetingMessage = message;
                     x.GreetingFilePath = "";
                 });
                 return;
@@ -176,7 +175,6 @@ namespace BotCore.Interactions.Modules.Admin
                     }
                     await Context._guildService.UpdateAsync(Context.BotGuild, x =>
                     {
-                        x.GreetingMessage = message;
                         x.GreetingFilePath = filePath;
                     });
                     await FollowupAsync("file downloaded, gretting-message updated.");
@@ -203,7 +201,7 @@ namespace BotCore.Interactions.Modules.Admin
                 $"1. `/setup roles`  Setup your roles for this server so bot can perform it's tasks.\n" +
                 $"2. `/setup password` The password which server user will be authenticated.\n" +
                 $"3. `/setup logger-channel`  Every common message from bot will be sent here.\n" +
-                $"4. `/setup greeting-message`  Whenever a user joins your server this message will be sent to him/her and in logger-channel.\n" +
+                $"4. `/setup on-boarding-file`  Whenever a user joins your server, this file with welcome message will be sent to him/her and in logger-channel.\n" +
                 $"5. `/setup prefix` You will change the default prefix for your server.\n" +
                 $"6. `/setup authentication` Please choose the channel which only `Unverified` users can see.\n" +
                 $"7. `/setup birthday-message` Make a new Birthday message which will be the default message for birthday message.\n" +

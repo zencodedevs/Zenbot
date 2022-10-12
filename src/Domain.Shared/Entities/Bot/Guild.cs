@@ -25,7 +25,6 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public ulong UnVerifiedRoleId { get; set; }
         public ulong HrRoleId { get; set; }
 
-        public string GreetingMessage { get; set; }
         public virtual ICollection<GuildChannel> Channels { get; set; }
         public virtual ICollection<BirthdayMessage> BirthdayMessages { get; set; }
         public virtual ICollection<WelcomeMessage> WelcomeMessages { get; set; }
