@@ -62,6 +62,12 @@ namespace Zenbot.Infrastructure.Shared.Persistence
         public DbSet<GuildChannel> GuildChannels { get; set; }
         public DbSet<BirthdayMessage> BirthdayMessages { get; set; }
         public DbSet<WelcomeMessage> WelcomeMessages { get; set; }
+        public DbSet<Vocation> Vocations { get; set; }
+        public DbSet<Supervisor> Supervisors { get; set; }
+
+
+
+
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -100,7 +106,16 @@ namespace Zenbot.Infrastructure.Shared.Persistence
 
             modelBuilder.Entity<ApplicationUser>(b => { });
 
-            /// Entity type configurations  
+            /// BotUser Configuration with object value type (Supervisor)
+            //modelBuilder.Entity<BotUser>(b =>
+            //{
+            //    b.ToTable("BotUsers").HasKey(x => x.Id);
+            //    b.OwnsOne(x => x.Supervisor, sp =>
+            //    {
+            //        sp.Property(x => x.DiscordId).HasMaxLength(255).HasDefaultValue(ulong.MinValue);
+            //        sp.Property(x => x.Username).HasMaxLength(255).HasDefaultValue(string.Empty);
+            //    });
+            //});
         }
 
         private async Task DispatchEvents()

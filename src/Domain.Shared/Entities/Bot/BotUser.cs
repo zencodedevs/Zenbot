@@ -6,18 +6,27 @@ using System.Text;
 using System.Threading.Tasks;
 using Zen.Domain.Entities.Entity;
 using Zen.Domain.Events;
+using Zen.Domain.Values;
+using Zenbot.Domain.Shared.Entities.Bot;
 
 namespace Domain.Shared.Entities.Bot
 {
-    public class BotUser : Entity, IHasDomainEvent
+    public class BotUser : Entity, IHasDomainEvent 
     {
         public ulong DiscordId { get; set; }
+        public bool IsSupervisor { get; set; }
         public string UserMail { get; set; }
         public string Username { get; set; }
         public string JiraAccountID { get; set; }
         public string BitBucketAccountId { get; set; }
         public DateTime Birthday { get; set; } = DateTime.MinValue;
         public DateTime NextNotifyTIme { get; set; } = DateTime.MinValue;
+
+        // Value object Entity
+        public virtual ICollection<SupervisorEmployee> Supervisor { get; set; }
+        public virtual ICollection<Vocation> Vocations { get; set; }
+
+
 
         [NotMapped]
         public List<DomainEvent> DomainEvents { get; set; }
@@ -31,9 +40,26 @@ namespace Domain.Shared.Entities.Bot
             Username = username;
             return this;
         }
-
-
-
-
     }
+
+    
+
+    //public class Supervisor : ValueObject
+    //{
+    //    public ulong DiscordId { get; init; }
+    //    public string Username { get; init; }
+
+    //    public Supervisor(ulong discordId, string username)
+    //    {
+    //        DiscordId = discordId;
+    //        Username = username;
+    //    }
+
+    //    protected override IEnumerable<object> GetAtomicValues()
+    //    {
+    //        yield return DiscordId;
+    //        yield return Username;
+    //    }
+    //}
+    
 }
