@@ -149,6 +149,7 @@ namespace BotCore.Services.Jira.Modules
                 x.UserMail = form.Email;
                 x.BitBucketAccountId = form.bitbucketId;
                 x.JiraAccountID = form.JiraId;
+                x.GuildId = Context.BotGuild.Id;
             });
 
             await FollowupAsync(embed: embed, ephemeral: true);

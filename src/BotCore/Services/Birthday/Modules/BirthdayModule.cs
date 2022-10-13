@@ -87,7 +87,9 @@ namespace BotCore.Services.Birthday.Modules
             {
                 x.Birthday = dateTime;
                 x.Username = Context.User.Username;
+                x.GuildId = Context.BotGuild.Id;
             });
+
             await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>", ephemeral:true);
             var todayDay = DateTime.UtcNow.Day;
             var todayMonth = DateTime.UtcNow.Month;
