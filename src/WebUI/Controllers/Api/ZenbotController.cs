@@ -24,6 +24,8 @@ namespace Zenbot.WebUI.Controllers.Api
             _jiraService = jiraService;
             _bitbucketService = services.GetRequiredService<BitbucketService>();
         }
+
+        // For Jira Webhook
         [HttpPost]
         public async Task GetJiraWebHook([FromBody] JiraWebhookObject value)
         {
@@ -46,7 +48,7 @@ namespace Zenbot.WebUI.Controllers.Api
             }.Build();
 
             var component = new ComponentBuilder()
-                .WithButton("Reporter", "1", ButtonStyle.Secondary, null, "", true, row: 0)
+                .WithButton("Reporter", "1", ButtonStyle.Secondary,null, "", true, row: 0)
                 .WithButton(jiraWH.ReporterName, null, ButtonStyle.Link, null, jiraWH.IssueSelf, row: 0)
 
                 .WithButton("Project Name", "2", ButtonStyle.Secondary, null, "", true, row: 1)
@@ -93,7 +95,7 @@ namespace Zenbot.WebUI.Controllers.Api
                 .WithButton("Repository", "3", ButtonStyle.Secondary, null, "", true, row: 1)
                 .WithButton(bitbucketWH.RepositoryName, null, ButtonStyle.Link, null, bitbucketWH.RepositoryLink, row: 1)
 
-
+                
                 .Build();
 
             foreach (var item in reviewers)

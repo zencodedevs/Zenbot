@@ -10,6 +10,7 @@ using Discord;
 using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -22,10 +23,15 @@ namespace BotCore
     /// </summary>
     public class BotService
     {
-        
+        private readonly IWebHostEnvironment _env;
+
+        public BotService(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
         public BotService ConfigServices(IServiceCollection services)
         {
-            var configuration = BotConfiguration.GetConfiguration();
+            var configuration = BotConfiguration.GetConfiguration(_env);
 
             services
                 .AddSingleton(configuration)

@@ -69,25 +69,6 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BotUsers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DiscordId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    UserMail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    JiraAccountID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BitBucketAccountId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NextNotifyTIme = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BotUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DeviceCodes",
                 columns: table => new
                 {
@@ -156,12 +137,12 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     GuildId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
                     BotPrefix = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsMainServer = table.Column<bool>(type: "bit", nullable: false),
+                    ScrinIOToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AuthenticationPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GreetingFilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VerifiedRoleId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
                     UnVerifiedRoleId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    HrRoleId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    GreetingMessage = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    HrRoleId = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -356,6 +337,54 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BirthdayMessages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    GuildId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BirthdayMessages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BirthdayMessages_Guilds_GuildId",
+                        column: x => x.GuildId,
+                        principalTable: "Guilds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BotUsers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DiscordId = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
+                    IsSupervisor = table.Column<bool>(type: "bit", nullable: false),
+                    UserMail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JiraAccountID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BitBucketAccountId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NextNotifyTIme = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GuildId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BotUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BotUsers_Guilds_GuildId",
+                        column: x => x.GuildId,
+                        principalTable: "Guilds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GuildChannels",
                 columns: table => new
                 {
@@ -374,6 +403,89 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                         principalTable: "Guilds",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WelcomeMessages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    GuildId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WelcomeMessages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WelcomeMessages_Guilds_GuildId",
+                        column: x => x.GuildId,
+                        principalTable: "Guilds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Supervisors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SupervisorId = table.Column<int>(type: "int", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Supervisors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Supervisors_BotUsers_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "BotUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Supervisors_BotUsers_SupervisorId",
+                        column: x => x.SupervisorId,
+                        principalTable: "BotUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vocations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ForDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsAccept = table.Column<bool>(type: "bit", nullable: false),
+                    UserRequestId = table.Column<int>(type: "int", nullable: false),
+                    SupervisorId = table.Column<int>(type: "int", nullable: true),
+                    SupervisorEmployeeId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vocations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vocations_BotUsers_SupervisorId",
+                        column: x => x.SupervisorId,
+                        principalTable: "BotUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Vocations_BotUsers_UserRequestId",
+                        column: x => x.UserRequestId,
+                        principalTable: "BotUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Vocations_Supervisors_SupervisorEmployeeId",
+                        column: x => x.SupervisorEmployeeId,
+                        principalTable: "Supervisors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -416,6 +528,16 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BirthdayMessages_GuildId",
+                table: "BirthdayMessages",
+                column: "GuildId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BotUsers_GuildId",
+                table: "BotUsers",
+                column: "GuildId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",
                 table: "DeviceCodes",
                 column: "DeviceCode",
@@ -450,6 +572,36 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                 name: "IX_PersistedGrants_SubjectId_SessionId_Type",
                 table: "PersistedGrants",
                 columns: new[] { "SubjectId", "SessionId", "Type" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Supervisors_EmployeeId",
+                table: "Supervisors",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Supervisors_SupervisorId",
+                table: "Supervisors",
+                column: "SupervisorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vocations_SupervisorEmployeeId",
+                table: "Vocations",
+                column: "SupervisorEmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vocations_SupervisorId",
+                table: "Vocations",
+                column: "SupervisorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vocations_UserRequestId",
+                table: "Vocations",
+                column: "UserRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WelcomeMessages_GuildId",
+                table: "WelcomeMessages",
+                column: "GuildId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -473,7 +625,7 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                 name: "AuditLogs");
 
             migrationBuilder.DropTable(
-                name: "BotUsers");
+                name: "BirthdayMessages");
 
             migrationBuilder.DropTable(
                 name: "DeviceCodes");
@@ -497,6 +649,12 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
+                name: "Vocations");
+
+            migrationBuilder.DropTable(
+                name: "WelcomeMessages");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -504,6 +662,12 @@ namespace Zenbot.Infrastructure.Shared.Migrations
 
             migrationBuilder.DropTable(
                 name: "Events");
+
+            migrationBuilder.DropTable(
+                name: "Supervisors");
+
+            migrationBuilder.DropTable(
+                name: "BotUsers");
 
             migrationBuilder.DropTable(
                 name: "Guilds");

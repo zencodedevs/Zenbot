@@ -35,6 +35,12 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.Property<decimal>("DiscordId")
                         .HasColumnType("decimal(20,0)");
 
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsSupervisor")
+                        .HasColumnType("bit");
+
                     b.Property<string>("JiraAccountID")
                         .HasColumnType("nvarchar(max)");
 
@@ -48,6 +54,8 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GuildId");
 
                     b.ToTable("BotUsers");
                 });
@@ -629,9 +637,6 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.Property<string>("GreetingFilePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GreetingMessage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("GuildId")
                         .HasColumnType("decimal(20,0)");
 
@@ -678,6 +683,64 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.ToTable("GuildChannels");
                 });
 
+            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.SupervisorEmployee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SupervisorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SupervisorId");
+
+                    b.ToTable("Supervisors");
+                });
+
+            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.Vocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ForDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAccept")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("RequestDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("SupervisorEmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SupervisorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserRequestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupervisorEmployeeId");
+
+                    b.HasIndex("SupervisorId");
+
+                    b.HasIndex("UserRequestId");
+
+                    b.ToTable("Vocations");
+                });
+
             modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.WelcomeMessage", b =>
                 {
                     b.Property<int>("Id")
@@ -699,6 +762,17 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.HasIndex("GuildId");
 
                     b.ToTable("WelcomeMessages");
+                });
+
+            modelBuilder.Entity("Domain.Shared.Entities.Bot.BotUser", b =>
+                {
+                    b.HasOne("Zenbot.Domain.Shared.Entities.Bot.Guild", "Guild")
+                        .WithMany("BotUsers")
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Guild");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -785,6 +859,44 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.Navigation("Guild");
                 });
 
+            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.SupervisorEmployee", b =>
+                {
+                    b.HasOne("Domain.Shared.Entities.Bot.BotUser", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("Domain.Shared.Entities.Bot.BotUser", "Supervisor")
+                        .WithMany()
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Supervisor");
+                });
+
+            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.Vocation", b =>
+                {
+                    b.HasOne("Zenbot.Domain.Shared.Entities.Bot.SupervisorEmployee", null)
+                        .WithMany("Vocations")
+                        .HasForeignKey("SupervisorEmployeeId");
+
+                    b.HasOne("Domain.Shared.Entities.Bot.BotUser", "Supervisor")
+                        .WithMany()
+                        .HasForeignKey("SupervisorId");
+
+                    b.HasOne("Domain.Shared.Entities.Bot.BotUser", "UserRequest")
+                        .WithMany()
+                        .HasForeignKey("UserRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Supervisor");
+
+                    b.Navigation("UserRequest");
+                });
+
             modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.WelcomeMessage", b =>
                 {
                     b.HasOne("Zenbot.Domain.Shared.Entities.Bot.Guild", "Guild")
@@ -800,9 +912,16 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                 {
                     b.Navigation("BirthdayMessages");
 
+                    b.Navigation("BotUsers");
+
                     b.Navigation("Channels");
 
                     b.Navigation("WelcomeMessages");
+                });
+
+            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.SupervisorEmployee", b =>
+                {
+                    b.Navigation("Vocations");
                 });
 #pragma warning restore 612, 618
         }

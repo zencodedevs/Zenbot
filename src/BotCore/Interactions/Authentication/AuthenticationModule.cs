@@ -81,6 +81,12 @@ namespace BotCore.Interactions.Authentication
         {
             await DeferAsync();
 
+            var welcomeMessage = await guildService.GetWelcomeMessageAsync(Context.BotGuild.Id);
+
+            // Message text and replace the {username} with Discord username
+            var wMessage = welcomeMessage.Message.Replace("{username}", $"<@{Context.User.Id}>");
+
+
             if (!string.IsNullOrEmpty(Context.BotGuild.GreetingFilePath))
             {
                 if (!System.IO.File.Exists(Context.BotGuild.GreetingFilePath))
@@ -92,7 +98,7 @@ namespace BotCore.Interactions.Authentication
                 {
                     await Context.User.SendFileAsync(
                         filePath: Context.BotGuild.GreetingFilePath,
-                        text: string.Format(Context.BotGuild.GreetingMessage, Context.User.Username));
+                        text: wMessage);
                 }
                 catch
                 {
@@ -102,14 +108,10 @@ namespace BotCore.Interactions.Authentication
             }
 
             await (Context.User as IGuildUser).AddRoleAsync(Context.BotGuild.VerifiedRoleId);
-            var welcomeMessage = await guildService.GetWelcomeMessageAsync(Context.BotGuild.Id);
-
-            // Message text and replace the {username} with Discord username
-            var wMessage = welcomeMessage.Message.Replace("{username}", $"<@{Context.User.Id}>");
-
+            
             var embed = new EmbedBuilder()
             {
-                Title = "Happy Birthday",
+                Title = "Welcome",
                 Description = $"{wMessage} \n\n  @everyone  ",
                 Color = Color.Purple,
                 ThumbnailUrl = "https://img.icons8.com/fluency/200/confetti.png",

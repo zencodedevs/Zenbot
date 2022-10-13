@@ -8,6 +8,8 @@
     using System.Threading.Tasks;
     using System.IO;
     using Newtonsoft.Json;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
 
     /// <summary>
     /// Here we have all configuration about zenbot
@@ -15,16 +17,46 @@
     /// </summary>
     public class BotConfiguration
     {
+        private static IWebHostEnvironment _hostingEnvironment;
+
+        public static bool IsInitialized { get; private set; }
+
+        public static void Initialize(IWebHostEnvironment hostEnvironment)
+        {
+            if (IsInitialized)
+                throw new InvalidOperationException("Object already initialized");
+
+            _hostingEnvironment = hostEnvironment;
+            IsInitialized = true;
+        }
+
         //Bot Server common config
         public string BotToken { get; set; }
         public string Prefix { get; set; }
 
         // bot Scrin.io Config
         public ScrinIO ScrinIO { get; set; }
-     
-        public static BotConfiguration GetConfiguration()
+        
+       
+        // Read config data from apssetting.json in deferent environment
+        public static BotConfiguration GetConfiguration(IWebHostEnvironment hostingEnvironment)
         {
-            var data = File.ReadAllText(@"config.json");
+            _hostingEnvironment = hostingEnvironment;
+
+            string data;
+            switch (_hostingEnvironment.EnvironmentName)
+            {
+                case "Qa":
+                    data = File.ReadAllText(@"appsettings.Qa.json");
+                    break;
+                case "Production":
+                    data = File.ReadAllText(@"appsettings.Producttion.json");
+                    break;
+
+                default:
+                    data = File.ReadAllText(@"appsettings.json");
+                    break;
+            }
             var json = JsonConvert.DeserializeObject<BotConfiguration>(data);
             return json;
         }
