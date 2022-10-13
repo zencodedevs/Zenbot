@@ -22,8 +22,11 @@ namespace Domain.Shared.Entities.Bot
         public DateTime Birthday { get; set; } = DateTime.MinValue;
         public DateTime NextNotifyTIme { get; set; } = DateTime.MinValue;
 
-        // Value object Entity
-        public virtual ICollection<SupervisorEmployee> Supervisor { get; set; }
+        public int GuildId { get; set; }
+        public Guild Guild { get; set; }
+
+
+        [NotMapped]
         public virtual ICollection<Vocation> Vocations { get; set; }
 
 

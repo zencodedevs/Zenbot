@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Shared.Entities.Bot;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public ulong HrRoleId { get; set; }
 
         public virtual ICollection<GuildChannel> Channels { get; set; }
+        public virtual ICollection<BotUser> BotUsers { get; set; }
         public virtual ICollection<BirthdayMessage> BirthdayMessages { get; set; }
         public virtual ICollection<WelcomeMessage> WelcomeMessages { get; set; }
     }

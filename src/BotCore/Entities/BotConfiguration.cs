@@ -24,7 +24,7 @@
      
         public static BotConfiguration GetConfiguration()
         {
-            var data = File.ReadAllText(@"config.json");
+            var data = File.ReadAllText(@"appsettings.json");
             var json = JsonConvert.DeserializeObject<BotConfiguration>(data);
             return json;
         }

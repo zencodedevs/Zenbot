@@ -63,7 +63,7 @@ namespace Zenbot.Infrastructure.Shared.Persistence
         public DbSet<BirthdayMessage> BirthdayMessages { get; set; }
         public DbSet<WelcomeMessage> WelcomeMessages { get; set; }
         public DbSet<Vocation> Vocations { get; set; }
-        public DbSet<Supervisor> Supervisors { get; set; }
+        public DbSet<SupervisorEmployee> Supervisors { get; set; }
 
 
 

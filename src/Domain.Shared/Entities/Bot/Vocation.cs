@@ -20,9 +20,9 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         [ForeignKey("UserRequestId")]
         public virtual BotUser UserRequest { get; set; }
 
-        public int SupervisorId { get; set; }
+        public int? SupervisorId { get; set; }
 
         [ForeignKey("SupervisorId")]
-        public virtual SupervisorEmployee Supervisor { get; set; }
+        public virtual BotUser Supervisor { get; set; }
     }
 }
