@@ -77,7 +77,7 @@ namespace BotCore.Entities
         {
             if (_user is null || refresh)
             {
-                _user = await _userService.GetOrAddAsync(Interaction.User.Id);
+                _user = await _userService.GetOrAddAsync(Interaction.User.Id, BotGuild.Id);
             }
             return _user;
         }

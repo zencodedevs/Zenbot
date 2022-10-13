@@ -34,6 +34,25 @@ namespace BotCore.Interactions.Modules.Admin
         public BirthdayMessageService _birthdayMessageService { get; set; }
         public WelcomeMessageService _welcomeMessageService { get; set; }
 
+
+
+
+        // Setup the Supervisor for your this Guild
+        // we can have multiple Supervisor
+
+        [SlashCommand("choose-supervisor", "you can make a user as supervisor")]
+        public async Task supervisor([MaxLength(20)] string prefix)
+        {
+            await DeferAsync();
+            await Context._guildService.UpdateAsync(Context.BotGuild.Id, x =>
+            {
+                x.BotPrefix = prefix;
+            });
+            await FollowupAsync($"Channel prefix updated to **{prefix}**");
+        }
+
+
+
         // Replace the default bot prefix with your own profex
         [SlashCommand("prefix", "setup server prefix")]
         public async Task prefix([MaxLength(20)] string prefix)
