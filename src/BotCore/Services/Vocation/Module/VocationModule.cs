@@ -14,6 +14,7 @@ namespace BotCore.Services.VocationModule
     {
         public UserService _usersService { get; set; }
         public VocationService vocationService { get; set; }
+        public SupervisorService supervisorService { get; set; }
 
         [SlashCommand("list", "show all vocation request you did in the past")]
         [ComponentInteraction("vocation-list:*", true)]
@@ -31,7 +32,7 @@ namespace BotCore.Services.VocationModule
                 string rejected = "Rejected";
                 foreach (var vocation in vocationlist)
                 {
-                    times += $"<t:{((DateTimeOffset)vocation.StartDate).ToUnixTimeSeconds()}:R> to <t:{((DateTimeOffset)vocation.EndDate).ToUnixTimeSeconds()}:R>\n";
+                    times += $"{vocation.StartDate.ToString("dd / MM / yyyy")} `TO` {vocation.EndDate.ToString("dd / MM / yyyy")} \n";
                     isConfirmed += (vocation.IsAccept ? confirmed : rejected);
                 }
 
@@ -65,9 +66,41 @@ namespace BotCore.Services.VocationModule
         public async Task set_modal(VocationForm form)
         {
             await DeferAsync();
-            
-           
 
+            DateTime startDate = form.StartDate;
+            DateTime endDate = form.EndDate;
+
+            var requestUser = await _usersService.GetAsync(x => x.DiscordId == Context.BotUser.DiscordId);
+
+            //  amount of request for day off
+            var vocationDays = Convert.ToInt32((form.EndDate - form.StartDate).TotalDays);
+
+            // The amount of day user can request for Day Off
+            var dayOfflimitation =  await vocationService.GetVocationAmountAsync(requestUser.Id);
+            if(dayOfflimitation == 0)
+            {
+                await FollowupAsync("Sorry! You don't have a `Day Off` for this month. Please try next month");
+                return;
+            }
+            if(vocationDays > dayOfflimitation)
+            {
+                await FollowupAsync($"Sorry! You don't have {vocationDays} days `Day Off` for this month, but you can request for {dayOfflimitation} days");
+                return;
+            }
+            
+            //Get employee's supervisor
+            var spr = await supervisorService.GetSupervisor(Context.BotUser.Id);
+
+            if(spr == null)
+            {
+                await FollowupAsync($"Sorry! You don't have a `Supervisor` yet, please contact admin to assign you a `Supervisor`!");
+                return;
+            }
+
+            // insert
+             await vocationService.AddVocationAsync(Context.BotUser.Id, startDate, endDate, spr.SupervisorId);
+
+            await FollowupAsync($"Great! You've requested for {vocationDays} days vocation for this month, soon I will notify you about your supervisor's answer!");
             //var user = _usersService.UpdateAsync(Context.BotUser, x =>
             //{
             //    x.Birthday = dateTime;

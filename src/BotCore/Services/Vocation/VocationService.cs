@@ -23,12 +23,42 @@ namespace BotCore.Services
             _discord = _services.GetRequiredService<DiscordSocketClient>();
         }
 
+        SupervisorService supervisorService { get; set; }
 
-        public async Task<List<Vocation>> GetOrAddAsync(int requestId)
+        public async Task<int> GetVocationAmountAsync(int requestId)
         {
-            
-            return null;
+            var currentYear = DateTime.UtcNow.Year;
 
+            var vocations = await base.GetManyAsync(x=> x.UserRequestId 
+                          == requestId && x.IsAccept && x.StartDate.Year == currentYear);
+
+            var currentMonth = DateTime.UtcNow.Month;
+
+            int vocation = 0;
+
+            foreach (var item in vocations)
+            {
+                vocation += Convert.ToInt32((item.EndDate - item.StartDate).TotalDays);
+            }
+
+            vocation += currentMonth - vocation;
+          
+            return vocation;
+        }
+
+        public async Task AddVocationAsync(int requestId, DateTime startDate, DateTime endDate, int supervisorId)
+        {
+                var vocation = new Vocation
+                {
+                    RequestDate = DateTime.UtcNow,
+                    UserRequestId = requestId,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    SupervisorId = supervisorId,
+                    IsAccept = false
+                };
+
+                await base.InsertAsync(vocation);
         }
     }
 }

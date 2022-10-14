@@ -40,5 +40,10 @@ namespace BotCore.Services
             return null;
 
         }
+
+        public async Task<SupervisorEmployee> GetSupervisor(int requestId)
+        {
+            return await base.GetAsync(x => x.EmployeeId == requestId);
+        }
     }
 }
