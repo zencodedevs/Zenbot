@@ -41,33 +41,58 @@ namespace BotCore.Interactions.Modules.Admin
         // Setup the Supervisor for your this Guild
         // we can have multiple Supervisor
 
-        [SlashCommand("choose-supervisor", "you can make a user as supervisor")]
-        public async Task supervisor()
+        [SlashCommand("select-supervisor", "Choose a user to be supervisor")]
+        public async Task supervisor(IUser user)
+        {
+            await DeferAsync();
+           
+            var supervisor = _userService.UpdateAsync(Context.BotUser, x =>
+            {
+                x.IsSupervisor = true;
+            });
+
+            await FollowupAsync($"Great! you have made `{user.Username}` as a `Supervisor`");
+
+            //var users = await _userService.GetUsersOfGuild(Context.BotGuild.Id);
+
+            //var menu = new SelectMenuBuilder() 
+            //{
+            //    CustomId = "userMenu",
+            //    Placeholder = "Select a user"
+            //};
+            //foreach (var item in users)
+            //{
+            //    menu.AddOption(item.Username, (item.DiscordId).ToString());
+            //}
+
+
+
+            //var builder = new ComponentBuilder()
+            //    .WithSelectMenu(menu);
+
+            //await ReplyAsync("Whos really lying?", components: builder.Build());
+        }
+
+
+
+        // Replace the default bot prefix with your own profex
+        [SlashCommand("list-supervisor", "show list of all supervisor in this servisor")]
+        public async Task prefix()
         {
             await DeferAsync();
             var users = await _userService.GetUsersOfGuild(Context.BotGuild.Id);
 
-            var menu = new SelectMenuBuilder() 
-            {
-                CustomId = "userMenu",
-                Placeholder = "Select a user"
-            };
+            var embedBuiler = new EmbedBuilder()
+            .WithTitle("List of all Supervisors in this Server")
+            .WithColor(Color.Purple)
+            .WithCurrentTimestamp();
+
             foreach (var item in users)
             {
-                menu.AddOption(item.Username, (item.DiscordId).ToString());
+                embedBuiler.AddField("Name", item.Username, true);
             }
 
-           
-
-            var builder = new ComponentBuilder()
-                .WithSelectMenu(menu);
-
-            await ReplyAsync("Whos really lying?", components: builder.Build());
-            //await Context._guildService.UpdateAsync(Context.BotGuild.Id, x =>
-            //{
-            //    x.BotPrefix = prefix;
-            //});
-            await FollowupAsync($"Channel prefix updated to *");
+            await FollowupAsync(embed: embedBuiler.Build(), ephemeral: true);
         }
 
 

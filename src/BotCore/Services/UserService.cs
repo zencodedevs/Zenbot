@@ -52,7 +52,7 @@ namespace BotCore.Services
 
         public async Task<List<BotUser>> GetUsersOfGuild(int guildId)
         {
-            return await base.GetManyAsync(a => a.GuildId == guildId);
+            return await base.GetManyAsync(a => a.GuildId == guildId && a.IsSupervisor);
         }
 
         public async Task<BotUser> GetOrAddAsync(ulong Id, int guildId)
