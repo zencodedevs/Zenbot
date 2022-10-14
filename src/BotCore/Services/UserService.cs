@@ -50,7 +50,17 @@ namespace BotCore.Services
             return await base.GetManyAsync(a => a.Birthday != DateTime.MinValue);
         }
 
-        public async Task<BotUser> GetOrAddAsync(ulong Id, int guildId)
+        public async Task<List<BotUser>> GetUsersOfGuild(int guildId)
+        {
+            return await base.GetManyAsync(a => a.GuildId == guildId && a.IsSupervisor);
+        }
+
+        public async Task<BotUser> GetUserByDiscordId(ulong discordId)
+        {
+            return await base.GetAsync(a => a.DiscordId == discordId);
+        }
+
+        public async Task<BotUser> GetOrAddAsync(ulong Id, string username, int guildId)
         {
             var user = await base.GetAsync(a => a.DiscordId == Id);
             if (user == null)
@@ -58,7 +68,8 @@ namespace BotCore.Services
                 user = new BotUser()
                 {
                     DiscordId = Id,
-                    GuildId = guildId
+                    GuildId = guildId,
+                    Username = username
                 };
                 user = await base.InsertAsync(user);
             }
@@ -72,6 +83,12 @@ namespace BotCore.Services
         public async Task<BotUser> GetUserByBitbucketId(string bitbucketId)
         {
             return await base.GetAsync(x => x.BitBucketAccountId == bitbucketId);
+        }
+
+
+        public async Task<BotUser> GetUserById(int Id)
+        {
+            return await base.GetAsync(x => x.Id == Id);
         }
     }
 }

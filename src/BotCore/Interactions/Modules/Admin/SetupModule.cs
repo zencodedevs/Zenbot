@@ -33,22 +33,80 @@ namespace BotCore.Interactions.Modules.Admin
         public ChannelService _channelService { get; set; }
         public BirthdayMessageService _birthdayMessageService { get; set; }
         public WelcomeMessageService _welcomeMessageService { get; set; }
+        public UserService _userService { get; set; }
+        public SupervisorService _supervisorService { get; set; }
 
 
 
 
-        // Setup the Supervisor for your this Guild
+        // Setup the Supervisor for this Guild
         // we can have multiple Supervisor
 
-        [SlashCommand("choose-supervisor", "you can make a user as supervisor")]
-        public async Task supervisor([MaxLength(20)] string prefix)
+        [SlashCommand("select-supervisor", "Choose a user to be supervisor")]
+        public async Task supervisor(IUser user)
         {
             await DeferAsync();
-            await Context._guildService.UpdateAsync(Context.BotGuild.Id, x =>
+           
+            var supervisor = _userService.UpdateAsync(Context.BotUser, x =>
             {
-                x.BotPrefix = prefix;
+                x.IsSupervisor = true;
             });
-            await FollowupAsync($"Channel prefix updated to **{prefix}**");
+
+            await FollowupAsync($"Great! you have made `{user.Username}` as a `Supervisor`");
+
+        }
+
+
+
+        // Command to show list of all supervisor of this Guild
+        [SlashCommand("list-supervisor", "show list of all supervisor in this servisor")]
+        public async Task prefix()
+        {
+            await DeferAsync();
+            var users = await _userService.GetUsersOfGuild(Context.BotGuild.Id);
+
+            var embedBuiler = new EmbedBuilder()
+            .WithTitle("List of all Supervisors in this Server")
+            .WithColor(Color.Purple)
+            .WithCurrentTimestamp();
+
+            foreach (var item in users)
+            {
+                embedBuiler.AddField("Name", item.Username, true);
+            }
+
+            await FollowupAsync(embed: embedBuiler.Build(), ephemeral: true);
+        }
+
+
+        // Replace the default bot prefix with your own profex
+        [SlashCommand("assign-supervisor", "You can assign supervisor to selected user")]
+        public async Task prefix(IUser supervisor, IUser user)
+        {
+            await DeferAsync();
+
+            var spr = await _userService.GetUserByDiscordId(supervisor.Id);
+            if (!spr.IsSupervisor)
+            {
+                await FollowupAsync($"`{spr.Username}` is not Supervisor. make sure first run `setup select-supervisor` command and try again");
+                return;
+            }
+            var emp = await _userService.GetUserByDiscordId(user.Id);
+
+            if(spr != null && emp != null)
+            {
+              var insert =  await _supervisorService.GetOrAddAsync(spr.Id, emp.Id);
+                if(insert == null)
+                {
+                    await FollowupAsync($"You've already selected `{spr.Username}` as Supervisor for `{emp.Username}`");
+                    return;
+                }
+
+                await FollowupAsync($"Great! You've selected `{spr.Username}` as supervisor for `{emp.Username}`.", null, false,ephemeral:true);
+                return;
+            }
+
+            await FollowupAsync("Supervisor or user is not registerd in database!");
         }
 
 

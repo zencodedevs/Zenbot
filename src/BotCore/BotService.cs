@@ -48,6 +48,8 @@ namespace BotCore
                 .AddSingleton<ChannelService>()
                 .AddSingleton<BirthdayMessageService>()
                 .AddSingleton<WelcomeMessageService>()
+                .AddSingleton<SupervisorService>()
+                .AddSingleton<VocationService>()
 
                 .AddSingleton<JiraService>()
                 .AddSingleton<BitbucketService>()
