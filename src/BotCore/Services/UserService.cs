@@ -84,5 +84,11 @@ namespace BotCore.Services
         {
             return await base.GetAsync(x => x.BitBucketAccountId == bitbucketId);
         }
+
+
+        public async Task<BotUser> GetUserById(int Id)
+        {
+            return await base.GetAsync(x => x.Id == Id);
+        }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using BotCore.Entities;
+using BotCore.Extenstions;
+using BotCore.Interactions.Preconditions;
 using BotCore.Services.VocationForms;
 using Discord;
 using Discord.Interactions;
+using Discord.WebSocket;
 using Domain.Shared.Entities.Bot;
 using System;
 using System.Linq;
@@ -100,16 +103,64 @@ namespace BotCore.Services.VocationModule
             // insert
              await vocationService.AddVocationAsync(Context.BotUser.Id, startDate, endDate, spr.SupervisorId);
 
-            await FollowupAsync($"Great! You've requested for {vocationDays} days vocation for this month, soon I will notify you about your supervisor's answer!");
-            //var user = _usersService.UpdateAsync(Context.BotUser, x =>
-            //{
-            //    x.Birthday = dateTime;
-            //    x.Username = Context.User.Username;
-            //    x.GuildId = Context.BotGuild.Id;
-            //});
+            await FollowupAsync($"Great! You've requested for **{vocationDays}** days vocation for this month, soon I will notify you about your supervisor's answer!");
 
-            //await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>", ephemeral: true);
-           
+            var embed = new EmbedBuilder()
+            {
+                Title = "Vocation Request",
+                Description = $"**{Context.BotUser.Username}** wants to a have day off for `{vocationDays}` days \n" +
+              $"Please `Confirm` or `Reject` this request so we can notify him/her about your  decision \n" +
+              $"Request Date : {DateTime.UtcNow.ToString("dddd, dd MMMM yyyy")}"
+            }.Build();
+
+            var component = new ComponentBuilder()
+                .WithButton("Confrim", $"button-vocation-request-confirm:{Context.User.Id}", ButtonStyle.Success, new Emoji("✔"), null, false, 0)
+                .WithButton("Reject", $"button-vocation-request-reject:{Context.User.Id}", ButtonStyle.Danger, new Emoji("❌"), null, false, 0)
+                .Build();
+
+            var message = await this.supervisorService.SendMessageToUserAsync(spr.SupervisorId, "", false, embed: embed, components: component);
+
         }
+
+
+
+        // Reject the vocation Request
+        [ComponentInteraction("button-vocation-request-reject:*", true)]
+        [CheckUser(CheckUser.CheckUserType.CustomId)]
+        public async Task cancel(ulong id)
+        {
+            await DeferAsync();
+           
+                var embed = new EmbedBuilder()
+                {
+                    Title = "Request Rejected",
+                    Description = "You've rejected the request for vocation. I just notified him/her about your decision!",
+                    ThumbnailUrl = "https://img.icons8.com/fluency/480/delete-sign.png",
+                    Color = 14946816,
+                }.Build();
+
+                await FollowupAsync(null, embed: embed);
+            
+        }
+
+        // Confirm the vocation Request
+        [ComponentInteraction("button-vocation-request-confirm:*", true)]
+        [CheckUser(CheckUser.CheckUserType.CustomId)]
+        public async Task confirm(ulong id)
+        {
+            await DeferAsync();
+
+            var embed = new EmbedBuilder()
+            {
+                Title = "Request Confirmed!",
+                Description = "You've confirmed the request for vocation. I just notified him/her about your decision!",
+                ThumbnailUrl = "https://img.icons8.com/fluency/200/verified-account.png",
+                Color = 1364764
+            }.Build();
+
+            await FollowupAsync(null, embed: embed);
+
+        }
+
     }
 }
