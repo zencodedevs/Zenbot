@@ -55,6 +55,11 @@ namespace BotCore.Services
             return await base.GetManyAsync(a => a.GuildId == guildId && a.IsSupervisor);
         }
 
+        public async Task<BotUser> GetUserByDiscordId(ulong discordId)
+        {
+            return await base.GetAsync(a => a.DiscordId == discordId);
+        }
+
         public async Task<BotUser> GetOrAddAsync(ulong Id, int guildId)
         {
             var user = await base.GetAsync(a => a.DiscordId == Id);

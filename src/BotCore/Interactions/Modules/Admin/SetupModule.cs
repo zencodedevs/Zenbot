@@ -2,6 +2,7 @@
 using BotCore.Extenstions;
 using BotCore.Services;
 using BotCore.Services.Birthday.Forms;
+using BotCore.Services.Vocation;
 using BotCore.WelcomeMessageFormModal;
 using Discord;
 using Discord.Interactions;
@@ -34,11 +35,12 @@ namespace BotCore.Interactions.Modules.Admin
         public BirthdayMessageService _birthdayMessageService { get; set; }
         public WelcomeMessageService _welcomeMessageService { get; set; }
         public UserService _userService { get; set; }
+        public SupervisorService _supervisorService { get; set; }
 
 
 
 
-        // Setup the Supervisor for your this Guild
+        // Setup the Supervisor for this Guild
         // we can have multiple Supervisor
 
         [SlashCommand("select-supervisor", "Choose a user to be supervisor")]
@@ -53,29 +55,11 @@ namespace BotCore.Interactions.Modules.Admin
 
             await FollowupAsync($"Great! you have made `{user.Username}` as a `Supervisor`");
 
-            //var users = await _userService.GetUsersOfGuild(Context.BotGuild.Id);
-
-            //var menu = new SelectMenuBuilder() 
-            //{
-            //    CustomId = "userMenu",
-            //    Placeholder = "Select a user"
-            //};
-            //foreach (var item in users)
-            //{
-            //    menu.AddOption(item.Username, (item.DiscordId).ToString());
-            //}
-
-
-
-            //var builder = new ComponentBuilder()
-            //    .WithSelectMenu(menu);
-
-            //await ReplyAsync("Whos really lying?", components: builder.Build());
         }
 
 
 
-        // Replace the default bot prefix with your own profex
+        // Command to show list of all supervisor of this Guild
         [SlashCommand("list-supervisor", "show list of all supervisor in this servisor")]
         public async Task prefix()
         {
@@ -93,6 +77,37 @@ namespace BotCore.Interactions.Modules.Admin
             }
 
             await FollowupAsync(embed: embedBuiler.Build(), ephemeral: true);
+        }
+
+
+        // Replace the default bot prefix with your own profex
+        [SlashCommand("assign-supervisor", "You can assign supervisor to selected user")]
+        public async Task prefix(IUser supervisor, IUser user)
+        {
+            await DeferAsync();
+
+            var spr = await _userService.GetUserByDiscordId(supervisor.Id);
+            if (!spr.IsSupervisor)
+            {
+                await FollowupAsync($"`{spr.Username}` is not Supervisor. make sure first run `setup select-supervisor` command and try again");
+                return;
+            }
+            var emp = await _userService.GetUserByDiscordId(user.Id);
+
+            if(spr != null && emp != null)
+            {
+              var insert =  await _supervisorService.GetOrAddAsync(spr.Id, emp.Id);
+                if(insert == null)
+                {
+                    await FollowupAsync($"You've already selected `{spr.Username}` as Supervisor for `{emp.Username}`");
+                    return;
+                }
+
+                await FollowupAsync($"Great! You've selected `{spr.Username}` as supervisor for `{emp.Username}`.", null, false,ephemeral:true);
+                return;
+            }
+
+            await FollowupAsync("Supervisor or user is not registerd in database!");
         }
 
 
