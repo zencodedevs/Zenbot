@@ -12,7 +12,8 @@ namespace Zenbot.Domain.Shared.Entities.Bot
     public class Vocation : Entity
     {
         public DateTime RequestDate { get; set; }
-        public DateTime ForDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public bool IsAccept { get; set; }
 
         public int UserRequestId { get; set; }

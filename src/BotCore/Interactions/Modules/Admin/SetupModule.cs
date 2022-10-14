@@ -33,6 +33,7 @@ namespace BotCore.Interactions.Modules.Admin
         public ChannelService _channelService { get; set; }
         public BirthdayMessageService _birthdayMessageService { get; set; }
         public WelcomeMessageService _welcomeMessageService { get; set; }
+        public UserService _userService { get; set; }
 
 
 
@@ -41,14 +42,32 @@ namespace BotCore.Interactions.Modules.Admin
         // we can have multiple Supervisor
 
         [SlashCommand("choose-supervisor", "you can make a user as supervisor")]
-        public async Task supervisor([MaxLength(20)] string prefix)
+        public async Task supervisor()
         {
             await DeferAsync();
-            await Context._guildService.UpdateAsync(Context.BotGuild.Id, x =>
+            var users = await _userService.GetUsersOfGuild(Context.BotGuild.Id);
+
+            var menu = new SelectMenuBuilder() 
             {
-                x.BotPrefix = prefix;
-            });
-            await FollowupAsync($"Channel prefix updated to **{prefix}**");
+                CustomId = "userMenu",
+                Placeholder = "Select a user"
+            };
+            foreach (var item in users)
+            {
+                menu.AddOption(item.Username, (item.DiscordId).ToString());
+            }
+
+           
+
+            var builder = new ComponentBuilder()
+                .WithSelectMenu(menu);
+
+            await ReplyAsync("Whos really lying?", components: builder.Build());
+            //await Context._guildService.UpdateAsync(Context.BotGuild.Id, x =>
+            //{
+            //    x.BotPrefix = prefix;
+            //});
+            await FollowupAsync($"Channel prefix updated to *");
         }
 
 

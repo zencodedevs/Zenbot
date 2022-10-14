@@ -50,6 +50,11 @@ namespace BotCore.Services
             return await base.GetManyAsync(a => a.Birthday != DateTime.MinValue);
         }
 
+        public async Task<List<BotUser>> GetUsersOfGuild(int guildId)
+        {
+            return await base.GetManyAsync(a => a.GuildId == guildId);
+        }
+
         public async Task<BotUser> GetOrAddAsync(ulong Id, int guildId)
         {
             var user = await base.GetAsync(a => a.DiscordId == Id);
