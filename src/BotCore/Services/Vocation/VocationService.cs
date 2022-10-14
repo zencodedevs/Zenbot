@@ -24,7 +24,7 @@ namespace BotCore.Services
         }
 
 
-        public async Task<Vocation> GetOrAddAsync(int supervisor, int user)
+        public async Task<List<Vocation>> GetOrAddAsync(int requestId)
         {
             
             return null;

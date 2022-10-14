@@ -2,7 +2,6 @@
 using BotCore.Extenstions;
 using BotCore.Services;
 using BotCore.Services.Birthday.Forms;
-using BotCore.Services.Vocation;
 using BotCore.WelcomeMessageFormModal;
 using Discord;
 using Discord.Interactions;
