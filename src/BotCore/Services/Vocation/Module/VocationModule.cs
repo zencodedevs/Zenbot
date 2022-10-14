@@ -1,11 +1,10 @@
-﻿
-using BotCore.Entities;
+﻿using BotCore.Entities;
+using BotCore.Services.VocationForms;
 using Discord;
 using Discord.Interactions;
+using Domain.Shared.Entities.Bot;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BotCore.Services.VocationModule
@@ -51,6 +50,33 @@ namespace BotCore.Services.VocationModule
                 return;
             }
             await FollowupAsync("You didn't request for a day off yet!.");
+        }
+
+
+
+        [SlashCommand("request", "request for a day off")]
+        public async Task request()
+        {
+            await RespondWithModalAsync<VocationForm>($"vocation-request");
+            
+        }
+
+        [ModalInteraction("vocation-request", true)]
+        public async Task set_modal(VocationForm form)
+        {
+            await DeferAsync();
+            
+           
+
+            //var user = _usersService.UpdateAsync(Context.BotUser, x =>
+            //{
+            //    x.Birthday = dateTime;
+            //    x.Username = Context.User.Username;
+            //    x.GuildId = Context.BotGuild.Id;
+            //});
+
+            //await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>", ephemeral: true);
+           
         }
     }
 }

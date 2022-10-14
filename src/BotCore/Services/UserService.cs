@@ -60,7 +60,7 @@ namespace BotCore.Services
             return await base.GetAsync(a => a.DiscordId == discordId);
         }
 
-        public async Task<BotUser> GetOrAddAsync(ulong Id, int guildId)
+        public async Task<BotUser> GetOrAddAsync(ulong Id, string username, int guildId)
         {
             var user = await base.GetAsync(a => a.DiscordId == Id);
             if (user == null)
@@ -68,7 +68,8 @@ namespace BotCore.Services
                 user = new BotUser()
                 {
                     DiscordId = Id,
-                    GuildId = guildId
+                    GuildId = guildId,
+                    Username = username
                 };
                 user = await base.InsertAsync(user);
             }
