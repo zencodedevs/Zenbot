@@ -4,4 +4,4 @@ BuildOutput=dist\\zenbot
 WebSiteName=bot.zencode.io
 DestinationRoot=C:\\inetpub
 Bindings=https://bot.zencode.io:443/
-NotifyMail = hussaini@zencode.io, andro.lomtadze@altcom.io
+NotifyMail = hussaini@zencode.io, andro.lomtadze@altcom.io, reza.saeidinejad@zencode.io, valakhosravi0@gmail.com 
