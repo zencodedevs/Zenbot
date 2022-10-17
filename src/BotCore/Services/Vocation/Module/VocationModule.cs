@@ -146,6 +146,12 @@ namespace BotCore.Services.VocationModule
                 Color = 14946816,
             }.Build();
 
+            // Update the database for vocation rejected 
+            var user = vocationService.UpdateAsync(vocationId, x =>
+            {
+                x.IsAccept = false;
+            });
+
             // Notify the user for rejection from supervisor
             await this.supervisorService.SendMessageToUserAsync(id, "", false, embed: emp);
 
@@ -175,6 +181,12 @@ namespace BotCore.Services.VocationModule
                 ThumbnailUrl = "https://img.icons8.com/fluency/200/verified-account.png",
                 Color = 1364764
             }.Build();
+
+            // Update the database for vocation confirmed 
+            var user = vocationService.UpdateAsync(vocationId, x =>
+            {
+                x.IsAccept = true;
+            });
 
             // Notify the user for rejection from supervisor
             await this.supervisorService.SendMessageToUserAsync(id, "", false, embed: emp);
