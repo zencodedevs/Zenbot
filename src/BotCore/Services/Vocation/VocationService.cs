@@ -41,7 +41,7 @@ namespace BotCore.Services
                 vocation += Convert.ToInt32((item.EndDate - item.StartDate).TotalDays);
             }
 
-            vocation += currentMonth - vocation;
+            vocation = currentMonth - vocation;
           
             return vocation;
         }

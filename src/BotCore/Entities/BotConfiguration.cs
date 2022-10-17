@@ -52,6 +52,9 @@
                 case "Production":
                     data = File.ReadAllText(@"appsettings.Producttion.json");
                     break;
+                case "Development":
+                    data = File.ReadAllText(@"appsettings.Development.json");
+                    break;
 
                 default:
                     data = File.ReadAllText(@"appsettings.json");
