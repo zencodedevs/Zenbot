@@ -42,12 +42,12 @@ namespace BotCore.Handlers
                 return;
 
 
-            //var argPos = 0;
-            //if (!message.HasStringPrefix(_botConfiguration.Prefix, ref argPos))
-            //    return;
+            var argPos = 0;
+            if (!message.HasStringPrefix(_botConfiguration.Prefix, ref argPos))
+                return;
 
-            //var ctx = new SocketCommandContext(_discord, message);
-            //var result = await _commands.ExecuteAsync(ctx, argPos, services);
+            var ctx = new SocketCommandContext(_client, message);
+            var result = await _commands.ExecuteAsync(ctx, argPos, services);
         }
         private async Task _commands_CommandExecuted(Discord.Optional<CommandInfo> info, ICommandContext context, IResult result)
         {

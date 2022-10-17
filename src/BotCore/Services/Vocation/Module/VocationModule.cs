@@ -36,7 +36,7 @@ namespace BotCore.Services.VocationModule
                 foreach (var vocation in vocationlist)
                 {
                     times += $"{vocation.StartDate.ToString("dd / MM / yyyy")} `TO` {vocation.EndDate.ToString("dd / MM / yyyy")} \n";
-                    isConfirmed += (vocation.IsAccept ? confirmed : rejected);
+                    isConfirmed += (vocation.IsAccept ? confirmed : rejected) + "\n";
                 }
 
                 var embed = new EmbedBuilder()
