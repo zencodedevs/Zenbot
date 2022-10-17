@@ -287,6 +287,10 @@ namespace BotCore.Interactions.Modules.Admin
                 $"10. `/admin role add/remove` Admin can Assign or remove roles to/from users.\n" +
                 $"11. `/hr role add/remove` HR can assign or remove roles to/from users.\n" +
                 $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
+                $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
+                $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
+                $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
+                $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
                 $"13. `/birthday add` Users can add their birthday date, the bot will then announce in logger channel.\n" +
                 $"14. `/external account` Users can add their external account Id (jira, bitbucket).\n" +
                 $"15. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
