@@ -101,7 +101,7 @@ namespace BotCore.Services.VocationModule
             }
 
             // insert
-             await vocationService.AddVocationAsync(Context.BotUser.Id, startDate, endDate, spr.SupervisorId);
+           var vocationId = await vocationService.AddVocationAsync(Context.BotUser.Id, startDate, endDate, spr.SupervisorId);
 
             await FollowupAsync($"Great! You've requested for **{vocationDays}** days vocation for this month, soon I will notify you about your supervisor's answer!");
 
@@ -114,8 +114,8 @@ namespace BotCore.Services.VocationModule
             }.Build();
 
             var component = new ComponentBuilder()
-                .WithButton("Confrim", $"button-vocation-request-confirm:{requestUser.Id}", ButtonStyle.Success, new Emoji("✔"), null, false, 0)
-                .WithButton("Reject", $"button-vocation-request-reject:{requestUser.Id}", ButtonStyle.Danger, new Emoji("❌"), null, false, 0)
+                .WithButton("Confrim", $"button-vocation-request-confirm:{requestUser.Id}:{vocationId}", ButtonStyle.Success, new Emoji("✔"), null, false, 0)
+                .WithButton("Reject", $"button-vocation-request-reject:{requestUser.Id}:{vocationId}", ButtonStyle.Danger, new Emoji("❌"), null, false, 0)
                 .Build();
 
             var message = await this.supervisorService.SendMessageToUserAsync(spr.SupervisorId, "", false, embed: embed, components: component);
@@ -125,15 +125,15 @@ namespace BotCore.Services.VocationModule
 
 
         // Reject the vocation Request
-        [ComponentInteraction("button-vocation-request-reject:*", true)]
-        public async Task cancel(int id)
+        [ComponentInteraction("button-vocation-request-reject:*:*", true)]
+        public async Task cancel(int id, int vocationId)
         {
             await DeferAsync();
            
                 var spr = new EmbedBuilder()
                 {
                     Title = "Request Rejected",
-                    Description = "You've rejected the request for vocation. I just notified (him/her) about your decision!",
+                    Description = $"You've rejected the request for vocation. I just notified (him/her) about your decision! \n {vocationId} ",
                     ThumbnailUrl = "https://img.icons8.com/fluency/480/delete-sign.png",
                     Color = 14946816,
                 }.Build();
@@ -141,7 +141,7 @@ namespace BotCore.Services.VocationModule
             var emp = new EmbedBuilder()
             {
                 Title = "Request Rejected",
-                Description = "Your request for vocation has rejected due to your supervisor decision! Please contact (him/her) for more info",
+                Description = $"Your request for vocation has rejected due to your supervisor decision! Please contact (him/her) for more info ",
                 ThumbnailUrl = "https://img.icons8.com/fluency/480/delete-sign.png",
                 Color = 14946816,
             }.Build();
@@ -154,15 +154,15 @@ namespace BotCore.Services.VocationModule
         }
 
         // Confirm the vocation Request
-        [ComponentInteraction("button-vocation-request-confirm:*", true)]
-        public async Task confirm(int id)
+        [ComponentInteraction("button-vocation-request-confirm:*:*", true)]
+        public async Task confirm(int id, int vocationId)
         {
             await DeferAsync();
 
             var embed = new EmbedBuilder()
             {
                 Title = "Request Confirmed!",
-                Description = "You've confirmed the request for vocation. I just notified (him/her) about your decision!",
+                Description = $"You've confirmed the request for vocation. I just notified (him/her) about your decision! {vocationId}",
                 ThumbnailUrl = "https://img.icons8.com/fluency/200/verified-account.png",
                 Color = 1364764
             }.Build();
