@@ -114,8 +114,8 @@ namespace BotCore.Services.VocationModule
             }.Build();
 
             var component = new ComponentBuilder()
-                .WithButton("Confrim", $"button-vocation-request-confirm:{Context.User.Id}", ButtonStyle.Success, new Emoji("✔"), null, false, 0)
-                .WithButton("Reject", $"button-vocation-request-reject:{Context.User.Id}", ButtonStyle.Danger, new Emoji("❌"), null, false, 0)
+                .WithButton("Confrim", $"button-vocation-request-confirm:{requestUser.Id}", ButtonStyle.Success, new Emoji("✔"), null, false, 0)
+                .WithButton("Reject", $"button-vocation-request-reject:{requestUser.Id}", ButtonStyle.Danger, new Emoji("❌"), null, false, 0)
                 .Build();
 
             var message = await this.supervisorService.SendMessageToUserAsync(spr.SupervisorId, "", false, embed: embed, components: component);
@@ -126,37 +126,58 @@ namespace BotCore.Services.VocationModule
 
         // Reject the vocation Request
         [ComponentInteraction("button-vocation-request-reject:*", true)]
-        [CheckUser(CheckUser.CheckUserType.CustomId)]
-        public async Task cancel(ulong id)
+        public async Task cancel(int id)
         {
             await DeferAsync();
            
-                var embed = new EmbedBuilder()
+                var spr = new EmbedBuilder()
                 {
                     Title = "Request Rejected",
-                    Description = "You've rejected the request for vocation. I just notified him/her about your decision!",
+                    Description = "You've rejected the request for vocation. I just notified (him/her) about your decision!",
                     ThumbnailUrl = "https://img.icons8.com/fluency/480/delete-sign.png",
                     Color = 14946816,
                 }.Build();
 
-                await FollowupAsync(null, embed: embed);
+            var emp = new EmbedBuilder()
+            {
+                Title = "Request Rejected",
+                Description = "Your request for vocation has rejected due to your supervisor decision! Please contact (him/her) for more info",
+                ThumbnailUrl = "https://img.icons8.com/fluency/480/delete-sign.png",
+                Color = 14946816,
+            }.Build();
+
+            // Notify the user for rejection from supervisor
+            await this.supervisorService.SendMessageToUserAsync(id, "", false, embed: emp);
+
+            await FollowupAsync(null, embed: spr);
             
         }
 
         // Confirm the vocation Request
         [ComponentInteraction("button-vocation-request-confirm:*", true)]
-        [CheckUser(CheckUser.CheckUserType.CustomId)]
-        public async Task confirm(ulong id)
+        public async Task confirm(int id)
         {
             await DeferAsync();
 
             var embed = new EmbedBuilder()
             {
                 Title = "Request Confirmed!",
-                Description = "You've confirmed the request for vocation. I just notified him/her about your decision!",
+                Description = "You've confirmed the request for vocation. I just notified (him/her) about your decision!",
                 ThumbnailUrl = "https://img.icons8.com/fluency/200/verified-account.png",
                 Color = 1364764
             }.Build();
+
+
+            var emp = new EmbedBuilder()
+            {
+                Title = "Request Confirmed!",
+                Description = "**Good News!**  Your request for vocation confirmed 😀 \n  Enjoy your vocation. Good luck!",
+                ThumbnailUrl = "https://img.icons8.com/fluency/200/verified-account.png",
+                Color = 1364764
+            }.Build();
+
+            // Notify the user for rejection from supervisor
+            await this.supervisorService.SendMessageToUserAsync(id, "", false, embed: emp);
 
             await FollowupAsync(null, embed: embed);
 

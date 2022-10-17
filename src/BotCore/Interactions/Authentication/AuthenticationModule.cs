@@ -111,7 +111,7 @@ namespace BotCore.Interactions.Authentication
             
             var embed = new EmbedBuilder()
             {
-                Title = "Welcome",
+                Title = $"{Context.User.Username} joined",
                 Description = $"{wMessage} \n\n  @everyone  ",
                 Color = Color.Purple,
                 ThumbnailUrl = "https://img.icons8.com/fluency/200/confetti.png",
