@@ -16,5 +16,15 @@ namespace BotCore.Commands.Modules
         {
             await ReplyAsync($"Pong ! ` Current Latency {Context.Client.Latency}`");
         }
+
+        [Command("help")]
+        public async Task help()
+        {
+            await ReplyAsync($"Need help? please consider the following steps! \n " +
+                $"`birthday-add` Run this command so you will be registerd in this server and also bot will notify your birthday on server \n" +
+                $"`external account` Run this command and register your external account Id like `Jira and Bitbucket` you'll recieve message whenever somone assigns you task you make you a reviewer on a pull request\n" +
+                $"`vocation request` Run this command to request for vocation. You'll recieve message whenever your supervisor accept or decline \n" +
+                $"`vocation list` You will get all vocation request history you've done so far");
+        }
     }
 }

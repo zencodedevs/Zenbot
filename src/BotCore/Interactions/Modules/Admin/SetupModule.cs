@@ -137,6 +137,19 @@ namespace BotCore.Interactions.Modules.Admin
         }
 
 
+        // setup the scrin io token for this server
+        [SlashCommand("scrin-io-token", "setup scrin io tokne bot will use that to invite users")]
+        public async Task scrin_io(string token)
+        {
+            await DeferAsync();
+            await Context._guildService.UpdateAsync(Context.BotGuild.Id, x =>
+            {
+                x.ScrinIOToken = token;
+            });
+            await FollowupAsync($"The setup for scrin io token done succesfuly.");
+        }
+
+
         // Select or change the Guild logger channel
         [SlashCommand("logger-channel", "setup logger channel")]
         public async Task logger_channel(ITextChannel channel)
@@ -287,16 +300,18 @@ namespace BotCore.Interactions.Modules.Admin
                 $"10. `/admin role add/remove` Admin can Assign or remove roles to/from users.\n" +
                 $"11. `/hr role add/remove` HR can assign or remove roles to/from users.\n" +
                 $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
-                $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
-                $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
-                $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
-                $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
                 $"13. `/birthday add` Users can add their birthday date, the bot will then announce in logger channel.\n" +
                 $"14. `/external account` Users can add their external account Id (jira, bitbucket).\n" +
-                $"15. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
+                $"14. `/setup select-supervisor` You can choose a user and register that as supervisor.\n" +
+                $"14. `/setup list-supervisor` You will get all of your supervisors list you registerd in this server\n" +
+                $"14. `/setup assign-supervisor` Here you can assign a user as supervisor for other user.\n" +
+                $"15. `/setup scrionio-token` you can run register your scrin io for this server and user `scrin invite` command to invite people.\n" +
+                $"16. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
                 ).Build();
+
             await RespondAsync(embed: embed);
         }
+
 
         // The command that Admin make it once and then all new user will use it to enter thier password
         // for authentication

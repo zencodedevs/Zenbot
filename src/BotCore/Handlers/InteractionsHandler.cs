@@ -41,9 +41,9 @@ namespace BotCore.Handlers
             _discord.Ready += _client_Ready;
             async Task _client_Ready()
             {
-                if (BotService.IsDebug())
-                    await _interactions.RegisterCommandsToGuildAsync(1015972293773643877, true);
-                else
+                //if (BotService.IsDebug())
+                //    await _interactions.RegisterCommandsToGuildAsync(1018765173969932319, true);
+                //else
                     await _interactions.RegisterCommandsGloballyAsync(true);
             }
 
