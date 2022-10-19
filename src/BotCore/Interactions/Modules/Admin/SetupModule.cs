@@ -43,11 +43,11 @@ namespace BotCore.Interactions.Modules.Admin
         // we can have multiple Supervisor
 
         [SlashCommand("select-supervisor", "Choose a user to be supervisor")]
-        public async Task supervisor(IUser user)
+        public async Task supervisor(IUser supervisor)
         {
             await DeferAsync();
-           
-            var supervisor = _userService.UpdateAsync(Context.BotUser, x =>
+            var user = await _userService.GetUserByDiscordId(supervisor.Id);
+            var newSpr = _userService.UpdateAsync(user, x =>
             {
                 x.IsSupervisor = true;
             });
