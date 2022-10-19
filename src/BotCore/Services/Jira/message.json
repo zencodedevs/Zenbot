@@ -115,7 +115,7 @@
       },
       "description": "string",
       "timetracking": {},
-      "summary": "string",
+      "summary": "about zenbot",
       "creator": {
         "self": "string",
         "accountId": "string",
@@ -139,7 +139,7 @@
           "_16x16": "string",
           "_32x32": "string"
         },
-        "displayName": "string",
+        "displayName": "Hamid Homan",
         "active": true,
         "timeZone": "string",
         "accountType": "string"
