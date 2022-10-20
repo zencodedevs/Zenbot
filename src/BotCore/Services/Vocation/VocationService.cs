@@ -23,7 +23,7 @@ namespace BotCore.Services
             _discord = _services.GetRequiredService<DiscordSocketClient>();
         }
 
-        SupervisorService supervisorService { get; set; }
+    
 
         public async Task<int> GetVocationAmountAsync(int requestId)
         {
