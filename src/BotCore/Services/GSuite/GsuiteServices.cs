@@ -17,14 +17,14 @@ namespace BotCore.Services.GSuite
     {
         static string[] scopes = {DirectoryService.Scope.AdminDirectoryUser};
         static string ApplicationName = "Zenbot";
-        public async Task CreateGSuiteAccount(string name, string family, string email, string password, string phone)
+        public async static Task CreateGSuiteAccount(string name, string family, string email, string password, string phone)
         {
             UserCredential userCredential;
 
             using (var stream = 
                 new FileStream("credential.json", FileMode.Open, FileAccess.Read))
             {
-                string credPath = "token.json";
+                string credPath = "suiToken.json";
                 userCredential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets,
                     scopes, "user", CancellationToken.None,
                     new FileDataStore(credPath, true)).Result;
