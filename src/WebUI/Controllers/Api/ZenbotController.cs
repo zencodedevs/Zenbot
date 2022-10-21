@@ -37,7 +37,7 @@ namespace Zenbot.WebUI.Controllers.Api
         [HttpPost]
         public async Task JiraWebHook([FromBody] JiraWebhookObject value)
         {
-            var jiraWH = new JiraWebHook
+            var jiraWH = new JiraWebHookDetail
             {
                 AssigneeId = value.issue.fields.assignee.accountId,
                 IssueSelf = value.issue.self,
