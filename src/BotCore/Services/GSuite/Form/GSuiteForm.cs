@@ -27,11 +27,6 @@ namespace BotCore.Services.GSuite.Form
         [RequiredInput]
         public string Email { get; set; }
 
-        [InputLabel("Phone Number")]
-        [ModalTextInput("phoneNumber", Discord.TextInputStyle.Short, "Enter the Phone Number", 1, 14, null)]
-        [RequiredInput]
-        public string PhoneNumber { get; set; }
-
         [InputLabel("Password")]
         [ModalTextInput("password", Discord.TextInputStyle.Short, "Enter the Passowrd", 1, 20, null)]
         [RequiredInput]

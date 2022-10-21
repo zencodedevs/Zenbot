@@ -56,6 +56,7 @@ namespace BotCore
                 .AddSingleton<LocaleService>()
 
                 .AddSingleton<ScrinIOService>()
+                .AddSingleton<GsuiteServices>()
 
                 .AddSingleton<BirthdayService>()
                 .AddSingleton<EventService>();
@@ -80,6 +81,7 @@ namespace BotCore
             var brithday = _services.GetRequiredService<BirthdayService>();
             var events = _services.GetRequiredService<EventService>();
             var scrinio = _services.GetRequiredService<ScrinIOService>();
+            var gsuite = _services.GetRequiredService<GsuiteServices>();
 
 
             await client.LoginAsync(TokenType.Bot, config.BotToken, true);
