@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook
 {
-    public class JiraWebHook
+    public class JiraWebHookDetail
     {
         public string AssigneeId { get; set; }
         public string AssigneeName { get; set; }

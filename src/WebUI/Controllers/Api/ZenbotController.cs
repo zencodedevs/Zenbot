@@ -9,12 +9,7 @@ using System.Threading.Tasks;
 using Zen.Mvc;
 using Zenbot.Domain.Shared.Entities.Bot.Dtos.BitbucketWebHook;
 using Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook;
-using Google.Apis.Auth.AspNetCore3;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Drive.v3;
-using Google.Apis.Services;
-using System.Linq;
-using System.Collections.Generic;
+
 
 namespace Zenbot.WebUI.Controllers.Api
 {
