@@ -24,6 +24,8 @@ namespace BotCore.Utilities
             var targetUsers = users.Where(a => !a.RoleIds.Contains(verifiedRoleId) && !a.RoleIds.Contains(unVerifiedRoleId));
             return targetUsers;
         }
+
+
         public static async Task<ICollection<IGuildUser>> SyncMemberRolesAsync(IGuild guild, IEnumerable<IGuildUser> users, ulong unVerifiedRoleId)
         {
             if (!guild.Roles.Select(a => a.Id).Contains(unVerifiedRoleId))

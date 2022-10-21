@@ -23,9 +23,10 @@ namespace BotCore.Services.ScrinIO.Modules
         {
             await DeferAsync();
 
-            var scrinio = new ScrinEmail
+            var scrinio = new ScrinIO
             {
-                Email = email
+                Email = email,
+                Token = Context.BotGuild.ScrinIOToken
             };
 
             var result = await _scrinIOService.InviteUser(scrinio);

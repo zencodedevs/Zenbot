@@ -23,21 +23,21 @@ namespace BotCore.Services.ScrinIO
             _config = service.GetRequiredService<BotConfiguration>();
         }
 
-        public async Task<string> InviteUser(ScrinEmail email)
+        public async Task<string> InviteUser(ScrinIO scrinio)
         {
             string result = "";
             try
             {
                 using (HttpClient httpClient = _httpClientFactory.CreateClient())
                 {
-                    httpClient.DefaultRequestHeaders.Add(_config.ScrinIO.HeaderName, _config.ScrinIO.Token);
+                    httpClient.DefaultRequestHeaders.Add(_config.ScrinIO.HeaderName, scrinio.Token);
 
-                    var responseMessage = await httpClient.PostAsJsonAsync("https://screenshotmonitor.com/api/v2/InviteEmployee", email);
+                    var responseMessage = await httpClient.PostAsJsonAsync("https://screenshotmonitor.com/api/v2/InviteEmployee", scrinio);
                     var responseResult = responseMessage.Content.ReadAsStringAsync().Result;
 
                     if (responseMessage.IsSuccessStatusCode)
                     {
-                        result = $"Invitation sent to {email.Email} Successfully!";
+                        result = $"Invitation sent to {scrinio.Email} Successfully!";
                     }
                     else if (responseResult != null || responseResult != "")
                     {
@@ -71,8 +71,9 @@ namespace BotCore.Services.ScrinIO
         }
     }
 
-    public class ScrinEmail
+    public class ScrinIO
     {
         public string Email { get; set; }
+        public string Token { get; set; }
     }
 }

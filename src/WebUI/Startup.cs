@@ -30,6 +30,8 @@ using Zenbot.WebUI.Filters;
 using Zenbot.WebUI.Helpers;
 using Zenbot.WebUI.Middlewares;
 using Zenbot.WebUI.Processors;
+using Google.Apis.Auth.AspNetCore3;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Zenbot.WebUI
 {
@@ -61,8 +63,23 @@ namespace Zenbot.WebUI
 
             // Adding services from Discord bot to start the bot from this Layer
             var bot = new BotService(_env).ConfigServices(services);
-
             services.AddSingleton(bot);
+
+            // This configures Google.Apis.Auth.AspNetCore3 for use in this app.
+            //services
+            //    .AddAuthentication(o =>
+            //    {
+            //        o.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+            //        o.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+            //        o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    })
+            //    .AddCookie()
+            //    .AddGoogleOpenIdConnect(options =>
+            //    {
+            //        options.ClientId = "";
+            //        options.ClientSecret ="";
+            //    });
+
 
             services.AddDomain();
             services.AddApplication(Configuration);

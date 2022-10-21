@@ -91,6 +91,7 @@ namespace BotCore.Services.Birthday.Modules
             });
 
             await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>", ephemeral:true);
+            
             var todayDay = DateTime.UtcNow.Day;
             var todayMonth = DateTime.UtcNow.Month;
             if (dateTime.Day == todayDay && dateTime.Month == todayMonth)

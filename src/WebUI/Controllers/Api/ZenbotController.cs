@@ -25,6 +25,18 @@ namespace Zenbot.WebUI.Controllers.Api
             _bitbucketService = services.GetRequiredService<BitbucketService>();
         }
 
+
+        //Redirect Url
+        [HttpGet]
+        public async Task<string> GetGSuiteData()
+        {
+            return "Okay";
+        }
+
+
+
+
+
         // For Jira Webhook
         [HttpPost]
         public async Task GetJiraWebHook([FromBody] JiraWebhookObject value)
@@ -48,15 +60,9 @@ namespace Zenbot.WebUI.Controllers.Api
             }.Build();
 
             var component = new ComponentBuilder()
-                .WithButton("Reporter", "1", ButtonStyle.Secondary,null, "", true, row: 0)
-                .WithButton(jiraWH.ReporterName, null, ButtonStyle.Link, null, jiraWH.IssueSelf, row: 0)
 
-                .WithButton("Project Name", "2", ButtonStyle.Secondary, null, "", true, row: 1)
-                .WithButton(jiraWH.ProjectName, null, ButtonStyle.Link, null, jiraWH.ProjectUrl, row: 1)
-
-                .WithButton("Issue Name", "3", ButtonStyle.Secondary, null, "", true, row: 2)
-                .WithButton(jiraWH.IssueName, null, ButtonStyle.Link, null, jiraWH.IssueSelf, row: 2)
-
+                .WithButton("Project Name", "2", ButtonStyle.Secondary, null, "", true, row: 0)
+                .WithButton(jiraWH.ProjectName, null, ButtonStyle.Link, null, jiraWH.ProjectUrl, row: 0)
 
                 .Build();
 
@@ -85,7 +91,7 @@ namespace Zenbot.WebUI.Controllers.Api
             {
                 Title = "New Pull Request",
                 Description = $"**{bitbucketWH.AuthorName}**  added you as a reviewer on pull request #{bitbucketWH.PullRequestId} \n" +
-                $"{bitbucketWH.PullRequestLink} ------------ Date : {bitbucketWH.PullRequestDate.ToString("dddd, dd MMMM yyyy")}"
+                $"Link: {bitbucketWH.PullRequestLink} \n Date : {bitbucketWH.PullRequestDate.ToString("dddd, dd MMMM yyyy")}"
             }.Build();
 
             var component = new ComponentBuilder()
