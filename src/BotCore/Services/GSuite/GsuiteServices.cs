@@ -1,16 +1,21 @@
 ﻿using BotCore.Entities;
 using Google.Apis.Admin.Directory.directory_v1;
+using Google.Apis.Admin.Directory.directory_v1.Data;
 using Google.Apis.Auth.AspNetCore3;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
+using Google.Apis.Http;
 using Google.Apis.Services;
+using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BotCore.Services
@@ -25,27 +30,46 @@ namespace BotCore.Services
             _httpClientFactory = httpfClient;
             _auth = auth;
         }
-
+       
         static string[] scopes = { DirectoryService.Scope.AdminDirectoryUser };
 
         static string ApplicationName = "Zenbot";
 
+
+
         public async Task<string> CreateGSuiteAccount(GSuiteAccount gSuite)
         {
-            string result = "";
+            string result = "AIzaSyBubNbOKoiMgO9Zxr2hw6FqT3OoybBt01k";
+
             try
             {
+                UserCredential credential;
+                using (var stream = new FileStream("credential.json", FileMode.Open, FileAccess.Read))
+                {
+                    string credPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                    credPath = Path.Combine(credPath, ".credentials/", System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
+
+                    // Requesting Authentication or loading previously stored authentication for userName
+                    credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets,
+                                                                            scopes,
+                                                                            "user",
+                                                                            CancellationToken.None,
+                                                                            new FileDataStore(credPath, true)).Result;
+
+                    await credential.GetAccessTokenForRequestAsync();
+
+                }
+
+                var service = new DirectoryService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = "ZenbotDesktop",
+                });
+
+              
 
                 using (HttpClient httpClient = _httpClientFactory.CreateClient())
                 {
-
-                    GoogleCredential cred = await _auth.GetCredentialAsync();
-
-                    var service = new DriveService(new BaseClientService.Initializer
-                    {
-                        HttpClientInitializer = cred,
-
-                    });
 
                     var responseMessage = await httpClient.PostAsJsonAsync("https://admin.googleapis.com/admin/directory/v1/users", gSuite);
 
@@ -99,40 +123,7 @@ namespace BotCore.Services
         public string GivenName { get; set; }
     }
 
-
-
-    //static string ApplicationName = "Zenbot";
-    //public async static Task CreateGSuiteAccount(string name, string family, string email, string password, string phone)
-    //{
-    //    UserCredential userCredential;
-
-    //    using (var stream =
-    //        new FileStream("credential.json", FileMode.Open, FileAccess.Read))
-    //    {
-    //        string credPath = "suiToken.json";
-    //        userCredential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets,
-    //            scopes, "user", CancellationToken.None,
-    //            new FileDataStore(credPath, true)).Result;
-    //    }
-
-    //    var services = new DirectoryService(new BaseClientService.Initializer()
-    //    {
-    //        HttpClientInitializer = userCredential,
-    //        ApplicationName = ApplicationName
-    //    });
-
-    //    User newUserbody = new User();
-    //    UserName newUsername = new UserName();
-
-    //    newUsername.GivenName = name;
-    //    newUsername.FamilyName = family;
-
-    //    newUserbody.PrimaryEmail = email;
-    //    newUserbody.Name = newUsername;
-    //    newUserbody.Password = password;
-
-
-    //    services.Users.Insert(newUserbody);
-    //}
+    
+   
 }
 
