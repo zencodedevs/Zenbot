@@ -2,6 +2,7 @@
 using BotCore.Services.GSuite.Form;
 using BotCore.Services.ScrinIO;
 using Discord.Interactions;
+using Google.Apis.Admin.Directory.directory_v1.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,23 +28,19 @@ namespace BotCore.Services.GSuite.Module
         {
             await DeferAsync();
 
-            Name name = new Name
-            {
-                GivenName = form.FirstName,
-                FamilyName = form.Family
-            };
+            User newUserbody = new User();
+            UserName newUsername = new UserName();
 
-            GSuiteAccount gSuite = new GSuiteAccount
-            {
-                Name = name,
-                Password = form.Password,
-                PrimaryEmail = form.Email
-            };
+            newUsername.GivenName = form.FirstName;
+            newUsername.FamilyName = form.Family;
 
-           
-           var result = await gsuiteServices.CreateGSuiteAccount(gSuite);
+            newUserbody.PrimaryEmail = form.Email;
+            newUserbody.Name = newUsername;
+            newUserbody.Password = form.Password;
 
-           await FollowupAsync(result);
+            var result =  gsuiteServices.CreateGSuiteAccount(newUserbody);
+
+           await FollowupAsync($"A G Suite Account created as **{form.Email}** successfully!");
         }
     }
 }
