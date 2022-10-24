@@ -43,6 +43,7 @@ namespace BotCore.Services
 
             try
             {
+                // Here this credential shoul be added from Google Api console app
                 UserCredential credential;
                 using (var stream = new FileStream("credential.json", FileMode.Open, FileAccess.Read))
                 {
