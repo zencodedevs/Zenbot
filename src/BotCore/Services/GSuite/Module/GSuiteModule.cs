@@ -40,7 +40,7 @@ namespace BotCore.Services.GSuite.Module
                 PrimaryEmail = form.Email
             };
 
-            
+           
            var result = await gsuiteServices.CreateGSuiteAccount(gSuite);
 
            await FollowupAsync(result);
