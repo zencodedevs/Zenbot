@@ -26,14 +26,6 @@ namespace Zenbot.WebUI.Controllers.Api
             _bitbucketService = services.GetRequiredService<BitbucketService>();
         }
 
-
-        [HttpPost]
-        public async Task RedirectUrl()
-        {
-
-        }
-
-
         // For Jira Webhook
         [HttpPost]
         public async Task JiraWebHook([FromBody] JiraWebhookObject value)
