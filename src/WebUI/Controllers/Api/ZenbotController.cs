@@ -27,6 +27,12 @@ namespace Zenbot.WebUI.Controllers.Api
         }
 
 
+        [HttpPost]
+        public async Task RedirectUrl()
+        {
+
+        }
+
 
         // For Jira Webhook
         [HttpPost]
