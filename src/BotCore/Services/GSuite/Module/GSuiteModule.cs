@@ -34,6 +34,22 @@ namespace BotCore.Services.GSuite.Module
         {
             await DeferAsync();
 
+            // check for correct email address
+            if (!form.Email.Contains('@'))
+            {
+                await FollowupAsync("Please enter the correct email address with your domain name");
+                return;
+            }
+
+            // check for correct email address
+            if (form.Email.Contains("@gmail.com"))
+            {
+                await FollowupAsync("Domain not found! Please enter a primary email with your domain nam");
+                return;
+            }
+
+
+            // Get data and insert to service
             User newUserbody = new User();
             UserName newUsername = new UserName();
 
@@ -44,7 +60,7 @@ namespace BotCore.Services.GSuite.Module
             newUserbody.Name = newUsername;
             newUserbody.Password = form.Password;
 
-            var Credentials = "credential.json";
+            var Credentials = Context.BotGuild.GSuiteAuth;
             var result =  gsuiteServices.CreateGSuiteAccount(newUserbody, Credentials);
 
            await FollowupAsync($"A G Suite Account created as **{form.Email}** successfully!");
