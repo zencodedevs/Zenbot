@@ -37,16 +37,15 @@ namespace BotCore.Services
         //Scopes for api requests
         static string[] scopes = { DirectoryService.Scope.AdminDirectoryUser };
 
-        public async Task<string> CreateGSuiteAccount(User gSuite)
+        public async Task<string> CreateGSuiteAccount(User gSuite, string auth)
         {
-            string result = "AIzaSyBubNbOKoiMgO9Zxr2hw6FqT3OoybBt01k";
 
             try
             {
                 var token = "";
                 // Here this credential shoul be added from Google Api console app
                 UserCredential credential;
-                using (var stream = new FileStream("credential.json", FileMode.Open, FileAccess.Read))
+                using (var stream = new FileStream(auth, FileMode.Open, FileAccess.Read))
                 {
                     string credPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                     credPath = Path.Combine(credPath, ".credentials/", System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
