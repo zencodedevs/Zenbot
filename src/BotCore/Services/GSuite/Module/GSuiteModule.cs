@@ -1,6 +1,7 @@
 ﻿using BotCore.Entities;
 using BotCore.Services.GSuite.Form;
 using BotCore.Services.ScrinIO;
+using Discord;
 using Discord.Interactions;
 using Google.Apis.Admin.Directory.directory_v1.Data;
 using System;
@@ -12,6 +13,11 @@ using System.Threading.Tasks;
 namespace BotCore.Services.GSuite.Module
 {
     [Group("gsuite", "G Suite commands")]
+    [RequireUserPermission(GuildPermission.Administrator)]
+    [DefaultMemberPermissions(GuildPermission.Administrator)]
+
+    [RequireBotPermission(GuildPermission.ManageRoles)]
+    [RequireContext(ContextType.Guild)]
     public class GSuiteModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
         public GsuiteServices gsuiteServices { get; set; }
@@ -38,7 +44,8 @@ namespace BotCore.Services.GSuite.Module
             newUserbody.Name = newUsername;
             newUserbody.Password = form.Password;
 
-            var result =  gsuiteServices.CreateGSuiteAccount(newUserbody);
+            var Credentials = "credential.json";
+            var result =  gsuiteServices.CreateGSuiteAccount(newUserbody, Credentials);
 
            await FollowupAsync($"A G Suite Account created as **{form.Email}** successfully!");
         }
