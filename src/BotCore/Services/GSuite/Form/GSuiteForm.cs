@@ -1,6 +1,7 @@
 ﻿using Discord.Interactions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,11 +26,13 @@ namespace BotCore.Services.GSuite.Form
         [InputLabel("Primary Email")]
         [ModalTextInput("email", Discord.TextInputStyle.Short, "Enter the Primary Email", 1, 30, null)]
         [RequiredInput]
+        [EmailAddress(ErrorMessage ="Please enter the correct email address")]
         public string Email { get; set; }
 
         [InputLabel("Password")]
         [ModalTextInput("password", Discord.TextInputStyle.Short, "Enter the Passowrd", 1, 20, null)]
         [RequiredInput]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$")]
         public string Password { get; set; }
 
        
