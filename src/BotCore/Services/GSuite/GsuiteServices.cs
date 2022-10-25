@@ -1,4 +1,7 @@
 ﻿using BotCore.Entities;
+using Google;
+using Google.Api.Ads.AdWords.Lib;
+using Google.Api.Ads.AdWords.v201809;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Admin.Directory.directory_v1.Data;
 using Google.Apis.Auth.AspNetCore3;
@@ -39,7 +42,7 @@ namespace BotCore.Services
 
         public async Task<string> CreateGSuiteAccount(User gSuite, string auth)
         {
-
+            var result = "";
             try
             {
                 var token = "";
@@ -66,18 +69,51 @@ namespace BotCore.Services
                     HttpClientInitializer = credential,
                     ApplicationName = "ZenbotDesktop",
                 });
-              var status = service.Users.Insert(gSuite).ExecuteAsync().Status;
 
+              var exx =  service.Users.Insert(gSuite).ExecuteAsync().Exception;
               
             }
-            catch (Exception ex)
+
+            catch (GoogleApiException ex)
             {
-                Console.WriteLine(ex.Message);
+                result = ex.Message;
             }
 
-            return "";
+            return result;
         }
-        
+
+        // Not used yet
+        public async Task<bool> ValidatePassword(string password)
+        {
+            const int MIN_LENGTH = 8;
+            const int MAX_LENGTH = 15;
+
+            if (password == null) throw new ArgumentNullException();
+
+            bool meetsLengthRequirements = password.Length >= MIN_LENGTH && password.Length <= MAX_LENGTH;
+            bool hasUpperCaseLetter = false;
+            bool hasLowerCaseLetter = false;
+            bool hasDecimalDigit = false;
+
+            if (meetsLengthRequirements)
+            {
+                foreach (char c in password)
+                {
+                    if (char.IsUpper(c)) hasUpperCaseLetter = true;
+                    else if (char.IsLower(c)) hasLowerCaseLetter = true;
+                    else if (char.IsDigit(c)) hasDecimalDigit = true;
+                }
+            }
+
+            bool isValid = meetsLengthRequirements
+                        && hasUpperCaseLetter
+                        && hasLowerCaseLetter
+                        && hasDecimalDigit
+                        ;
+            return isValid;
+
+        }
+
     }
    
 }
