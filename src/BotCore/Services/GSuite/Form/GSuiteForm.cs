@@ -30,9 +30,8 @@ namespace BotCore.Services.GSuite.Form
         public string Email { get; set; }
 
         [InputLabel("Password")]
-        [ModalTextInput("password", Discord.TextInputStyle.Short, "Enter the Passowrd", 1, 20, null)]
+        [ModalTextInput("password", Discord.TextInputStyle.Short, "Enter the Passowrd", 8, 20, null)]
         [RequiredInput]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$")]
         public string Password { get; set; }
 
        
