@@ -73,10 +73,6 @@
 		</None>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="wwwroot\bot\gsuite\" />
-	</ItemGroup>
-
 	<ProjectExtensions>
 		<VisualStudio>
 			<UserProperties appsettings_1json__JsonSchema="" />

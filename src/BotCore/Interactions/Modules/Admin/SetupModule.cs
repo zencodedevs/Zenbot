@@ -247,7 +247,7 @@ namespace BotCore.Interactions.Modules.Admin
 
             using (WebClient client = new WebClient())
             {
-                var directoryPath = $@"wwwroot/bot/guilds/{Context.Guild.Id}/";
+                var directoryPath = $@"BotFiles/guilds/{Context.Guild.Id}/";
                 if (!Directory.Exists(directoryPath))
                     Directory.CreateDirectory(directoryPath);
 
@@ -302,7 +302,7 @@ namespace BotCore.Interactions.Modules.Admin
 
             using (WebClient client = new WebClient())
             {
-                var directoryPath = $@"wwwroot/bot/gsuite/{Context.Guild.Id}/";
+                var directoryPath = $@"BotFiles/gsuite/{Context.Guild.Id}/";
                 if (!Directory.Exists(directoryPath))
                     Directory.CreateDirectory(directoryPath);
 
