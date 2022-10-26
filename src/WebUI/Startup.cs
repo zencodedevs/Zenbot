@@ -66,22 +66,22 @@ namespace Zenbot.WebUI
             services.AddSingleton(bot);
 
             // This configures Google.Apis.Auth.AspNetCore3 for use in this app.
-            //services
-            //    .AddAuthentication(o =>
-            //    {
-            //        o.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
-            //        o.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
-            //        o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    })
-            //    .AddCookie()
-            //    .AddGoogleOpenIdConnect(options =>
-            //    {
-            //        options.ClientId = "";
-            //        options.ClientSecret ="";
-            //    });
+           services
+               .AddAuthentication(o =>
+               {
+                   o.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+                   o.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+                   o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+               })
+               .AddCookie()
+               .AddGoogleOpenIdConnect(options =>
+               {
+                   options.ClientId = "146753972763-gkhaav62pq08ktqs015obka7taqra11p.apps.googleusercontent.com";
+                   options.ClientSecret = "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";
+               });
 
 
-            services.AddDomain();
+           services.AddDomain();
             services.AddApplication(Configuration);
             services.AddInfrastructure(Configuration);
             services.AddWebUi();

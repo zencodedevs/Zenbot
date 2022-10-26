@@ -22,6 +22,7 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public string ScrinIOToken { get; set; }
         public string AuthenticationPassword { get; set; }
         public string GreetingFilePath { get; set; }
+        public string GSuiteAuth { get; set; }
         public ulong VerifiedRoleId { get; set; }
         public ulong UnVerifiedRoleId { get; set; }
         public ulong HrRoleId { get; set; }

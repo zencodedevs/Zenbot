@@ -23,11 +23,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="credential.json" />
+	  <None Include="credential.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="FluentValidation.AspNetCore" Version="10.2.3" />
+		<PackageReference Include="Google.Apis.Drive.v3" Version="1.57.0.2831" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.12" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.9" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
@@ -68,6 +71,10 @@
 		<None Update="libwkhtmltox.dylib">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\bot\gsuite\" />
 	</ItemGroup>
 
 	<ProjectExtensions>

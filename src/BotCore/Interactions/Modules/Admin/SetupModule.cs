@@ -225,7 +225,7 @@ namespace BotCore.Interactions.Modules.Admin
         }
 
         // Set the greeting message for this Guild
-        [SlashCommand("on-boarding-file", "setup server's greeting message.")]
+        [SlashCommand("on-boarding", "setup server's on-boarding file")]
         public async Task greeting_message(IAttachment grettingFile = null)
         {
             await DeferAsync();
@@ -242,12 +242,12 @@ namespace BotCore.Interactions.Modules.Admin
                 return;
             }
 
-            // Download the file from Discord and put in a file in discord
+            // Download the file from Discord and put in server root directory
             // then we can just sent this file from discord
 
             using (WebClient client = new WebClient())
             {
-                var directoryPath = $@"guilds/{Context.Guild.Id}/";
+                var directoryPath = $@"wwwroot/bot/guilds/{Context.Guild.Id}/";
                 if (!Directory.Exists(directoryPath))
                     Directory.CreateDirectory(directoryPath);
 
@@ -267,7 +267,7 @@ namespace BotCore.Interactions.Modules.Admin
                     {
                         x.GreetingFilePath = filePath;
                     });
-                    await FollowupAsync("file downloaded, gretting-message updated.");
+                    await FollowupAsync("on boarding file updated for your server.");
                 }
 
                 client.DownloadFileAsync(new Uri(grettingFile.Url), filePath);
@@ -275,6 +275,63 @@ namespace BotCore.Interactions.Modules.Admin
             }
 
         }
+
+
+
+
+        // Set the g suite auth credentials for this Guild
+        [SlashCommand("gsuite-auth", "setup server's gsuite credentials.")]
+        public async Task gsuit_auth(IAttachment gsuiteAuth = null)
+        {
+            await DeferAsync();
+
+            if (File.Exists(Context.BotGuild.GSuiteAuth))
+                File.Delete(Context.BotGuild.GSuiteAuth);
+
+            if (gsuiteAuth is null)
+            {
+                await Context._guildService.UpdateAsync(Context.BotGuild, x =>
+                {
+                    x.GreetingFilePath = "";
+                });
+                return;
+            }
+
+            // Download the file from Discord and put in server root directory
+            // then we can just sent this file from discord
+
+            using (WebClient client = new WebClient())
+            {
+                var directoryPath = $@"wwwroot/bot/gsuite/{Context.Guild.Id}/";
+                if (!Directory.Exists(directoryPath))
+                    Directory.CreateDirectory(directoryPath);
+
+                var filePath = directoryPath + gsuiteAuth.Filename;
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
+
+                client.DownloadFileCompleted += Client_DownloadFileCompleted;
+                async void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+                {
+                    if (e.Error is not null)
+                    {
+                        await FollowupAsync("can not download the file, try again.");
+                        return;
+                    }
+                    await Context._guildService.UpdateAsync(Context.BotGuild, x =>
+                    {
+                        x.GSuiteAuth = filePath;
+                    });
+                    await FollowupAsync("G Suite credentials updated for your server.");
+                }
+
+                client.DownloadFileAsync(new Uri(gsuiteAuth.Url), filePath);
+                await FollowupAsync("please wait, we are downloading the file.");
+            }
+
+        }
+
+
 
 
         //Help Command for the whole bot setup
@@ -291,22 +348,24 @@ namespace BotCore.Interactions.Modules.Admin
                 $"1. `/setup roles`  Setup your roles for this server so bot can perform it's tasks.\n" +
                 $"2. `/setup password` The password which server user will be authenticated.\n" +
                 $"3. `/setup logger-channel`  Every common message from bot will be sent here.\n" +
-                $"4. `/setup on-boarding-file`  Whenever a user joins your server, this file with welcome message will be sent to him/her and in logger-channel.\n" +
-                $"5. `/setup prefix` You will change the default prefix for your server.\n" +
-                $"6. `/setup authentication` Please choose the channel which only `Unverified` users can see.\n" +
-                $"7. `/setup birthday-message` Make a new Birthday message which will be the default message for birthday message.\n" +
-                $"8. `/setup welcome-message` Make a new Welcome message which will be the default message for Welcome new user message.\n" +
-                $"9. `/admin roles sync` All the server users will need to authenticat with server password. Bot will assign `Unverified` Role to all of users which don't have `Verified` Role\n" +
-                $"10. `/admin role add/remove` Admin can Assign or remove roles to/from users.\n" +
-                $"11. `/hr role add/remove` HR can assign or remove roles to/from users.\n" +
-                $"12. `/hr user-send file` HR can send onboarding file to specific user\n" +
-                $"13. `/birthday add` Users can add their birthday date, the bot will then announce in logger channel.\n" +
-                $"14. `/external account` Users can add their external account Id (jira, bitbucket).\n" +
-                $"14. `/setup select-supervisor` You can choose a user and register that as supervisor.\n" +
-                $"14. `/setup list-supervisor` You will get all of your supervisors list you registerd in this server\n" +
-                $"14. `/setup assign-supervisor` Here you can assign a user as supervisor for other user.\n" +
-                $"15. `/setup scrionio-token` you can run register your scrin io for this server and user `scrin invite` command to invite people.\n" +
-                $"16. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
+                $"4. `/setup on-boarding`  Whenever a user joins your server, this file with welcome message will be sent to him/her and in logger-channel.\n" +
+                $"5. `/setup gsuite-auth`  Please upload the json file you get from google console app, the project shoud be `installed` application in google console app.\n" +
+                $"6. `/gsuite create-account`  For creating a g suite user account in google.\n" +
+                $"7. `/setup prefix` You will change the default prefix for your server.\n" +
+                $"8. `/setup authentication` Please choose the channel which only `Unverified` users can see.\n" +
+                $"9. `/setup birthday-message` Make a new Birthday message which will be the default message for birthday message.\n" +
+                $"10. `/setup welcome-message` Make a new Welcome message which will be the default message for Welcome new user message.\n" +
+                $"11. `/admin roles sync` All the server users will need to authenticat with server password. Bot will assign `Unverified` Role to all of users which don't have `Verified` Role\n" +
+                $"12. `/admin role add/remove` Admin can Assign or remove roles to/from users.\n" +
+                $"13. `/hr role add/remove` HR can assign or remove roles to/from users.\n" +
+                $"14. `/hr user-send file` HR can send onboarding file to specific user\n" +
+                $"15. `/birthday add` Users can add their birthday date, the bot will then announce in logger channel.\n" +
+                $"16. `/external account` Users can add their external account Id (jira, bitbucket).\n" +
+                $"17. `/setup select-supervisor` You can choose a user and register that as supervisor.\n" +
+                $"18. `/setup list-supervisor` You will get all of your supervisors list you registerd in this server\n" +
+                $"19. `/setup assign-supervisor` Here you can assign a user as supervisor for other user.\n" +
+                $"20. `/setup scrionio-token` you can run register your scrin io for this server and user `scrin invite` command to invite people.\n" +
+                $"21. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
                 ).Build();
 
             await RespondAsync(embed: embed);

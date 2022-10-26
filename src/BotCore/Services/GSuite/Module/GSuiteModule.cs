@@ -1,6 +1,9 @@
 ﻿using BotCore.Entities;
 using BotCore.Services.GSuite.Form;
+using BotCore.Services.ScrinIO;
+using Discord;
 using Discord.Interactions;
+using Google.Apis.Admin.Directory.directory_v1.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +13,15 @@ using System.Threading.Tasks;
 namespace BotCore.Services.GSuite.Module
 {
     [Group("gsuite", "G Suite commands")]
+    [RequireUserPermission(GuildPermission.Administrator)]
+    [DefaultMemberPermissions(GuildPermission.Administrator)]
+
+    [RequireBotPermission(GuildPermission.ManageRoles)]
+    [RequireContext(ContextType.Guild)]
     public class GSuiteModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
+        public GsuiteServices gsuiteServices { get; set; }
+     
 
         [SlashCommand("create-account", "Create a new G suite account for a user")]
         public async Task add()
@@ -24,9 +34,36 @@ namespace BotCore.Services.GSuite.Module
         {
             await DeferAsync();
 
-           await GsuiteServices.CreateGSuiteAccount(form.FirstName, form.Family, form.Email, form.Password, form.PhoneNumber);
+            // check for correct email address
+            if (!form.Email.Contains('@'))
+            {
+                await FollowupAsync("Please enter the correct email address with your domain name");
+                return;
+            }
 
-           await FollowupAsync("Account created");
+            // check for correct email address
+            if (form.Email.Contains("@gmail.com"))
+            {
+                await FollowupAsync("Domain not found! Please enter a primary email with your domain nam");
+                return;
+            }
+
+
+            // Get data and insert to service
+            User newUserbody = new User();
+            UserName newUsername = new UserName();
+
+            newUsername.GivenName = form.FirstName;
+            newUsername.FamilyName = form.Family;
+
+            newUserbody.PrimaryEmail = form.Email;
+            newUserbody.Name = newUsername;
+            newUserbody.Password = form.Password;
+
+            var Credentials = Context.BotGuild.GSuiteAuth;
+            var result =  gsuiteServices.CreateGSuiteAccount(newUserbody, Credentials);
+
+           await FollowupAsync($"A G Suite Account created as **{form.Email}** successfully!");
         }
     }
 }
