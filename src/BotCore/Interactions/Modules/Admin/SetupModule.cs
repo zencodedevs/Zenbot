@@ -54,13 +54,17 @@ namespace BotCore.Interactions.Modules.Admin
 
             await FollowupAsync($"Great! you have made `{user.Username}` as a `Supervisor`");
 
+            // Log the message
+            var message = $"Selected `{supervisor.Username}` as a Supervisor";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
 
         // Command to show list of all supervisor of this Guild
         [SlashCommand("list-supervisor", "show list of all supervisor in this servisor")]
-        public async Task prefix()
+        public async Task listSupervisor()
         {
             await DeferAsync();
             var users = await _userService.GetUsersOfGuild(Context.BotGuild.Id);
@@ -76,12 +80,17 @@ namespace BotCore.Interactions.Modules.Admin
             }
 
             await FollowupAsync(embed: embedBuiler.Build(), ephemeral: true);
+
+            // Log the message
+            var message = $" Requested for list of supervisors";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
         // Replace the default bot prefix with your own profex
         [SlashCommand("assign-supervisor", "You can assign supervisor to selected user")]
-        public async Task prefix(IUser supervisor, IUser user)
+        public async Task AssignSupervisor(IUser supervisor, IUser user)
         {
             await DeferAsync();
 
@@ -107,6 +116,11 @@ namespace BotCore.Interactions.Modules.Admin
             }
 
             await FollowupAsync("Supervisor or user is not registerd in database!");
+
+            // Log the message
+            var message = $"Selected `{supervisor.Username}` as Supervisor for `{user.Username}`";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
@@ -121,6 +135,11 @@ namespace BotCore.Interactions.Modules.Admin
                 x.BotPrefix = prefix;
             });
             await FollowupAsync($"Channel prefix updated to **{prefix}**");
+
+            // Log the message
+            var message = $"Changed the prefix to `{prefix}`";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
@@ -134,6 +153,11 @@ namespace BotCore.Interactions.Modules.Admin
                 x.AuthenticationPassword = password;
             });
             await FollowupAsync($"The password changed to {password} succesfuly.");
+
+            // Log the message
+            var message = $"Created a password for server : {password}";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
@@ -147,6 +171,11 @@ namespace BotCore.Interactions.Modules.Admin
                 x.ScrinIOToken = token;
             });
             await FollowupAsync($"The setup for scrin io token done succesfuly.");
+
+            // Log the message
+            var message = $"Insert the ScrinIO Auth Token : `{token}`";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
@@ -166,6 +195,11 @@ namespace BotCore.Interactions.Modules.Admin
             await _channelService.UpdateAsync(targetChannel, x => x.Type = GuildChannelType.Logger);
 
             await FollowupAsync($"The logger channel changed to **<#{channel.Mention()}>**");
+
+            // Log the message
+            var message = $"Selected `{Context.Channel.Name}` as logger channel";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
@@ -183,6 +217,11 @@ namespace BotCore.Interactions.Modules.Admin
 
             await _birthdayMessageService.GetOrAddAsync(true, form.Message, Context.BotGuild.Id);
             await FollowupAsync($"You've adde new message for birthday \n **<#{form.Message}>**");
+
+            // Log the message
+            var message = $"Created a birthday message : `{form.Message}`";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
@@ -201,6 +240,11 @@ namespace BotCore.Interactions.Modules.Admin
 
             await _welcomeMessageService.GetOrAddAsync(true, form.Message, Context.BotGuild.Id);
             await FollowupAsync($"You've adde new welcome Message \n **<#{form.Message}>**");
+
+            // Log the message
+            var message = $"Created a welcome message : `{form.Message}`";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
@@ -222,11 +266,16 @@ namespace BotCore.Interactions.Modules.Admin
                 x.HrRoleId = hr.Id;
             });
             await FollowupAsync($"The server roles updated.");
+
+            // Log the message
+            var message = $"Roles set up for server: `{verified.Name}, {unVerified.Name}, {hr.Name}`";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
         // Set the greeting message for this Guild
         [SlashCommand("on-boarding", "setup server's on-boarding file")]
-        public async Task greeting_message(IAttachment grettingFile = null)
+        public async Task onBoardingFile(IAttachment grettingFile = null)
         {
             await DeferAsync();
 
@@ -268,12 +317,16 @@ namespace BotCore.Interactions.Modules.Admin
                         x.GreetingFilePath = filePath;
                     });
                     await FollowupAsync("on boarding file updated for your server.");
+
+                    // Log the message
+                    var message = $"On boarding file created : `{filePath}`";
+                    await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
                 }
 
                 client.DownloadFileAsync(new Uri(grettingFile.Url), filePath);
                 await FollowupAsync("please wait, we are downloading the file.");
             }
-
         }
 
 
@@ -323,6 +376,11 @@ namespace BotCore.Interactions.Modules.Admin
                         x.GSuiteAuth = filePath;
                     });
                     await FollowupAsync("G Suite credentials updated for your server.");
+
+                    // Log the message
+                    var message = $"G Suite credentials updated : `{filePath}`";
+                    await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
                 }
 
                 client.DownloadFileAsync(new Uri(gsuiteAuth.Url), filePath);
@@ -369,6 +427,11 @@ namespace BotCore.Interactions.Modules.Admin
                 ).Build();
 
             await RespondAsync(embed: embed);
+
+            // Log the message
+            var message = $"Admin help command run";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
@@ -392,6 +455,11 @@ namespace BotCore.Interactions.Modules.Admin
             await channel.SendMessageAsync(embed: embed.Build(), components: component.Build());
 
             await FollowupAsync("The channel updated, make sure the channel is private and unwriteable.", ephemeral: true);
+
+            // Log the message
+            var message = $"Authentication command run by admin";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
     }
