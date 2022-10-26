@@ -22,6 +22,7 @@ namespace BotCore.Interactions.Authentication
         public BotConfiguration botConfiguration { get; set; }
         public EventService EventService { get; set; }
         public GuildService guildService { get; set; }
+        public ChannelService _channelService { get; set; }  
 
 
         [ComponentInteraction("button-admin-setup-authentication-password", true)]
@@ -30,6 +31,11 @@ namespace BotCore.Interactions.Authentication
         public async Task btnAuthentication()
         {
             await RespondWithModalAsync<AuthenticationForm>("modal-admin-setup-authentication-password");
+
+            // Log the message
+            var message = $"Try to sign in";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
@@ -125,6 +131,10 @@ namespace BotCore.Interactions.Authentication
             await (Context.User as IGuildUser).RemoveRoleAsync(Context.BotGuild.UnVerifiedRoleId);
             var loggerChannel = (GuildChannel)Context.Data;
             await Context._channelService.SendMessageAsync(loggerChannel.ChannelId, Context.User.ToUserMention(), embed: embed);
+
+            // Log the message
+            var message = $"User joined the server successfully";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
 
         }
     }
