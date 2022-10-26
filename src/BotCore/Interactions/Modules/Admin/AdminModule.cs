@@ -25,6 +25,10 @@ namespace BotCore.Interactions.Modules.Admin
         [Group("roles", "roles commands")]
         public class RolesModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
+            public BotConfiguration _config { get; set; }
+            public ChannelService _channelService { get; set; }
+
+
             // the command that admin can run to check if there are some people without desired (Verified ) Role
             [SlashCommand("sync", "sync roles")]
             [RequireGuildSetup(RequireGuildSetup.GuildSetupType.RoleId)]
@@ -59,6 +63,21 @@ namespace BotCore.Interactions.Modules.Admin
                     x.Embed = result;
                     x.Content = Context.User.ToUserMention();
                 });
+
+
+                // Log the message
+                var logger_embed = new EmbedBuilder()
+                {
+                    Title = "Message logged",
+                    Description = $"Date: {DateTime.UtcNow.ToString("dd MM yyyy")} \n" +
+                    $"Server:  {Context.Guild.Name} ({Context.BotGuild.GuildId}) \n" +
+                    $"User: {Context.User.Username} ({Context.User.Id}) \n\n" +
+                    $"Message: Birthday added",
+                    Color = Color.Purple,
+                    ThumbnailUrl = "https://img.icons8.com/clouds/344/imessage.png",
+                }.Build();
+                await _channelService.SendMessageAsync(_config.loggerChannel, null, false, embed: logger_embed);
+
             }
 
             [SlashCommand("add", "add role to user")]

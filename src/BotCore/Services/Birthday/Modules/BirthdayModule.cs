@@ -21,6 +21,8 @@ namespace BotCore.Services.Birthday.Modules
 
         public UserService _usersService { get; set; }
         public BirthdayService brithdayService { get; set; }
+        public ChannelService _channelService { get; set; }
+        public BotConfiguration _config { get; set; }
         /// <summary>
         /// Check if there is some upcomming birthday by Admin
         /// </summary>
@@ -78,30 +80,35 @@ namespace BotCore.Services.Birthday.Modules
         {
             await DeferAsync();
 
-            DateTime dateTime = DateTime.MinValue
+            DateTime birthdayDate = DateTime.MinValue
                 .AddYears(form.Year - 1)
                 .AddMonths(form.Month - 1)
                 .AddDays(form.Day - 1);
 
             var user = _usersService.UpdateAsync(Context.BotUser, x =>
             {
-                x.Birthday = dateTime;
+                x.Birthday = birthdayDate;
                 x.Username = Context.User.Username;
                 x.GuildId = Context.BotGuild.Id;
             });
 
-            await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)dateTime).ToUnixTimeSeconds()}:D>", ephemeral:true);
+            await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)birthdayDate).ToUnixTimeSeconds()}:D>", ephemeral:true);
             
             var todayDay = DateTime.UtcNow.Day;
             var todayMonth = DateTime.UtcNow.Month;
-            if (dateTime.Day == todayDay && dateTime.Month == todayMonth)
+            if (birthdayDate.Day == todayDay && birthdayDate.Month == todayMonth)
             {
                 await brithdayService.NotficationUsersBirthdayAsync(new BotUser[] { Context.BotUser });
             }
+
+            // Log the message
+            var message = $"Birthday added : {birthdayDate}";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
-     
+
 
         // check by each user the exact time of birthday date
 
