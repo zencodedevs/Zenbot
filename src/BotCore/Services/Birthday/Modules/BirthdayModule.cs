@@ -61,6 +61,11 @@ namespace BotCore.Services.Birthday.Modules
                 return;
             }
             await FollowupAsync("No user found.");
+
+            // Log the message
+            var message = $"Requested for upcomming birthdays";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
 
 
@@ -124,6 +129,12 @@ namespace BotCore.Services.Birthday.Modules
                 return;
             }
             await FollowupAsync($"{MentionUtils.MentionUser(user.Id)}'s brithday is <t:{((DateTimeOffset)targetUser.Birthday).ToUnixTimeSeconds()}:R>.");
+
+            // Log the message
+            var message = $"Request for birthday date";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
+
         }
 
 
