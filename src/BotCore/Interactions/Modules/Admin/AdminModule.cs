@@ -84,7 +84,7 @@ namespace BotCore.Interactions.Modules.Admin
                 await FollowupAsync("the role added to the user succesfuly.");
 
                 // Log the message
-                var message = $"Role {role.Name} added to {user.Username}";
+                var message = $"Role `{role.Name}` added to `{user.Username}`";
                 await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
 
             }
@@ -108,7 +108,7 @@ namespace BotCore.Interactions.Modules.Admin
                 await FollowupAsync("the role removed from the user succesfuly.");
 
                 // Log the message
-                var message = $"Role {roleId} removed from {user.Username}";
+                var message = $"Role `{roleId}` removed from `{user.Username}`";
                 await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
 
             }

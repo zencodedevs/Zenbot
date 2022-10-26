@@ -25,10 +25,13 @@ namespace BotCore.Interactions.Modules.Moderators
     public class HRModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
 
+
+
         // Users Group which HR sends onboarding file or ther required file to users
         [Group("users", "users commands")]
         public class UsersModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
+            public ChannelService _channelService { get; set; }
             public BotConfiguration BotConfiguration { get; set; }
             public GuildService guildService { get; set; }
 
@@ -61,6 +64,11 @@ namespace BotCore.Interactions.Modules.Moderators
                 await user.SendMessageAsync(embed: embed.Build(), components: component.Build());
 
                 await FollowupAsync("File sent to the user succesfully.", ephemeral: @private);
+
+                // Log the message
+                var message = $"`{Context.User.Username}` Sent a on-boarding file {file.Url} to `{user.Username}`";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
             }
         }
 
@@ -70,6 +78,8 @@ namespace BotCore.Interactions.Modules.Moderators
         [Group("roles", "roles commands")]
         public class RolesModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
+            public ChannelService _channelService { get; set; }
+
 
             [SlashCommand("add", "add role to user")]
             public async Task add(IGuildUser user, IRole role)
@@ -82,6 +92,11 @@ namespace BotCore.Interactions.Modules.Moderators
                 }
                 await user.AddRoleAsync(role);
                 await FollowupAsync("the role added to the user succesfuly.");
+
+                // Log the message
+                var message = $"Role `{role.Name}` added to `{user.Username}`";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
             }
 
             [SlashCommand("remove", "remove role to user")]
@@ -99,6 +114,11 @@ namespace BotCore.Interactions.Modules.Moderators
 
                 await user.RemoveRoleAsync(roleId);
                 await FollowupAsync("the role removed from the user succesfuly.");
+
+                // Log the message
+                var message = $"Role `{roleId}` removed `{user.Username}`";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
             }
 
             [AutocompleteCommand("role", "remove")]
