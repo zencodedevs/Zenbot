@@ -66,17 +66,8 @@ namespace BotCore.Interactions.Modules.Admin
 
 
                 // Log the message
-                var logger_embed = new EmbedBuilder()
-                {
-                    Title = "Message logged",
-                    Description = $"Date: {DateTime.UtcNow.ToString("dd MM yyyy")} \n" +
-                    $"Server:  {Context.Guild.Name} ({Context.BotGuild.GuildId}) \n" +
-                    $"User: {Context.User.Username} ({Context.User.Id}) \n\n" +
-                    $"Message: Birthday added",
-                    Color = Color.Purple,
-                    ThumbnailUrl = "https://img.icons8.com/clouds/344/imessage.png",
-                }.Build();
-                await _channelService.SendMessageAsync(_config.loggerChannel, null, false, embed: logger_embed);
+                var message = $"All the roles synced by admin";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
 
             }
 
@@ -91,6 +82,11 @@ namespace BotCore.Interactions.Modules.Admin
                 }
                 await user.AddRoleAsync(role);
                 await FollowupAsync("the role added to the user succesfuly.");
+
+                // Log the message
+                var message = $"Role {role.Name} added to {user.Username}";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
             }
 
 
@@ -110,6 +106,11 @@ namespace BotCore.Interactions.Modules.Admin
 
                 await user.RemoveRoleAsync(roleId);
                 await FollowupAsync("the role removed from the user succesfuly.");
+
+                // Log the message
+                var message = $"Role {roleId} removed from {user.Username}";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
             }
 
 
