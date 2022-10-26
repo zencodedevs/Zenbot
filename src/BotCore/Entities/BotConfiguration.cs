@@ -33,6 +33,7 @@
         //Bot Server common config
         public string BotToken { get; set; }
         public string Prefix { get; set; }
+        public ulong loggerChannel { get; set; }
 
         // bot Scrin.io Config
         public ScrinIO ScrinIO { get; set; }
