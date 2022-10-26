@@ -25,6 +25,10 @@ namespace BotCore.Interactions.Modules.Admin
         [Group("roles", "roles commands")]
         public class RolesModule : InteractionModuleBase<CustomSocketInteractionContext>
         {
+            public BotConfiguration _config { get; set; }
+            public ChannelService _channelService { get; set; }
+
+
             // the command that admin can run to check if there are some people without desired (Verified ) Role
             [SlashCommand("sync", "sync roles")]
             [RequireGuildSetup(RequireGuildSetup.GuildSetupType.RoleId)]
@@ -59,6 +63,12 @@ namespace BotCore.Interactions.Modules.Admin
                     x.Embed = result;
                     x.Content = Context.User.ToUserMention();
                 });
+
+
+                // Log the message
+                var message = $"All the roles synced by admin";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
             }
 
             [SlashCommand("add", "add role to user")]
@@ -72,6 +82,11 @@ namespace BotCore.Interactions.Modules.Admin
                 }
                 await user.AddRoleAsync(role);
                 await FollowupAsync("the role added to the user succesfuly.");
+
+                // Log the message
+                var message = $"Role `{role.Name}` added to `{user.Username}`";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
             }
 
 
@@ -91,6 +106,11 @@ namespace BotCore.Interactions.Modules.Admin
 
                 await user.RemoveRoleAsync(roleId);
                 await FollowupAsync("the role removed from the user succesfuly.");
+
+                // Log the message
+                var message = $"Role `{roleId}` removed from `{user.Username}`";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
             }
 
 

@@ -18,6 +18,10 @@ namespace BotCore.Services.VocationModule
         public UserService _usersService { get; set; }
         public VocationService vocationService { get; set; }
         public SupervisorService supervisorService { get; set; }
+        public ChannelService _channelService { get; set; }
+        
+
+
 
         [SlashCommand("list", "show all vocation request you did in the past")]
         [ComponentInteraction("vocation-list:*", true)]
@@ -54,6 +58,11 @@ namespace BotCore.Services.VocationModule
                 return;
             }
             await FollowupAsync("You didn't request for a day off yet!.");
+
+
+            // Log the message
+            var message = $"Requested for list of the vocations";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
         }
 
 
@@ -118,8 +127,12 @@ namespace BotCore.Services.VocationModule
                 .WithButton("Reject", $"button-vocation-request-reject:{requestUser.Id}:{vocationId}", ButtonStyle.Danger, new Emoji("❌"), null, false, 0)
                 .Build();
 
-            var message = await this.supervisorService.SendMessageToUserAsync(spr.SupervisorId, "", false, embed: embed, components: component);
+           await this.supervisorService.SendMessageToUserAsync(spr.SupervisorId, "", false, embed: embed, components: component);
 
+
+            // Log the message
+            var message = $"Requested for vocation";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
         }
 
 

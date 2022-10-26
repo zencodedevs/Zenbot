@@ -16,6 +16,7 @@ namespace BotCore.Services.ScrinIO.Modules
     public class ScrinIOModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
         public ScrinIOService _scrinIOService { get; set; }
+        public ChannelService _channelService { get; set; }
 
 
         [SlashCommand("invite", "invite users to join scrinio")]
@@ -32,6 +33,11 @@ namespace BotCore.Services.ScrinIO.Modules
             var result = await _scrinIOService.InviteUser(scrinio);
 
             await FollowupAsync(result);
+
+
+            // Log the message
+            var message = $"User invited to join the scrin io";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
         }
 
     }

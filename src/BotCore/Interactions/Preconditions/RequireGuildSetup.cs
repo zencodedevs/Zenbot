@@ -30,14 +30,14 @@ namespace Discord.Interactions
             {
                 case GuildSetupType.RoleId:
                     if (context.BotGuild.VerifiedRoleId == 0 && context.BotGuild.VerifiedRoleId == 0)
-                        return PreconditionResult.FromError("Verified Role & Unverified Role not found, setup command `/setup roles`.");
+                        return PreconditionResult.FromError("Verified Role & Unverified Role not found, setup command `Please Contact admin or HR`.");
                     break;
 
                 case GuildSetupType.LoggerChannel:
                     var channel = await context._guildService.GetChannelAsync(context.BotGuild.Id, GuildChannelType.Logger);
                     context.Data = channel;
                     if (channel is null)
-                        return PreconditionResult.FromError("Verified Role & Unverified Role not found, setup command `/setup roles`.");
+                        return PreconditionResult.FromError("Logger Channel did not selected, `Pleaes contact admin or HR`");
                     break;
             }
             return PreconditionResult.FromSuccess();

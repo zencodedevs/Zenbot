@@ -23,13 +23,14 @@ namespace BotCore.Services
         private readonly DiscordSocketClient _discord;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IServiceProvider _services;
-        //private readonly BotConfiguration _config;
+        private readonly BotConfiguration _config;
 
         public ChannelService(IServiceProvider services, IServiceScopeFactory scopeFactory) : base(services, scopeFactory)
         {
             _services = services;
             _scopeFactory = scopeFactory;
             _discord = _services.GetRequiredService<DiscordSocketClient>();
+            _config = services.GetRequiredService<BotConfiguration>();
         }
 
         // Common method for sending message to logger channel
@@ -55,6 +56,25 @@ namespace BotCore.Services
                 channel = await base.InsertAsync(@new);
             }
             return channel;
+        }
+
+
+        // Common method which is gonna be the logged message for every interaction user make
+        public async Task loggerEmbedMessage(string message, string serverName, ulong serverId, string username, ulong userId)
+        {
+            // Log the message
+            var logger_embed = new EmbedBuilder()
+            {
+                Title = "Message logged",
+                Description = $"Date: {DateTime.UtcNow.ToString("dd MM yyyy")} \n" +
+                $"Server:  {serverName} ({serverId}) \n" +
+                $"User: {username} ({userId}) \n\n" +
+                $"Message: {message}",
+                Color = Color.Purple,
+                ThumbnailUrl = "https://img.icons8.com/clouds/344/imessage.png",
+            }.Build();
+            await SendMessageAsync(_config.loggerChannel, null, false, embed: logger_embed);
+
         }
     }
 }

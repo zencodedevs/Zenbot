@@ -21,6 +21,7 @@ namespace BotCore.Services.GSuite.Module
     public class GSuiteModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
         public GsuiteServices gsuiteServices { get; set; }
+        public ChannelService _channelService { get; set; }
      
 
         [SlashCommand("create-account", "Create a new G suite account for a user")]
@@ -64,6 +65,11 @@ namespace BotCore.Services.GSuite.Module
             var result =  gsuiteServices.CreateGSuiteAccount(newUserbody, Credentials);
 
            await FollowupAsync($"A G Suite Account created as **{form.Email}** successfully!");
+
+            // Log the message
+            var message = $"Requested to create a g suite accout for a user `{form.Email}`";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
         }
     }
 }
