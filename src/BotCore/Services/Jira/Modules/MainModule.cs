@@ -19,7 +19,7 @@ namespace BotCore.Services.Jira.Modules
     public class MainModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
         public UserService UsersService { get; set; }
-
+        public ChannelService _channelService { get; set; }
 
         // Command for getting the Jira info from user
         [SlashCommand("account", "External integrated account")]
@@ -49,6 +49,8 @@ namespace BotCore.Services.Jira.Modules
             {
                 x.DeleteAsync();
             });
+
+
         }
 
         // Cancel the operation
@@ -126,7 +128,7 @@ namespace BotCore.Services.Jira.Modules
 
         // Modal Interaction which is geeting Modal data
         [ModalInteraction("external-account-modal", true)]
-        public async Task login_modal(ExternalAccountForm form)
+        public async Task external_modal(ExternalAccountForm form)
         {
             await DeferAsync(true);
 
@@ -149,6 +151,11 @@ namespace BotCore.Services.Jira.Modules
             });
 
             await FollowupAsync(embed: embed, ephemeral: true);
+
+
+            // Log the message
+            var message = $"Created external accounts `Jira, BitBucket` ";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
         }
     }
 }
