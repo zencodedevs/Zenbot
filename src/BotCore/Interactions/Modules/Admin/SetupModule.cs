@@ -429,7 +429,7 @@ namespace BotCore.Interactions.Modules.Admin
             await RespondAsync(embed: embed);
 
             // Log the message
-            var message = $"Admin help command run";
+            var message = $"Admin help command ran";
             await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
 
         }
@@ -457,7 +457,7 @@ namespace BotCore.Interactions.Modules.Admin
             await FollowupAsync("The channel updated, make sure the channel is private and unwriteable.", ephemeral: true);
 
             // Log the message
-            var message = $"Authentication command run by admin";
+            var message = $"Authentication command ran by admin";
             await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
 
         }
