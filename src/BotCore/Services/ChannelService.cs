@@ -66,7 +66,7 @@ namespace BotCore.Services
             var logger_embed = new EmbedBuilder()
             {
                 Title = "Message logged",
-                Description = $"Date: {DateTime.UtcNow.ToString("dd MM yyyy")} \n" +
+                Description = $"Date: {DateTime.UtcNow.ToString("dd MM yyyy - HH:mm")} \n" +
                 $"Server:  {serverName} ({serverId}) \n" +
                 $"User: {username} ({userId}) \n\n" +
                 $"Message: {message}",

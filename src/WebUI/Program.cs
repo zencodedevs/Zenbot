@@ -1,3 +1,5 @@
+using BotCore;
+using BotCore.Services.Birthday;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -6,11 +8,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
+using Quartz;
 using System;
 using System.Threading.Tasks;
 using Zenbot.Domain.Shared.Entities;
 using Zenbot.Infrastructure.Persistence;
 using Zenbot.Infrastructure.Shared.Persistence;
+using Zenbot.WebUI.Extensions;
+using Zenbot.WebUI.Services;
 
 namespace Zenbot.WebUI
 {
@@ -72,6 +77,20 @@ namespace Zenbot.WebUI
                 .ConfigureServices((hostContext, services) =>
                  {
 
+
+                     // Add the required Quartz.NET services
+                     services.AddQuartz(quartz =>
+                     {
+                         // Use a Scoped container to create jobs. I'll touch on this later
+                         quartz.UseMicrosoftDependencyInjectionScopedJobFactory();
+
+                         // Register the job, loading the schedule from configuration
+                         quartz.AddJobTrigger<DailyBirthdayChekQuartzService>(hostContext.Configuration);
+                     });
+
+                     // Add the Quartz.NET hosted service
+
+                     services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
                      // other config
                  })

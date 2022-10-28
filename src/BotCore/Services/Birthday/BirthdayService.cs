@@ -101,7 +101,11 @@ namespace BotCore.Services.Birthday
                     // Getting message from database the one which is active
                     var birthday_message = await _guildService.GetBirthdayMessageAsync(botGuild.Id);
                     // Message text and replace the {username} with Discord username
-                    var bMessage = birthday_message.Message.Replace("{username}", $"<@{u.DiscordId}>");
+                    var bMessage = $"Happy Birthday dear $<@{u.DiscordId} \n We're all happy to have you here and congratulate your birthday together! 😍 \n **Have a very nice day**";
+                    if (birthday_message != null)
+                    {
+                        bMessage = birthday_message.Message.Replace("{username}", $"<@{u.DiscordId}>");
+                    }
 
                     var brithday_embed = new EmbedBuilder()
                     {
@@ -110,7 +114,7 @@ namespace BotCore.Services.Birthday
                         Color = Color.Purple,
                         ThumbnailUrl = "https://img.icons8.com/external-flat-icons-pause-08/64/000000/external-birthday-christmas-collection-flat-icons-pause-08.png",
                     }.Build();
-                    await _channelService.SendMessageAsync(loggerChannel.ChannelId, null,false,embed: brithday_embed);
+                    await _channelService.SendMessageAsync(loggerChannel.ChannelId, null, false, embed: brithday_embed);
 
                     await Task.Delay(150);
                 }
