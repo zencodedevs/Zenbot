@@ -66,11 +66,15 @@ namespace BotCore.Handlers
             if (!context.Interaction.HasResponded)
             {
                 await context.Interaction.RespondAsync(result.ErrorReason, ephemeral: true);
+                var message = result.ErrorReason;
+                await _channelService.loggerEmbedMessage(message, context.Guild.Name, context.Guild.Id, context.User.Username, context.User.Id);
                 return;
             }
             else
             {
                 await context.Interaction.FollowupAsync(result.ErrorReason, ephemeral: true);
+                var message = result.ErrorReason;
+                await _channelService.loggerEmbedMessage(message, context.Guild.Name, context.Guild.Id, context.User.Username, context.User.Id);
                 return;
             }
         }
