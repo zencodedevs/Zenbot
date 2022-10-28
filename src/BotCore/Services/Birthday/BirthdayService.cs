@@ -63,8 +63,11 @@ namespace BotCore.Services.Birthday
         {
             if (users is null || users.Count < 1)
                 return;
-
+            
+            // To get all guilts users are in
             List<Guild> botGuilds = new();
+
+            // To get all logger channels for logging
             List<GuildChannel> botChannels = new();
 
             var listUsers = _discord.Guilds.SelectMany(a => a.Users);
@@ -76,6 +79,7 @@ namespace BotCore.Services.Birthday
                 if (user is null || user.MutualGuilds is null || user.MutualGuilds.Count < 1)
                     continue;
 
+                // Send message to every guilds users are inside that
                 foreach (var guild in user.MutualGuilds)
                 {
                     var botGuild = botGuilds.FirstOrDefault(a => a.GuildId == guild.Id);
@@ -100,6 +104,7 @@ namespace BotCore.Services.Birthday
 
                     // Getting message from database the one which is active
                     var birthday_message = await _guildService.GetBirthdayMessageAsync(botGuild.Id);
+                    
                     // Message text and replace the {username} with Discord username
                     var bMessage = $"Happy Birthday dear $<@{u.DiscordId} \n We're all happy to have you here and congratulate your birthday together! 😍 \n **Have a very nice day**";
                     if (birthday_message != null)
