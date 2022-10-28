@@ -22,7 +22,7 @@ namespace BotCore.Interactions.Authentication
         public BotConfiguration botConfiguration { get; set; }
         public EventService EventService { get; set; }
         public GuildService guildService { get; set; }
-        public ChannelService _channelService { get; set; }  
+        public ChannelService _channelService { get; set; }
 
 
         [ComponentInteraction("button-admin-setup-authentication-password", true)]
@@ -90,7 +90,11 @@ namespace BotCore.Interactions.Authentication
             var welcomeMessage = await guildService.GetWelcomeMessageAsync(Context.BotGuild.Id);
 
             // Message text and replace the {username} with Discord username
-            var wMessage = welcomeMessage.Message.Replace("{username}", $"<@{Context.User.Id}>");
+            var wMessage = $"Welcome dear <@{Context.User.Id}>\n We're much stronger now by having you in our team!\n **Thank you for joining us**";
+            if (welcomeMessage != null)
+            {
+                wMessage = welcomeMessage.Message.Replace("{username}", $"<@{Context.User.Id}>");
+            }
 
 
             if (!string.IsNullOrEmpty(Context.BotGuild.GreetingFilePath))
@@ -114,7 +118,7 @@ namespace BotCore.Interactions.Authentication
             }
 
             await (Context.User as IGuildUser).AddRoleAsync(Context.BotGuild.VerifiedRoleId);
-            
+
             var embed = new EmbedBuilder()
             {
                 Title = $"{Context.User.Username} joined",
