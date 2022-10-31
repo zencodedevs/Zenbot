@@ -82,6 +82,7 @@ namespace BotCore.Services.VocationModule
             DateTime startDate = form.StartDate;
             DateTime endDate = form.EndDate;
 
+           
             var requestUser = await _usersService.GetAsync(x => x.DiscordId == Context.BotUser.DiscordId);
 
             //  amount of request for day off
