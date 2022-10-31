@@ -16,6 +16,11 @@
         <span class="fw-bold fs-3 text-primary">@Context.GetOperatorUsername()</span>
     </div>
 
+    <div class="text-center mt-2">
+        <span class="fw-bold fs-4 text-dark">Email:</span>
+        <span class="fw-bold fs-3 text-primary">@Context.GetOperatorEmailAddress()</span>
+    </div>
+
     <div class="text-center mt-5">
         <a class="text-info hover-fade" asp-controller="@nameof(HomeController).GetControllerRoute()" asp-action="@nameof(HomeController.Index)">
             <span class="material-icons me-1 align-middle">arrow_back</span>

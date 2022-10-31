@@ -1,5 +1,7 @@
 using BotCore;
 using FluentValidation.AspNetCore;
+using Google.Apis.Auth.AspNetCore3;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -30,8 +32,6 @@ using Zenbot.WebUI.Filters;
 using Zenbot.WebUI.Helpers;
 using Zenbot.WebUI.Middlewares;
 using Zenbot.WebUI.Processors;
-using Google.Apis.Auth.AspNetCore3;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Zenbot.WebUI
 {
@@ -66,22 +66,22 @@ namespace Zenbot.WebUI
             services.AddSingleton(bot);
 
             // This configures Google.Apis.Auth.AspNetCore3 for use in this app.
-           services
-               .AddAuthentication(o =>
-               {
-                   o.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
-                   o.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
-                   o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-               })
-               .AddCookie()
-               .AddGoogleOpenIdConnect(options =>
-               {
-                   options.ClientId = "146753972763-gkhaav62pq08ktqs015obka7taqra11p.apps.googleusercontent.com";
-                   options.ClientSecret = "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";
-               });
+            services
+                .AddAuthentication(o =>
+                {
+                    o.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+                    o.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+                    o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddCookie()
+                .AddGoogleOpenIdConnect(options =>
+                {
+                    options.ClientId = "146753972763-gkhaav62pq08ktqs015obka7taqra11p.apps.googleusercontent.com";
+                    options.ClientSecret = "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";
+                });
 
 
-           services.AddDomain();
+            services.AddDomain();
             services.AddApplication(Configuration);
             services.AddInfrastructure(Configuration);
             services.AddWebUi();
@@ -113,14 +113,16 @@ namespace Zenbot.WebUI
                 {
                     options.AppId = Configuration["Discord:AppId"];
                     options.AppSecret = Configuration["Discord:AppSecret"];
-                    options.Scope.Add("guilds");
+
+                    options.Scope.Add("identify");
+                    options.Scope.Add("email");
                 });
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy(Constants.SettingsSecurityPolicy,
-            //        policy => policy.RequireClaim(Permissions.PermissionType.SettingPerm));
-            //});
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Constants.SettingsSecurityPolicy,
+                    policy => policy.RequireClaim(Permissions.PermissionType.SettingPerm));
+            });
 
             #region Open api  
 
