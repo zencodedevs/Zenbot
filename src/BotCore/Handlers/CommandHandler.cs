@@ -16,7 +16,6 @@ namespace BotCore.Handlers
         private readonly CommandService _commands;
         private readonly DiscordSocketClient _client;
         private readonly BotConfiguration _botConfiguration;
-        private readonly ChannelService _channelService;
         public CommandHandler(IServiceProvider services)
         {
             this.services = services;
@@ -24,7 +23,6 @@ namespace BotCore.Handlers
             _commands = services.GetRequiredService<CommandService>();
             _client = services.GetRequiredService<DiscordSocketClient>();
             _botConfiguration = services.GetRequiredService<BotConfiguration>();
-            _channelService = services.GetRequiredService<ChannelService>();
 
         }
         public async Task InitializeAsync()
