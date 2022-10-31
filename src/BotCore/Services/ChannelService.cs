@@ -60,13 +60,13 @@ namespace BotCore.Services
 
 
         // Common method which is gonna be the logged message for every interaction user make
-        public async Task loggerEmbedMessage(string message, string serverName, ulong serverId, string username, ulong userId)
+        public async Task loggerEmbedMessage(string message, string serverName = "Unknown", ulong serverId = 0, string username = "Unknown", ulong userId = 0)
         {
             // Log the message
             var logger_embed = new EmbedBuilder()
             {
                 Title = "Message logged",
-                Description = $"Date: {DateTime.UtcNow.ToString("dd MM yyyy - HH:mm")} \n" +
+                Description = $"Date: {DateTime.UtcNow.ToString("dd MM yyyy - HH:mm")} Utc time \n" +
                 $"Server:  {serverName} ({serverId}) \n" +
                 $"User: {username} ({userId}) \n\n" +
                 $"Message: {message}",
@@ -76,5 +76,7 @@ namespace BotCore.Services
             await SendMessageAsync(_config.loggerChannel, null, false, embed: logger_embed);
 
         }
+
+      
     }
 }

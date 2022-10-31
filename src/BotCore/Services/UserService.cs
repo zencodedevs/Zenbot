@@ -31,6 +31,7 @@ namespace BotCore.Services
             _discord = _services.GetRequiredService<DiscordSocketClient>();
         }
 
+        // Send message directly to user
         public async Task<IMessage> SendMessageToUserAsync(ulong userId, string text = null, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageComponent components = null, Embed[] embeds = null)
         {
             IUser discordUser = await _discord.Rest.GetUserAsync(userId);
@@ -38,6 +39,8 @@ namespace BotCore.Services
 
             return await discordUser.SendMessageAsync(text, isTTS, embed, options, allowedMentions, components, embeds);
         }
+
+        // check list of all upcomming birthdays
         public async Task<List<BotUser>> GetUpComingUsersBrithday()
         {
             var TodayMonth = DateTime.UtcNow.Month;
@@ -45,21 +48,26 @@ namespace BotCore.Services
 
             return await base.GetManyAsync(x => x.Birthday.Month == TodayMonth && x.Birthday.Day == TodayDay);
         }
+
         public async Task<List<BotUser>> GetUsersBrithday()
         {
             return await base.GetManyAsync(a => a.Birthday != DateTime.MinValue);
         }
 
+        // List of all supervisors for this Guild
         public async Task<List<BotUser>> GetUsersOfGuild(int guildId)
         {
             return await base.GetManyAsync(a => a.GuildId == guildId && a.IsSupervisor);
         }
 
+        // User by discord Id
         public async Task<BotUser> GetUserByDiscordId(ulong discordId)
         {
             return await base.GetAsync(a => a.DiscordId == discordId);
         }
 
+
+        // Add user to database by first interaction with bot
         public async Task<BotUser> GetOrAddAsync(ulong Id, string username, int guildId)
         {
             var user = await base.GetAsync(a => a.DiscordId == Id);
@@ -75,17 +83,20 @@ namespace BotCore.Services
             }
             return user;
         }
+
+        // Get user by Jira account id
         public async Task<BotUser> GetUserByJiraId(string jiraId)
         {
             return await base.GetAsync(x => x.JiraAccountID == jiraId);
         }
 
+        // Get user by bitbucket account Id
         public async Task<BotUser> GetUserByBitbucketId(string bitbucketId)
         {
             return await base.GetAsync(x => x.BitBucketAccountId == bitbucketId);
         }
 
-
+        // Get user by ID
         public async Task<BotUser> GetUserById(int Id)
         {
             return await base.GetAsync(x => x.Id == Id);
