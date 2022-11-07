@@ -29,8 +29,8 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
         "UseInMemoryDatabase": "true",
-        "ASPNETCORE_HTTPS_PORT": "6011",
-        "ASPNETCORE_URLS": "https://+:6011;http://+:6010"
+        "ASPNETCORE_HTTPS_PORT": "6010",
+        "ASPNETCORE_URLS": "https://+:6010;http://+:6011"
       },
       "httpPort": 6011,
       "useSSL": true,

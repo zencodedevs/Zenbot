@@ -16,7 +16,6 @@ namespace Zenbot.WebUI.DiscordOAuth
             AuthorizationEndpoint = DiscordDefaults.AuthorizationEndpoint;
             TokenEndpoint = DiscordDefaults.TokenEndpoint;
             UserInformationEndpoint = DiscordDefaults.UserInformationEndpoint;
-            Scope.Add("identify");
 
             ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id", ClaimValueTypes.UInteger64);
             ClaimActions.MapJsonKey(ClaimTypes.Name, "username", ClaimValueTypes.String);
