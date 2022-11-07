@@ -51,7 +51,7 @@
                     data = File.ReadAllText(@"appsettings.Qa.json");
                     break;
                 case "Production":
-                    data = File.ReadAllText(@"appsettings.Producttion.json");
+                    data = File.ReadAllText(@"appsettings.Production.json");
                     break;
                 case "Development":
                     data = File.ReadAllText(@"appsettings.Development.json");
