@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,10 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public ulong VerifiedRoleId { get; set; }
         public ulong UnVerifiedRoleId { get; set; }
         public ulong HrRoleId { get; set; }
+
+        public string UserId { get; set; }// the owner of server
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<GuildChannel> Channels { get; set; }
         public virtual ICollection<BotUser> BotUsers { get; set; }
