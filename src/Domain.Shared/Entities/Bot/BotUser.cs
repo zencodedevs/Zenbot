@@ -15,7 +15,6 @@ namespace Domain.Shared.Entities.Bot
     {
         public ulong DiscordId { get; set; }
         public bool IsSupervisor { get; set; }
-        public bool IsAdmin { get; set; }
         public string UserMail { get; set; }
         public string Username { get; set; }
         public string JiraAccountID { get; set; }

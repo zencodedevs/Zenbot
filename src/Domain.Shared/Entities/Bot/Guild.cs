@@ -28,10 +28,6 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public ulong UnVerifiedRoleId { get; set; }
         public ulong HrRoleId { get; set; }
 
-        public string? UserId { get; set; }// the owner of server
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser User { get; set; }
-
         public virtual ICollection<GuildChannel> Channels { get; set; }
         public virtual ICollection<BotUser> BotUsers { get; set; }
         public virtual ICollection<BirthdayMessage> BirthdayMessages { get; set; }

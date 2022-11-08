@@ -433,7 +433,7 @@ namespace BotCore.Interactions.Modules.Admin
             {
                 x.DiscordId = Context.User.Id;
                 x.GuildId = Context.BotGuild.Id;
-                x.IsAdmin = true;
+                x.Username = Context.User.Username;
             });
             // Log the message
             var message = $"Admin help command ran";
