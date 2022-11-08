@@ -396,6 +396,8 @@ namespace BotCore.Interactions.Modules.Admin
         [SlashCommand("help", "help")]
         public async Task help()
         {
+            await DeferAsync(true);
+
             var embed = new EmbedBuilder()
             .WithTitle("Setup Help")
             .WithDescription(
@@ -425,8 +427,14 @@ namespace BotCore.Interactions.Modules.Admin
                 $"20. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
                 ).Build();
 
-            await RespondAsync(embed: embed);
+            await FollowupAsync(embed: embed);
 
+            await Context._userService.UpdateAsync(Context.BotUser, x =>
+            {
+                x.DiscordId = Context.User.Id;
+                x.GuildId = Context.BotGuild.Id;
+                x.IsAdmin = true;
+            });
             // Log the message
             var message = $"Admin help command ran";
             await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);

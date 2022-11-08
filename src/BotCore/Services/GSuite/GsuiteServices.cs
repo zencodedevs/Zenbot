@@ -27,15 +27,6 @@ namespace BotCore.Services
 {
     public class GsuiteServices
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IGoogleAuthProvider _auth;
-
-        public GsuiteServices(IHttpClientFactory httpfClient, IGoogleAuthProvider auth)
-        {
-            _httpClientFactory = httpfClient;
-            _auth = auth;
-        }
-
 
         //Scopes for api requests
         static string[] scopes = { DirectoryService.Scope.AdminDirectoryUser };
@@ -70,7 +61,7 @@ namespace BotCore.Services
                     ApplicationName = "ZenbotDesktop",
                 });
 
-              var exx =  service.Users.Insert(gSuite).ExecuteAsync().Exception;
+              var exx =  service.Users.Insert(gSuite).ExecuteAsync();
               
             }
 
