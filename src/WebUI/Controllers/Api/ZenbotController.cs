@@ -33,40 +33,49 @@ namespace Zenbot.WebUI.Controllers.Api
         [HttpPost]
         public async Task JiraWebHook([FromBody] JiraWebhookObject value)
         {
-            if (value != null)
+            try
             {
-                var jiraWH = new JiraWebHookDetail
+                if (value != null)
                 {
-                    AssigneeId = value.issue.fields.assignee.accountId,
-                    IssueSelf = value.issue.self,
-                    IssueName = value.issue.fields.summary,
-                    ProjectName = value.issue.fields.project.name,
-                    ProjectUrl = value.issue.fields.project.self,
-                    ReporterName = value.issue.fields.reporter.displayName,
-                    IssueUpdateDate = value.issue.fields.statuscategorychangedate
-                };
-                var embed = new EmbedBuilder()
+                    var jiraWH = new JiraWebHookDetail
+                    {
+                        AssigneeId = value.issue.fields.assignee.accountId,
+                        IssueSelf = value.issue.self,
+                        IssueName = value.issue.fields.summary,
+                        ProjectName = value.issue.fields.project.name,
+                        ProjectUrl = value.issue.fields.project.self,
+                        ReporterName = value.issue.fields.reporter.displayName,
+                        IssueUpdateDate = value.issue.fields.statuscategorychangedate
+                    };
+                    var embed = new EmbedBuilder()
+                    {
+                        Title = "New Task Assigned",
+                        Description = $"**{jiraWH.ReporterName}** has assigned you a new task \n" +
+                        $"{jiraWH.IssueName} : {jiraWH.IssueSelf} \n" +
+                        $"Date : {jiraWH.IssueUpdateDate.ToString("dddd, dd MMMM yyyy")}"
+                    }.Build();
+
+                    var component = new ComponentBuilder()
+
+                        .WithButton("Project Name", "2", ButtonStyle.Secondary, null, "", true, row: 0)
+                        .WithButton(jiraWH.ProjectName, null, ButtonStyle.Link, null, jiraWH.ProjectUrl, row: 0)
+
+                        .Build();
+
+                    await this._jiraService.SendMessageToUserAsync(jiraWH.AssigneeId, "", false, embed: embed, components: component);
+                }
+                else
                 {
-                    Title = "New Task Assigned",
-                    Description = $"**{jiraWH.ReporterName}** has assigned you a new task \n" +
-                    $"{jiraWH.IssueName} : {jiraWH.IssueSelf} \n" +
-                    $"Date : {jiraWH.IssueUpdateDate.ToString("dddd, dd MMMM yyyy")}"
-                }.Build();
-
-                var component = new ComponentBuilder()
-
-                    .WithButton("Project Name", "2", ButtonStyle.Secondary, null, "", true, row: 0)
-                    .WithButton(jiraWH.ProjectName, null, ButtonStyle.Link, null, jiraWH.ProjectUrl, row: 0)
-
-                    .Build();
-
-                await this._jiraService.SendMessageToUserAsync(jiraWH.AssigneeId, "", false, embed: embed, components: component);
+                    var message = "Could not get the jira webhook data! \n Value of jira webhook is null";
+                    await _channelService.loggerEmbedMessage(message);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var message = "Could not get the jira webhook data! \n Value of jira webhook is null";
+                var message = "An exception occured during receiving Jira webhook: "+ ex.Message;
                 await _channelService.loggerEmbedMessage(message);
             }
+            
         }
 
 
@@ -75,48 +84,57 @@ namespace Zenbot.WebUI.Controllers.Api
         [HttpPost]
         public async Task BitbucketWebHook([FromBody] BitbucketWebHookRequest value)
         {
-            if (value != null)
+            try
             {
-                var reviewers = value.pullrequest.reviewers.ToArray();
-
-                var bitbucketWH = new BitbucketWebHook
+                if (value != null)
                 {
-                    AuthorName = value.pullrequest.author.display_name,
-                    PullRequestDate = value.pullrequest.created_on,
-                    PullRequestLink = value.pullrequest.links.html.href,
-                    PullRequestTitle = value.pullrequest.title,
-                    RepositoryName = value.repository.name,
-                    RepositoryLink = value.repository.links.html.href,
-                    PullRequestId = value.pullrequest.id,
-                };
-                var embed = new EmbedBuilder()
+                    var reviewers = value.pullrequest.reviewers.ToArray();
+
+                    var bitbucketWH = new BitbucketWebHook
+                    {
+                        AuthorName = value.pullrequest.author.display_name,
+                        PullRequestDate = value.pullrequest.created_on,
+                        PullRequestLink = value.pullrequest.links.html.href,
+                        PullRequestTitle = value.pullrequest.title,
+                        RepositoryName = value.repository.name,
+                        RepositoryLink = value.repository.links.html.href,
+                        PullRequestId = value.pullrequest.id,
+                    };
+                    var embed = new EmbedBuilder()
+                    {
+                        Title = "New Pull Request",
+                        Description = $"**{bitbucketWH.AuthorName}**  added you as a reviewer on pull request #{bitbucketWH.PullRequestId} \n" +
+                        $"Link: {bitbucketWH.PullRequestLink} \n Date : {bitbucketWH.PullRequestDate.ToString("dddd, dd MMMM yyyy")}"
+                    }.Build();
+
+                    var component = new ComponentBuilder()
+                        .WithButton("Author", "1", ButtonStyle.Secondary, null, null, true, row: 0)
+                        .WithButton(SharedButtonModule.GetButtonReturnLabelName(bitbucketWH.AuthorName, ButtonStyle.Secondary), row: 0)
+
+                        .WithButton("Repository", "3", ButtonStyle.Secondary, null, "", true, row: 1)
+                        .WithButton(bitbucketWH.RepositoryName, null, ButtonStyle.Link, null, bitbucketWH.RepositoryLink, row: 1)
+
+
+                        .Build();
+
+                    foreach (var item in reviewers)
+                    {
+                        await this._bitbucketService.SendMessageToUserAsync(item.account_id, "", false, embed: embed, components: component);
+                        await Task.Delay(100);
+                    }
+                }
+                else
                 {
-                    Title = "New Pull Request",
-                    Description = $"**{bitbucketWH.AuthorName}**  added you as a reviewer on pull request #{bitbucketWH.PullRequestId} \n" +
-                    $"Link: {bitbucketWH.PullRequestLink} \n Date : {bitbucketWH.PullRequestDate.ToString("dddd, dd MMMM yyyy")}"
-                }.Build();
-
-                var component = new ComponentBuilder()
-                    .WithButton("Author", "1", ButtonStyle.Secondary, null, null, true, row: 0)
-                    .WithButton(SharedButtonModule.GetButtonReturnLabelName(bitbucketWH.AuthorName, ButtonStyle.Secondary), row: 0)
-
-                    .WithButton("Repository", "3", ButtonStyle.Secondary, null, "", true, row: 1)
-                    .WithButton(bitbucketWH.RepositoryName, null, ButtonStyle.Link, null, bitbucketWH.RepositoryLink, row: 1)
-
-
-                    .Build();
-
-                foreach (var item in reviewers)
-                {
-                    await this._bitbucketService.SendMessageToUserAsync(item.account_id, "", false, embed: embed, components: component);
-                    await Task.Delay(100);
+                    var message = "Could not get the bitBucket webhook data! \n Value of bitBucket webhook is null";
+                    await _channelService.loggerEmbedMessage(message);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                var message = "Could not get the bitBucket webhook data! \n Value of bitBucket webhook is null";
+                var message = "An exception occured during receiving bitBucket webhook: " + ex.Message;
                 await _channelService.loggerEmbedMessage(message);
             }
+          
 
         }
 
