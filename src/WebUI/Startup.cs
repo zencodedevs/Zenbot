@@ -262,7 +262,7 @@ namespace Zenbot.WebUI
 
             var localizationOptions = new RequestLocalizationOptions
             {
-                DefaultRequestCulture = new RequestCulture(culture: Constants.SystemCultureNames.Georgian, uiCulture: Constants.SystemCultureNames.Georgian),
+                DefaultRequestCulture = new RequestCulture(culture: Constants.SystemCultureNames.English, uiCulture: Constants.SystemCultureNames.English),
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
             };

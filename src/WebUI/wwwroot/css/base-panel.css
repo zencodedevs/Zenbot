@@ -7,8 +7,8 @@
     overflow-x: hidden;
 }
 
-.navbar-bg {
-    background-color:#eaeaea;
+.custom-lightGray-bg {
+    background-color: #eaeaea;
 }
 #sidebar-wrapper {
     min-height: 100vh;
@@ -17,7 +17,7 @@
     -moz-transition: margin 0.25s ease-out;
     -o-transition: margin 0.25s ease-out;
     transition: margin 0.25s ease-out;
-    background-color: #0C485A !important;
+    /*background-color: #0C485A !important;*/
 }
 
     #sidebar-wrapper .sidebar-heading {
