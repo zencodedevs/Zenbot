@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Zenbot.WebUI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class PanelController : Controller
     {
         // GET: /Panel/Index
