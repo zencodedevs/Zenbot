@@ -18,6 +18,12 @@ namespace BotCore.Commands.Modules
             await ReplyAsync($"Pong ! ` Current Latency {Context.Client.Latency}`");
         }
 
+        [Command("myId")]
+        public async Task MyId()
+        {
+            await ReplyAsync($"Your Discord ID:  `{Context.User.Id}`");
+        }
+
         [Command("help")]
         public async Task help()
         {
