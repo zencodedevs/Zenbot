@@ -7,12 +7,11 @@ namespace Zenbot.WebUI.Controllers
 {
     public class ServerController : Controller
     {
-        private readonly IBotUserService _botUserService;
+       
         private readonly IBotUserGuildService _botUserGuildService;
 
-        public ServerController(IBotUserService botUserService, IBotUserGuildService botUserGuildService)
+        public ServerController(IBotUserGuildService botUserGuildService)
         {
-            _botUserService = botUserService;
             _botUserGuildService = botUserGuildService;
         }
 
@@ -20,8 +19,8 @@ namespace Zenbot.WebUI.Controllers
         public async Task<IActionResult> Index()
         {
             var userid = HttpContext.GetOperatorUserId();
-            var user = await _botUserService.GetBotUserByDiscordId((ulong)userid);
-            var guilds = await _botUserGuildService.GetAllGuildsByUserId(user.Id);
+            
+            var guilds = await _botUserGuildService.GetAllGuildsByUserId((ulong)userid);
             return View(guilds);
         }
     }

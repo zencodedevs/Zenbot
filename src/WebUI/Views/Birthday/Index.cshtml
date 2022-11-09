@@ -1,0 +1,87 @@
+﻿@using Zenbot.Domain.Shared.Entities.Bot
+@model IEnumerable<BirthdayMessage>
+
+@{
+    ViewData["Title"] = "Birthday";
+    Layout = "_PanelLayout";
+    var counter = 1;
+}
+
+<div class="row g-3 my-2 bg-white pb-3">
+    <div class="d-flex justify-content-between px-3">
+        <div class="col-md-3">
+            <a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#CreatServerModal">
+                <div class="custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
+                    <div class="d-flex justify-content-around align-items-center">
+                        <p class="fs-5 mb-0">Add a Server</p>
+                        <i class="fas fa-plus-circle fs-5 p-2"></i>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+       
+
+        <div class="col-md-3">
+            <a href="https://discord.com/api/oauth2/authorize?client_id=1018769259251388457&permissions=1101945441360&scope=bot%20applications.commands" class="text-dark">
+                <div class=" custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
+                    <div class="d-flex justify-content-around align-items-center">
+                        <p class="fs-5 mb-0">Add Zenbot</p>
+                        <i class="fas fa-plus-square fs-5 p-2"></i>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="p-4">
+        <h5>All Servers</h5>
+        <div class="p-4 border border-1 rounded-2">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Server Name</th>
+                        <th scope="col">Active/InActive</th>
+                        <th scope="col">Edit Message</th>
+                        <th scope="col">Settings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="text-center">
+                            <th scope="row">@counter</th>
+                            <td>@item.Guild.GuildName</td>
+                            <td>@item.IsActive</td>
+                            <td><a asp-action="Edit" asp-controller="Birthday" asp-route-Id="@item.Id"><i class="fas fa-edit me-2"></i></a></td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-h"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" href="#">Edit Server</a></li>
+                                        <li><a class="dropdown-item" href="#">Remove Server</a></li>
+                                        <li><a class="dropdown-item" href="#">Add User to server</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+
+                  
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+
+  
