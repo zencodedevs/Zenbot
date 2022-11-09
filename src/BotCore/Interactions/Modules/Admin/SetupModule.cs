@@ -36,6 +36,7 @@ namespace BotCore.Interactions.Modules.Admin
         public UserService _userService { get; set; }
         public SupervisorService _supervisorService { get; set; }
         public BotUserGuildServices _botUserGuildServices { get; set; }
+        public GuildService guildService { get; set; }
 
 
 
@@ -422,6 +423,11 @@ namespace BotCore.Interactions.Modules.Admin
                 x.BotUserId = Context.BotUser.Id;
                 x.GuildId = Context.BotGuild.Id;
                 x.IsAdmin = true;
+            });
+
+            await guildService.UpdateAsync(Context.BotGuild, x =>
+            {
+                x.GuildName = Context.Guild.Name;
             });
             // Log the message
             var message = $"Admin help command ran";

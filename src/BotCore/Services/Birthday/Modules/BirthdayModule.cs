@@ -96,7 +96,6 @@ namespace BotCore.Services.Birthday.Modules
             {
                 x.Birthday = birthdayDate;
                 x.Username = Context.User.Username;
-                //x.GuildId = Context.BotGuild.Id;
             });
 
             await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)birthdayDate).ToUnixTimeSeconds()}:D>", ephemeral:true);

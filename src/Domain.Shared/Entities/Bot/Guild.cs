@@ -17,6 +17,7 @@ namespace Zenbot.Domain.Shared.Entities.Bot
             Channels = new List<GuildChannel>();
         }
         public ulong GuildId { get; set; }
+        public string GuildName { get; set; }
         public bool IsMainServer { get; set; }
         public string ScrinIOToken { get; set; }
         public string AuthenticationPassword { get; set; }

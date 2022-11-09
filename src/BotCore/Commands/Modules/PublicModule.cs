@@ -21,9 +21,16 @@ namespace BotCore.Commands.Modules
             var message = $"Hello Command ran";
             await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
 
+            // Add Server and discord user into database
             var guild = await guildService.GetOrAddAsync(Context.Guild.Id);
             var user = await userService.GetOrAddAsync(Context.User.Id, Context.User.Username);
             await _botUserGuildServices.GetOrAddAsync(guild.Id, user.Id, false);
+            
+            // Add server name
+            await guildService.UpdateAsync(guild.Id, x =>
+            {
+                x.GuildName = Context.Guild.Name;
+            });
         }
 
 
@@ -66,10 +73,17 @@ namespace BotCore.Commands.Modules
 
             await ReplyAsync(embed: embed);
 
-            // add User to database
+            //    // Add Server and discord user into database
             var guild = await guildService.GetOrAddAsync(Context.Guild.Id);
             var user = await userService.GetOrAddAsync(Context.User.Id, Context.User.Username);
             await _botUserGuildServices.GetOrAddAsync(guild.Id, user.Id, true);
+
+            // Add server name
+            await guildService.UpdateAsync(guild.Id, x =>
+            {
+                x.GuildName = Context.Guild.Name;
+            });
+
             // Log the message
             var message = $"Admin help command ran";
             await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
@@ -112,9 +126,17 @@ namespace BotCore.Commands.Modules
                 ).Build();
 
             await ReplyAsync(embed: helpEmbed);
+
+            // Add Server and discord user into database
             var guild = await guildService.GetOrAddAsync(Context.Guild.Id);
             var user = await userService.GetOrAddAsync(Context.User.Id, Context.User.Username);
             await _botUserGuildServices.GetOrAddAsync(guild.Id, user.Id, false);
+           
+            // Add server name
+            await guildService.UpdateAsync(guild.Id, x =>
+            {
+                x.GuildName = Context.Guild.Name;
+            });
 
             // Log the message
             var message = $"Help commmand ran";
