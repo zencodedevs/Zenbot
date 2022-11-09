@@ -73,7 +73,6 @@ namespace BotCore.Services
                 var newGuild = new Guild()
                 {
                     GuildId = id,
-                    BotPrefix = _config.Prefix
                 };
                 guild = await base.InsertAsync(newGuild);
             }

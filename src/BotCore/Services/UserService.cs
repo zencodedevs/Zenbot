@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Zen.Domain.Interfaces;
 using Zen.Uow;
+using Zenbot.Domain.Shared.Entities.Bot;
 using Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook;
 
 namespace BotCore.Services
@@ -55,9 +56,15 @@ namespace BotCore.Services
         }
 
         // List of all supervisors for this Guild
-        public async Task<List<BotUser>> GetUsersOfGuild(int guildId)
+        public async Task<List<BotUser>> GetSupervisorersForCurrentGuild(List<BotUserGuild> botUserGuilds)
         {
-            return await base.GetManyAsync(a => a.GuildId == guildId && a.IsSupervisor);
+            var sprs = new List<BotUser>();
+            foreach (var item in botUserGuilds)
+            {
+                var user= await base.GetAsync( x => x.Id == item.BotUserId && x.IsSupervisor);
+                if(user!= null) sprs.Add(user);
+            }
+            return sprs;
         }
 
         // User by discord Id
@@ -68,7 +75,7 @@ namespace BotCore.Services
 
 
         // Add user to database by first interaction with bot
-        public async Task<BotUser> GetOrAddAsync(ulong Id, string username, int guildId)
+        public async Task<BotUser> GetOrAddAsync(ulong Id, string username)
         {
             var user = await base.GetAsync(a => a.DiscordId == Id);
             if (user == null)
@@ -76,7 +83,6 @@ namespace BotCore.Services
                 user = new BotUser()
                 {
                     DiscordId = Id,
-                    GuildId = guildId,
                     Username = username
                 };
                 user = await base.InsertAsync(user);
