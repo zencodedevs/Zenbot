@@ -2,13 +2,17 @@
 
 namespace Zenbot.Infrastructure.Shared.Migrations
 {
-    public partial class migguildIdisAdmin : Migration
+    public partial class migupdatebotUsertbl : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "IsAdmin",
+                table: "BotUsers");
+
             migrationBuilder.AddColumn<bool>(
                 name: "IsAdmin",
-                table: "BotUsers",
+                table: "BotUserGuilds",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
@@ -18,7 +22,14 @@ namespace Zenbot.Infrastructure.Shared.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "IsAdmin",
-                table: "BotUsers");
+                table: "BotUserGuilds");
+
+            migrationBuilder.AddColumn<bool>(
+                name: "IsAdmin",
+                table: "BotUsers",
+                type: "bit",
+                nullable: false,
+                defaultValue: false);
         }
     }
 }

@@ -17,8 +17,6 @@ namespace Zenbot.Domain.Shared.Entities.Bot
             Channels = new List<GuildChannel>();
         }
         public ulong GuildId { get; set; }
-        public string BotPrefix { get; set; }
-
         public bool IsMainServer { get; set; }
         public string ScrinIOToken { get; set; }
         public string AuthenticationPassword { get; set; }
@@ -29,9 +27,9 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public ulong HrRoleId { get; set; }
 
         public virtual ICollection<GuildChannel> Channels { get; set; }
-        public virtual ICollection<BotUser> BotUsers { get; set; }
         public virtual ICollection<BirthdayMessage> BirthdayMessages { get; set; }
         public virtual ICollection<WelcomeMessage> WelcomeMessages { get; set; }
+        public virtual ICollection<BotUserGuild> BotUserGuilds { get; set; }
     }
  
   

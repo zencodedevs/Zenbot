@@ -10,8 +10,8 @@ using Zenbot.Infrastructure.Shared.Persistence;
 namespace Zenbot.Infrastructure.Shared.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221025043727_mig-gsuite")]
-    partial class miggsuite
+    [Migration("20221108134349_mig-initial")]
+    partial class miginitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,8 +37,8 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.Property<decimal>("DiscordId")
                         .HasColumnType("decimal(20,0)");
 
-                    b.Property<int>("GuildId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsSupervisor")
                         .HasColumnType("bit");
@@ -56,8 +56,6 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GuildId");
 
                     b.ToTable("BotUsers");
                 });
@@ -623,6 +621,28 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.ToTable("BirthdayMessages");
                 });
 
+            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.BotUserGuild", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BotUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BotUserId");
+
+                    b.HasIndex("GuildId");
+
+                    b.ToTable("BotUserGuilds");
+                });
+
             modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.Guild", b =>
                 {
                     b.Property<int>("Id")
@@ -772,17 +792,6 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.ToTable("WelcomeMessages");
                 });
 
-            modelBuilder.Entity("Domain.Shared.Entities.Bot.BotUser", b =>
-                {
-                    b.HasOne("Zenbot.Domain.Shared.Entities.Bot.Guild", "Guild")
-                        .WithMany("BotUsers")
-                        .HasForeignKey("GuildId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Guild");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -856,6 +865,25 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.Navigation("Guild");
                 });
 
+            modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.BotUserGuild", b =>
+                {
+                    b.HasOne("Domain.Shared.Entities.Bot.BotUser", "BotUser")
+                        .WithMany("BotUserGuilds")
+                        .HasForeignKey("BotUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Zenbot.Domain.Shared.Entities.Bot.Guild", "Guild")
+                        .WithMany("BotUserGuilds")
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BotUser");
+
+                    b.Navigation("Guild");
+                });
+
             modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.GuildChannel", b =>
                 {
                     b.HasOne("Zenbot.Domain.Shared.Entities.Bot.Guild", "Guild")
@@ -916,11 +944,16 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.Navigation("Guild");
                 });
 
+            modelBuilder.Entity("Domain.Shared.Entities.Bot.BotUser", b =>
+                {
+                    b.Navigation("BotUserGuilds");
+                });
+
             modelBuilder.Entity("Zenbot.Domain.Shared.Entities.Bot.Guild", b =>
                 {
                     b.Navigation("BirthdayMessages");
 
-                    b.Navigation("BotUsers");
+                    b.Navigation("BotUserGuilds");
 
                     b.Navigation("Channels");
 

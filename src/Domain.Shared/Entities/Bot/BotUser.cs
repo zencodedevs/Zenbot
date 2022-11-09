@@ -20,24 +20,23 @@ namespace Domain.Shared.Entities.Bot
         public string JiraAccountID { get; set; }
         public string BitBucketAccountId { get; set; }
         public DateTime Birthday { get; set; } = DateTime.MinValue;
-        public DateTime NextNotifyTIme { get; set; } = DateTime.MinValue;
 
-        public int GuildId { get; set; }
-        public Guild Guild { get; set; }
+      
 
 
         [NotMapped]
         public virtual ICollection<Vocation> Vocations { get; set; }
+        public virtual ICollection<BotUserGuild> BotUserGuilds { get; set; }
+
 
 
 
         [NotMapped]
         public List<DomainEvent> DomainEvents { get; set; }
 
-        public BotUser Create(string username, string userMail, ulong userId, DateTime birthday, DateTime nextNotifyTime)
+        public BotUser Create(string username, string userMail, ulong userId, DateTime birthday)
         {
             Birthday = birthday;
-            NextNotifyTIme = nextNotifyTime;
             DiscordId = userId;
             UserMail = userMail;
             Username = username;
@@ -45,24 +44,6 @@ namespace Domain.Shared.Entities.Bot
         }
     }
 
-    
-
-    //public class Supervisor : ValueObject
-    //{
-    //    public ulong DiscordId { get; init; }
-    //    public string Username { get; init; }
-
-    //    public Supervisor(ulong discordId, string username)
-    //    {
-    //        DiscordId = discordId;
-    //        Username = username;
-    //    }
-
-    //    protected override IEnumerable<object> GetAtomicValues()
-    //    {
-    //        yield return DiscordId;
-    //        yield return Username;
-    //    }
-    //}
+  
     
 }
