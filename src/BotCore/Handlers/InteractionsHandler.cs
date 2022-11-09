@@ -23,6 +23,7 @@ namespace BotCore.Handlers
         private readonly GuildService _guildService;
         private readonly ChannelService _channelService;
         private readonly UserService _userService;
+        private readonly BotUserGuildServices _botUserGuildServices;
         public InteractionsHandler(IServiceProvider services)
         {
             this.services = services;
@@ -33,6 +34,7 @@ namespace BotCore.Handlers
             _guildService = services.GetRequiredService<GuildService>();
             _channelService = services.GetRequiredService<ChannelService>();
             _userService = services.GetRequiredService<UserService>();
+            _botUserGuildServices = services.GetRequiredService<BotUserGuildServices>();
         }
         public async Task InitializeAsync()
         {
@@ -52,7 +54,7 @@ namespace BotCore.Handlers
         }
         private async Task _client_IntegrationCreated(SocketInteraction interaction)
         {
-            var ctx = new CustomSocketInteractionContext(_discord, interaction, _guildService, _channelService, _userService, interaction.Channel);
+            var ctx = new CustomSocketInteractionContext(_discord, interaction, _guildService, _channelService, _userService, _botUserGuildServices, interaction.Channel);
             await _interactions.ExecuteCommandAsync(ctx, services);
         }
         private async Task _interactions_InteractionExecuted(ICommandInfo info, Discord.IInteractionContext context, IResult result)

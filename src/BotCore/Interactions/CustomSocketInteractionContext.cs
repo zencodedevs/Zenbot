@@ -22,12 +22,14 @@ namespace BotCore.Entities
         public GuildService _guildService;
         public UserService _userService;
         public ChannelService _channelService;
+        public BotUserGuildServices _botUserGuildServices;
 
-        public CustomSocketInteractionContext(IDiscordClient client, IDiscordInteraction interaction, GuildService guildService, ChannelService channelService, UserService userService, IMessageChannel channel = null) : base(client, interaction, channel)
+        public CustomSocketInteractionContext(IDiscordClient client, IDiscordInteraction interaction, GuildService guildService, ChannelService channelService, UserService userService, BotUserGuildServices botUserGuildServices, IMessageChannel channel = null) : base(client, interaction, channel)
         {
             this._guildService = guildService;
             this._userService = userService;
             this._channelService = channelService;
+            this._botUserGuildServices = botUserGuildServices;
 
         }
 
@@ -77,7 +79,7 @@ namespace BotCore.Entities
         {
             if (_user is null || refresh)
             {
-                _user = await _userService.GetOrAddAsync(Interaction.User.Id, Interaction.User.Username, BotGuild.Id);
+                _user = await _userService.GetOrAddAsync(Interaction.User.Id, Interaction.User.Username);
             }
             return _user;
         }
@@ -100,6 +102,25 @@ namespace BotCore.Entities
                 _botGuild = await _guildService.GetOrAddAsync(Interaction.GuildId.Value);
             }
             return _botGuild;
+        }
+
+
+        // Current Guild with user bot is running in
+        private BotUserGuild _botUserGuild;
+        public BotUserGuild BotUserGuild
+        {
+            get
+            {
+                return GetBotUserGuildAsync(false).Result;
+            }
+        }
+        public async Task<BotUserGuild> GetBotUserGuildAsync(bool refresh)
+        {
+            if (_botUserGuild == null || refresh)
+            {
+                _botUserGuild = await _botUserGuildServices.GetOrAddAsync(BotGuild.Id, BotUser.Id, false);
+            }
+            return _botUserGuild;
         }
 
     }

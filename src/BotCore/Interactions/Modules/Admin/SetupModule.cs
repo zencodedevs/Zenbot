@@ -35,6 +35,7 @@ namespace BotCore.Interactions.Modules.Admin
         public WelcomeMessageService _welcomeMessageService { get; set; }
         public UserService _userService { get; set; }
         public SupervisorService _supervisorService { get; set; }
+        public BotUserGuildServices _botUserGuildServices { get; set; }
 
 
 
@@ -67,14 +68,15 @@ namespace BotCore.Interactions.Modules.Admin
         public async Task listSupervisor()
         {
             await DeferAsync();
-            var users = await _userService.GetUsersOfGuild(Context.BotGuild.Id);
+            var currenGuildUsers = await _botUserGuildServices.GetUsersByGuildId(Context.BotGuild.Id);
+            var sprs = await _userService.GetSupervisorersForCurrentGuild(currenGuildUsers);
 
             var embedBuiler = new EmbedBuilder()
             .WithTitle("List of all Supervisors in this Server")
             .WithColor(Color.Purple)
             .WithCurrentTimestamp();
 
-            foreach (var item in users)
+            foreach (var item in sprs)
             {
                 embedBuiler.AddField("Name", item.Username, true);
             }
@@ -125,22 +127,7 @@ namespace BotCore.Interactions.Modules.Admin
 
 
 
-        // Replace the default bot prefix with your own profex
-        [SlashCommand("prefix", "setup server prefix")]
-        public async Task prefix([MaxLength(20)] string prefix)
-        {
-            await DeferAsync();
-            await Context._guildService.UpdateAsync(Context.BotGuild.Id, x =>
-            {
-                x.BotPrefix = prefix;
-            });
-            await FollowupAsync($"Channel prefix updated to **{prefix}**");
-
-            // Log the message
-            var message = $"Changed the prefix to `{prefix}`";
-            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
-
-        }
+        
 
 
         // Create Or update the Server Guild password for Authentication users
@@ -429,11 +416,12 @@ namespace BotCore.Interactions.Modules.Admin
 
             await FollowupAsync(embed: embed);
 
-            await Context._userService.UpdateAsync(Context.BotUser, x =>
+            // add User to database
+            await Context._botUserGuildServices.UpdateAsync(Context.BotUserGuild, x =>
             {
-                x.DiscordId = Context.User.Id;
+                x.BotUserId = Context.BotUser.Id;
                 x.GuildId = Context.BotGuild.Id;
-                x.Username = Context.User.Username;
+                x.IsAdmin = true;
             });
             // Log the message
             var message = $"Admin help command ran";
