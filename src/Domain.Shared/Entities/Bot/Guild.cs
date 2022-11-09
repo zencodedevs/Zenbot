@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,9 @@ namespace Zenbot.Domain.Shared.Entities.Bot
             Channels = new List<GuildChannel>();
         }
         public ulong GuildId { get; set; }
-        public string BotPrefix { get; set; }
-
+        public string GuildName { get; set; }
         public bool IsMainServer { get; set; }
+        public DateTime JoinDate { get; set; } = DateTime.UtcNow;
         public string ScrinIOToken { get; set; }
         public string AuthenticationPassword { get; set; }
         public string GreetingFilePath { get; set; }
@@ -28,9 +29,9 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public ulong HrRoleId { get; set; }
 
         public virtual ICollection<GuildChannel> Channels { get; set; }
-        public virtual ICollection<BotUser> BotUsers { get; set; }
         public virtual ICollection<BirthdayMessage> BirthdayMessages { get; set; }
         public virtual ICollection<WelcomeMessage> WelcomeMessages { get; set; }
+        public virtual ICollection<BotUserGuild> BotUserGuilds { get; set; }
     }
  
   

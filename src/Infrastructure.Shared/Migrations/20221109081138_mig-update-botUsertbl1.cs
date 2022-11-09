@@ -2,12 +2,12 @@
 
 namespace Zenbot.Infrastructure.Shared.Migrations
 {
-    public partial class miggsuite : Migration
+    public partial class migupdatebotUsertbl1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "GSuiteAuth",
+                name: "GuildName",
                 table: "Guilds",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -16,7 +16,7 @@ namespace Zenbot.Infrastructure.Shared.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "GSuiteAuth",
+                name: "GuildName",
                 table: "Guilds");
         }
     }

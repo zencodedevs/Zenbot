@@ -39,19 +39,13 @@ namespace BotCore.Services.Birthday
             _discord.Ready += _client_Ready;
         }
 
-        // Method which will be called every 24 hours to check if there are in bot servers who has birthday
+        // Method which will be called every day at 11 am
         private Task _client_Ready()
         {
             _ = Task.Run(async () =>
             {
-                // while loop for calling the function everyday
-                while (true)
-                {
                     var users = await _usersService.GetUpComingUsersBrithday();
                     await NotficationUsersBirthdayAsync(users);
-
-                    await Task.Delay(TimeSpan.FromHours(24));
-                }
             });
 
             return Task.CompletedTask;
@@ -121,15 +115,9 @@ namespace BotCore.Services.Birthday
                     }.Build();
                     await _channelService.SendMessageAsync(loggerChannel.ChannelId, null, false, embed: brithday_embed);
 
-                    await Task.Delay(150);
                 }
 
-                await _usersService.UpdateAsync(u, x =>
-                {
-                    u.NextNotifyTIme = DateTime.UtcNow
-                    .AddYears(1)
-                    .AddSeconds(-30);
-                });
+              
             }
 
 

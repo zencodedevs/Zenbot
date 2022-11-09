@@ -80,6 +80,8 @@ namespace BotCore.Services.Birthday.Modules
         {
             await RespondWithModalAsync<BirthdayForm>($"set-brithday");
         }
+
+
         [ModalInteraction("set-brithday", true)]
         public async Task set_modal(BirthdayForm form)
         {
@@ -94,7 +96,6 @@ namespace BotCore.Services.Birthday.Modules
             {
                 x.Birthday = birthdayDate;
                 x.Username = Context.User.Username;
-                x.GuildId = Context.BotGuild.Id;
             });
 
             await FollowupAsync($"Done, your brithday added, <t:{((DateTimeOffset)birthdayDate).ToUnixTimeSeconds()}:D>", ephemeral:true);
@@ -105,6 +106,8 @@ namespace BotCore.Services.Birthday.Modules
             {
                 await brithdayService.NotficationUsersBirthdayAsync(new BotUser[] { Context.BotUser });
             }
+
+           
 
             // Log the message
             var message = $"Birthday added : {birthdayDate}";

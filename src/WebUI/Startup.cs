@@ -65,20 +65,20 @@ namespace Zenbot.WebUI
             var bot = new BotService(_env).ConfigServices(services);
             services.AddSingleton(bot);
 
-            // This configures Google.Apis.Auth.AspNetCore3 for use in this app.
-            services
-                .AddAuthentication(o =>
-                {
-                    o.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
-                    o.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
-                    o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
-                .AddCookie()
-                .AddGoogleOpenIdConnect(options =>
-                {
-                    options.ClientId = "146753972763-gkhaav62pq08ktqs015obka7taqra11p.apps.googleusercontent.com";
-                    options.ClientSecret = "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";
-                });
+            //// This configures Google.Apis.Auth.AspNetCore3 for use in this app.
+            //services
+            //    .AddAuthentication(o =>
+            //    {
+            //        o.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+            //        o.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+            //        o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    })
+            //    .AddCookie()
+            //    .AddGoogleOpenIdConnect(options =>
+            //    {
+            //        options.ClientId = "146753972763-gkhaav62pq08ktqs015obka7taqra11p.apps.googleusercontent.com";
+            //        options.ClientSecret = "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";
+            //    });
 
 
             services.AddDomain();
@@ -262,7 +262,7 @@ namespace Zenbot.WebUI
 
             var localizationOptions = new RequestLocalizationOptions
             {
-                DefaultRequestCulture = new RequestCulture(culture: Constants.SystemCultureNames.Georgian, uiCulture: Constants.SystemCultureNames.Georgian),
+                DefaultRequestCulture = new RequestCulture(culture: Constants.SystemCultureNames.English, uiCulture: Constants.SystemCultureNames.English),
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
             };

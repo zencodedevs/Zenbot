@@ -3,18 +3,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Zenbot.Infrastructure.Shared.Migrations
 {
-    public partial class migVocation : Migration
+    public partial class migupdatebotguild : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "ForDate",
-                table: "Vocations",
-                newName: "StartDate");
-
             migrationBuilder.AddColumn<DateTime>(
-                name: "EndDate",
-                table: "Vocations",
+                name: "JoinDate",
+                table: "Guilds",
                 type: "datetime2",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
@@ -23,13 +18,8 @@ namespace Zenbot.Infrastructure.Shared.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "EndDate",
-                table: "Vocations");
-
-            migrationBuilder.RenameColumn(
-                name: "StartDate",
-                table: "Vocations",
-                newName: "ForDate");
+                name: "JoinDate",
+                table: "Guilds");
         }
     }
 }

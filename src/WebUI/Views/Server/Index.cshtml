@@ -1,0 +1,146 @@
+﻿@using Zenbot.Domain.Shared.Entities.Bot
+@model IEnumerable<BotUserGuild>
+
+@{
+    ViewData["Title"] = "Server";
+    Layout = "_PanelLayout";
+    var counter = 1;
+}
+
+<div class="row g-3 my-2 bg-white pb-3">
+    <div class="d-flex justify-content-between px-3">
+        <div class="col-md-3">
+            <a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#CreatServerModal">
+                <div class="custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
+                    <div class="d-flex justify-content-around align-items-center">
+                        <p class="fs-5 mb-0">Add a Server</p>
+                        <i class="fas fa-plus-circle fs-5 p-2"></i>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+       
+
+        <div class="col-md-3">
+            <a href="https://discord.com/api/oauth2/authorize?client_id=1018769259251388457&permissions=1101945441360&scope=bot%20applications.commands" class="text-dark">
+                <div class=" custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
+                    <div class="d-flex justify-content-around align-items-center">
+                        <p class="fs-5 mb-0">Add Zenbot</p>
+                        <i class="fas fa-plus-square fs-5 p-2"></i>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="p-4">
+        <h5>All Servers</h5>
+        <div class="p-4 border border-1 rounded-2">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Server Name</th>
+                        <th scope="col">Users Count</th>
+                        <th scope="col">Join Date</th>
+                        <th scope="col">Settings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="text-center">
+                            <th scope="row">@counter</th>
+                            <td>@item.Guild.GuildName</td>
+                            <td>87</td>
+                            <td>@item.Guild.JoinDate.ToString("MMM dd yyyy")</td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-h"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" href="#">Edit Server</a></li>
+                                        <li><a class="dropdown-item" href="#">Remove Server</a></li>
+                                        <li><a class="dropdown-item" href="#">Add User to server</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+
+                  
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+
+  <!-- Modal -->
+        <div class="modal fade" id="CreatServerModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Server</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Great! If you want to add a server make sure first you've added the Zenbot to your server.
+                        Once you finished, let's consider next steps by pressing on the `Next` button.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-target="#NextStepsForCreatingServer" data-bs-toggle="modal" data-bs-dismiss="modal">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Next Steps-->
+        <div class="modal fade" id="NextStepsForCreatingServer" aria-hidden="true" aria-labelledby="" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalToggleLabel2">Add Server (Second step)</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Nice job, You did it! Now it is time to setup Zenbot inside your server.Just run `/setup help`
+                        If you wanted, complete those steps if not no problem.
+                        <p class="mt-2">
+                            <strong>Note:</strong> We recommand you to make an extra channel and then run
+                            the setup commands for your server so no one will see the setup results.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-dark" data-bs-target="#CreatServerModal" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+                        <button class="btn btn-dark" data-bs-target="#FinalStepsForCreatingServer" data-bs-toggle="modal" data-bs-dismiss="modal">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Final Modal-->
+        <div class="modal fade" id="FinalStepsForCreatingServer" aria-hidden="true" aria-labelledby="" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalToggleLabel2">Add Server (Final step)</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Congratulations!</strong> Now you're ready to enjoy using Zenbot</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-dark" data-bs-target="#NextStepsForCreatingServer" data-bs-toggle="modal" data-bs-dismiss="modal">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -41,6 +41,8 @@ namespace Infrastructure.Shared
             services.TryAddScoped<IAppDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
             services.TryAddTransient<IDateTime, DateTimeService>();
+            services.TryAddScoped<IBotUserGuildService, BotUserGuildService>();
+            services.TryAddScoped<IBotUserService, BotUserService>();
 
             return services;
         }

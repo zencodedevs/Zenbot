@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Zenbot.Infrastructure.Shared.Persistence;
 
 namespace Zenbot.Infrastructure.Shared.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221108134349_mig-initial")]
+    partial class miginitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,11 +37,17 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.Property<decimal>("DiscordId")
                         .HasColumnType("decimal(20,0)");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsSupervisor")
                         .HasColumnType("bit");
 
                     b.Property<string>("JiraAccountID")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("NextNotifyTIme")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserMail")
                         .HasColumnType("nvarchar(max)");
@@ -626,9 +634,6 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.Property<int>("GuildId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BotUserId");
@@ -648,6 +653,9 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.Property<string>("AuthenticationPassword")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BotPrefix")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("GSuiteAuth")
                         .HasColumnType("nvarchar(max)");
 
@@ -657,17 +665,11 @@ namespace Zenbot.Infrastructure.Shared.Migrations
                     b.Property<decimal>("GuildId")
                         .HasColumnType("decimal(20,0)");
 
-                    b.Property<string>("GuildName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("HrRoleId")
                         .HasColumnType("decimal(20,0)");
 
                     b.Property<bool>("IsMainServer")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("JoinDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("ScrinIOToken")
                         .HasColumnType("nvarchar(max)");
