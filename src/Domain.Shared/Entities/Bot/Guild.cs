@@ -19,6 +19,7 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public ulong GuildId { get; set; }
         public string GuildName { get; set; }
         public bool IsMainServer { get; set; }
+        public DateTime JoinDate { get; set; } = DateTime.UtcNow;
         public string ScrinIOToken { get; set; }
         public string AuthenticationPassword { get; set; }
         public string GreetingFilePath { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Shared.Entities.Bot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Zenbot.Domain.Shared.Interfaces
 {
     public interface IBotUserService
     {
-        Task<int> GetBotUsersByGuildId(int guildId);
+        Task<BotUser> GetBotUserByDiscordId(ulong discordId);
     }
 }
