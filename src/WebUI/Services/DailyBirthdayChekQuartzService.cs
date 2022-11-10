@@ -25,12 +25,9 @@ namespace Zenbot.WebUI.Services
 
         public async Task Execute(IJobExecutionContext context)
         {
-            //if (await _featureManager.IsEnabledAsync("DailyBirthdayChekQuartzService"))
-            //{
                 var users = await _userService.GetUpComingUsersBrithday();
                 await _birthdayService.NotficationUsersBirthdayAsync(users);
                 Console.WriteLine("job is runing...");
-            //}
         }
     }
 }

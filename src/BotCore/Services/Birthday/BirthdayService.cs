@@ -28,6 +28,7 @@ namespace BotCore.Services.Birthday
         private readonly BotConfiguration _config;
         private readonly GuildService _guildService;
         private readonly ChannelService _channelService;
+        private readonly BirthdayMessageService birthdayMessageService;
         public BirthdayService(IServiceProvider services)
         {
             _services = services;
@@ -36,6 +37,7 @@ namespace BotCore.Services.Birthday
             _config = services.GetRequiredService<BotConfiguration>();
             _guildService = services.GetRequiredService<GuildService>();
             _channelService = services.GetRequiredService<ChannelService>();
+            birthdayMessageService = services.GetRequiredService<BirthdayMessageService>();
             _discord.Ready += _client_Ready;
         }
 
@@ -44,8 +46,8 @@ namespace BotCore.Services.Birthday
         {
             _ = Task.Run(async () =>
             {
-                    var users = await _usersService.GetUpComingUsersBrithday();
-                    await NotficationUsersBirthdayAsync(users);
+                var users = await _usersService.GetUpComingUsersBrithday();
+                await NotficationUsersBirthdayAsync(users);
             });
 
             return Task.CompletedTask;
@@ -57,7 +59,7 @@ namespace BotCore.Services.Birthday
         {
             if (users is null || users.Count < 1)
                 return;
-            
+
             // To get all guilts users are in
             List<Guild> botGuilds = new();
 
@@ -82,8 +84,12 @@ namespace BotCore.Services.Birthday
                         botGuild = await _guildService.GetAsync(a => a.GuildId == guild.Id);
                         if (botGuild is null)
                             continue;
-
-                        botGuilds.Add(botGuild);
+                        
+                        // check if the birthday message is enable for this Guild
+                        if (await birthdayMessageService.CheckIfBirthdayMessageIsEnable(botGuild.Id))
+                        {
+                            botGuilds.Add(botGuild);
+                        }
                     }
 
                     var loggerChannel = botChannels.FirstOrDefault(a => a.GuildId == botGuild.Id);
@@ -98,7 +104,7 @@ namespace BotCore.Services.Birthday
 
                     // Getting message from database the one which is active
                     var birthday_message = await _guildService.GetBirthdayMessageAsync(botGuild.Id);
-                    
+
                     // Message text and replace the {username} with Discord username
                     var bMessage = $"Happy Birthday dear $<@{u.DiscordId} \n We're all happy to have you here and congratulate your birthday together! 😍 \n **Have a very nice day**";
                     if (birthday_message != null)
@@ -117,7 +123,7 @@ namespace BotCore.Services.Birthday
 
                 }
 
-              
+
             }
 
 
