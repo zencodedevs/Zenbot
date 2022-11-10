@@ -27,14 +27,18 @@ namespace BotCore.Services
 
         public async Task<WelcomeMessage> GetOrAddAsync(bool isActive, string message, int guildId)
         {
-            if (isActive)
+
+            var welcomeMessage = await base.GetAsync(a => a.IsActive);
+            if (welcomeMessage is not null)
             {
-                var welcomeMessage = await base.GetAsync(a => a.IsActive);
-                if (welcomeMessage is not null)
+                welcomeMessage = await base.UpdateAsync(welcomeMessage, x =>
                 {
-                    welcomeMessage = await base.UpdateAsync(welcomeMessage, x => x.IsActive = false);
-                }
+                    x.IsActive = true;
+                    x.Message = message;
+                });
+                return welcomeMessage;
             }
+
 
             var newMessage = new WelcomeMessage()
             {

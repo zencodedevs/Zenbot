@@ -13,15 +13,18 @@ namespace Zenbot.Infrastructure.Shared.Services
     public class BotUserGuildService : IBotUserGuildService
     {
         private readonly IEntityFrameworkRepository<BotUserGuild> _repository;
-        public BotUserGuildService(IEntityFrameworkRepository<BotUserGuild> repository)
+        private readonly IBotUserService _botUserService;
+        public BotUserGuildService(IEntityFrameworkRepository<BotUserGuild> repository, IBotUserService botUserService)
         {
             _repository = repository;
+            _botUserService = botUserService;
         }
-        public async Task<List<BotUserGuild>> GetAllGuildsByUserId(int userId)
+        public async Task<List<BotUserGuild>> GetAllGuildsByUserId(ulong userId)
         {
+            var user = await _botUserService.GetBotUserByDiscordId(userId);
             var query = await _repository.GetQueryableAsync(x => x.Guild);
-            var data = await query.Where(x => x.BotUserId == userId && x.IsAdmin).ToListAsync();
-            return data;
+            var guilds = await query.Where(x => x.BotUserId == user.Id && x.IsAdmin).ToListAsync();
+            return guilds;
         }
     }
 }

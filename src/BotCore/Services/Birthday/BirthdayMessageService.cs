@@ -26,14 +26,16 @@ namespace BotCore.Services
 
         public async Task<BirthdayMessage> GetOrAddAsync(bool isActive, string message, int guildId)
         {
-            if (isActive)
+
+            var birthdayMessage = await base.GetAsync(a => a.GuildId == guildId);
+            if (birthdayMessage is not null)
             {
-                var birthdayMessage = await base.GetAsync(a => a.IsActive);
-                if (birthdayMessage is not null)
+                birthdayMessage = await base.UpdateAsync(birthdayMessage, x =>
                 {
-                    birthdayMessage = await base.UpdateAsync(birthdayMessage, x => x.IsActive = false);
-                }
-               
+                    x.Message = message;
+                    x.IsActive = isActive;
+                });
+                return birthdayMessage;
             }
 
             var newMessage = new BirthdayMessage()
@@ -45,6 +47,13 @@ namespace BotCore.Services
             var result = await base.InsertAsync(newMessage);
             return result;
 
+        }
+
+        public async Task<bool> CheckIfBirthdayMessageIsEnable(int guildId)
+        {
+            var message = await base.GetAsync(a => a.GuildId == guildId && a.IsActive);
+            if(message == null) return false;
+            return true;
         }
     }
 }
