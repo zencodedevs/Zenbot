@@ -27,16 +27,18 @@ namespace Zenbot.WebUI.Controllers
             return View(guilds);
         }
 
-        public async Task<IActionResult> Settings(int guildId)
+     
+        public async Task<IActionResult> Edit(int guildId)
         {
             var message = await _birthdayMessageService.GetBirthdayMessagesByGuildId(guildId);
             if (message != null)
             {
+                ViewBag.guildId = guildId;
                 var messageDto = new BirthdayMessageDto
                 {
                     Message = message.Message,
                     IsActive = message.IsActive,
-                    GuildId = guildId,
+                    GuildId = message.GuildId,
                     Id = message.Id
                 };
                 return View(messageDto);
@@ -46,15 +48,14 @@ namespace Zenbot.WebUI.Controllers
             return View();
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Settings(BirthdayMessageDto message)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(BirthdayMessageDto dto)
         {
-
-            var bMessage = await _birthdayMessageService.UpdateBirthdayMessage(message);
+            var bMessage = await _birthdayMessageService.UpdateBirthdayMessage(dto);
             if (bMessage) return RedirectToAction(nameof(Index));
-            else return View(message);
-
-            return View(message);
+            else return View(dto);
         }
     }
 }
