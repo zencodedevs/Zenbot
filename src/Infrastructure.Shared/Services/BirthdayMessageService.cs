@@ -20,31 +20,29 @@ namespace Zenbot.Infrastructure.Shared.Services
             _repository = repository;
             _userGuildService = userGuildService;
         }
-        public async Task<List<BirthdayMessage>> GetBirthdayMessagesByGuildId(ulong userId)
+        public async Task<BirthdayMessage> GetBirthdayMessagesByGuildId(int guildId)
         {
-            if (!string.IsNullOrEmpty(userId.ToString()))
+            if (guildId > 0)
             {
-                var guilds = await _userGuildService.GetAllGuildsByUserId(userId);
-                var messages = new List<BirthdayMessage>();
-                foreach (var guild in guilds)
-                {
-                    var query = await _repository.GetQueryableAsync(x => x.Guild);
-                    var message = await query.Where(x => x.GuildId == guild.Id).FirstOrDefaultAsync();
-                    messages.Add(message);
-                }
-                return messages;
+               return await _repository.FindAsync(x => x.GuildId == guildId);
             }
             return null;
         }
 
-        public async Task<bool> UpdateBirthdayMessage(BirthdayMessageDto messageDto)
+        public async Task<bool> UpdateBirthdayMessage(BirthdayMessageDto message)
         {
-            var message = await _repository.FindAsync(x => x.Id == messageDto.Id);
-            if (message != null)
+            var bMessage = await _repository.FindAsync(x => x.Id == message.Id);
+            if (bMessage != null)
             {
-                message.Message = message.Message;
-                message.IsActive = messageDto.IsActive;
-                await _repository.UpdateAsync(message);
+                if (string.IsNullOrEmpty(message.Message))
+                {
+                    bMessage.Message = "Happy Birthday dear {username} We're all happy to have you here and congratulate your birthday together! 😍 \n **Have a very nice day**";
+                }
+                else bMessage.Message = message.Message;
+
+                bMessage.Message = message.Message;
+                bMessage.IsActive = message.IsActive;
+                await _repository.UpdateAsync(bMessage);
                 await _repository.SaveChangesAsync(true);
                 return true;
             }

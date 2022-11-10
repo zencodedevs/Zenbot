@@ -10,7 +10,7 @@ namespace Zenbot.Domain.Shared.Interfaces
 {
     public interface IBirthdayMessageService
     {
-        Task<List<BirthdayMessage>> GetBirthdayMessagesByGuildId(ulong userId);
-        Task<bool> UpdateBirthdayMessage(BirthdayMessageDto messageDto);
+        Task<BirthdayMessage> GetBirthdayMessagesByGuildId(int guildId);
+        Task<bool> UpdateBirthdayMessage(BirthdayMessageDto message);
     }
 }
