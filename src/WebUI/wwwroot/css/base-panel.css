@@ -6,7 +6,10 @@
 #wrapper {
     overflow-x: hidden;
 }
-
+.note{
+    font-size:.8em;
+    color:#8d8d8d !important;
+}
 .custom-lightGray-bg {
     background-color: #eaeaea;
 }

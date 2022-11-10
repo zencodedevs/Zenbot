@@ -1,8 +1,8 @@
 ﻿@using Zenbot.Domain.Shared.Entities.Bot.Dtos
-@model BirthdayMessageDto
+@model WelcomeMessageDto
 
 @{
-    ViewData["Title"] = "Birthday";
+    ViewData["Title"] = "Welcome";
     Layout = "_PanelLayout";
 }
 
@@ -13,11 +13,11 @@
 
 
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <a href="#" class="text-dark">
                 <div class=" custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
                     <div class="d-flex justify-content-around align-items-center">
-                        <p class="fs-5 mb-0">Birthday Settings</p>
+                        <p class="fs-5 mb-0">Welcome Message Settings</p>
                         <i class="fas fa-birthday-cake fs-5 p-2"></i>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="p-4">
-        <h5>Update Birthay Message Here!</h5>
+        <h5>Update Welcome Message Here!</h5>
         <div class="p-4 border border-1 rounded-2">
             <form asp-action="Edit" method="post">
 
@@ -39,7 +39,7 @@
                         <p><strong>Note: </strong>Please use `{username}` where ever you want to be your user's name.</p>
                     </label>
                     <textarea asp-for="@Model.Message" class="form-control" id="exampleFormControlTextarea1" rows="4"
-                              placeholder="Happy Birthday dear {username} We're all happy to have you here and congratulate your birthday together! 😍 \n **Have a very nice day**">
+                              placeholder="Welcome dear {username} \n Now we're much stronger by having you in our team!\n **Thank you for joining us**">
                     </textarea>
                 </div>
                 <div class="form-check form-switch d-flex justify-content-between">
@@ -51,7 +51,6 @@
                         <input type="submit" value="Save" class="btn btn-dark" />
                     </div>
                 </div>
-
                 <div class=" note">If you <strong>Disable</strong> this feature, Zenbot won't use it for your server.</div>
             </form>
         </div>
