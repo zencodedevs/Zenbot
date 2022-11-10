@@ -1,0 +1,63 @@
+﻿@using Zenbot.Domain.Shared.Entities.Bot.Dtos
+@model BirthdayMessageDto
+
+@{
+    ViewData["Title"] = "Birthday";
+    Layout = "_PanelLayout";
+}
+
+<div class="row g-3 my-2 bg-white pb-3">
+    <div class="d-flex justify-content-between px-3">
+        <div class="col-md-3">
+        </div>
+
+
+
+        <div class="col-md-3">
+            <a href="#" class="text-dark">
+                <div class=" custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
+                    <div class="d-flex justify-content-around align-items-center">
+                        <p class="fs-5 mb-0">Birthday Settings</p>
+                        <i class="fas fa-birthday-cake fs-5 p-2"></i>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="p-4">
+        <h5>Update Birthay Message Here!</h5>
+        <div class="p-4 border border-1 rounded-2">
+            <form asp-action="Settings"  method="post">
+                
+                <input asp-for="@Model.Id" hidden />
+                <input asp-for="@Model.GuildId" hidden value="@ViewBag.guildId"/>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">
+                        <p class="fs-6 text-secondary">The placeholder is the default Message for birthday, but you can always customize it.</p>
+                        <p><strong>Note: </strong>Please use `{username}` where ever you want to be your user's name.</p>
+                    </label>
+                    <textarea asp-for="@Model.Message" class="form-control" id="exampleFormControlTextarea1" rows="4"
+                              placeholder="Happy Birthday dear {username} We're all happy to have you here and congratulate your birthday together! 😍 \n **Have a very nice day**">
+                    </textarea>
+                </div>
+                <div class="form-check form-switch d-flex justify-content-between">
+                    <div>
+                        <input class="form-check-input " type="checkbox" id="flexSwitchCheckChecked" asp-for="@Model.IsActive">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Active/InActive</label>
+                    </div>
+
+                    <div>
+                    </div>
+                </div>
+                        <button class="btn btn-dark" type="submit">Save</button>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+

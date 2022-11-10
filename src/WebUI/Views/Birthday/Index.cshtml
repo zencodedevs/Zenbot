@@ -1,5 +1,5 @@
 ﻿@using Zenbot.Domain.Shared.Entities.Bot
-@model IEnumerable<BirthdayMessage>
+@model IEnumerable<BotUserGuild>
 
 @{
     ViewData["Title"] = "Birthday";
@@ -10,25 +10,18 @@
 <div class="row g-3 my-2 bg-white pb-3">
     <div class="d-flex justify-content-between px-3">
         <div class="col-md-3">
-            <a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#CreatServerModal">
-                <div class="custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
-                    <div class="d-flex justify-content-around align-items-center">
-                        <p class="fs-5 mb-0">Add a Server</p>
-                        <i class="fas fa-plus-circle fs-5 p-2"></i>
-                    </div>
-                </div>
-            </a>
+            
 
         </div>
 
        
 
         <div class="col-md-3">
-            <a href="https://discord.com/api/oauth2/authorize?client_id=1018769259251388457&permissions=1101945441360&scope=bot%20applications.commands" class="text-dark">
+            <a href="#" class="text-dark">
                 <div class=" custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
                     <div class="d-flex justify-content-around align-items-center">
-                        <p class="fs-5 mb-0">Add Zenbot</p>
-                        <i class="fas fa-plus-square fs-5 p-2"></i>
+                        <p class="fs-5 mb-0">Birthday Settings</p>
+                        <i class="fas fa-birthday-cake fs-5 p-2"></i>
                     </div>
                 </div>
             </a>
@@ -44,9 +37,8 @@
                     <tr class="text-center">
                         <th scope="col">#</th>
                         <th scope="col">Server Name</th>
-                        <th scope="col">Active/InActive</th>
-                        <th scope="col">Edit Message</th>
-                        <th scope="col">Settings</th>
+                        <th scope="col">Join Date</th>
+                        <th scope="col">Birthday Settings</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,21 +47,8 @@
                         <tr class="text-center">
                             <th scope="row">@counter</th>
                             <td>@item.Guild.GuildName</td>
-                            <td>@item.IsActive</td>
-                            <td><a asp-action="Edit" asp-controller="Birthday" asp-route-Id="@item.Id"><i class="fas fa-edit me-2"></i></a></td>
-                            <td>
-                                <div class="dropdown">
-                                    <a class="toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                    </a>
-
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" href="#">Edit Server</a></li>
-                                        <li><a class="dropdown-item" href="#">Remove Server</a></li>
-                                        <li><a class="dropdown-item" href="#">Add User to server</a></li>
-                                    </ul>
-                                </div>
-                            </td>
+                            <td>@item.Guild.JoinDate.ToString("MMM dd yyyy")</td>
+                            <td><a asp-action="Settings" asp-controller="Birthday" asp-route-guildId="@item.GuildId"><i class="fas fa-cogs me-2"></i></a></td>
                         </tr>
                         counter++;
                     }
