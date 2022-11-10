@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,16 +10,16 @@ using Zenbot.Domain.Shared.Interfaces;
 
 namespace Zenbot.Infrastructure.Shared.Services
 {
-    public class BirthdayMessageService : IBirthdayMessageService
+    public class WelcomeMessageService : IWelcomeMessageService
     {
-        private readonly IEntityFrameworkRepository<BirthdayMessage> _repository;
+        private readonly IEntityFrameworkRepository<WelcomeMessage> _repository;
         private readonly IBotUserGuildService _userGuildService;
-        public BirthdayMessageService(IEntityFrameworkRepository<BirthdayMessage> repository, IBotUserGuildService userGuildService)
+        public WelcomeMessageService(IEntityFrameworkRepository<WelcomeMessage> repository, IBotUserGuildService userGuildService)
         {
             _repository = repository;
             _userGuildService = userGuildService;
         }
-        public async Task<BirthdayMessage> GetBirthdayMessagesByGuildId(int guildId)
+        public async Task<WelcomeMessage> GetWelcomeMessagesByGuildId(int guildId)
         {
             if (guildId > 0)
             {
@@ -29,19 +28,20 @@ namespace Zenbot.Infrastructure.Shared.Services
             return null;
         }
 
-        public async Task<bool> UpdateBirthdayMessage(BirthdayMessageDto message)
+        public async Task<bool> UpdateWelcomeMessage(WelcomeMessageDto message)
         {
-            var bMessage = await _repository.FindAsync(x => x.Id == message.Id);
-            if (bMessage != null)
+            var wMessage = await _repository.FindAsync(x => x.Id == message.Id);
+            if (wMessage != null)
             {
-                bMessage.Message = message.Message;
-                bMessage.IsActive = message.IsActive;
-                await _repository.UpdateAsync(bMessage);
+                wMessage.Message = message.Message;
+                wMessage.IsActive = message.IsActive;
+                await _repository.UpdateAsync(wMessage);
                 await _repository.SaveChangesAsync(true);
                 return true;
             }
-            else if(bMessage == null)            {
-                var newBMessage = new BirthdayMessage
+            else if(wMessage == null)
+            {
+                var newWMessage = new WelcomeMessage
                 {
                     IsActive = message.IsActive,
                     GuildId = message.GuildId,
@@ -49,16 +49,14 @@ namespace Zenbot.Infrastructure.Shared.Services
                 };
                 if (string.IsNullOrEmpty(message.Message))
                 {
-                    newBMessage.Message = "Happy Birthday dear {username} We're all happy to have you here and congratulate your birthday together! 😍 \n **Have a very nice day**";
+                    newWMessage.Message = "Welcome dear {username} \nNow we're much stronger by having you in our team!\n **Thank you for joining us**";
                 }
-                else { newBMessage.Message = message.Message; }
-                await _repository.InsertAsync(newBMessage);
+                else { newWMessage.Message = message.Message; }
+                await _repository.InsertAsync(newWMessage);
                 await _repository.SaveChangesAsync(true);
                 return true;
             };
             return false;
         }
-
     }
 }
-
