@@ -23,6 +23,7 @@ namespace BotCore.Interactions.Authentication
         public EventService EventService { get; set; }
         public GuildService guildService { get; set; }
         public ChannelService _channelService { get; set; }
+        public WelcomeMessageService welcomeMessageService { get; set; }
 
 
         [ComponentInteraction("button-admin-setup-authentication-password", true)]
@@ -89,52 +90,57 @@ namespace BotCore.Interactions.Authentication
 
             var welcomeMessage = await guildService.GetWelcomeMessageAsync(Context.BotGuild.Id);
 
-            // Message text and replace the {username} with Discord username
-            var wMessage = $"Welcome dear <@{Context.User.Id}>\n We're much stronger now by having you in our team!\n **Thank you for joining us**";
-            if (welcomeMessage != null)
+            // check if welcome message is enable or not
+            if (await welcomeMessageService.CheckIfWelcomeMessageIsEnable(Context.BotGuild.Id))
             {
-                wMessage = welcomeMessage.Message.Replace("{username}", $"<@{Context.User.Id}>");
+                // Message text and replace the {username} with Discord username
+                var wMessage = $"Welcome dear <@{Context.User.Id}>\n We're much stronger now by having you in our team!\n **Thank you for joining us**";
+                if (welcomeMessage != null)
+                {
+                    wMessage = welcomeMessage.Message.Replace("{username}", $"<@{Context.User.Id}>");
+                }
+
+
+                if (!string.IsNullOrEmpty(Context.BotGuild.GreetingFilePath))
+                {
+                    if (!System.IO.File.Exists(Context.BotGuild.GreetingFilePath))
+                    {
+                        await FollowupAsync("File not found. Please contact HR for providing the file", ephemeral: true);
+                        return;
+                    }
+                    try
+                    {
+                        await Context.User.SendFileAsync(
+                            filePath: Context.BotGuild.GreetingFilePath,
+                            text: wMessage);
+                    }
+                    catch
+                    {
+                        await FollowupAsync("The bot can't send message in your direct, make sure yoru direct is open.", ephemeral: true);
+                        return;
+                    }
+                }
+
+                await (Context.User as IGuildUser).AddRoleAsync(Context.BotGuild.VerifiedRoleId);
+
+                var embed = new EmbedBuilder()
+                {
+                    Title = $"{Context.User.Username} joined",
+                    Description = $"{wMessage} \n\n  @everyone  ",
+                    Color = Color.Purple,
+                    ThumbnailUrl = "https://img.icons8.com/fluency/200/confetti.png",
+                    Author = new EmbedAuthorBuilder()
+                    {
+                        Name = Context.User.Username,
+                        IconUrl = Context.User.GetAvatarUrl() ?? Context.User.GetDefaultAvatarUrl()
+                    }
+                }.Build();
+
+                await (Context.User as IGuildUser).RemoveRoleAsync(Context.BotGuild.UnVerifiedRoleId);
+                var loggerChannel = (GuildChannel)Context.Data;
+                await Context._channelService.SendMessageAsync(loggerChannel.ChannelId, Context.User.ToUserMention(), embed: embed);
+
             }
-
-
-            if (!string.IsNullOrEmpty(Context.BotGuild.GreetingFilePath))
-            {
-                if (!System.IO.File.Exists(Context.BotGuild.GreetingFilePath))
-                {
-                    await FollowupAsync("File not found. Please contact HR for providing the file", ephemeral: true);
-                    return;
-                }
-                try
-                {
-                    await Context.User.SendFileAsync(
-                        filePath: Context.BotGuild.GreetingFilePath,
-                        text: wMessage);
-                }
-                catch
-                {
-                    await FollowupAsync("The bot can't send message in your direct, make sure yoru direct is open.", ephemeral: true);
-                    return;
-                }
-            }
-
-            await (Context.User as IGuildUser).AddRoleAsync(Context.BotGuild.VerifiedRoleId);
-
-            var embed = new EmbedBuilder()
-            {
-                Title = $"{Context.User.Username} joined",
-                Description = $"{wMessage} \n\n  @everyone  ",
-                Color = Color.Purple,
-                ThumbnailUrl = "https://img.icons8.com/fluency/200/confetti.png",
-                Author = new EmbedAuthorBuilder()
-                {
-                    Name = Context.User.Username,
-                    IconUrl = Context.User.GetAvatarUrl() ?? Context.User.GetDefaultAvatarUrl()
-                }
-            }.Build();
-
-            await (Context.User as IGuildUser).RemoveRoleAsync(Context.BotGuild.UnVerifiedRoleId);
-            var loggerChannel = (GuildChannel)Context.Data;
-            await Context._channelService.SendMessageAsync(loggerChannel.ChannelId, Context.User.ToUserMention(), embed: embed);
 
             // Log the message
             var message = $"User joined the server successfully";

@@ -50,5 +50,14 @@ namespace BotCore.Services
             return result;
 
         }
+
+
+        public async Task<bool> CheckIfWelcomeMessageIsEnable(int guildId)
+        {
+            var message = await base.GetAsync(a => a.GuildId == guildId && a.IsActive);
+            if (message == null) return false;
+            return true;
+        }
+
     }
 }
