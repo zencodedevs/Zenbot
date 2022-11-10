@@ -43,6 +43,7 @@ namespace Infrastructure.Shared
             services.TryAddTransient<IDateTime, DateTimeService>();
             services.TryAddScoped<IBotUserGuildService, BotUserGuildService>();
             services.TryAddScoped<IBotUserService, BotUserService>();
+            services.TryAddScoped<IBirthdayMessageService, BirthdayMessageService>();
 
             return services;
         }
