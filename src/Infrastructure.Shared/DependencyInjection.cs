@@ -45,6 +45,7 @@ namespace Infrastructure.Shared
             services.TryAddScoped<IBotUserService, BotUserService>();
             services.TryAddScoped<IBirthdayMessageService, BirthdayMessageService>();
             services.TryAddScoped<IWelcomeMessageService, WelcomeMessageService>();
+            services.TryAddScoped<IBoardingMessage, BoardingMessageServices>();
 
             return services;
         }

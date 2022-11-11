@@ -2,7 +2,7 @@
 @model IEnumerable<BotUserGuild>
 
 @{
-    ViewData["Title"] = "Welcome";
+    ViewData["Title"] = "Boarding";
     Layout = "_PanelLayout";
     var counter = 1;
 }
@@ -16,11 +16,11 @@
 
        
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <a href="#" class="text-dark">
                 <div class=" custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
                     <div class="d-flex justify-content-around align-items-center">
-                        <p class="fs-5 mb-0">Join Server Settings</p>
+                        <p class="fs-5 mb-0">Boarding Message Settings</p>
                         <i class="fas fa-birthday-cake fs-5 p-2"></i>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Server Name</th>
                         <th scope="col">Join Date</th>
-                        <th scope="col">Welcome Message Settings</th>
+                        <th scope="col">Boarding Message Settings</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +48,8 @@
                             <th scope="row">@counter</th>
                             <td>@item.Guild.GuildName</td>
                             <td>@item.Guild.JoinDate.ToString("MMM dd yyyy")</td>
-                            <td><a asp-action="Edit" asp-controller="JoinServer" asp-route-guildId="@item.GuildId"asp-route-guildName="@item.Guild.GuildName"><i class="fas fa-cogs me-2"></i></a></td>
+                            <td><a asp-action="Edit" asp-controller="Boarding" asp-route-guildId="@item.GuildId" asp-route-guildName="@item.Guild.GuildName">
+                                <i class="fas fa-cogs me-2"></i></a></td>
                         </tr>
                         counter++;
                     }

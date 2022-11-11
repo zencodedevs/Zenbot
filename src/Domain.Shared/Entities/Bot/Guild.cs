@@ -32,6 +32,7 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public virtual ICollection<BirthdayMessage> BirthdayMessages { get; set; }
         public virtual ICollection<WelcomeMessage> WelcomeMessages { get; set; }
         public virtual ICollection<BotUserGuild> BotUserGuilds { get; set; }
+        public virtual ICollection<BoardingMessage> BoardingMessages { get; set; }
     }
  
   

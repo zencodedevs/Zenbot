@@ -10,14 +10,14 @@ using Zenbot.Domain.Shared.Interfaces;
 
 namespace Zenbot.Infrastructure.Shared.Services
 {
-    public class WelcomeMessageService : IWelcomeMessageService
+    public class BoardingMessageServices : IBoardingMessage
     {
-        private readonly IEntityFrameworkRepository<WelcomeMessage> _repository;
-        public WelcomeMessageService(IEntityFrameworkRepository<WelcomeMessage> repository)
+        private readonly IEntityFrameworkRepository<BoardingMessage> _repository;
+        public BoardingMessageServices(IEntityFrameworkRepository<BoardingMessage> repository)
         {
             _repository = repository;
         }
-        public async Task<WelcomeMessage> GetWelcomeMessagesByGuildId(int guildId)
+        public async Task<BoardingMessage> GetBoardingMessagesByGuildId(int guildId)
         {
             if (guildId > 0)
             {
@@ -26,7 +26,7 @@ namespace Zenbot.Infrastructure.Shared.Services
             return null;
         }
 
-        public async Task<bool> UpdateWelcomeMessage(WelcomeMessageDto message)
+        public async Task<bool> UpdateBoardingMessage(BoardingMessageDto message)
         {
             var wMessage = await _repository.FindAsync(x => x.Id == message.Id);
             if (wMessage != null)
@@ -37,9 +37,9 @@ namespace Zenbot.Infrastructure.Shared.Services
                 await _repository.SaveChangesAsync(true);
                 return true;
             }
-            else if(wMessage == null)
+            else if (wMessage == null)
             {
-                var newWMessage = new WelcomeMessage
+                var newWMessage = new BoardingMessage
                 {
                     IsActive = message.IsActive,
                     GuildId = message.GuildId,
@@ -47,7 +47,7 @@ namespace Zenbot.Infrastructure.Shared.Services
                 };
                 if (string.IsNullOrEmpty(message.Message))
                 {
-                    newWMessage.Message = "Welcome dear {username} \nNow we're much stronger by having you in our team!\n **Thank you for joining us**";
+                    newWMessage.Message = "Welcome dear {username} \n Now we're much stronger by having you in our team!\n **Thank you for joining us**";
                 }
                 else { newWMessage.Message = message.Message; }
                 await _repository.InsertAsync(newWMessage);

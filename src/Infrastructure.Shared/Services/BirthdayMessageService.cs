@@ -14,11 +14,9 @@ namespace Zenbot.Infrastructure.Shared.Services
     public class BirthdayMessageService : IBirthdayMessageService
     {
         private readonly IEntityFrameworkRepository<BirthdayMessage> _repository;
-        private readonly IBotUserGuildService _userGuildService;
-        public BirthdayMessageService(IEntityFrameworkRepository<BirthdayMessage> repository, IBotUserGuildService userGuildService)
+        public BirthdayMessageService(IEntityFrameworkRepository<BirthdayMessage> repository)
         {
             _repository = repository;
-            _userGuildService = userGuildService;
         }
         public async Task<BirthdayMessage> GetBirthdayMessagesByGuildId(int guildId)
         {

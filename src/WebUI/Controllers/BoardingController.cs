@@ -1,21 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Zenbot.Domain.Shared.Entities.Bot;
 using Zenbot.Domain.Shared.Entities.Bot.Dtos;
 using Zenbot.Domain.Shared.Interfaces;
 using Zenbot.WebUI.Extensions;
 
 namespace Zenbot.WebUI.Controllers
 {
-    public class BirthdayController : Controller
+    public class BoardingController : Controller
     {
         private readonly IBotUserGuildService _botUserGuildService;
-        private readonly IBirthdayMessageService _birthdayMessageService;
+        private readonly IBoardingMessage _boardingMessageService;
 
-        public BirthdayController(IBotUserGuildService botUserGuildService, IBirthdayMessageService birthdayMessageService)
+        public BoardingController(IBotUserGuildService botUserGuildService, IBoardingMessage boardingMessageService)
         {
             _botUserGuildService = botUserGuildService;
-            _birthdayMessageService = birthdayMessageService;
+            _boardingMessageService = boardingMessageService;
         }
 
         [HttpGet]
@@ -27,17 +26,17 @@ namespace Zenbot.WebUI.Controllers
             return View(guilds);
         }
 
-     
+
         public async Task<IActionResult> Edit(int guildId, string guildName)
         {
-            var message = await _birthdayMessageService.GetBirthdayMessagesByGuildId(guildId);
+            var message = await _boardingMessageService.GetBoardingMessagesByGuildId(guildId);
 
             ViewBag.guildId = guildId;
             ViewBag.guildName = guildName;
 
             if (message != null)
             {
-                var messageDto = new BirthdayMessageDto
+                var messageDto = new BoardingMessageDto
                 {
                     Message = message.Message,
                     IsActive = message.IsActive,
@@ -53,9 +52,9 @@ namespace Zenbot.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(BirthdayMessageDto dto)
+        public async Task<IActionResult> Edit(BoardingMessageDto dto)
         {
-            var bMessage = await _birthdayMessageService.UpdateBirthdayMessage(dto);
+            var bMessage = await _boardingMessageService.UpdateBoardingMessage(dto);
             if (bMessage) return RedirectToAction(nameof(Index));
             else return View(dto);
         }
