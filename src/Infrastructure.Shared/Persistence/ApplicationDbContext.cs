@@ -65,6 +65,8 @@ namespace Zenbot.Infrastructure.Shared.Persistence
         public DbSet<Vocation> Vocations { get; set; }
         public DbSet<SupervisorEmployee> Supervisors { get; set; }
         public DbSet<BotUserGuild> BotUserGuilds { get; set; }
+        public DbSet<BoardingMessage> BoardingMessages { get; set; }
+        public DbSet<BoardingFiles> BoardingFiles { get; set; }
 
 
 
