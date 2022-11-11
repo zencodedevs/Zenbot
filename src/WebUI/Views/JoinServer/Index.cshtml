@@ -48,7 +48,7 @@
                             <th scope="row">@counter</th>
                             <td>@item.Guild.GuildName</td>
                             <td>@item.Guild.JoinDate.ToString("MMM dd yyyy")</td>
-                            <td><a asp-action="Edit" asp-controller="JoinServer" asp-route-guildId="@item.GuildId"><i class="fas fa-cogs me-2"></i></a></td>
+                            <td><a asp-action="Edit" asp-controller="JoinServer" asp-route-guildId="@item.GuildId"asp-route-guildName="@item.Guild.GuildName"><i class="fas fa-cogs me-2"></i></a></td>
                         </tr>
                         counter++;
                     }

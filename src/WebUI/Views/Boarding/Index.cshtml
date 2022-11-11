@@ -16,7 +16,7 @@
 
        
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <a href="#" class="text-dark">
                 <div class=" custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
                     <div class="d-flex justify-content-around align-items-center">
@@ -48,7 +48,8 @@
                             <th scope="row">@counter</th>
                             <td>@item.Guild.GuildName</td>
                             <td>@item.Guild.JoinDate.ToString("MMM dd yyyy")</td>
-                            <td><a asp-action="Edit" asp-controller="Boarding" asp-route-guildId="@item.GuildId"><i class="fas fa-cogs me-2"></i></a></td>
+                            <td><a asp-action="Edit" asp-controller="Boarding" asp-route-guildId="@item.GuildId" asp-route-guildName="@item.Guild.GuildName">
+                                <i class="fas fa-cogs me-2"></i></a></td>
                         </tr>
                         counter++;
                     }

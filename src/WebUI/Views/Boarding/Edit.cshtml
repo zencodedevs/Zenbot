@@ -14,30 +14,30 @@
 
 
         <div class="col-md-4">
-            <a href="#" class="text-dark">
                 <div class=" custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
                     <div class="d-flex justify-content-around align-items-center">
                         <p class="fs-5 mb-0">Boarding Message Settings</p>
                         <i class="fas fa-birthday-cake fs-5 p-2"></i>
                     </div>
                 </div>
-            </a>
 
         </div>
     </div>
 
     <div class="p-4">
-        <h5>Update Welcome Message Here!</h5>
+        <h5>Update Welcome Message For <strong><i>@ViewBag.guildName</i></strong> Server</h5>
         <div class="p-4 border border-1 rounded-2">
             <form asp-action="Edit" method="post">
 
                 <input asp-for="@Model.Id" class="form-control" hidden />
-                <input asp-for="@Model.GuildId" class="form-control" value="@ViewBag.guildId" hidden/>
-                <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">
+                <input asp-for="@Model.GuildId" class="form-control" value="@ViewBag.guildId" hidden />
+                <div class="mb-3 position-relative">
+                    <label for="exampleFormControlTextarea1 " class="form-label">
                         <p class="fs-6 text-secondary">@ViewBag.info</p>
-                        <p><strong>Note: </strong>Please use `{username}` where ever you want to be your user's name.</p>
+                        <strong>Note: </strong>Please use `{username}` where ever you want to be your user's name.
                     </label>
+                    <div class="position-absolute top-0 end-0"><a asp-action="AttachFile" class="btn custom-lightGray-bg">Attach File</a></div>
+                    
                     <textarea asp-for="@Model.Message" class="form-control" id="exampleFormControlTextarea1" rows="4"
                               placeholder="Welcome dear {username} \n Now we're much stronger by having you in our team!\n **Thank you for joining us**">
                     </textarea>

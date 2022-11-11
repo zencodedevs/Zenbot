@@ -28,12 +28,15 @@ namespace Zenbot.WebUI.Controllers
         }
 
      
-        public async Task<IActionResult> Edit(int guildId)
+        public async Task<IActionResult> Edit(int guildId, string guildName)
         {
             var message = await _birthdayMessageService.GetBirthdayMessagesByGuildId(guildId);
+
+            ViewBag.guildId = guildId;
+            ViewBag.guildName = guildName;
+
             if (message != null)
             {
-                ViewBag.guildId = guildId;
                 var messageDto = new BirthdayMessageDto
                 {
                     Message = message.Message,
@@ -44,7 +47,6 @@ namespace Zenbot.WebUI.Controllers
                 return View(messageDto);
             }
             ViewBag.info = "The placeholder is the default Message for Birthday, but you can always customize it.";
-            ViewBag.guildId = guildId;
             return View();
         }
 
