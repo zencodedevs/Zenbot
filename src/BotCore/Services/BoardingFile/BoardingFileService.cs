@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zenbot.Domain.Shared.Common;
 using Zenbot.Domain.Shared.Entities.Bot;
 
 namespace BotCore.Services
@@ -24,31 +25,25 @@ namespace BotCore.Services
         }
 
 
-        //public async Task<BoardingFiles> GetOrAddAsync(bool isActive, string message, int guildId)
-        //{
+       public async Task<BoardingFiles> AddBoardingFilesAsync(int brMessageId,string file)
+        {
+            var brfiles = await base.GetManyAsync(x => x.BoardingMessageId == brMessageId);
+            if (brfiles != null)
+            {
+                foreach (var item in brfiles)
+                {
+                    UploadFiles.DeleteImg("wwwroot/"+item.FilePath);
+                }
+            }
+            await base.DeleteManyAsync(brfiles);
 
-        //    var boardingMessage = await base.GetAsync(a => a.IsActive);
-        //    if (boardingMessage is not null)
-        //    {
-        //        boardingMessage = await base.UpdateAsync(boardingMessage, x =>
-        //        {
-        //            x.IsActive = true;
-        //            x.Message = message;
-        //        });
-        //        return boardingMessage;
-        //    }
-
-
-        //    var newMessage = new BoardingMessage()
-        //    {
-        //        IsActive = isActive,
-        //        Message = message,
-        //        GuildId = guildId
-        //    };
-        //    var result = await base.InsertAsync(newMessage);
-        //    return result;
-
-        //}
+            var data = new BoardingFiles
+            {
+                BoardingMessageId = brMessageId,
+                FilePath = file
+            };
+            return await base.InsertAsync(data);
+        }
 
 
         public async Task<IEnumerable<BoardingFiles>> CheckIfBoardingFilesExist(int boardingMessageId)

@@ -45,7 +45,7 @@ namespace BotCore.Interactions.Modules.Moderators
                 var brMessage = await boardingServices.GetBoardingMessageAsync(Context.BotGuild.Id);// getting data from database
 
                 // Message text and replace the {username} with Discord username
-                if (brMessage != null)
+                if (brMessage.IsActive)
                 {
                     var bMessage = brMessage.Message.Replace("{username}", $"<@{user.Id}>");
                     var embed = new EmbedBuilder()
