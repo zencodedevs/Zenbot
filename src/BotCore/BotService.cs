@@ -52,6 +52,7 @@ namespace BotCore
                 .AddSingleton<VocationService>()
                 .AddSingleton<BotUserGuildServices>()
                 .AddSingleton<BoardingServices>()
+                .AddSingleton<BoardingFileService>()
 
                 .AddSingleton<JiraService>()
                 .AddSingleton<BitbucketService>()
