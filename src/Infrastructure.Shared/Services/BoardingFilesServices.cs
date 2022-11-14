@@ -56,7 +56,7 @@ namespace Zenbot.Infrastructure.Shared.Services
                     var boardingFile = new BoardingFiles
                     {
                         BoardingMessageId = msgId,
-                        FilePath = "wwwroot/bot/boardingFile/" + imgname
+                        FilePath = "bot/boardingFile/" + imgname
                     };
                     fileList.Add(boardingFile);
                 }
