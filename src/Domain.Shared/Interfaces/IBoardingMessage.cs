@@ -12,5 +12,6 @@ namespace Zenbot.Domain.Shared.Interfaces
     {
         Task<BoardingMessage> GetBoardingMessagesByGuildId(int guildId);
         Task<bool> UpdateBoardingMessage(BoardingMessageDto message);
+        Task<int> CreateMessage(int guildId);
     }
 }
