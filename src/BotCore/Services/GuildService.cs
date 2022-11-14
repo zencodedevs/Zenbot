@@ -62,6 +62,8 @@ namespace BotCore.Services
             return await _welcomeMessageService.GetAsync(a => a.GuildId == guildId && a.IsActive);
         }
 
+       
+
 
         // Get Or insert the current Guild from/to bot database
         public async Task<Guild> GetOrAddAsync(ulong id)

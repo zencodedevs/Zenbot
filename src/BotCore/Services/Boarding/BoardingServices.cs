@@ -23,8 +23,13 @@ using Zenbot.Domain.Shared.Entities.Bot;
                 _discord = _services.GetRequiredService<DiscordSocketClient>();
             }
 
+        // Getting Active Boarding message from this Guild
+        public async Task<BoardingMessage> GetBoardingMessageAsync(int guildId)
+        {
+            return await base.GetAsync(a => a.GuildId == guildId && a.IsActive);
+        }
 
-            public async Task<BoardingMessage> GetOrAddAsync(bool isActive, string message, int guildId)
+        public async Task<BoardingMessage> GetOrAddAsync(bool isActive, string message, int guildId)
             {
 
                 var boardingMessage = await base.GetAsync(a => a.IsActive);
