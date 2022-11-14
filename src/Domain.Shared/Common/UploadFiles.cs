@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Zenbot.Domain.Shared.Common
 {
-    public class AttachFile
+    public class UploadFiles
     {
         // Create file and store that to server
-        public static string CreateImg(IFormFile file, string folder)
+        public static string CreateImg(IFormFile file)
         {
             try
             {
-                string imgname = GenerateCode.GuidCode() + Path.GetExtension(file.FileName);
-                string ImgPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/bot/" + folder + "/", imgname);
+                string imgname = GenerateCode.GuidCode() + file.FileName;
+                string ImgPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/bot/boardingFile", imgname);
 
                 using (var stream = new FileStream(ImgPath, FileMode.Create))
                 {
@@ -34,11 +34,11 @@ namespace Zenbot.Domain.Shared.Common
 
 
         // Delete the file and it's root from server
-        public static bool DeleteImg(string folder, string imgname)
+        public static bool DeleteImg(string imgname)
         {
             try
             {
-                string Fullpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/bot/" + folder + "/" + imgname);
+                string Fullpath = Path.Combine(Directory.GetCurrentDirectory(), imgname);
                 if (File.Exists(Fullpath))
                 {
                     File.Delete(Fullpath);
