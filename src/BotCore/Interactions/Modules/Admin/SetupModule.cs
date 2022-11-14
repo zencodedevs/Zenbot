@@ -270,9 +270,6 @@ namespace BotCore.Interactions.Modules.Admin
         {
             await DeferAsync();
 
-            if (File.Exists(Context.BotGuild.GreetingFilePath))
-                File.Delete(Context.BotGuild.GreetingFilePath);
-
             if (boardingFile is null)
             {
                 await FollowupAsync("File is not selected!");
@@ -330,10 +327,6 @@ namespace BotCore.Interactions.Modules.Admin
 
             if (gsuiteAuth is null)
             {
-                await Context._guildService.UpdateAsync(Context.BotGuild, x =>
-                {
-                    x.GreetingFilePath = "";
-                });
                 return;
             }
 
