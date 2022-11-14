@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Zenbot.Domain.Shared.Entities.Bot;
 using Zenbot.Domain.Shared.Entities.Bot.Dtos;
@@ -7,6 +8,7 @@ using Zenbot.WebUI.Extensions;
 
 namespace Zenbot.WebUI.Controllers
 {
+    [Authorize]
     public class BirthdayController : Controller
     {
         private readonly IBotUserGuildService _botUserGuildService;

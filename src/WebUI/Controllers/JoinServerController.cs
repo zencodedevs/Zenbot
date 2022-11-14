@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Zenbot.Domain.Shared.Entities.Bot.Dtos;
 using Zenbot.Domain.Shared.Interfaces;
@@ -6,6 +7,7 @@ using Zenbot.WebUI.Extensions;
 
 namespace Zenbot.WebUI.Controllers
 {
+    [Authorize]
     public class JoinServerController : Controller
     {
         private readonly IBotUserGuildService _botUserGuildService;
