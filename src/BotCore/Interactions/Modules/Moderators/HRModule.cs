@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Zenbot.Domain.Shared.Common;
 
 namespace BotCore.Interactions.Modules.Moderators
 {
@@ -34,36 +35,43 @@ namespace BotCore.Interactions.Modules.Moderators
             public ChannelService _channelService { get; set; }
             public BotConfiguration BotConfiguration { get; set; }
             public GuildService guildService { get; set; }
+            public BoardingServices boardingServices { get; set; }
 
             [SlashCommand("send-file", "send file to a user")]
             public async Task sendFile(IGuildUser user, bool @private, IAttachment file)
             {
                 await DeferAsync(@private);
-                
-                var welcomeMessage = await guildService.GetWelcomeMessageAsync(Context.BotGuild.Id);// getting data from database
+
+                var brMessage = await boardingServices.GetBoardingMessageAsync(Context.BotGuild.Id);// getting data from database
 
                 // Message text and replace the {username} with Discord username
-                var wMessage = welcomeMessage.Message.Replace("{username}", $"<@{user.Id}>");
-
-                var embed = new EmbedBuilder()
+                if (brMessage.IsActive)
                 {
-                    Title = "New File Received",
-                    Description =
-                    $"**You have new {(file.Ephemeral ? "private " : "")} file from <@{Context.User.Id}>\n\n**" +
-                    $"Description: {wMessage}\n\n" +
-                    $"Size: ` {file.Size.ToSizeSuffix()} `\n" +
-                    $"File Name: ` {file.Filename} `\n" +
-                    $"**[Download The File]({file.Url})**",
-                    ThumbnailUrl = "https://img.icons8.com/fluency/344/double-down.png",
-                    Color = 5814783,
-                };
+                    var bMessage = brMessage.Message.Replace("{username}", $"<@{user.Id}>");
+                    var embed = new EmbedBuilder()
+                    {
+                        Title = "Boarding message from HR",
+                        Description =
+                        $"**You have new {(file.Ephemeral ? "private " : "")} file from <@{Context.User.Id}>\n\n**" +
+                        $"Description: {brMessage}\n\n" +
+                        $"Size: ` {file.Size.ToSizeSuffix()} `\n" +
+                        $"File Name: ` {file.Filename} `\n" +
+                        $"**[Download The File]({file.Url})**",
+                       
+                        ThumbnailUrl = "https://img.icons8.com/fluency/344/double-down.png",
+                        Color = 5814783,
+                    };
 
-                var component = new ComponentBuilder()
-                    .WithButton("Download File", null, ButtonStyle.Link, new Emoji("🌐"), file.Url, false, 0);
+                    var component = new ComponentBuilder()
+                        .WithButton("Download File", null, ButtonStyle.Link, new Emoji("🌐"), file.Url, false, 0);
 
-                await user.SendMessageAsync(embed: embed.Build(), components: component.Build());
+                    await user.SendMessageAsync(embed: embed.Build(), components: component.Build());
 
-                await FollowupAsync("File sent to the user succesfully.", ephemeral: @private);
+                    await FollowupAsync("File sent to the user succesfully.", ephemeral: @private);
+                }
+
+                await FollowupAsync("Boarding message is not Enable, please Enable that by runing `setup-boarding-message` or login to zenbot website");
+
 
                 // Log the message
                 var message = $"`{Context.User.Username}` Sent a on-boarding file {file.Url} to `{user.Username}`";

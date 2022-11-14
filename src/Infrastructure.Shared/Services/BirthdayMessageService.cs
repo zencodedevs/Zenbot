@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zen.Domain.Interfaces;
+using Zenbot.Domain.Shared.Common;
 using Zenbot.Domain.Shared.Entities.Bot;
 using Zenbot.Domain.Shared.Entities.Bot.Dtos;
 using Zenbot.Domain.Shared.Interfaces;
@@ -47,7 +48,7 @@ namespace Zenbot.Infrastructure.Shared.Services
                 };
                 if (string.IsNullOrEmpty(message.Message))
                 {
-                    newBMessage.Message = "Happy Birthday dear {username} We're all happy to have you here and congratulate your birthday together! 😍 \n **Have a very nice day**";
+                    newBMessage.Message = StaticData.BirthdayDefaultMessage;
                 }
                 else { newBMessage.Message = message.Message; }
                 await _repository.InsertAsync(newBMessage);

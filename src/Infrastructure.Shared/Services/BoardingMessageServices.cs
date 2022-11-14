@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zen.Domain.Interfaces;
+using Zenbot.Domain.Shared.Common;
 using Zenbot.Domain.Shared.Entities.Bot;
 using Zenbot.Domain.Shared.Entities.Bot.Dtos;
 using Zenbot.Domain.Shared.Interfaces;
@@ -24,6 +25,24 @@ namespace Zenbot.Infrastructure.Shared.Services
                 return await _repository.FindAsync(x => x.GuildId == guildId);
             }
             return null;
+        }
+
+
+        public async Task<int> CreateMessage(int guildId)
+        {
+            if (!(guildId >0))
+            {
+                return 0;
+            }
+            var message = new BoardingMessage
+            {
+                GuildId = guildId,
+                Message = StaticData.BoardingDefaultMessage,
+                IsActive = true
+            };
+            await _repository.InsertAsync(message);
+            await _repository.SaveChangesAsync(true);
+            return message.Id;
         }
 
         public async Task<bool> UpdateBoardingMessage(BoardingMessageDto message)
@@ -47,7 +66,7 @@ namespace Zenbot.Infrastructure.Shared.Services
                 };
                 if (string.IsNullOrEmpty(message.Message))
                 {
-                    newWMessage.Message = "Welcome dear {username} \n Now we're much stronger by having you in our team!\n **Thank you for joining us**";
+                    newWMessage.Message = StaticData.BoardingDefaultMessage;
                 }
                 else { newWMessage.Message = message.Message; }
                 await _repository.InsertAsync(newWMessage);

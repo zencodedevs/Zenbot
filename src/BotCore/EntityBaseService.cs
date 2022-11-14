@@ -38,7 +38,23 @@ namespace BotCore
             }
         }
 
-       
+        public async Task<bool> DeleteManyAsync(List<T> values)
+        {
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var unitOfWorkManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+                var _repository = scope.ServiceProvider.GetRequiredService<IEntityFrameworkRepository<T>>();
+
+                using (var uow = unitOfWorkManager.Begin())
+                {
+                     await _repository.DeleteManyAsync(values);
+                    await _repository.SaveChangesAsync(true);
+                    return true;
+                }
+            }
+        }
+
+
         // Common method for getting the data from database
         public async Task<T> GetAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] propertySelectors)
         {

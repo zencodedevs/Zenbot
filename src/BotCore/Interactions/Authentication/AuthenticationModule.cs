@@ -11,6 +11,7 @@ using BotCore.Interactions.Preconditions;
 using BotCore.Interactions.Authentication.Forms;
 using BotCore.Services;
 using Zenbot.Domain.Shared.Entities.Bot;
+using Zenbot.Domain.Shared.Common;
 
 namespace BotCore.Interactions.Authentication
 {
@@ -24,6 +25,8 @@ namespace BotCore.Interactions.Authentication
         public GuildService guildService { get; set; }
         public ChannelService _channelService { get; set; }
         public WelcomeMessageService welcomeMessageService { get; set; }
+        public BoardingServices boardingServices { get; set; }
+        public BoardingFileService boardingFileService { get; set; }
 
 
         [ComponentInteraction("button-admin-setup-authentication-password", true)]
@@ -94,25 +97,42 @@ namespace BotCore.Interactions.Authentication
             if (await welcomeMessageService.CheckIfWelcomeMessageIsEnable(Context.BotGuild.Id))
             {
                 // Message text and replace the {username} with Discord username
-                var wMessage = $"Welcome dear <@{Context.User.Id}>\n We're much stronger now by having you in our team!\n **Thank you for joining us**";
+                var wMessage = StaticData.BoardingDefaultMessage.Replace("{username}", $"<@{Context.User.Id}>");
+
                 if (welcomeMessage != null)
                 {
                     wMessage = welcomeMessage.Message.Replace("{username}", $"<@{Context.User.Id}>");
                 }
 
 
-                if (!string.IsNullOrEmpty(Context.BotGuild.GreetingFilePath))
+                // Boarding Message settings
+                var brMessage = StaticData.BoardingDefaultMessage.Replace("{username}", $"<@{Context.User.Id}>");
+
+                var boardingMessage = await boardingServices.CheckIfBoardingMessageIsEnable(Context.BotGuild.Id);
+
+                //Send boarding message in DM
+                if (boardingMessage != null)
                 {
-                    if (!System.IO.File.Exists(Context.BotGuild.GreetingFilePath))
-                    {
-                        await FollowupAsync("File not found. Please contact HR for providing the file", ephemeral: true);
-                        return;
-                    }
+                    brMessage = boardingMessage.Message.Replace("{username}", $"<@{Context.User.Id}>");
+
                     try
                     {
                         await Context.User.SendFileAsync(
-                            filePath: Context.BotGuild.GreetingFilePath,
-                            text: wMessage);
+                            filePath: "",
+                            text: brMessage);
+
+                        // Check for attache files for this boarding message
+                        var brFiles = await boardingFileService.CheckIfBoardingFilesExist(boardingMessage.Id);
+                        if (brFiles != null)
+                        {
+                            foreach (var item in brFiles)
+                            {
+                                await Context.User.SendFileAsync(
+                               filePath: item.FilePath,
+                               text: "Attached file");
+                            }
+                        }
+
                     }
                     catch
                     {
@@ -120,6 +140,7 @@ namespace BotCore.Interactions.Authentication
                         return;
                     }
                 }
+
 
                 await (Context.User as IGuildUser).AddRoleAsync(Context.BotGuild.VerifiedRoleId);
 
@@ -138,7 +159,12 @@ namespace BotCore.Interactions.Authentication
 
                 await (Context.User as IGuildUser).RemoveRoleAsync(Context.BotGuild.UnVerifiedRoleId);
                 var loggerChannel = (GuildChannel)Context.Data;
-                await Context._channelService.SendMessageAsync(loggerChannel.ChannelId, Context.User.ToUserMention(), embed: embed);
+
+                // check if welcome message is Enable
+                if (await welcomeMessageService.CheckIfWelcomeMessageIsEnable(Context.BotGuild.Id))
+                {
+                    await Context._channelService.SendMessageAsync(loggerChannel.ChannelId, Context.User.ToUserMention(), embed: embed);
+                }
 
             }
 

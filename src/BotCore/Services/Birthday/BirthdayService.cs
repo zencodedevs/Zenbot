@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Zen.Domain.Interfaces;
 using Zen.Uow;
+using Zenbot.Domain.Shared.Common;
 using Zenbot.Domain.Shared.Entities.Bot;
 
 namespace BotCore.Services.Birthday
@@ -106,7 +107,7 @@ namespace BotCore.Services.Birthday
                     var birthday_message = await _guildService.GetBirthdayMessageAsync(botGuild.Id);
 
                     // Message text and replace the {username} with Discord username
-                    var bMessage = $"Happy Birthday dear $<@{u.DiscordId} \n We're all happy to have you here and congratulate your birthday together! 😍 \n **Have a very nice day**";
+                    var bMessage = StaticData.BirthdayDefaultMessage.Replace("{username}", $"<@{u.DiscordId}>");
                     if (birthday_message != null)
                     {
                         bMessage = birthday_message.Message.Replace("{username}", $"<@{u.DiscordId}>");

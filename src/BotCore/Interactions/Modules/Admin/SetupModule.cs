@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Twilio.Rest.Api.V2010.Account;
+using Zenbot.Domain.Shared.Common;
 using Zenbot.Domain.Shared.Entities.Bot;
 
 namespace BotCore.Interactions.Modules.Admin
@@ -37,6 +38,8 @@ namespace BotCore.Interactions.Modules.Admin
         public SupervisorService _supervisorService { get; set; }
         public BotUserGuildServices _botUserGuildServices { get; set; }
         public GuildService guildService { get; set; }
+        public BoardingServices _boardingMessage { get; set; }
+        public BoardingFileService _boardingFileService { get; set; }
 
 
 
@@ -263,19 +266,16 @@ namespace BotCore.Interactions.Modules.Admin
 
         // Set the greeting message for this Guild
         [SlashCommand("on-boarding", "setup server's on-boarding file")]
-        public async Task onBoardingFile(IAttachment grettingFile = null)
+        public async Task onBoardingFile(IAttachment boardingFile = null)
         {
             await DeferAsync();
 
             if (File.Exists(Context.BotGuild.GreetingFilePath))
                 File.Delete(Context.BotGuild.GreetingFilePath);
 
-            if (grettingFile is null)
+            if (boardingFile is null)
             {
-                await Context._guildService.UpdateAsync(Context.BotGuild, x =>
-                {
-                    x.GreetingFilePath = "";
-                });
+                await FollowupAsync("File is not selected!");
                 return;
             }
 
@@ -284,13 +284,12 @@ namespace BotCore.Interactions.Modules.Admin
 
             using (WebClient client = new WebClient())
             {
-                var directoryPath = $@"BotFiles/guilds/{Context.Guild.Id}/";
+                var directoryPath = $@"wwwroot/bot/boardingFile/";
                 if (!Directory.Exists(directoryPath))
                     Directory.CreateDirectory(directoryPath);
 
-                var filePath = directoryPath + grettingFile.Filename;
-                if (File.Exists(filePath))
-                    File.Delete(filePath);
+                var filePath = directoryPath + UploadFiles.GenerateCode.GuidCode()+ boardingFile.Filename;
+                
 
                 client.DownloadFileCompleted += Client_DownloadFileCompleted;
                 async void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -300,10 +299,10 @@ namespace BotCore.Interactions.Modules.Admin
                         await FollowupAsync("can not download the file, try again.");
                         return;
                     }
-                    await Context._guildService.UpdateAsync(Context.BotGuild, x =>
-                    {
-                        x.GreetingFilePath = filePath;
-                    });
+
+                    var boardingMessage = await _boardingMessage.GetBoardingMessageAsync(Context.BotGuild.Id);
+                    await _boardingFileService.AddBoardingFilesAsync(boardingMessage.Id, filePath.Replace("wwwroot/", ""));
+
                     await FollowupAsync("on boarding file updated for your server.");
 
                     // Log the message
@@ -312,7 +311,7 @@ namespace BotCore.Interactions.Modules.Admin
 
                 }
 
-                client.DownloadFileAsync(new Uri(grettingFile.Url), filePath);
+                client.DownloadFileAsync(new Uri(boardingFile.Url), filePath);
                 await FollowupAsync("please wait, we are downloading the file.");
             }
         }
