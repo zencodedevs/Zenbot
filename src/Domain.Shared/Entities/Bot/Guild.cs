@@ -22,7 +22,6 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public DateTime JoinDate { get; set; } = DateTime.UtcNow;
         public string ScrinIOToken { get; set; }
         public string AuthenticationPassword { get; set; }
-        public string GreetingFilePath { get; set; }
         public string GSuiteAuth { get; set; }
         public ulong VerifiedRoleId { get; set; }
         public ulong UnVerifiedRoleId { get; set; }
