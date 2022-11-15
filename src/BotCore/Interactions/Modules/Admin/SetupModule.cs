@@ -52,6 +52,11 @@ namespace BotCore.Interactions.Modules.Admin
         {
             await DeferAsync();
             var user = await _userService.GetUserByDiscordId(supervisor.Id);
+            if(user == null)
+            {
+                user = await _userService.GetOrAddAsync(supervisor.Id, supervisor.Username);
+                await _botUserGuildServices.GetOrAddAsync(Context.BotGuild.Id, user.Id, false);
+            }
             var newSpr = _userService.UpdateAsync(user, x =>
             {
                 x.IsSupervisor = true;
