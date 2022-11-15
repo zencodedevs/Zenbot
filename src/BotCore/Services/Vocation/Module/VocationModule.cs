@@ -111,7 +111,7 @@ namespace BotCore.Services.VocationModule
             }
 
             // insert
-           var vocationId = await vocationService.AddVocationAsync(Context.BotUser.Id, startDate, endDate, spr.SupervisorId);
+           var vocationId = await vocationService.AddVocationAsync(Context.BotUser.Id, startDate, endDate, spr.SupervisorId, form.Description, Context.BotGuild.Id);
 
             await FollowupAsync($"Great! You've requested for **{vocationDays}** days vocation for this month, soon I will notify you about your supervisor's answer!");
 
@@ -119,8 +119,9 @@ namespace BotCore.Services.VocationModule
             {
                 Title = "Vocation Request",
                 Description = $"**{Context.BotUser.Username}** wants to a have day off for `{vocationDays}` days \n" +
-              $"Please `Confirm` or `Reject` this request so we can notify him/her about your  decision \n" +
-              $"Request Date : {DateTime.UtcNow.ToString("dddd, dd MMMM yyyy")}"
+                $"Please `Confirm` or `Reject` this request so we can notify him/her about your  decision \n\n" +
+                $"Description/Reason: {form.Description}" +
+                $"Request Date : {DateTime.UtcNow.ToString("dddd, dd MMMM yyyy")}"
             }.Build();
 
             var component = new ComponentBuilder()

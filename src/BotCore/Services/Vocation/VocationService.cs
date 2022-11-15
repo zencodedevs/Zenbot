@@ -46,7 +46,7 @@ namespace BotCore.Services
             return vocation;
         }
 
-        public async Task<int> AddVocationAsync(int requestId, DateTime startDate, DateTime endDate, int supervisorId)
+        public async Task<int> AddVocationAsync(int requestId, DateTime startDate, DateTime endDate, int supervisorId, string desc, int guildId)
         {
                 var vocation = new Vocation
                 {
@@ -54,6 +54,8 @@ namespace BotCore.Services
                     UserRequestId = requestId,
                     StartDate = startDate,
                     EndDate = endDate,
+                    Description = desc,
+                    GuildId = guildId,
                     SupervisorId = supervisorId,
                     IsAccept = false
                 };
