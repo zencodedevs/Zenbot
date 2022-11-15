@@ -15,6 +15,14 @@ namespace Zenbot.Domain.Shared.Entities.Bot
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsAccept { get; set; }
+        public string Description { get; set; }
+
+
+
+
+        public int GuildId { get; set; }
+        [ForeignKey("GuildId")]
+        public virtual Guild Guild { get; set; }
 
         public int UserRequestId { get; set; }
 
