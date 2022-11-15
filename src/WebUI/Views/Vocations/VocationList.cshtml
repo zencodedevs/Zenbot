@@ -28,17 +28,18 @@
     <div class="p-4">
         <h5>All Vocations for <i>@ViewBag.guildName Server</i></h5>
         <div class="p-4 border border-1 rounded-2">
-            <div class="row p-3 m-3">
+            <div class="row">
                 @foreach (var item in Model)
                 {
-                    <div class="col-md-3 border border-1 shadow hover-fade rounded">
-                        <p><strong>Applicatn: </strong> @item.UserRequest.Username</p>
-                        <p><strong>Request Date: </strong> @item.RequestDate.ToString("dd / MM / yyyy")</p>
-                        <p><strong>Request Days: </strong> From @item.StartDate.ToString("dd / MM / yyyy") To @item.EndDate.ToString("dd / MM / yyyy")</p>
-                        <p><strong>Supervisor: </strong> @item.Supervisor.Username</p>
-                        <p><strong>Description: </strong> @item.Description</p>
-                        <p><strong>Status: </strong> <span class=$"@(item.IsAccept? "bg-success": "bg-danger") px-4 py-2 rounded">@(item.IsAccept? "Approved": "Rejected") </span> </p>
-                    </div>
+                    <div class="col-md-3 p-1">
+                        <div class="border h-100 overflow-auto border-1 shadow hover-fade rounded p-3 "role="button">
+                            <p class="text-center my-3"> <span style="background-color:@(item.IsAccept? "#40B22C": "#FF5733")" class="p-1 rounded">@(item.IsAccept? "Approved": "Rejected") </span> </p>
+                        <p class="mb-1"><strong>Applicatn: </strong> @item.UserRequest.Username</p>
+                        <p class="mb-1"><strong>Request Date: </strong> @item.RequestDate.ToString("dd/MM/yyyy")</p>
+                        <p class="mb-1"><strong>Request Days: </strong> From @item.StartDate.ToString("dd/MM/yyyy") To @item.EndDate.ToString("dd/MM/yyyy")</p>
+                        <p class="mb-1"><strong>Supervisor: </strong> @item.Supervisor.Username</p>
+                        <p class="mb-4"><strong>Description: </strong> @item.Description</p>
+                    </div></div>
                 }
 
             </div>
