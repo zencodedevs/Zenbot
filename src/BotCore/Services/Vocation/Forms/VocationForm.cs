@@ -22,5 +22,11 @@ namespace BotCore.Services.VocationForms
         [RequiredInput]
         public DateTime EndDate { get; set; }
 
+
+        [InputLabel("Description")]
+        [ModalTextInput("description", Discord.TextInputStyle.Paragraph, "Reason or any description", 5, 1000, null)]
+        [RequiredInput]
+        public string Description { get; set; }
+
     }
 }
