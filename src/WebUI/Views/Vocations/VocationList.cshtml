@@ -31,14 +31,16 @@
             <div class="row">
                 @foreach (var item in Model)
                 {
+                    var days = Convert.ToInt32((item.EndDate - item.StartDate).TotalDays);
                     <div class="col-md-3 p-1">
                         <div class="border h-100 overflow-auto border-1 shadow hover-fade rounded p-3 "role="button">
-                            <p class="text-center my-3"> <span style="background-color:@(item.IsAccept? "#40B22C": "#FF5733")" class="p-1 rounded">@(item.IsAccept? "Approved": "Rejected") </span> </p>
-                        <p class="mb-1"><strong>Applicatn: </strong> @item.UserRequest.Username</p>
-                        <p class="mb-1"><strong>Request Date: </strong> @item.RequestDate.ToString("dd/MM/yyyy")</p>
-                        <p class="mb-1"><strong>Request Days: </strong> From @item.StartDate.ToString("dd/MM/yyyy") To @item.EndDate.ToString("dd/MM/yyyy")</p>
-                        <p class="mb-1"><strong>Supervisor: </strong> @item.Supervisor.Username</p>
-                        <p class="mb-4"><strong>Description: </strong> @item.Description</p>
+                            <p class="text-center my-3"> <span style="background-color:@(item.IsAccept? "#40B22C": "#FF5733")" class="font-custom-size p-1 rounded">@(item.IsAccept? "Approved": "Rejected") </span> </p>
+                        <p class="mb-1 font-custom-size"><strong>Applicatn: </strong> @item.UserRequest.Username</p>
+                        <p class="mb-1 font-custom-size"><strong>Request Date: </strong> @item.RequestDate.ToString("dd/MM/yyyy")</p>
+                        <p class="mb-1 font-custom-size"><strong>For: </strong> @days @(days>1? "Days": "Day") </p>
+                        <p class="mb-1 font-custom-size"><strong>Request Days: </strong> From <br> @item.StartDate.ToString("dd/MM/yyyy") To @item.EndDate.ToString("dd/MM/yyyy")</p>
+                        <p class="mb-1 font-custom-size"><strong>Supervisor: </strong> @item.Supervisor.Username</p>
+                        <p class="mb-4 font-custom-size"><strong>Description: </strong> @item.Description</p>
                     </div></div>
                 }
 
