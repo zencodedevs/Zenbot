@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,11 @@ namespace Zenbot.Infrastructure.Shared.Services
         {
             _repository = repository;
         }
-        public async Task<List<Vocation>> GetBirthdayMessagesByGuildId(int guildId)
+        public async Task<List<Vocation>> GetVocationListByGuildId(int guildId)
         {
-            return await _repository.GetListAsync(x => x.GuildId == guildId);
+            var query = await _repository.GetQueryableAsync(x => x.Guild, x=> x.UserRequest, x=> x.Supervisor);
+            var vocations = await query.Where(x => x.GuildId == guildId).ToListAsync();
+            return vocations;
         }
     }
 }

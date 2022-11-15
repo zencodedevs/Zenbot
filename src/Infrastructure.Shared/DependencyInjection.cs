@@ -47,6 +47,7 @@ namespace Infrastructure.Shared
             services.TryAddScoped<IWelcomeMessageService, WelcomeMessageService>();
             services.TryAddScoped<IBoardingMessage, BoardingMessageServices>();
             services.TryAddScoped<IBoardingFiles, BoardingFilesServices>();
+            services.TryAddScoped<IVocationServices, VocatoinServices>();
 
             return services;
         }

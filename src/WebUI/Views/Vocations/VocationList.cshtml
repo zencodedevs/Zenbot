@@ -1,0 +1,51 @@
+﻿@using Zenbot.Domain.Shared.Entities.Bot
+@model IEnumerable<Vocation>
+
+@{
+    ViewData["Title"] = "Vocation";
+    Layout = "_PanelLayout";
+    var counter = 1;
+}
+
+<div class="row g-3 my-2 bg-white pb-3">
+    <div class="d-flex justify-content-between px-3">
+        <div class="col-md-3">
+        </div>
+
+        <div class="col-md-3">
+            <a href="#" class="text-dark">
+                <div class=" custom-lightGray-bg shadow-sm d-flex justify-content-around align-items-center rounded py-2">
+                    <div class="d-flex justify-content-around align-items-center">
+                        <p class="fs-5 mb-0">Vocation Settings</p>
+                        <i class="fas fa-birthday-cake fs-5 p-2"></i>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="p-4">
+        <h5>All Vocations for <i>@ViewBag.guildName Server</i></h5>
+        <div class="p-4 border border-1 rounded-2">
+            <div class="row p-3 m-3">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 border border-1 shadow hover-fade rounded">
+                        <p><strong>Applicatn: </strong> @item.UserRequest.Username</p>
+                        <p><strong>Request Date: </strong> @item.RequestDate.ToString("dd / MM / yyyy")</p>
+                        <p><strong>Request Days: </strong> From @item.StartDate.ToString("dd / MM / yyyy") To @item.EndDate.ToString("dd / MM / yyyy")</p>
+                        <p><strong>Supervisor: </strong> @item.Supervisor.Username</p>
+                        <p><strong>Description: </strong> @item.Description</p>
+                        <p><strong>Status: </strong> <span class=$"@(item.IsAccept? "bg-success": "bg-danger") px-4 py-2 rounded">@(item.IsAccept? "Approved": "Rejected") </span> </p>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+

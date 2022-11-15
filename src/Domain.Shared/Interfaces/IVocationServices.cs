@@ -9,7 +9,7 @@ namespace Zenbot.Domain.Shared.Interfaces
 {
     public interface IVocationServices
     {
-        Task<List<Vocation>> GetBirthdayMessagesByGuildId(int guildId);
+        Task<List<Vocation>> GetVocationListByGuildId(int guildId);
         //Task<bool> UpdateBirthdayMessage(BirthdayMessageDto message);
     }
 }
