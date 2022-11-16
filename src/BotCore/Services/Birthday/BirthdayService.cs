@@ -120,7 +120,7 @@ namespace BotCore.Services.Birthday
                         Color = Color.Purple,
                         ThumbnailUrl = "https://img.icons8.com/external-flat-icons-pause-08/64/000000/external-birthday-christmas-collection-flat-icons-pause-08.png",
                     }.Build();
-                    await _channelService.SendMessageAsync(loggerChannel.ChannelId, null, false, embed: brithday_embed);
+                    await _channelService.SendMessageAsync(loggerChannel.ChannelId, null, embed: brithday_embed);
 
                 }
 

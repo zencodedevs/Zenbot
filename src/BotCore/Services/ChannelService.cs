@@ -34,10 +34,10 @@ namespace BotCore.Services
         }
 
         // Common method for sending message to logger channel
-        public async Task SendMessageAsync(ulong channelId, string text = null, bool isTTS = false, Embed embed = null, RequestOptions options = null, AllowedMentions allowedMentions = null, MessageReference messageReference = null, MessageComponent components = null, ISticker[] stickers = null, Embed[] embeds = null, MessageFlags flags = MessageFlags.None)
+        public async Task SendMessageAsync(ulong channelId, string text = null, Embed embed = null)
         {
             var channel = (ITextChannel)(_discord.GetChannel(channelId) ?? await _discord.GetChannelAsync(channelId));
-            await channel.SendMessageAsync(text, isTTS, embed, options, allowedMentions, messageReference, components, stickers, embeds, flags);
+            await channel.SendMessageAsync(text, embed:embed);
         }
 
 
@@ -73,7 +73,7 @@ namespace BotCore.Services
                 Color = Color.Purple,
                 ThumbnailUrl = "https://img.icons8.com/clouds/344/imessage.png",
             }.Build();
-            await SendMessageAsync(_config.loggerChannel, null, false, embed: logger_embed);
+            await SendMessageAsync(_config.loggerChannel, null, embed: logger_embed);
 
         }
 
