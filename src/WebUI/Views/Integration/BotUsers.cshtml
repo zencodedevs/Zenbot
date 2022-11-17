@@ -155,13 +155,10 @@
                     </div>
 
                      <div>
-                        <input class="form-check-input enableIntegration" type="checkbox" name="isEnable" id="flexSwitchCheckChecked">
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Enable/Disable</label>
+                         <input type="checkbox" id="integration" name="isEnable" />
+                       
                     </div>
-                     <div>
-                        <input class="form-check-input " type="checkbox" id="flexSwitchCheckChecked" checked>
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Enable/Disable</label>
-                    </div>
+                  
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -219,7 +216,7 @@
             var jira = button.getAttribute('data-bs-jira')
             var bitbucket = button.getAttribute('data-bs-bitbucket')
             var enable = button.getAttribute('data-bs-enable')
-            console.log(" Hello from Enalbe",enable);
+            console.log("Hello attribute; : ", enable)
             // If necessary, you could initiate an AJAX request here
             // and then do the updating in a callback.
             //
@@ -230,8 +227,8 @@
             var guildNameInput = IntegrationModal.querySelector('.modal-body .guildName')
             var jiraInput = IntegrationModal.querySelector('.modal-body .jira')
             var bitbucketInput = IntegrationModal.querySelector('.modal-body .bitbucket')
-            var enableInput = IntegrationModal.querySelector('.modal-body .enableIntegration')
-            console.log("Hello from enable Input: ", enableInput.value)
+            var inte = document.getElementById("integration").checked = enable;
+             console.log("Heyyyy : ", inte)
 
             modalTitle.textContent = 'Update User Integration for ' + userName
             userIdInput.value = userId
@@ -239,7 +236,7 @@
             guildNameInput.value = guildName;
             jiraInput.value = jira;
             bitbucketInput.value = bitbucket;
-            enableInput.value = enable;
+            
 
         })
     </script>
