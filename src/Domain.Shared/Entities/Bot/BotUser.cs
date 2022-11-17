@@ -19,6 +19,7 @@ namespace Domain.Shared.Entities.Bot
         public string Username { get; set; }
         public string JiraAccountID { get; set; }
         public string BitBucketAccountId { get; set; }
+        public bool IsEnableIntegration { get; set; } = true;
         public DateTime Birthday { get; set; } = DateTime.MinValue;
 
       
