@@ -26,5 +26,13 @@ namespace Zenbot.Infrastructure.Shared.Services
             var guilds = await query.Where(x => x.BotUserId == user.Id && x.IsAdmin).ToListAsync();
             return guilds;
         }
+
+
+        public async Task<List<BotUserGuild>> GetAllGuildsByGuildId(int guildId)
+        {
+            var query = await _repository.GetQueryableAsync(x => x.BotUser);
+            var users = await query.Where(x => x.GuildId == guildId).ToListAsync();
+            return users;
+        }
     }
 }

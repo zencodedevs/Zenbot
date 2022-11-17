@@ -10,5 +10,6 @@ namespace Zenbot.Domain.Shared.Interfaces
     public interface IBotUserGuildService
     {
         Task<List<BotUserGuild>> GetAllGuildsByUserId(ulong userId);
+        Task<List<BotUserGuild>> GetAllGuildsByGuildId(int guildId);
     }
 }
