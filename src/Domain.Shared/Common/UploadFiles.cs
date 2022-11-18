@@ -11,12 +11,12 @@ namespace Zenbot.Domain.Shared.Common
     public class UploadFiles
     {
         // Create file and store that to server
-        public static string CreateImg(IFormFile file)
+        public static string CreateImg(IFormFile file, string folderName)
         {
             try
             {
                 string imgname = GenerateCode.GuidCode() + file.FileName;
-                string ImgPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/bot/boardingFile", imgname);
+                string ImgPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/bot/"+folderName, imgname);
 
                 using (var stream = new FileStream(ImgPath, FileMode.Create))
                 {
