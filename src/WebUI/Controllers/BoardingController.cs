@@ -39,15 +39,15 @@ namespace Zenbot.WebUI.Controllers
         public async Task<IActionResult> Edit(int guildId, string guildName)
         {
             var message = await _boardingMessageService.GetBoardingMessagesByGuildId(guildId);
-            ICollection<BoardingFiles> messageFile= await _boardingFiles.GetBoardingFilesByBoardingMessageId(message.Id);
-            ViewBag.messageFiles = messageFile;
 
             ViewBag.guildId = guildId;
             ViewBag.guildName = guildName;
-            
+
 
             if (message != null)
             {
+                ICollection<BoardingFiles> messageFile = await _boardingFiles.GetBoardingFilesByBoardingMessageId(message.Id);
+                ViewBag.messageFiles = messageFile;
                 var messageDto = new BoardingMessageDto
                 {
                     Message = message.Message,
