@@ -25,7 +25,11 @@ namespace BotCore.Services
         // Get Or insert the current Guild from/to bot database
         public async Task<BotUserGuild> GetOrAddAsync(int guildId, int botUserId, bool isAdmin = false)
         {
-            var userGuild = await base.GetAsync(x => x.BotUserId == botUserId && x.GuildId == guildId && x.IsAdmin == isAdmin);
+            var userGuild = await base.GetAsync(x => x.BotUserId == botUserId && x.GuildId == guildId && x.IsAdmin);
+            if (userGuild == null)
+            {
+                userGuild = await base.GetAsync(x => x.BotUserId == botUserId && x.GuildId == guildId && x.IsAdmin == isAdmin);
+            }
 
             if (userGuild is null)
             {
