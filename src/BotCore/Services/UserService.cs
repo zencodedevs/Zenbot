@@ -125,7 +125,8 @@ namespace BotCore.Services
                     DiscordId = Id,
                     Username = username,
                     JiraAccountID = jiraAccount,
-                    BitBucketAccountId = bitBucketAccount
+                    BitBucketAccountId = bitBucketAccount,
+                    IsEnableIntegration = true
                 };
                 user = await base.InsertAsync(user);
             }
@@ -134,6 +135,7 @@ namespace BotCore.Services
                 user = await base.UpdateAsync(user.Id, x => {
                     x.JiraAccountID = jiraAccount;
                     x.BitBucketAccountId = bitBucketAccount;
+                    x.IsEnableIntegration = true;
                 });
             }
             return user;

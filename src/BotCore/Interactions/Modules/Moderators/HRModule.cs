@@ -102,6 +102,7 @@ namespace BotCore.Interactions.Modules.Moderators
 
             }
 
+
             [SlashCommand("add-integration", "register jiraAccount ID and bitBucket Account ID")]
             public async Task Integration(IGuildUser botUser,string jiraAccountID, string bitBucketAccountID)
             {
@@ -112,7 +113,7 @@ namespace BotCore.Interactions.Modules.Moderators
                 var user = await userService.GetOrAddAsync(botUser.Id, botUser.Username, jiraAccountID, bitBucketAccountID);
 
                 await _botUserGuildServices.GetOrAddAsync(guild.Id, user.Id, false);
-                await FollowupAsync($"Done, JiraID : `{jiraAccountID}`, BitBucketID: `{bitBucketAccountID}` , ephemeral: true");
+                await FollowupAsync($"Done, JiraID : `{jiraAccountID}`, BitBucketID: `{bitBucketAccountID}` for `{botUser.Username}", ephemeral: true);
 
                 // Log the message
                 var message = $"`{Context.User.Username}` as HR added birthday for `{botUser.Username}` jira and bitbucket account ID";
