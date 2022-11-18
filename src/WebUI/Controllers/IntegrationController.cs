@@ -50,9 +50,9 @@ namespace Zenbot.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateUserIntegration(string jiraAccount, string bitbucketAccount, bool isEnable, int userId, string guildName, int guildId)
+        public async Task<IActionResult> UpdateUserIntegration(string jiraAccount, string bitbucketAccount, bool flexSwitchCheckChecked, int userId, string guildName, int guildId)
         {
-            var update = await _botUserService.UpdateIntegration(jiraAccount,bitbucketAccount,isEnable, userId);
+            var update = await _botUserService.UpdateIntegration(jiraAccount,bitbucketAccount, flexSwitchCheckChecked, userId);
             if (update)
             {
                 return RedirectToAction("BotUsers", new { guildId = guildId, guildName = guildName });

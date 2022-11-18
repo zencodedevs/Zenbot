@@ -49,7 +49,7 @@
                             <td>@item.BotUser.Username</td>
                             <td>@item.BotUser.Birthday.ToString("MMM dd yyyy")</td>
                             <td>
-                                <p class="text-center"> <span style="background-color:@(item.BotUser.IsSupervisor? "#40B22C": "#FF5733")" class="font-custom-size p-1 rounded">@(item.BotUser.IsSupervisor? "YES": "NO") </span> </p>
+                                <p class="text-center"> <span style="background-color:@(item.BotUser.IsSupervisor? "#40B22C": "#FF5733")" class="font-custom-size p-1 rounded">@(item.BotUser.IsSupervisor? "YES": "NOT") </span> </p>
                             </td>
                             <td>
                                 <p class="text-center"> <span style="background-color:@(item.BotUser.IsEnableIntegration? "#40B22C": "#FF5733")" class="font-custom-size p-1 rounded">@(item.BotUser.IsEnableIntegration? "Enable": "Disable") </span> </p>
@@ -68,16 +68,17 @@
                                            data-bs-guildId="@item.GuildId"
                                            data-bs-guildName="@ViewBag.guildName">Birthday</a>
                                         </li>
-                                         <li>
+                                        <li>
                                             <a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#userIntegration" data-bs-userId="@item.BotUser.Id"
+                                           data-bs-target="#userIntegration" data-bs-userId="@item.BotUser.Id"
                                            data-bs-username="@item.BotUser.Username"
                                            data-bs-guildId="@item.GuildId"
                                            data-bs-guildName="@ViewBag.guildName"
-                                            data-bs-jira="@item.BotUser.JiraAccountID"
-                                            data-bs-bitbucket="@item.BotUser.BitBucketAccountId"
-                                            data-bs-enable="@item.BotUser.IsEnableIntegration">Integration</a>
+                                           data-bs-jira="@item.BotUser.JiraAccountID"
+                                           data-bs-bitbucket="@item.BotUser.BitBucketAccountId"
+                                           data-bs-enableIntegration="@item.BotUser.IsEnableIntegration">Integration</a>
                                         </li>
+
                                     </ul>
                                 </div>
                             </td>
@@ -146,7 +147,7 @@
 
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Jira Account ID:</label>
-                        <input class="form-control jira" type="text" name="jiraAccount"  />
+                        <input class="form-control jira" type="text" name="jiraAccount" />
                     </div>
 
                     <div class="mb-3">
@@ -154,14 +155,13 @@
                         <input class="form-control bitbucket" type="text" name="bitbucketAccount" />
                     </div>
 
-                     <div>
-                         <input type="checkbox" id="integration" name="isEnable" />
-                       
+                    <div class="form-check form-switch mb-3" onclick="checkCheckBox()">
+                        <input class="form-check-input" name="flexSwitchCheckChecked" type="checkbox" id="integrationCheckBox">
+                        <label class="form-check-label" for="integrationCheckBox">Enable/Disable</label>
                     </div>
-                  
+                    <div class=" note">If you <strong>Disable</strong> this feature, Zenbot won't use it for your server.</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-dark">Save</button>
                 </div>
             </div>
@@ -172,8 +172,6 @@
 @section Scripts {
     <script>
         var birthdayModal = document.getElementById('birthday')
-        var IntegrationModal = document.getElementById('userIntegration')
-
 
         birthdayModal.addEventListener('show.bs.modal', function(event) {
             // Button that triggered the modal
@@ -191,7 +189,7 @@
             var userIdInput = birthdayModal.querySelector('.modal-body .userId')
             var guildIdInput = birthdayModal.querySelector('.modal-body .guildId')
             var guildNameInput = birthdayModal.querySelector('.modal-body .guildName')
-           
+
 
             modalTitle.textContent = 'Update Birthay for ' + userName
             userIdInput.value = userId
@@ -201,7 +199,7 @@
     </script>
 
     @*// for integration*@
-     <script>
+    <script>
         var IntegrationModal = document.getElementById('userIntegration')
 
 
@@ -215,8 +213,17 @@
             var guildId = button.getAttribute('data-bs-guildId')
             var jira = button.getAttribute('data-bs-jira')
             var bitbucket = button.getAttribute('data-bs-bitbucket')
-            var enable = button.getAttribute('data-bs-enable')
-            console.log("Hello attribute; : ", enable)
+            var enable = button.getAttribute('data-bs-enableIntegration');
+
+            if (enable == "False") {
+                document.getElementById("integrationCheckBox").checked = false;
+                document.getElementById("integrationCheckBox").value = false;
+            }
+            if (enable == "True") {
+                document.getElementById("integrationCheckBox").checked = true;
+                document.getElementById("integrationCheckBox").value = true;
+            }
+
             // If necessary, you could initiate an AJAX request here
             // and then do the updating in a callback.
             //
@@ -227,8 +234,9 @@
             var guildNameInput = IntegrationModal.querySelector('.modal-body .guildName')
             var jiraInput = IntegrationModal.querySelector('.modal-body .jira')
             var bitbucketInput = IntegrationModal.querySelector('.modal-body .bitbucket')
-            var inte = document.getElementById("integration").checked = enable;
-             console.log("Heyyyy : ", inte)
+
+            
+            
 
             modalTitle.textContent = 'Update User Integration for ' + userName
             userIdInput.value = userId
@@ -236,8 +244,16 @@
             guildNameInput.value = guildName;
             jiraInput.value = jira;
             bitbucketInput.value = bitbucket;
-            
 
+            /**/
         })
+        function checkCheckBox() {
+            if (document.getElementById("integrationCheckBox").checked) {
+                document.getElementById("integrationCheckBox").value = true;
+            } else {
+                document.getElementById("integrationCheckBox").value = false;
+            }
+        }
+      
     </script>
       }
