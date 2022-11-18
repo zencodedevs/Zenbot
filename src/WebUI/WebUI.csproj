@@ -75,6 +75,7 @@
 
 	<ItemGroup>
 	  <Folder Include="wwwroot\bot\boardingFile\" />
+	  <Folder Include="wwwroot\bot\gsuite\" />
 	</ItemGroup>
 
 	<ProjectExtensions>
