@@ -112,12 +112,10 @@ namespace BotCore.Interactions.Modules.Moderators
                 var user = await userService.GetOrAddAsync(botUser.Id, botUser.Username, jiraAccountID, bitBucketAccountID);
 
                 await _botUserGuildServices.GetOrAddAsync(guild.Id, user.Id, false);
-
-                DateTime bthDay = birthday;
-                await FollowupAsync($"Done, brithday added for `{botUser.Username}`, <t:{((DateTimeOffset)bthDay).ToUnixTimeSeconds()}:D>", ephemeral: true);
+                await FollowupAsync($"Done, JiraID : `{jiraAccountID}`, BitBucketID: `{bitBucketAccountID}` , ephemeral: true");
 
                 // Log the message
-                var message = $"`{Context.User.Username}` as HR added birthday for `{botUser.Username}` : Date: `{birthday}`";
+                var message = $"`{Context.User.Username}` as HR added birthday for `{botUser.Username}` jira and bitbucket account ID";
                 await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
 
             }
