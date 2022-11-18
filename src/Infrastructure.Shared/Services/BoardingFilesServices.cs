@@ -51,7 +51,7 @@ namespace Zenbot.Infrastructure.Shared.Services
 
                 foreach (IFormFile item in file)
                 {
-                    string imgname = UploadFiles.CreateImg(item);
+                    string imgname = UploadFiles.CreateImg(item, "boardingFile");
                     if (imgname == "false") return false;
                     var boardingFile = new BoardingFiles
                     {
