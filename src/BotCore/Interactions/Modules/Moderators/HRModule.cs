@@ -36,6 +36,9 @@ namespace BotCore.Interactions.Modules.Moderators
             public BotConfiguration BotConfiguration { get; set; }
             public GuildService guildService { get; set; }
             public BoardingServices boardingServices { get; set; }
+            public UserService userService { get; set; }
+            public BotUserGuildServices _botUserGuildServices { get; set; }
+
 
             [SlashCommand("send-file", "send file to a user")]
             public async Task sendFile(IGuildUser user, bool @private, IAttachment file)
@@ -75,6 +78,44 @@ namespace BotCore.Interactions.Modules.Moderators
 
                 // Log the message
                 var message = $"`{Context.User.Username}` Sent a on-boarding file {file.Url} to `{user.Username}`";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
+            }
+
+            [SlashCommand("add-birthday","register birthday date for a user, type: dd/MM/yyyy")]
+            public async Task RegisterUser(IGuildUser botUser, DateTime birthday)
+            {
+                await DeferAsync();
+
+                // Add Server and discord user into database
+                var guild = await guildService.GetOrAddAsync(Context.Guild.Id);
+                var user = await userService.GetOrAddAsync(botUser.Id, botUser.Username, birthday);
+                
+                await _botUserGuildServices.GetOrAddAsync(guild.Id, user.Id, false);
+
+                DateTime bthDay = birthday;
+                await FollowupAsync($"Done, brithday added for `{botUser.Username}`, <t:{((DateTimeOffset)bthDay).ToUnixTimeSeconds()}:D>", ephemeral: true);
+
+                // Log the message
+                var message = $"`{Context.User.Username}` as HR added birthday for `{botUser.Username}` : Date: `{birthday}`";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
+            }
+
+            [SlashCommand("add-integration", "register jiraAccount ID and bitBucket Account ID")]
+            public async Task Integration(IGuildUser botUser,string jiraAccountID, string bitBucketAccountID)
+            {
+                await DeferAsync();
+
+                // Add Server and discord user into database
+                var guild = await guildService.GetOrAddAsync(Context.Guild.Id);
+                var user = await userService.GetOrAddAsync(botUser.Id, botUser.Username, jiraAccountID, bitBucketAccountID);
+
+                await _botUserGuildServices.GetOrAddAsync(guild.Id, user.Id, false);
+                await FollowupAsync($"Done, JiraID : `{jiraAccountID}`, BitBucketID: `{bitBucketAccountID}` , ephemeral: true");
+
+                // Log the message
+                var message = $"`{Context.User.Username}` as HR added birthday for `{botUser.Username}` jira and bitbucket account ID";
                 await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
 
             }

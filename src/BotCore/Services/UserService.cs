@@ -90,6 +90,55 @@ namespace BotCore.Services
             return user;
         }
 
+
+        // birthday
+        public async Task<BotUser> GetOrAddAsync(ulong Id, string username, DateTime birthday)
+        {
+            var user = await base.GetAsync(a => a.DiscordId == Id);
+            if (user == null)
+            {
+                user = new BotUser()
+                {
+                    DiscordId = Id,
+                    Username = username,
+                    Birthday = birthday
+                };
+                user = await base.InsertAsync(user);
+            }
+            else
+            {
+               user = await base.UpdateAsync(user.Id, x => {
+                    x.Birthday = birthday;
+                });
+            }
+            return user;
+        }
+
+        // INtegration
+        public async Task<BotUser> GetOrAddAsync(ulong Id, string username, string jiraAccount, string bitBucketAccount)
+        {
+            var user = await base.GetAsync(a => a.DiscordId == Id);
+            if (user == null)
+            {
+                user = new BotUser()
+                {
+                    DiscordId = Id,
+                    Username = username,
+                    JiraAccountID = jiraAccount,
+                    BitBucketAccountId = bitBucketAccount
+                };
+                user = await base.InsertAsync(user);
+            }
+            else
+            {
+                user = await base.UpdateAsync(user.Id, x => {
+                    x.JiraAccountID = jiraAccount;
+                    x.BitBucketAccountId = bitBucketAccount;
+                });
+            }
+            return user;
+        }
+
         // Get user by Jira account id
         public async Task<BotUser> GetUserByJiraId(string jiraId)
         {

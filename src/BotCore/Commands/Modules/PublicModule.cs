@@ -15,7 +15,7 @@ namespace BotCore.Commands.Modules
         [Command("Hello")]
         public async Task hello()
         {
-            await ReplyAsync($"Hello dear `{Context.User.Username}`, this is Zenbot! \nThank you for joining me, I will be your personal partner from now!");
+            await ReplyAsync($"Hello dear `{Context.User.Username}`, this is Zenbot! \n Thank you for joining me, I will be your personal partner from now!");
 
             // Log the message
             var message = $"Hello Command ran";
