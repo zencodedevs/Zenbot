@@ -26,13 +26,11 @@ namespace Zenbot.Infrastructure.Persistence
             }
         }
 
-        public static async Task SeedDefaultDataAsync(ApplicationDbContext dbContext)
+        public static async Task DeleteDuplicateData(ApplicationDbContext dbContext)
         {
-            //if (!dbContext.Cities.Any())
-            //{
-            //    await dbContext.Cities.AddAsync(new City().Create("თბილისი"));
-            //    await dbContext.SaveChangesAsync();
-            //}
+            var duplicatebotUserGuild = (dbContext.BotUserGuilds.ToList()).GroupBy(s => new { s.GuildId, s.BotUserId }).SelectMany(grp => grp.Skip(1)); ;
+            dbContext.BotUserGuilds.RemoveRange(duplicatebotUserGuild);
+            dbContext.SaveChanges();
         }
     }
 }

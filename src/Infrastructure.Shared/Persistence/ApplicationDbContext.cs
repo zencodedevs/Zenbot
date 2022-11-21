@@ -109,16 +109,6 @@ namespace Zenbot.Infrastructure.Shared.Persistence
 
             modelBuilder.Entity<ApplicationUser>(b => { });
 
-            /// BotUser Configuration with object value type (Supervisor)
-            //modelBuilder.Entity<BotUser>(b =>
-            //{
-            //    b.ToTable("BotUsers").HasKey(x => x.Id);
-            //    b.OwnsOne(x => x.Supervisor, sp =>
-            //    {
-            //        sp.Property(x => x.DiscordId).HasMaxLength(255).HasDefaultValue(ulong.MinValue);
-            //        sp.Property(x => x.Username).HasMaxLength(255).HasDefaultValue(string.Empty);
-            //    });
-            //});
         }
 
         private async Task DispatchEvents()
