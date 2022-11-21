@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Zenbot.WebUI.Extensions;
 
 namespace Zenbot.WebUI.Controllers
 {
+    [Authorize]
     public class IntegrationController : Controller
     {
         private readonly IBotUserGuildService _botUserGuildService;
