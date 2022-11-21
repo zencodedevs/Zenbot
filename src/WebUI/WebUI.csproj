@@ -29,6 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
 		<PackageReference Include="FluentValidation.AspNetCore" Version="10.2.3" />
 		<PackageReference Include="Google.Apis.Drive.v3" Version="1.57.0.2831" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.12" />
@@ -75,6 +76,7 @@
 
 	<ItemGroup>
 	  <Folder Include="wwwroot\bot\boardingFile\" />
+	  <Folder Include="wwwroot\bot\gsuite\" />
 	</ItemGroup>
 
 	<ProjectExtensions>

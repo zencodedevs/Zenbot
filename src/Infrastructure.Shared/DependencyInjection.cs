@@ -48,6 +48,7 @@ namespace Infrastructure.Shared
             services.TryAddScoped<IBoardingMessage, BoardingMessageServices>();
             services.TryAddScoped<IBoardingFiles, BoardingFilesServices>();
             services.TryAddScoped<IVocationServices, VocatoinServices>();
+            services.TryAddScoped<IGuildService, GuildService>();
 
             return services;
         }
