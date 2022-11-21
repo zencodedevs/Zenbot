@@ -30,7 +30,7 @@ namespace Zenbot.WebUI.Controllers
             return View(guilds);
         }
 
-        /*
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AuthenticateGuild(int guildId, string password)
@@ -54,6 +54,6 @@ namespace Zenbot.WebUI.Controllers
             await _guildService.UpdateScrinIOForGuild(guildId, scrinio);
             return RedirectToAction(nameof(Index));
         }
-        */
+        
     }
 }
