@@ -28,7 +28,7 @@ namespace Zenbot.Infrastructure.Shared.Services
             var guild = await _repository.FindAsync(x => x.Id == guildId);
             if (guild != null)
             {
-                UploadFiles.DeleteImg(guild.GSuiteAuth);
+                if(!string.IsNullOrEmpty(guild.GSuiteAuth)) UploadFiles.DeleteImg(guild.GSuiteAuth);
 
                 string imgname = UploadFiles.CreateImg(gsuite, "gsuite");
 

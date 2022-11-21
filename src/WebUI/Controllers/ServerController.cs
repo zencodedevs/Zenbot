@@ -54,6 +54,5 @@ namespace Zenbot.WebUI.Controllers
             await _guildService.UpdateScrinIOForGuild(guildId, scrinio);
             return RedirectToAction(nameof(Index));
         }
-        
     }
 }
