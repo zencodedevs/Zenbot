@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Zenbot.Domain.Shared.Interfaces;
@@ -10,11 +11,13 @@ namespace Zenbot.WebUI.Controllers
     {
         private readonly IBotUserGuildService _botUserGuildService;
         private readonly IBotUserService _botUserService;
+        private readonly INotyfService _notyf;
 
-        public IntegrationController(IBotUserGuildService botUserGuildService, IBotUserService botUserService)
+        public IntegrationController(IBotUserGuildService botUserGuildService, IBotUserService botUserService, INotyfService notyf)
         {
             _botUserGuildService = botUserGuildService;
             _botUserService = botUserService;
+            _notyf = notyf;
         }
 
         [HttpGet]
@@ -41,9 +44,11 @@ namespace Zenbot.WebUI.Controllers
             var update = await _botUserService.UpdateBirthday(birthdayDate, userId);
             if (update)
             {
+                _notyf.Success("Birthday Date updated successfully");
                 return RedirectToAction("BotUsers", new { guildId = guildId, guildName = guildName });
             }
             // Toas Error message
+            _notyf.Error("An error occured during updating the birthday date");
             return RedirectToAction("BotUsers", new { guildId = guildId, guildName = guildName });
         }
 
@@ -55,9 +60,11 @@ namespace Zenbot.WebUI.Controllers
             var update = await _botUserService.UpdateIntegration(jiraAccount,bitbucketAccount, flexSwitchCheckChecked, userId);
             if (update)
             {
+                _notyf.Success("Integration updated successfully");
                 return RedirectToAction("BotUsers", new { guildId = guildId, guildName = guildName });
             }
             // Toas Error message
+            _notyf.Error("An error occured during updating the Integrating");
             return RedirectToAction("BotUsers", new { guildId = guildId, guildName = guildName });
         }
 

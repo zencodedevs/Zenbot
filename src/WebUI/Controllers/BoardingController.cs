@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -18,12 +19,14 @@ namespace Zenbot.WebUI.Controllers
         private readonly IBotUserGuildService _botUserGuildService;
         private readonly IBoardingMessage _boardingMessageService;
         private readonly IBoardingFiles _boardingFiles;
+        private readonly INotyfService _notyf;
 
-        public BoardingController(IBotUserGuildService botUserGuildService, IBoardingMessage boardingMessageService, IBoardingFiles boardingFiles)
+        public BoardingController(IBotUserGuildService botUserGuildService, IBoardingMessage boardingMessageService, IBoardingFiles boardingFiles, INotyfService notyf)
         {
             _botUserGuildService = botUserGuildService;
             _boardingMessageService = boardingMessageService;
             _boardingFiles = boardingFiles;
+            _notyf = notyf;
         }
 
         [HttpGet]
@@ -68,8 +71,15 @@ namespace Zenbot.WebUI.Controllers
         public async Task<IActionResult> Edit(BoardingMessageDto dto)
         {
             var bMessage = await _boardingMessageService.UpdateBoardingMessage(dto);
-            if (bMessage) return RedirectToAction(nameof(Index));
-            else return View(dto);
+            if (bMessage)
+            {
+                _notyf.Success("Boarding message updated successfully");
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                _notyf.Error("Error occured during updating Boarding message"); return View(dto);
+            }
         }
 
 

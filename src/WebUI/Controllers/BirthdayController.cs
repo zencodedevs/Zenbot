@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Zenbot.Domain.Shared.Entities.Bot;
@@ -13,11 +14,12 @@ namespace Zenbot.WebUI.Controllers
     {
         private readonly IBotUserGuildService _botUserGuildService;
         private readonly IBirthdayMessageService _birthdayMessageService;
-
-        public BirthdayController(IBotUserGuildService botUserGuildService, IBirthdayMessageService birthdayMessageService)
+        private readonly INotyfService _notyf;
+        public BirthdayController(IBotUserGuildService botUserGuildService, IBirthdayMessageService birthdayMessageService,INotyfService notyf)
         {
             _botUserGuildService = botUserGuildService;
             _birthdayMessageService = birthdayMessageService;
+            _notyf = notyf;
         }
 
         [HttpGet]
@@ -58,8 +60,11 @@ namespace Zenbot.WebUI.Controllers
         public async Task<IActionResult> Edit(BirthdayMessageDto dto)
         {
             var bMessage = await _birthdayMessageService.UpdateBirthdayMessage(dto);
-            if (bMessage) return RedirectToAction(nameof(Index));
-            else return View(dto);
+            if (bMessage) {
+                _notyf.Success("Birthday message updated successfully");
+                return RedirectToAction(nameof(Index));
+            }
+            else { _notyf.Error("Error occured during updating Birthday message"); return View(dto); }
         }
     }
 }
