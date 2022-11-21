@@ -38,7 +38,7 @@ namespace Zenbot.Domain.Shared.Common
         {
             try
             {
-                string Fullpath = Path.Combine(Directory.GetCurrentDirectory(), imgname);
+                string Fullpath = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot/"+ imgname);
                 if (File.Exists(Fullpath))
                 {
                     File.Delete(Fullpath);
