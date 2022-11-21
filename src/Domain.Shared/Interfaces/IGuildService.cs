@@ -11,8 +11,8 @@ namespace Zenbot.Domain.Shared.Interfaces
     public interface IGuildService
     {
         Task<IEnumerable<Guild>> GetGuildsByUserId(ulong userId);
-        Task<Guild> UpdateScrinIOForGuild(int guildId, string scrinio);
-        Task<Guild> UpdateGSuiteAuthForGuild(int guildId, IFormFile gsuite);
-        Task<Guild> UpdatePasswordForGuild(int guildId, string password);
+        Task<bool> UpdateScrinIOForGuild(int guildId, string scrinio);
+        Task<bool> UpdateGSuiteAuthForGuild(int guildId, IFormFile gsuite);
+        Task<bool> UpdatePasswordForGuild(int guildId, string password);
     }
 }

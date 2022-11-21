@@ -1,3 +1,5 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using BotCore;
 using FluentValidation.AspNetCore;
 using Google.Apis.Auth.AspNetCore3;
@@ -80,7 +82,8 @@ namespace Zenbot.WebUI
             //        options.ClientSecret = "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";
             //    });
 
-
+            // For toast Notification
+            services.AddNotyf(config => { config.DurationInSeconds = 5; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
             services.AddDomain();
             services.AddApplication(Configuration);
             services.AddInfrastructure(Configuration);
@@ -212,6 +215,7 @@ namespace Zenbot.WebUI
                 app.UseHsts();
             }
 
+            app.UseNotyf();
             app.UseHealthChecks("/health");
 
             app.UseHttpsRedirection();

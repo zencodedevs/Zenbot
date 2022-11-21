@@ -23,7 +23,7 @@ namespace Zenbot.Infrastructure.Shared.Services
             throw new NotImplementedException();
         }
 
-        public async Task<Guild> UpdateGSuiteAuthForGuild(int guildId, IFormFile gsuite)
+        public async Task<bool> UpdateGSuiteAuthForGuild(int guildId, IFormFile gsuite)
         {
             var guild = await _repository.FindAsync(x => x.Id == guildId);
             if (guild != null)
@@ -36,12 +36,12 @@ namespace Zenbot.Infrastructure.Shared.Services
 
                 await _repository.UpdateAsync(guild);
                 await _repository.SaveChangesAsync(true);
-                return guild;
+                return true;
             }
-            return guild;
+            return false;
         }
 
-        public async Task<Guild> UpdatePasswordForGuild(int guildId, string password)
+        public async Task<bool> UpdatePasswordForGuild(int guildId, string password)
         {
             var guild = await _repository.FindAsync(x => x.Id == guildId);
             if (guild is not null)
@@ -49,12 +49,12 @@ namespace Zenbot.Infrastructure.Shared.Services
                 guild.AuthenticationPassword = password;
                 await _repository.UpdateAsync(guild);
                 await _repository.SaveChangesAsync(true);
-                return guild;
+                return true;
             }
-            return guild;
+            return false;
         }
 
-        public async Task<Guild> UpdateScrinIOForGuild(int guildId, string scrinio)
+        public async Task<bool> UpdateScrinIOForGuild(int guildId, string scrinio)
         {
             var guild = await _repository.FindAsync(x => x.Id == guildId);
             if (guild is not null)
@@ -62,9 +62,9 @@ namespace Zenbot.Infrastructure.Shared.Services
                 guild.ScrinIOToken = scrinio;
                 await _repository.UpdateAsync(guild);
                 await _repository.SaveChangesAsync(true);
-                return guild;
+                return true;
             }
-            return guild;
+            return false;
         }
     }
 }
