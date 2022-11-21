@@ -53,7 +53,7 @@ namespace Zenbot.WebUI
 
                     await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, roleManager);
 
-                    await ApplicationDbContextSeed.SeedDefaultDataAsync(context);
+                    await ApplicationDbContextSeed.DeleteDuplicateData(context);
                 }
                 catch (Exception ex)
                 {
