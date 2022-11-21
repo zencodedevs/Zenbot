@@ -176,7 +176,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input name="guildId" id="guildId" class="form-control guildId" hidden />
+                    <input name="guildId" id="guildId" class="form-control guildId"  hidden/>
 
                     <div class="mb-3">
                         <label for="password" class="col-form-label">New Password :</label>
@@ -198,7 +198,7 @@
 @*// G Suite Credentials Update Modal *@
 <div class="modal fade" id="gSuiteAuth" tabindex="-1" aria-labelledby="gSuiteAuthModal" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="post" asp-action="GSuiteAuth">
+        <form method="post" asp-action="GSuiteAuth" enctype="multipart/form-data">
 
             <div class="modal-content">
                 <div class="modal-header">
@@ -262,12 +262,13 @@
             // Extract info from data-bs-* attributes
             var guildName = button.getAttribute('data-bs-guildName')
             var guildId = button.getAttribute('data-bs-guildId')
+
             // If necessary, you could initiate an AJAX request here
             // and then do the updating in a callback.
             //
             // Update the modal's content.
-            var modalTitle = birthdayModal.querySelector('.modal-title')
-            var guildIdInput = birthdayModal.querySelector('.modal-body .guildId')
+            var modalTitle = scrinioToken.querySelector('.modal-title')
+            var guildIdInput = scrinioToken.querySelector('.modal-body .guildId')
 
             modalTitle.textContent = 'Update Scrin-io token for ' + guildName
             guildIdInput.value = guildId;
@@ -290,8 +291,8 @@
             // and then do the updating in a callback.
             //
             // Update the modal's content.
-            var modalTitle = IntegrationModal.querySelector('.modal-title')
-            var guildIdInput = IntegrationModal.querySelector('.modal-body .guildId')
+            var modalTitle = gSuiteAuth.querySelector('.modal-title')
+            var guildIdInput = gSuiteAuth.querySelector('.modal-body .guildId')
 
             modalTitle.textContent = 'Update Guild G Suite Credentials for ' + guildName
             guildIdInput.value = guildId;
@@ -310,13 +311,13 @@
             // Extract info from data-bs-* attributes
             var guildName = button.getAttribute('data-bs-guildName')
             var guildId = button.getAttribute('data-bs-guildId')
-
+            console.log("guildId", guildId);
             // If necessary, you could initiate an AJAX request here
             // and then do the updating in a callback.
             //
             // Update the modal's content.
-            var modalTitle = IntegrationModal.querySelector('.modal-title')
-            var guildIdInput = IntegrationModal.querySelector('.modal-body .guildId')
+            var modalTitle = editPassword.querySelector('.modal-title')
+            var guildIdInput = editPassword.querySelector('.modal-body .guildId')
 
             modalTitle.textContent = 'Update Guild password for ' + guildName
             guildIdInput.value = guildId;
