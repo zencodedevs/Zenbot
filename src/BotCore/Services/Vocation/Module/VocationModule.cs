@@ -119,8 +119,9 @@ namespace BotCore.Services.VocationModule
             {
                 Title = "Vocation Request",
                 Description = $"**{Context.BotUser.Username}** wants to a have day off for `{vocationDays}` days \n" +
+                $"From Date : `{form.StartDate}` To `{form.EndDate}` \n" +
                 $"Please `Confirm` or `Reject` this request so we can notify him/her about your  decision \n\n" +
-                $"Description/Reason: {form.Description}" +
+                $"Description/Reason: {form.Description} \n" +
                 $"Request Date : {DateTime.UtcNow.ToString("dddd, dd MMMM yyyy")}"
             }.Build();
 
@@ -148,7 +149,7 @@ namespace BotCore.Services.VocationModule
                 var spr = new EmbedBuilder()
                 {
                     Title = "Request Rejected",
-                    Description = $"You've rejected the request for vocation. I just notified (him/her) about your decision! \n {vocationId} ",
+                    Description = $"You've rejected the request for vocation. I just notified (him/her) about your decision! \n ",
                     ThumbnailUrl = "https://img.icons8.com/fluency/480/delete-sign.png",
                     Color = 14946816,
                 }.Build();
@@ -183,7 +184,7 @@ namespace BotCore.Services.VocationModule
             var embed = new EmbedBuilder()
             {
                 Title = "Request Confirmed!",
-                Description = $"You've confirmed the request for vocation. I just notified (him/her) about your decision! {vocationId}",
+                Description = $"You've confirmed the request for vocation. I just notified (him/her) about your decision!",
                 ThumbnailUrl = "https://img.icons8.com/fluency/200/verified-account.png",
                 Color = 1364764
             }.Build();

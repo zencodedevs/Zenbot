@@ -408,7 +408,7 @@ namespace BotCore.Interactions.Modules.Admin
                 $"16. `/setup select-supervisor` You can choose a user and register that as supervisor.\n" +
                 $"17. `/setup list-supervisor` You will get all of your supervisors list you registerd in this server\n" +
                 $"18. `/setup assign-supervisor` Here you can assign a user as supervisor for other user.\n" +
-                $"19. `/setup scrionio-token` you can run register your scrin io for this server and user `scrin invite` command to invite people.\n" +
+                $"19. `/setup scrinio-token` you can run register your scrin io for this server and user `scrin invite` command to invite people.\n" +
                 $"20. `/scrin invite` Only the admin of this sever can run this command to invite the user to scirn.io.\n"
                 ).Build();
 
