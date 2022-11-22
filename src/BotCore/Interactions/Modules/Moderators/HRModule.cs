@@ -103,6 +103,24 @@ namespace BotCore.Interactions.Modules.Moderators
             }
 
 
+            [SlashCommand("generate-new-password", "setup server password")]
+            public async Task password(string password)
+            {
+                await DeferAsync();
+                await Context._guildService.UpdateAsync(Context.BotGuild.Id, x =>
+                {
+                    x.AuthenticationPassword = password;
+                });
+                await FollowupAsync($"The password changed to {password} succesfuly.");
+
+                // Log the message
+                var message = $"New password generated for server";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
+            }
+
+
+
             [SlashCommand("add-integration", "register jiraAccount ID and bitBucket Account ID")]
             public async Task Integration(IGuildUser botUser,string jiraAccountID, string bitBucketAccountID)
             {
