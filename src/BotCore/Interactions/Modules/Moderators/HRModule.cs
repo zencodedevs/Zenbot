@@ -25,8 +25,21 @@ namespace BotCore.Interactions.Modules.Moderators
     [Group("hr", "hr commands")]
     public class HRModule : InteractionModuleBase<CustomSocketInteractionContext>
     {
+        public ChannelService _channelService { get; set; }
+        // Select or change the Guild logger channel
+        [SlashCommand("logger-channel", "setup logger channel")]
+        public async Task logger_channel(ITextChannel channel)
+        {
+            await DeferAsync();
 
 
+            await FollowupAsync($"The channel ID you've requested for : `{channel.Id}`");
+
+            // Log the message
+            var message = $"Selected `{Context.Channel.Name}` as logger channel";
+            await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
+        }
 
         // Users Group which HR sends onboarding file or ther required file to users
         [Group("users", "users commands")]

@@ -71,6 +71,22 @@ namespace BotCore.Interactions.Modules.Admin
 
             }
 
+            // Select or change the Guild logger channel
+            [SlashCommand("logger-channel", "setup logger channel")]
+            public async Task logger_channel(ITextChannel channel)
+            {
+                await DeferAsync();
+
+                
+                await FollowupAsync($"The channel ID you've requested for : `{channel.Id}`");
+
+                // Log the message
+                var message = $"Selected `{Context.Channel.Name}` as logger channel";
+                await _channelService.loggerEmbedMessage(message, Context.Guild.Name, Context.Guild.Id, Context.User.Username, Context.User.Id);
+
+            }
+
+
             [SlashCommand("add", "add role to user")]
             public async Task add(IGuildUser user, IRole role)
             {
