@@ -37,44 +37,57 @@ namespace Zenbot.WebUI.Controllers.Api
         [HttpPost]
         public async Task JiraWebHook([FromBody] JsonElement entity)
         {
+            var assigneeId = "";
             try
             {
-                    var json = entity.GetRawText();
-                    var result = JsonConvert.DeserializeObject<JiraWebhookObject>(json);
+                var json = entity.GetRawText();
+                var result = JsonConvert.DeserializeObject<JiraWebhookObject>(json);
 
-                    var jiraWH = new JiraWebHookDetail
-                    {
-                        AssigneeId = result.issue.fields.assignee.accountId,
-                        IssueSelf = result.issue.self,
-                        IssueName = result.issue.fields.summary,
-                        ProjectName = result.issue.fields.project.name,
-                        ProjectUrl = result.issue.fields.project.self,
-                        ReporterName = result.issue.fields.reporter.displayName,
-                        IssueUpdateDate = result.issue.fields.statuscategorychangedate
-                    };
-                    var embed = new EmbedBuilder()
-                    {
-                        Title = "New Task Assigned",
-                        Description = $"**{jiraWH.ReporterName}** has assigned you a new task \n" +
-                        $"{jiraWH.IssueName} : {jiraWH.IssueSelf} \n" +
-                        $"Date : {jiraWH.IssueUpdateDate.ToString("dddd, dd MMMM yyyy")}"
-                    }.Build();
+                var jiraWH = new JiraWebHookDetail
+                {
+                    AssigneeId = result.issue.fields.assignee.accountId,
+                    IssueSelf = result.issue.self,
+                    IssueName = result.issue.fields.summary,
+                    ProjectName = result.issue.fields.project.name,
+                    ProjectUrl = result.issue.fields.project.self,
+                    ReporterName = result.issue.fields.reporter.displayName,
+                    IssueUpdateDate = result.issue.fields.statuscategorychangedate
+                };
 
-                    var component = new ComponentBuilder()
+                assigneeId = jiraWH.AssigneeId;
 
-                        .WithButton("Project Name", "2", ButtonStyle.Secondary, null, "", true, row: 0)
-                        .WithButton(jiraWH.ProjectName, null, ButtonStyle.Link, null, jiraWH.ProjectUrl, row: 0)
+                var embed = new EmbedBuilder()
+                {
+                    Title = "New Task Assigned",
+                    Description = $"**{jiraWH.ReporterName}** has assigned you a new task \n" +
+                    $"{jiraWH.IssueName} : {jiraWH.IssueSelf} \n" +
+                    $"Date : {jiraWH.IssueUpdateDate.ToString("dddd, dd MMMM yyyy")}"
+                }.Build();
 
-                        .Build();
+                var component = new ComponentBuilder()
 
-                    await this._jiraService.SendMessageToUserAsync(jiraWH.AssigneeId, "", false, embed: embed, components: component);
+                    .WithButton("Project Name", "2", ButtonStyle.Secondary, null, "", true, row: 0)
+                    .WithButton(jiraWH.ProjectName, null, ButtonStyle.Link, null, jiraWH.ProjectUrl, row: 0)
+
+                    .Build();
+
+                await this._jiraService.SendMessageToUserAsync(jiraWH.AssigneeId, "", false, embed: embed, components: component);
+
+                //log the message 
+                var info = await this._jiraService.GetUserInfo(jiraWH.AssigneeId);
+
+                var message = $"News task has assigned to `{jiraWH.AssigneeName}`";
+                await _channelService.loggerEmbedMessage(message, info.GuildName, info.GuildId, info.Username, info.UserId);
             }
             catch (Exception ex)
             {
-                var message = "An exception occured during receiving Jira webhook: "+ ex.Message;
-                await _channelService.loggerEmbedMessage(message);
+                //log the message 
+                var info = await this._jiraService.GetUserInfo(assigneeId);
+
+                var message = "An exception occured during receiving Jira webhook: " + ex.Message;
+                await _channelService.loggerEmbedMessage(message, info.GuildName, info.GuildId, info.Username, info.UserId);
             }
-            
+
         }
 
 
@@ -133,7 +146,7 @@ namespace Zenbot.WebUI.Controllers.Api
                 var message = "An exception occured during receiving bitBucket webhook: " + ex.Message;
                 await _channelService.loggerEmbedMessage(message);
             }
-          
+
 
         }
 
