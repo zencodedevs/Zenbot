@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook
@@ -19,6 +20,18 @@ namespace Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook
         public string ProjectUrl { get; set; }
         public DateTime IssueUpdateDate { get; set; }
     }
+
+
+    public class JiraWebhookObject
+    {
+        public long timestamp { get; set; }
+        public string webhookEvent { get; set; }
+        public string issue_event_type_name { get; set; }
+        public virtual User user { get; set; }
+        public virtual Issue issue { get; set; }
+        public virtual Changelog changelog { get; set; }
+    }
+
 
     public class Aggregateprogress
     {
@@ -39,9 +52,13 @@ namespace Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook
 
     public class AvatarUrls
     {
+        [JsonPropertyName("48x48")]
         public string _48x48 { get; set; }
+        [JsonPropertyName("24x24")]
         public string _24x24 { get; set; }
+        [JsonPropertyName("16x16")]
         public string _16x16 { get; set; }
+        [JsonPropertyName("32x32")]
         public string _32x32 { get; set; }
     }
 
@@ -75,58 +92,66 @@ namespace Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook
         public Issuetype issuetype { get; set; }
         public object timespent { get; set; }
         public Project project { get; set; }
-        public object aggregatetimespent { get; set; }
-        public Resolution resolution { get; set; }
-        public object customfield_10027 { get; set; }
-        public object customfield_10028 { get; set; }
-        public object customfield_10029 { get; set; }
-        public DateTime resolutiondate { get; set; }
+        public object[] fixVersions { get; set; }
+        public dynamic issue { get; set; }
+        public object? aggregatetimespent { get; set; }
+        [JsonPropertyName("resolutions")]
+        public object? theResolutions { get; set; }
+        public object? customfield_10027 { get; set; }
+        public object? customfield_10028 { get; set; }
+        public object? customfield_10029 { get; set; }
+        public DateTime? resolutiondate { get; set; }
         public int workratio { get; set; }
         public Watches watches { get; set; }
-        public DateTime lastViewed { get; set; }
         public Issuerestriction issuerestriction { get; set; }
-        public DateTime created { get; set; }
-        public object customfield_10020 { get; set; }
-        public object customfield_10021 { get; set; }
-        public object customfield_10022 { get; set; }
-        public object customfield_10023 { get; set; }
+        public DateTime? lastViewed { get; set; }
+        public DateTime? created { get; set; }
+        public object? customfield_10020 { get; set; }
+        public object? customfield_10021 { get; set; }
+        public object? customfield_10022 { get; set; }
         public Priority priority { get; set; }
-        public object customfield_10024 { get; set; }
-        public string customfield_10025 { get; set; }
-        public object customfield_10026 { get; set; }
-        public object customfield_10016 { get; set; }
-        public object customfield_10017 { get; set; }
+        public object? customfield_10023 { get; set; }
+        public object? customfield_10024 { get; set; }
+        public string? customfield_10025 { get; set; }
+        public object? customfield_10026 { get; set; }
+        public object[]? labels { get; set; }
+        public object? customfield_10016 { get; set; }
+        public object? customfield_10017 { get; set; }
         public Customfield10018 customfield_10018 { get; set; }
-        public string customfield_10019 { get; set; }
-        public object timeestimate { get; set; }
-        public object aggregatetimeoriginalestimate { get; set; }
+        public string? customfield_10019 { get; set; }
+        public DateTime? timeestimate { get; set; }
+        public DateTime? aggregatetimeoriginalestimate { get; set; }
+        public object[]? versions { get; set; }
+        public object[]? issuelinks { get; set; }
         public Assignee assignee { get; set; }
         public DateTime updated { get; set; }
         public Status status { get; set; }
-        public object timeoriginalestimate { get; set; }
+        public object[]? components { get; set; }
+        public DateTime? timeoriginalestimate { get; set; }
         public string description { get; set; }
-        public object customfield_10010 { get; set; }
-        public object customfield_10014 { get; set; }
-        public object customfield_10015 { get; set; }
+        public object? customfield_10010 { get; set; }
+        public object? customfield_10014 { get; set; }
+        public object? customfield_10015 { get; set; }
         public Timetracking timetracking { get; set; }
-        public object customfield_10005 { get; set; }
-        public object customfield_10006 { get; set; }
-        public object security { get; set; }
-        public object customfield_10007 { get; set; }
-        public object customfield_10008 { get; set; }
-        public object customfield_10009 { get; set; }
-        public object aggregatetimeestimate { get; set; }
+        public object? customfield_10005 { get; set; }
+        public object? customfield_10006 { get; set; }
+        public string? security { get; set; }
+        public object? customfield_10007 { get; set; }
+        public object? customfield_10008 { get; set; }
+        public string[]? attachment { get; set; }
+        public object? customfield_10009 { get; set; }
+        public object? aggregatetimeestimate { get; set; }
         public string summary { get; set; }
         public Creator creator { get; set; }
-
+        public string[]? subtasks { get; set; }
         public Reporter reporter { get; set; }
         public Aggregateprogress aggregateprogress { get; set; }
-        public object customfield_10001 { get; set; }
-        public object customfield_10002 { get; set; }
-        public object customfield_10003 { get; set; }
-        public object customfield_10004 { get; set; }
-        public object environment { get; set; }
-        public object duedate { get; set; }
+        public object? customfield_10001 { get; set; }
+        public object? customfield_10002 { get; set; }
+        public object? customfield_10003 { get; set; }
+        public object? customfield_10004 { get; set; }
+        public object? environment { get; set; }
+        public object? duedate { get; set; }
         public Progress progress { get; set; }
         public Votes votes { get; set; }
     }
@@ -223,15 +248,7 @@ namespace Zenbot.Domain.Shared.Entities.Bot.Dtos.JiraWebHook
         public string name { get; set; }
     }
 
-    public class JiraWebhookObject
-    {
-        public long timestamp { get; set; }
-        public string webhookEvent { get; set; }
-        public string issue_event_type_name { get; set; }
-        public virtual User user { get; set; }
-        public virtual Issue issue { get; set; }
-        public virtual Changelog changelog { get; set; }
-    }
+
 
     public class Status
     {
