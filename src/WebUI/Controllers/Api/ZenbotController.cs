@@ -5,7 +5,9 @@ using BotCore.Services.Jira;
 using Discord;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Zen.Mvc;
 using Zenbot.Domain.Shared.Entities.Bot.Dtos.BitbucketWebHook;
@@ -29,23 +31,26 @@ namespace Zenbot.WebUI.Controllers.Api
             _channelService = services.GetRequiredService<ChannelService>();
         }
 
+
+
         // For Jira Webhook
         [HttpPost]
-        public async Task JiraWebHook([FromBody] JiraWebhookObject value)
+        public async Task JiraWebHook([FromBody] JsonElement entity)
         {
             try
             {
-                if (value != null)
-                {
+                    var json = entity.GetRawText();
+                    var result = JsonConvert.DeserializeObject<JiraWebhookObject>(json);
+
                     var jiraWH = new JiraWebHookDetail
                     {
-                        AssigneeId = value.issue.fields.assignee.accountId,
-                        IssueSelf = value.issue.self,
-                        IssueName = value.issue.fields.summary,
-                        ProjectName = value.issue.fields.project.name,
-                        ProjectUrl = value.issue.fields.project.self,
-                        ReporterName = value.issue.fields.reporter.displayName,
-                        IssueUpdateDate = value.issue.fields.statuscategorychangedate
+                        AssigneeId = result.issue.fields.assignee.accountId,
+                        IssueSelf = result.issue.self,
+                        IssueName = result.issue.fields.summary,
+                        ProjectName = result.issue.fields.project.name,
+                        ProjectUrl = result.issue.fields.project.self,
+                        ReporterName = result.issue.fields.reporter.displayName,
+                        IssueUpdateDate = result.issue.fields.statuscategorychangedate
                     };
                     var embed = new EmbedBuilder()
                     {
@@ -63,12 +68,6 @@ namespace Zenbot.WebUI.Controllers.Api
                         .Build();
 
                     await this._jiraService.SendMessageToUserAsync(jiraWH.AssigneeId, "", false, embed: embed, components: component);
-                }
-                else
-                {
-                    var message = "Could not get the jira webhook data! \n Value of jira webhook is null";
-                    await _channelService.loggerEmbedMessage(message);
-                }
             }
             catch (Exception ex)
             {
